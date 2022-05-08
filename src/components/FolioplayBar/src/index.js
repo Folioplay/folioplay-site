@@ -1,14 +1,14 @@
 import React from "react";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import walletIcon from '../../../images/Vectorwallet.png'
+import hamburgerIcon from '../../../images/Vectorhamburger.png'
 import '../style/index.css'
 export default function FolioplayBar() {
     const [state, setState] = React.useState({
@@ -56,7 +56,7 @@ export default function FolioplayBar() {
     );
     return (
         <div className="folioplay-bar-content-wrapper">
-            <img id="folioplay-hamburger" onClick={toggleDrawer('left', true)} src={require('../../../images/Vectorhamburger.png')} width={"20"} height={"12"} style={{ marginLeft: "3.75%", marginRight: "20px" }} />
+            <img id="folioplay-hamburger" onClick={toggleDrawer('left', true)} src={hamburgerIcon} alt="hamburger-icon" width={"20"} height={"12"} style={{ marginLeft: "3.75%", marginRight: "20px" }} />
             <Drawer
                 PaperProps={{
                     sx: {
@@ -70,7 +70,7 @@ export default function FolioplayBar() {
                 onClose={toggleDrawer('left', false)}
             >{list('left')}</Drawer>
             <span style={{ fontSize: "1.5rem", fontWeight: "800", letterSpacing: "1px" }}>FolioPlay</span>
-            <img id="folioplay-wallet" src={require('../../../images/Vectorwallet.png')} width={"20"} height={"18"} style={{ marginRight: "3.75%", marginLeft: "auto" }} />
+            <img id="folioplay-wallet" src={walletIcon} alt="wallet-icon" width={"20"} height={"18"} style={{ marginRight: "3.75%", marginLeft: "auto" }} />
         </div>
     );
 }

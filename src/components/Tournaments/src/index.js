@@ -1,10 +1,11 @@
 import React from "react";
-import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import FolioplayBar from "../../FolioplayBar/src";
-import { tournaments } from "../common/demoTournaments";
-import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { Button, LinearProgress } from "@mui/material";
-import '../style/index.css'
+import { tournaments } from "../common/demoTournaments";
+import FolioPlayLayout from "../../../layout/FolioPlayLayout";
+import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
+import '../style/index.css';
+
 export default function Tournaments() {
     const pad = num => ("0" + num).slice(-2);
     const getTimeFromDate = timestamp => {
@@ -14,14 +15,14 @@ export default function Tournaments() {
             seconds = date.getSeconds();
         return pad(hours) + ":" + pad(minutes)
     }
-    const tournamentsList = tournaments.map((tournament) => {
+    const tournamentsList = tournaments.map((tournament, index) => {
         const seatsFilled = 100 * tournament.filled_spots / tournament.total_spots;
         const startDate = new Date(tournament.start);
         const finishDate = new Date(tournament.end);
         const currDate = new Date();
         // console.log(startDate);
         return (
-            <div className="tournament" >
+            <div key={"tournament__" + index} className="tournament" >
                 <div className="tournament-info" >
                     <span className="tournament-image">
                     </span>

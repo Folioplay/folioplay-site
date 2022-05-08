@@ -1,13 +1,11 @@
-import React, {createContext, useEffect, useState} from "react";
+import React, { createContext, useState } from "react";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import {ethers, providers} from "ethers";
+import { ethers, providers } from "ethers";
 
 
 export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({ children }) => {
-
-    //
     // useEffect(()=>{
     //     if(userWalletAddress!==null){
     //         window.location.pathname="/main";
@@ -52,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{logout, loginWalletConnect, loggedIn, userWalletAddress, provider, loginMetamask}}>
+            value={{ logout, loginWalletConnect, loggedIn, userWalletAddress, provider, loginMetamask }}>
             {children}
         </AuthContext.Provider>
     );

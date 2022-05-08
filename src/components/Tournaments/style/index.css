@@ -83,7 +83,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url(/home/saksham-nomic/dev/folioplay/src/images/tournament.png);
+    background-image: url(../../../images/tournament.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
