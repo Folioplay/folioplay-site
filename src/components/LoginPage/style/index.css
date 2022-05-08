@@ -1,0 +1,78 @@
+#folioplay-login-wrapper {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+#folioplay-login-google-button {
+    background-color: var(--white);
+    color: black;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+#folioplay-login-meta-button {
+    background-color: var(--white);
+    color: black;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+#folioplay-text-separator-wrapper {
+    width: 100%;
+    text-align: center;
+    color: rgb(188, 188, 188);
+    border-bottom: 1px solid rgb(188, 188, 188);
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#folioplay-text-separator-wrapper span {
+    background: var(--violet-blue);
+    padding: 0 10px;
+}
+
+#folioplay-connect-metamask {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    padding: 10px;
+    border-radius: 20px;
+    transition: 0.3s all ease-in-out;
+}
+
+#folioplay-connect-metamask:hover {
+    background-color: rgba(176, 176, 176, 0.16);
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+.css-1ptx2yq-MuiInputBase-root-MuiInput-root::before {
+    border-bottom: 1px var(--white) solid !important;
+}
+
+#folioplay-login-mail-button {
+    text-transform: capitalize;
+    background-color: rgba(255, 255, 255);
+    font-weight: 600;
+    color: rgb(82, 82, 82);
+}
+
+#folioplay-login-mail-button:hover {
+    color: rgb(47, 47, 47);
+}
+
+#login-page-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(/home/psyco/FreeLancing/Folioplay/WebFolioplay/folioplay/src/images/home.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
