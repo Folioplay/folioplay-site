@@ -5,8 +5,18 @@ import { tournaments } from "../common/demoTournaments";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import '../style/index.css';
+import {useContext} from "react";
+// import {useSelector} from "react-redux";
 
 export default function Tournaments() {
+
+    // const walletAddress = useSelector((state)=> {
+    //     console.log( state.AuthSlice.userInfo.userWalletAddress);
+    //     return state.AuthSlice.userInfo.userWalletAddress;
+    // })
+    //
+    // console.log(walletAddress);
+
     const pad = num => ("0" + num).slice(-2);
     const getTimeFromDate = timestamp => {
         const date = new Date(timestamp * 1000);
@@ -15,6 +25,9 @@ export default function Tournaments() {
             seconds = date.getSeconds();
         return pad(hours) + ":" + pad(minutes)
     }
+
+    // console.log(userWalletAddress);
+
     const tournamentsList = tournaments.map((tournament, index) => {
         const seatsFilled = 100 * tournament.filled_spots / tournament.total_spots;
         const startDate = new Date(tournament.start);

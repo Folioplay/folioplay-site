@@ -5,29 +5,26 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TextField from '@mui/material/TextField';
 import FolioPlayLayout from '../../../layout/FolioPlayLayout'
 import '../style/index.css';
-import { ethers } from "ethers";
+import {ethers, providers} from "ethers";
 import CommonModal from "../../../Common/Modal/Modal";
 import Link from '@mui/material/Link';
-import { AuthContext } from "../../../Context/AuthContext";
 import googleIcon from '../../../images/google_icon.webp'
 import metamaskIcon from '../../../images/metamask.png'
-import walletconnectIcon from '../../../images/walletconnect.png'
+import walletconnectIcon from '../../../images/walletconnect.png';
+import {AuthContext} from "../../../Context/AuthContext";
+
+
 
 export default function LoginPage() {
-    const { loginWalletConnect, logout, userWalletAddress, loginMetamask } = useContext(AuthContext);
 
-    useEffect(() => {
-        if (userWalletAddress !== null) {
-            window.location.pathname = "/tournaments";
-        }
-    });
+    const {loginWalletConnect, loginMetamask} = useContext(AuthContext);
+
 
     const connectWalletConnect = async () => {
-        async function setProviderValue() {
-            await loginWalletConnect();
-        }
-        await setProviderValue();
+        await loginWalletConnect();
+        window.location.pathname="tournaments";
     }
+
     // const signOutWalletConnect = async () =>{
     //     await logout();
     // }
@@ -35,19 +32,21 @@ export default function LoginPage() {
         return (
             <CommonModal open={open} handleClose={handleClose}>
                 <div className="modalText">
-                    Install <Link className="innerModalContent" href="https://metamask.io/" target="_blank" onClick={handleClose}>  Metamask </Link> to Login
+                    Install <Link className="innerModalContent" href="https://metamask.io/" target="_blank"
+                                  onClick={handleClose}> Metamask </Link> to Login
                 </div>
             </CommonModal>
         )
     }
-    // console.log(userWalletAddress);
+
     const checkMetamask = async () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         if (!provider) {
             handleOpen();
         }
         else {
-            loginMetamask();
+            await loginMetamask();
+            window.location.pathname="tournaments";
             // TODO: Call api to check account present in database
         }
     }
