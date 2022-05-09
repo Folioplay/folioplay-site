@@ -1,0 +1,41 @@
+.leaderboard-entry {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    align-items: center;
+    box-shadow: inset 0px -1px 0px #DBE4EF;
+}
+
+.leaderboard-profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-color: var(--dim-white);
+}
+
+.leaderboard-username {
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: 0.2s all ease-in-out;
+}
+
+.leaderboard-username:hover {
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+}
+
+.leaderboard-teamname {
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: 0.2s all ease-in-out;
+}
+
+.leaderboard-teamname:hover {
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+}

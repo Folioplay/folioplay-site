@@ -8,7 +8,8 @@ export const tournaments = [
         "filled_spots": 3000,
         "reward": 1000,
         "entry_price": 250,
-        "image": "path"
+        "image": "path",
+        "id": 1
     }
     , {
         "name": "Ten from Cent",
@@ -19,7 +20,8 @@ export const tournaments = [
         "filled_spots": 3000,
         "reward": 1000,
         "entry_price": 250,
-        "image": "path"
+        "image": "path",
+        "id": 2
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -29,7 +31,8 @@ export const tournaments = [
         "filled_spots": 3000,
         "reward": 1000,
         "entry_price": 250,
-        "image": "path"
+        "image": "path",
+        "id": 3
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -39,7 +42,8 @@ export const tournaments = [
         "filled_spots": 3000,
         "reward": 1000,
         "entry_price": 250,
-        "image": "path"
+        "image": "path",
+        "id": 4
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -49,7 +53,8 @@ export const tournaments = [
         "filled_spots": 3000,
         "reward": 1000,
         "entry_price": 250,
-        "image": "path"
+        "image": "path",
+        "id": 5
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -59,6 +64,7 @@ export const tournaments = [
         "filled_spots": 3000,
         "reward": 1000,
         "entry_price": 250,
-        "image": "path"
+        "image": "path",
+        "id": 6
     }
 ]

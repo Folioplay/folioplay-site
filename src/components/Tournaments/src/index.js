@@ -4,6 +4,7 @@ import { Button, LinearProgress } from "@mui/material";
 import { tournaments } from "../common/demoTournaments";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
+import { useNavigate } from 'react-router-dom'
 import '../style/index.css';
 import {useContext} from "react";
 // import {useSelector} from "react-redux";
@@ -18,6 +19,7 @@ export default function Tournaments() {
     // console.log(walletAddress);
 
     const pad = num => ("0" + num).slice(-2);
+    const navigate = new useNavigate();
     const getTimeFromDate = timestamp => {
         const date = new Date(timestamp * 1000);
         let hours = date.getHours(),
@@ -39,7 +41,7 @@ export default function Tournaments() {
                 <div className="tournament-info" >
                     <span className="tournament-image">
                     </span>
-                    <span style={{ textAlign: "left" }}>
+                    <span style={{ textAlign: "left" }} onClick={() => navigate(`/tournaments/${tournament.id}`)}>
                         {tournament.name}
                         <br />
                         <span className="tournaments-spots">
@@ -64,7 +66,7 @@ export default function Tournaments() {
             <div className="fullpage">
                 <FolioplayBar />
                 <div style={{ marginTop: "40px", textAlign: "left", marginLeft: "3.75%", marginBottom: "40px" }}>
-                    <span style={{ letterSpacing: "1px", fontSize: "2rem", fontWeight: "800" }}>
+                    <span className="font-weight-800 font-size-30" >
                         Welcome
                     </span><br />
                     <span style={{ letterSpacing: "1px" }}>Time to turn the tables with your skills</span>

@@ -56,21 +56,20 @@ export default function FolioplayBar() {
     );
     return (
         <div className="folioplay-bar-content-wrapper">
-            <img id="folioplay-hamburger" onClick={toggleDrawer('left', true)} src={hamburgerIcon} alt="hamburger-icon" width={"20"} height={"12"} style={{ marginLeft: "3.75%", marginRight: "20px" }} />
+            <img id="folioplay-hamburger" className="mr-20" onClick={toggleDrawer('left', true)} src={hamburgerIcon} alt="hamburger-icon" width={"20"} height={"12"} style={{ marginLeft: "3.75%" }} />
             <Drawer
                 PaperProps={{
                     sx: {
                         backgroundColor: "var(--dim-violet-blue)",
-                        color: "var(--white)",
-                        backdropFilter: "blur(3px)"
+                        color: "var(--white)"
                     }
                 }}
                 anchor={"left"}
                 open={state['left']}
                 onClose={toggleDrawer('left', false)}
             >{list('left')}</Drawer>
-            <span style={{ fontSize: "1.5rem", fontWeight: "800", letterSpacing: "1px" }}>FolioPlay</span>
-            <img id="folioplay-wallet" src={walletIcon} alt="wallet-icon" width={"20"} height={"18"} style={{ marginRight: "3.75%", marginLeft: "auto" }} />
+            <span className="font-weight-800 font-size-25">FolioPlay</span>
+            <img id="folioplay-wallet" className="ml-auto" src={walletIcon} alt="wallet-icon" width={"20"} height={"18"} style={{ marginRight: "3.75%" }} />
         </div>
     );
 }

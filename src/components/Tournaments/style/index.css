@@ -34,6 +34,10 @@
     padding-right: 16px;
 }
 
+.tournament-info span:nth-child(2):hover {
+    cursor: pointer;
+}
+
 .tournament-info {
     font-size: 15px;
     line-height: 20px;

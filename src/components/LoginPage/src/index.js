@@ -5,24 +5,22 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TextField from '@mui/material/TextField';
 import FolioPlayLayout from '../../../layout/FolioPlayLayout'
 import '../style/index.css';
-import {ethers, providers} from "ethers";
+import { ethers, providers } from "ethers";
 import CommonModal from "../../../Common/Modal/Modal";
 import Link from '@mui/material/Link';
 import googleIcon from '../../../images/google_icon.webp'
 import metamaskIcon from '../../../images/metamask.png'
-import walletconnectIcon from '../../../images/walletconnect.png';
-import {AuthContext} from "../../../Context/AuthContext";
-
-
-
+import { AuthContext } from "../../../Context/AuthContext";
+import walletconnectIcon from '../../../images/walletconnect.png'
+import terastationIcon from '../../../images/terastation.png'
 export default function LoginPage() {
 
-    const {loginWalletConnect, loginMetamask} = useContext(AuthContext);
+    const { loginWalletConnect, loginMetamask } = useContext(AuthContext);
 
 
     const connectWalletConnect = async () => {
         await loginWalletConnect();
-        window.location.pathname="tournaments";
+        window.location.pathname = "tournaments";
     }
 
     // const signOutWalletConnect = async () =>{
@@ -33,7 +31,7 @@ export default function LoginPage() {
             <CommonModal open={open} handleClose={handleClose}>
                 <div className="modalText">
                     Install <Link className="innerModalContent" href="https://metamask.io/" target="_blank"
-                                  onClick={handleClose}> Metamask </Link> to Login
+                        onClick={handleClose}> Metamask </Link> to Login
                 </div>
             </CommonModal>
         )
@@ -46,7 +44,7 @@ export default function LoginPage() {
         }
         else {
             await loginMetamask();
-            window.location.pathname="tournaments";
+            window.location.pathname = "tournaments";
             // TODO: Call api to check account present in database
         }
     }
@@ -81,21 +79,29 @@ export default function LoginPage() {
             <div id="folioplay-login-wrapper">
                 {MetamaskModal()}
                 <Button id="folioplay-login-google-button" variant="contained">
-                    <img alt="google-icon" src={googleIcon} width={"20px"} height={"20px"} style={{ marginRight: "3px" }} />
+                    <img className='mr-3' alt="google-icon" src={googleIcon} width={"20px"} height={"20px"} />
                     Continue With Google</Button>
                 <Button id="folioplay-login-meta-button" variant="contained">
-                    <FacebookIcon style={{ color: "var(--violet-blue)", marginRight: "3px" }} />
+                    <FacebookIcon className='mr-3' style={{ color: "var(--violet-blue)" }} />
                     Continue With Meta</Button>
                 <h4 id="folioplay-text-separator-wrapper"><span >Or</span></h4>
-                <h3>Connect your web3 wallet</h3>
-                <div id="folioplay-connect-metamask" onClick={checkMetamask}>
-                    <img alt="metamask-icon" src={metamaskIcon} width={"60px"} height={"60px"} style={{ marginRight: "3px" }} />
-                    <h4 style={{ marginTop: "0px", marginBottom: "10px" }}>MetaMask</h4>
+                <h3 style={{ textAlign: "center" }}>Connect your web3 wallet</h3>
+                <div className="folioplay-connect" onClick={checkMetamask}>
+                    <div className='wallets'>
+                        <img className='mr-3' alt="metamask-icon" src={metamaskIcon} width={"30px"} height={"30px"} />
+                        <h5 className='mt-0 mb-10'>MetaMask</h5>
+                    </div>
+
+                    <div className='wallets' onClick={connectWalletConnect}>
+                        <img className='mr-3' alt="walletconnect-icon" src={walletconnectIcon} width={"30px"} height={"30px"} />
+                        <h5 className='mt-0 mb-10'>WalletConnect</h5>
+                    </div>
+                    <div className='wallets'>
+                        <img className='mr-3' alt="terastation-icon" src={terastationIcon} width={"30px"} height={"30px"} />
+                        <h5 className='mt-0 mb-10'>TeraStation</h5>
+                    </div>
                 </div>
-                <div id="folioplay-connect-metamask" onClick={connectWalletConnect}>
-                    <img alt="walletconnect-icon" src={walletconnectIcon} width={"60px"} height={"60px"} style={{ marginRight: "3px" }} />
-                    <h4 style={{ marginTop: "0px", marginBottom: "10px" }}>WalletConnect</h4>
-                </div>
+
                 <h4 id="folioplay-text-separator-wrapper"><span>Or</span></h4>
                 <CssTextField type="email" sx={{ input: { color: "var(--white)" }, "label": { color: "var(--white)" } }} id="email-field" label="Email address" variant="standard" style={{ marginBottom: "20px" }} required />
                 <Button id="folioplay-login-mail-button" variant="filled">Sign in via mail</Button>

@@ -34,16 +34,28 @@
     padding: 0 10px;
 }
 
-#folioplay-connect-metamask {
+.folioplay-connect {
     margin-left: auto;
     margin-right: auto;
-    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    width: 100%;
     padding: 10px;
     border-radius: 20px;
     transition: 0.3s all ease-in-out;
 }
 
-#folioplay-connect-metamask:hover {
+.wallets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.wallets:hover {
     background-color: rgba(176, 176, 176, 0.16);
     cursor: pointer;
     transition: 0.3s all ease-in-out;
