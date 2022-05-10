@@ -44,6 +44,7 @@ export default function LoginPage() {
         }
         else {
             await loginMetamask();
+            console.log("asdfg");
             window.location.pathname = "tournaments";
             // TODO: Call api to check account present in database
         }

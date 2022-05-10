@@ -28,7 +28,6 @@ export default function FolioplayBar() {
         setAnchorEl(null);
     };
 
-
     const [state, setState] = React.useState({
         left: false
     });
@@ -58,6 +57,12 @@ export default function FolioplayBar() {
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
+                <ListItem button>
+                    <ListItemIcon>
+                        <InboxIcon style={{ color: "var(--dim-white)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary={"Logout"} onClick={logout} />
+                </ListItem>
             </List>
             {/* <Divider />
             <List>

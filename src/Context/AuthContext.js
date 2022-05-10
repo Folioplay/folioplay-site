@@ -51,6 +51,7 @@ export const AuthContextProvider = ({ children }) => {
         setUserWalletAddress(account[0]);
         localStorage.setItem("walletAddress", account[0]);
         localStorage.setItem("walletType", "metamask");
+        console.log("qwert");
         // TODO: Call api to check account present in database
     };
 
@@ -59,6 +60,7 @@ export const AuthContextProvider = ({ children }) => {
         setUserWalletAddress(null);
         localStorage.setItem("walletAddress", null);
         localStorage.setItem("walletType", null);
+        window.location.pathname="";
         // TODO: Disconnect Provider session
     };
 
