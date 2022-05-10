@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -10,7 +10,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import walletIcon from '../../../images/Vectorwallet.png'
 import hamburgerIcon from '../../../images/Vectorhamburger.png'
 import '../style/index.css'
+import {AuthContext} from "../../../Context/AuthContext";
+
 export default function FolioplayBar() {
+    const {logout} = useContext(AuthContext);
+
     const [state, setState] = React.useState({
         left: false
     });
@@ -40,6 +44,12 @@ export default function FolioplayBar() {
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
+                <ListItem button>
+                    <ListItemIcon>
+                        <InboxIcon style={{ color: "var(--dim-white)" }} />
+                    </ListItemIcon>
+                    <ListItemText primary={"Logout"} onClick={logout} />
+                </ListItem>
             </List>
             {/* <Divider />
             <List>
