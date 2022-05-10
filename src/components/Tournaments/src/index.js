@@ -7,16 +7,8 @@ import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { useNavigate } from 'react-router-dom'
 import '../style/index.css';
 import {useContext} from "react";
-// import {useSelector} from "react-redux";
 
 export default function Tournaments() {
-
-    // const walletAddress = useSelector((state)=> {
-    //     console.log( state.AuthSlice.userInfo.userWalletAddress);
-    //     return state.AuthSlice.userInfo.userWalletAddress;
-    // })
-    //
-    // console.log(walletAddress);
 
     const pad = num => ("0" + num).slice(-2);
     const navigate = new useNavigate();
@@ -28,7 +20,6 @@ export default function Tournaments() {
         return pad(hours) + ":" + pad(minutes)
     }
 
-    // console.log(userWalletAddress);
 
     const tournamentsList = tournaments.map((tournament, index) => {
         const seatsFilled = 100 * tournament.filled_spots / tournament.total_spots;
