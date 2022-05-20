@@ -21,7 +21,7 @@ export default function LeaderBoardTabs() {
                 </span>
                 <div className='leaderboard-profile-image' ></div>
                 <span className='leaderboard-username ml-20'>{entry.name}</span>
-                <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span>
+                {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
                 <span className='ml-auto'>{entry.points}</span>
             </div >
         );
@@ -44,7 +44,7 @@ export default function LeaderBoardTabs() {
                             # Rank
                         </span>
                         <span className='ml-20'>User</span>
-                        <span className='ml-auto'>Team</span>
+                        {/* <span className='ml-auto'>Team</span> */}
                         <span className='ml-auto'>Points</span>
                     </div >
                     {leaderBoard}

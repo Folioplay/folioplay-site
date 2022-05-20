@@ -1,0 +1,95 @@
+.teamcreate-bar {
+    display: flex;
+    align-items: center;
+}
+
+.coins {
+    width: 100%;
+    min-height: 80%;
+    background-color: var(--white);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-y: scroll;
+}
+
+.coin-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s ease-in-out;
+
+}
+
+.coin-card {
+    border-radius: 12px;
+    min-width: 160px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    box-shadow: 0px 6px 26px 5px rgba(118, 133, 160, 0.1);
+    transition: 0.2s ease-in-out;
+
+}
+
+.coin-classes {
+    font-size: 17px;
+    color: #B2C6DB;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.coin-classes:hover {
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+}
+
+.coin-classes span {
+    padding: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+.coin-class-selected {
+    color: var(--white);
+    font-weight: 600;
+    border-bottom: 3px solid var(--golden);
+    transition: 0.2s ease-in-out;
+}
+
+.display-none {
+    display: none;
+}
+
+#team-create-page-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(20, 24, 71);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.assign-roles-div {
+    width: 94%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.role-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.coin-add-button {
+    color: var(--golden) !important;
+    border: 1px solid var(--golden) !important;
+}

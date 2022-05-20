@@ -97,10 +97,10 @@ export default function LoginPage() {
                         <img className='mr-3' alt="walletconnect-icon" src={walletconnectIcon} width={"30px"} height={"30px"} />
                         <h5 className='mt-0 mb-10'>WalletConnect</h5>
                     </div>
-                    <div className='wallets'>
+                    {/* <div className='wallets'>
                         <img className='mr-3' alt="terastation-icon" src={terastationIcon} width={"30px"} height={"30px"} />
                         <h5 className='mt-0 mb-10'>TeraStation</h5>
-                    </div>
+                    </div> */}
                 </div>
 
                 <h4 id="folioplay-text-separator-wrapper"><span>Or</span></h4>
