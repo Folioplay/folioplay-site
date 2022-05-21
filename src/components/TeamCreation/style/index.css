@@ -10,7 +10,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
     overflow-y: scroll;
-    /* scrollbar-width: none; */
+    scrollbar-width: none;
 }
 
 .coin-card-wrapper {
