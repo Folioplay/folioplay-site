@@ -10,6 +10,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
     overflow-y: scroll;
+    /* scrollbar-width: none; */
 }
 
 .coin-card-wrapper {
@@ -93,6 +94,7 @@
     color: var(--golden) !important;
     border: 1px solid var(--golden) !important;
 }
-.graph:hover{
+
+.graph:hover {
     cursor: pointer;
 }

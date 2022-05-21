@@ -34,11 +34,10 @@ export function TeamCreation() {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: "max(50%,300px)",
-        bgcolor: 'var(--light-matte-black)',
-        border: '2px solid #000',
+        bgcolor: '#E8EEF2',
         boxShadow: 24,
-        borderRadius: "15px",
-        p: 2,
+        borderRadius: "12px",
+        p: 1,
     };
     useEffect(() => {
         if (wasActiveTab !== "") {

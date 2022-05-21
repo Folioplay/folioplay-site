@@ -44,7 +44,7 @@
 }
 
 #coin-rank-2 {
-    transform: translate(-50px, 80px);
+    transform: translate(-40px, 80px);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
     padding: 5px;
     border-radius: 100%;
@@ -129,3 +129,10 @@
     text-transform: capitalize;
     font-weight: 600 !important;
 }
+@media only screen and (max-width: 600px) {
+    #save-team-button {
+        position: absolute;
+        top: 90%;
+        left: 60%;
+    }
+  }
