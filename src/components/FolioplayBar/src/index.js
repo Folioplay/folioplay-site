@@ -10,10 +10,33 @@ import MailIcon from '@mui/icons-material/Mail';
 import walletIcon from '../../../images/Vectorwallet.png'
 import hamburgerIcon from '../../../images/Vectorhamburger.png'
 import '../style/index.css'
+import {Menu, MenuItem} from "@mui/material";
+import {Logout} from "@mui/icons-material";
 import {AuthContext} from "../../../Context/AuthContext";
+import Divider from "@mui/material/Divider";
+import { useMoralis } from "react-moralis";
 
 export default function FolioplayBar() {
-    const {logout} = useContext(AuthContext);
+
+    const { logout, user } = useMoralis();
+    console.log(user);
+
+
+    const logOut = async () => {
+        await logout();
+        window.location.pathname="/";
+    }
+
+
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const [state, setState] = React.useState({
         left: false
@@ -36,7 +59,7 @@ export default function FolioplayBar() {
 
         >
             <List>
-                {['Home', 'Tournaments', 'Activity', 'Logout'].map((text, index) => (
+                {['Home', 'Tournaments', 'Activity'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>
                             {index % 2 === 0 ? <InboxIcon style={{ color: "var(--dim-white)" }} /> : <MailIcon style={{ color: "var(--dim-white)" }} />}
@@ -48,7 +71,7 @@ export default function FolioplayBar() {
                     <ListItemIcon>
                         <InboxIcon style={{ color: "var(--dim-white)" }} />
                     </ListItemIcon>
-                    <ListItemText primary={"Logout"} onClick={logout} />
+                    <ListItemText primary={"Logout"} onClick={logOut} />
                 </ListItem>
             </List>
             {/* <Divider />
@@ -79,7 +102,60 @@ export default function FolioplayBar() {
                 onClose={toggleDrawer('left', false)}
             >{list('left')}</Drawer>
             <span className="font-weight-800 font-size-25">FolioPlay</span>
-            <img id="folioplay-wallet" className="ml-auto" src={walletIcon} alt="wallet-icon" width={"20"} height={"18"} style={{ marginRight: "3.75%" }} />
+            <React.Fragment>
+                <img id="folioplay-wallet" className="ml-auto" src={walletIcon} alt="wallet-icon" width={"20"} height={"18"} style={{ marginRight: "3.75%" }} onClick={handleClick} />
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    PaperProps={{
+                        elevation: 0,
+                        sx: {
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1,
+                            },
+                            '&:before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: 0,
+                                right: 14,
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                            },
+                        },
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
+                    <MenuItem  >
+                        {/*Balance : {user.get("walletbalance")}*/}
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem  >
+                        <ListItemIcon>
+                            <Logout fontSize="small"/>
+                        </ListItemIcon>
+                        Add Money
+                    </MenuItem>
+                    <MenuItem>
+                        <ListItemIcon>
+                            <Logout fontSize="small"/>
+                        </ListItemIcon>
+                        Manage Transactions
+                    </MenuItem>
+                </Menu>
+            </React.Fragment>
         </div>
     );
 }

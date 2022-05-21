@@ -12,6 +12,7 @@ export const AuthContextProvider = ({ children }) => {
     const [provider, setProvider] = useState(null);
 
 
+
     useEffect(  () => {
         async function allotWallet() {
             if (localStorage.getItem("walletType") === "metamask") {
