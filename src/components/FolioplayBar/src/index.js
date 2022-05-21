@@ -16,6 +16,8 @@ import {AuthContext} from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
 export default function FolioplayBar() {
 
+    const {logout} = useContext(AuthContext);
+
     const {userWalletBalance, userWalletAddress} = useContext(AuthContext);
     console.log(userWalletAddress);
 

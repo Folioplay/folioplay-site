@@ -6,16 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import {AuthContextProvider} from "./Context/AuthContext";
 import {Provider as ReduxProvider} from "react-redux";
 import store from "./Redux/Store";
+import { MoralisProvider } from "react-moralis";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <AuthContextProvider>
+      <MoralisProvider serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL} appId={process.env.REACT_APP_MORALIS_APP_ID}>
+      {/*<AuthContextProvider>*/}
       {/*<ReduxProvider store={store}>*/}
         <App />
       {/*</ReduxProvider>*/}
-      </AuthContextProvider>
+      </MoralisProvider>
+      {/*</AuthContextProvider>*/}
   </React.StrictMode>
 );
 
