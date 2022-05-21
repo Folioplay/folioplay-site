@@ -5,21 +5,31 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TextField from '@mui/material/TextField';
 import FolioPlayLayout from '../../../layout/FolioPlayLayout'
 import '../style/index.css';
-import { ethers, providers } from "ethers";
-import CommonModal from "../../../Common/Modal/Modal";
-import Link from '@mui/material/Link';
 import googleIcon from '../../../images/google_icon.webp'
 import metamaskIcon from '../../../images/metamask.png'
 import { AuthContext } from "../../../Context/AuthContext";
 import walletconnectIcon from '../../../images/walletconnect.png'
 import terastationIcon from '../../../images/terastation.png'
 import { useMoralis } from "react-moralis";
+import Moralis from "moralis";
+
 
 
 export default function LoginPage() {
 
     const { loginWalletConnect, loginMetamask } = useContext(AuthContext);
 
+    const loginWithMail = async () => {
+        let email_val = document.getElementById("folioplay-login-mail-button");
+        console.log(process.env.REACT_APP_MAGIC_LINK_API_KEY);
+        const user = await Moralis.authenticate({
+            provider: "magicLink",
+            email: {email_val},
+            apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
+            network: "mainnet"
+        })
+        console.log(user);
+    }
 
     const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
     const walletConnectLogin = async () => {
@@ -27,7 +37,8 @@ export default function LoginPage() {
 
             await authenticate({ provider: "walletconnect", chainId: 137 })
                 .then(function (user) {
-                    console.log(user.get("ethAddress"));
+                    console.log(user);
+                    window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -40,7 +51,7 @@ export default function LoginPage() {
 
             await authenticate()
                 .then(function (user) {
-                    console.log(user.get("ethAddress"));
+                    window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -48,50 +59,7 @@ export default function LoginPage() {
         }
     }
 
-
-    const logOut = async () => {
-        await logout();
-        console.log("logged out");
-    }
-
-
-
-
-    // const connectWalletConnect = async () => {
-    //     await loginWalletConnect();
-    //     // window.location.pathname = "tournaments";
-    // }
-    //
-    // // const signOutWalletConnect = async () =>{
-    // //     await logout();
-    // // }
-    // const MetamaskModal = () => {
-    //     return (
-    //         <CommonModal open={open} handleClose={handleClose}>
-    //             <div className="modalText">
-    //                 Install <Link className="innerModalContent" href="https://metamask.io/" target="_blank"
-    //                     onClick={handleClose}> Metamask </Link> to Login
-    //             </div>
-    //         </CommonModal>
-    //     )
-    // }
-
-    // const checkMetamask = async () => {
-    //     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    //     if (!provider) {
-    //         handleOpen();
-    //     }
-    //     else {
-    //         await loginMetamask();
-    //         console.log("asdfg");
-    //         window.location.pathname = "tournaments";
-    //         // TODO: Call api to check account present in database
-    //     }
-    // }
     //Modal Section
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
     const CssTextField = withStyles({
         root: {
             '& label.Mui-focused': {
@@ -125,8 +93,8 @@ export default function LoginPage() {
                     Continue With Meta</Button>
                 <h4 id="folioplay-text-separator-wrapper"><span >Or</span></h4>
                 <h3 style={{ textAlign: "center" }}>Connect your web3 wallet</h3>
-                <div className="folioplay-connect" onClick={metamaskLogin}>
-                    <div className='wallets'>
+                <div className="folioplay-connect" >
+                    <div className='wallets' onClick={metamaskLogin}>
                         <img className='mr-3' alt="metamask-icon" src={metamaskIcon} width={"30px"} height={"30px"} />
                         <h5 className='mt-0 mb-10'>MetaMask</h5>
                     </div>
@@ -140,10 +108,9 @@ export default function LoginPage() {
                         <h5 className='mt-0 mb-10'>TeraStation</h5>
                     </div> */}
                 </div>
-
                 <h4 id="folioplay-text-separator-wrapper"><span>Or</span></h4>
                 <CssTextField type="email" sx={{ input: { color: "var(--white)" }, "label": { color: "var(--white)" } }} id="email-field" label="Email address" variant="standard" style={{ marginBottom: "20px" }} required />
-                <Button id="folioplay-login-mail-button" variant="filled">Sign in via mail</Button>
+                <Button id="folioplay-login-mail-button" onClick={loginWithMail} variant="filled">Sign in via mail</Button>
             </div>
         );
     }

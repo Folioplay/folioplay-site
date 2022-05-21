@@ -14,12 +14,20 @@ import {Menu, MenuItem} from "@mui/material";
 import {Logout} from "@mui/icons-material";
 import {AuthContext} from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
+import { useMoralis } from "react-moralis";
+
 export default function FolioplayBar() {
 
-    const {logout} = useContext(AuthContext);
+    const { logout, user } = useMoralis();
+    console.log(user);
 
-    const {userWalletBalance, userWalletAddress} = useContext(AuthContext);
-    console.log(userWalletAddress);
+
+    const logOut = async () => {
+        await logout();
+        window.location.pathname="/";
+    }
+
+
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -51,7 +59,7 @@ export default function FolioplayBar() {
 
         >
             <List>
-                {['Home', 'Tournaments', 'Activity', 'Logout'].map((text, index) => (
+                {['Home', 'Tournaments', 'Activity'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>
                             {index % 2 === 0 ? <InboxIcon style={{ color: "var(--dim-white)" }} /> : <MailIcon style={{ color: "var(--dim-white)" }} />}
@@ -63,7 +71,7 @@ export default function FolioplayBar() {
                     <ListItemIcon>
                         <InboxIcon style={{ color: "var(--dim-white)" }} />
                     </ListItemIcon>
-                    <ListItemText primary={"Logout"} onClick={logout} />
+                    <ListItemText primary={"Logout"} onClick={logOut} />
                 </ListItem>
             </List>
             {/* <Divider />
@@ -131,7 +139,7 @@ export default function FolioplayBar() {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <MenuItem  >
-                        Balance : {userWalletBalance}
+                        {/*Balance : {user.get("walletbalance")}*/}
                     </MenuItem>
                     <Divider />
                     <MenuItem  >
