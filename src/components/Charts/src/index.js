@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import { coinTosymbol } from '../../../CoinAndSymbols/symbols';
+// "autosize": false,
+// "showVolume": false,
+// "scalePosition": "no",
+// "scaleMode": "Normal",
+// "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+// "noTimeScale": false,
+// "valuesTracking": "1",
+// "chartType": "",
+// "${coinTosymbol[coin]}",
 function OpenChart({ coin }) {
     useEffect(() => {
         let mounted = true;
         if (mounted) {
             let scriptContent = `
             <!-- TradingView Widget BEGIN -->
-            new TradingView.MediumWidget(
+            new TradingView.widget(
                 {
-                "symbols": [
-                  [
-                    "${coinTosymbol[coin]}",
-                    "${coinTosymbol[coin]}"
-                  ]
-                ],
+                "symbol": "${coinTosymbol[coin]}"+"USD",
                 lineColor: 'rgba(69, 61, 241, 1)',
                 topColor: 'rgba(69, 61, 241, 0.35)',
                 bottomColor: 'rgba(69, 61, 241, 0)',
@@ -24,20 +28,21 @@ function OpenChart({ coin }) {
                 "chartOnly": false,
                 "width": "100%",
                 "min-width": "200px",
-                "height": 400,
+                "height": "400px",
                 "locale": "en",
                 "colorTheme": "dark",
                 "gridLineColor": "rgba(240, 243, 250, 0.3)",
                 "fontColor": "#787B86",
                 "isTransparent": false,
-                "autosize": false,
-                "showVolume": false,
-                "scalePosition": "no",
-                "scaleMode": "Normal",
-                "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
-                "noTimeScale": false,
-                "valuesTracking": "1",
-                "chartType": "",
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "3",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": true,
+                "border-radius":"10px",
+                "allow_symbol_change": true,
                 "container_id": "tradingview_7f1fe"
               }
                 );
