@@ -93,3 +93,6 @@
     color: var(--golden) !important;
     border: 1px solid var(--golden) !important;
 }
+.graph:hover{
+    cursor: pointer;
+}
