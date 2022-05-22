@@ -17,21 +17,24 @@ import Moralis from "moralis";
 
 export default function LoginPage() {
 
-    const { loginWalletConnect, loginMetamask } = useContext(AuthContext);
+    const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
+
 
     const loginWithMail = async () => {
-        let email_val = document.getElementById("folioplay-login-mail-button");
+        const email = document.getElementById("email-field").value;
         console.log(process.env.REACT_APP_MAGIC_LINK_API_KEY);
-        const user = await Moralis.authenticate({
+        console.log(email);
+        const user = await authenticate({
             provider: "magicLink",
-            email: {email_val},
-            apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
+            email: email,
+            apiKey: "pk_live_241CB42620CC8818", // Enter API key from Magic Dashboard https://dashboard.magic.link/
             network: "mainnet"
         })
-        console.log(user);
+        if(isAuthenticated){
+            window.location.pathname="/tournaments";
+        }
     }
 
-    const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
     const walletConnectLogin = async () => {
         if (!isAuthenticated) {
 
