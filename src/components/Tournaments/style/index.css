@@ -14,7 +14,7 @@
     background-color: "white";
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    padding-top: 44px;
+    padding-top: 2.75em;
 }
 
 .css-5xe99f-MuiLinearProgress-bar1 {
@@ -23,15 +23,15 @@
 
 .tournament {
     width: 85%;
-    min-height: 150px;
+    min-height: 9.375em;
     box-shadow: 0px 6px 26px 5px rgba(118, 133, 160, 0.1);
     border-radius: 8px;
     background-color: var(--white);
     margin-bottom: 20px;
     color: var(--black);
-    padding-top: 20px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-top: 1.25em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .tournament-info span:nth-child(2):hover {
@@ -39,7 +39,7 @@
 }
 
 .tournament-info {
-    font-size: 15px;
+    font-size: 0.9375em;
     line-height: 20px;
     display: flex;
     align-items: center;
@@ -49,8 +49,8 @@
 
 .tournament-image {
     margin-right: 10px;
-    width: 40px;
-    height: 40px;
+    width: 2.5em;
+    height: 2.5em;
     border-radius: 100%;
     background-color: var(--dim-white);
 }
@@ -63,7 +63,7 @@
 }
 
 .tournament-reward {
-    padding-top: 5px;
+    padding-top: 0.3125em;
     color: var(--grey-shade);
     display: flex;
     justify-content: flex-end;

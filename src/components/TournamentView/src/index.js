@@ -6,6 +6,7 @@ import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { useNavigate } from 'react-router-dom'
 import '../style/index.css'
 import { Button } from "@mui/material";
+import { motion } from 'framer-motion/dist/framer-motion'
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 export default function TournamentView() {
     var navigate = useNavigate();
@@ -40,9 +41,9 @@ export default function TournamentView() {
                 <div className="empty-area">
                 </div>
                 <div className="tournament-info-container">
-                    <div className="tournament-view-card">
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1, y: -90 }} transition={{ duration: 0.3 }} className="tournament-view-card">
                         <div className="tournament-info" >
-                            <span style={{ textAlign: "left" }} onClick={() => navigate(`/tournaments/${tournament.id}`)}>
+                            <span style={{ textAlign: "left" }}>
                                 <span className="font-size-15" style={{ color: "var(--grey-shade)" }}>Prize Pool</span><br />
                                 <span className="font-size-20 font-weight-700">{tournament.reward} MGT</span>
                             </span>
@@ -55,7 +56,7 @@ export default function TournamentView() {
                             <LinearProgress variant="determinate" style={{ backgroundColor: "var(--dim-white)" }} value={seatsFilled} />
                             <span className="font-size-15" style={{ minWidth: "100px", color: "var(--dark-dim-white)" }}>{tournament.filled_spots}/{tournament.total_spots} Spots Filled</span>
                         </div>
-                    </div>
+                    </motion.div>
                     <div className="folioplay-tabs">
                         <LeaderBoardTabs />
                     </div>

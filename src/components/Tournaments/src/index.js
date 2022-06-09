@@ -6,7 +6,10 @@ import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { useNavigate } from 'react-router-dom'
 import '../style/index.css';
-import {useContext} from "react";
+import { motion } from 'framer-motion/dist/framer-motion'
+import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { useContext } from "react";
 
 export default function Tournaments() {
 
@@ -28,7 +31,7 @@ export default function Tournaments() {
         const currDate = new Date();
         // console.log(startDate);
         return (
-            <div key={"tournament__" + index} className="tournament" >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 * (index + 1) }} key={"tournament__" + index} className="tournament" >
                 <div className="tournament-info" >
                     <span className="tournament-image">
                     </span>
@@ -36,7 +39,9 @@ export default function Tournaments() {
                         {tournament.name}
                         <br />
                         <span className="tournaments-spots">
-                            {getTimeFromDate(tournament.start)} hrs - {getTimeFromDate(tournament.end)} hrs
+                            {tournament.live ? <><FiberManualRecordIcon fontSize="small" style={{ fontSize: "12px", color: "var(--green)" }} /> Live</> :
+                                <>{getTimeFromDate(tournament.start)} hrs - {getTimeFromDate(tournament.end)} hrs</>
+                            }
                         </span>
                     </span>
                     <Button className="tournament-fee" size="small" style={{}}>{tournament.entry_price} MGT</Button>
@@ -49,7 +54,7 @@ export default function Tournaments() {
                     <EmojiEventsOutlinedIcon />{tournament.reward} MGT
                 </div>
 
-            </div >
+            </motion.div >
         );
     })
     const LeftComponent = () => {

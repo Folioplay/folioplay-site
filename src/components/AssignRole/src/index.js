@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button, Grid } from "@mui/material";
+import { motion } from 'framer-motion/dist/framer-motion'
+
 import '../style/index.css';
 export function AssignRole() {
     const teamCoins = ['Cardano', 'Litecoin', 'ADA', 'PolkaDot', 'Chainlink', 'Stellar', '1inch', 'Monero', 'AAVE', 'Uniswap', 'NEO'];
@@ -51,24 +53,30 @@ export function AssignRole() {
     const LeftComponent = () => {
         return (
             <div className="fullpage">
-                <Button id="save-team-button" variant="contained" >Save Team</Button>
+
+
                 <div className="upper-half">
                     <input id="team-name" className="mb-5 pl-5 pr-5" placeholder="Enter Team Name"></input>
+                    <img id="crown" src={require('../../../images/crown1.png').default}  />
                     <div>
-                        <img id="coin-rank-2" src={require('../../../images/default.png').default} width="80px" height="80px" />
-                        <img id="coin-rank-1" src={require('../../../images/default.png').default} width="80px" height="80px" />
-                        <img id="coin-rank-3" src={require('../../../images/default.png').default} width="80px" height="80px" />
+                        <img id="coin-rank-2" src={require('../../../images/default.png').default} width="60px" height="60px" />
+                        <img id="coin-rank-1" src={require('../../../images/default.png').default} width="60px" height="60px" />
+                        <img id="coin-rank-3" src={require('../../../images/default.png').default} width="60px" height="60px" />
                     </div>
-                    <img id="rank-image" src={require('../../../images/ranks.png').default} width="317.5px" height="250px" />
+                    {/* <img id="rank-image" src={require('../../../images/ranks.png').default} width="317.5px" height="250px" /> */}
+                    <img id="rank-image" src={require('../../../images/ranks.png').default} width="250px" height="196.9px" />
                 </div>
+                {/* <div id="save-team-button">
+                    <Button variant="contained" >Save Team</Button>
+                </div> */}
                 <div className="lower-half pt-20">
 
                     <span id="rank-info" className="pl-10 pt-20 pr-10 pb-20 mb-5 mt-5 font-weight-500">Rank 1 gets 2x points, 2 gets 1.75x, 3 gets 1.5x</span>
 
                     {
-                        teamCoins.map((coin) => {
+                        teamCoins.map((coin, index) => {
                             return (
-                                <div id={"coin-" + coin.toLowerCase()} className="rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5">
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.1 * index }} id={"coin-" + coin.toLowerCase()} className="rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5">
                                     <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} width="40px" height="40px" />
                                     <span className="ml-15">
                                         {coin}<br />
@@ -84,7 +92,7 @@ export function AssignRole() {
                                         3
                                     </span>
 
-                                </div>
+                                </motion.div>
                             );
                         })
                     }

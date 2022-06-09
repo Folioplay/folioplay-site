@@ -42,7 +42,7 @@
     /* flex-direction: column; */
     /* align-items: center; */
     width: 100%;
-    padding: 10px;
+    padding: 0.675em;
     border-radius: 20px;
     transition: 0.3s all ease-in-out;
 }
@@ -51,7 +51,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5px;
+    padding: 0.3125em;
     border-radius: 10px;
 }
 

@@ -8,14 +8,14 @@
 }
 
 .leaderboard-profile-image {
-    width: 32px;
-    height: 32px;
+    width: 2em;
+    height: 2em;
     border-radius: 100%;
     background-color: var(--dim-white);
 }
 
 .leaderboard-username {
-    max-width: 100px;
+    max-width: 6.25em;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -28,7 +28,7 @@
 }
 
 .leaderboard-teamname {
-    max-width: 100px;
+    max-width: 6.25em;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

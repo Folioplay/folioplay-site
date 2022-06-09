@@ -6,6 +6,7 @@ import { Button, Grid } from "@mui/material";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import OpenChart from "../../Charts/src";
+import { motion } from 'framer-motion/dist/framer-motion'
 import '../style/index.css'
 
 
@@ -20,27 +21,8 @@ export function TeamCreation() {
     const selectedMooning = [];
     const selectedRekt = [];
     const [open, setOpen] = React.useState(false);
-    const handleOpen = (event) => {
-        setGraphCoin(event.target.innerText.toLowerCase());
-        setOpen(true);
-    }
-    const handleClose = () => {
-        setGraphCoin("");
-        setOpen(false);
-    }
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: "max(50%,300px)",
-        bgcolor: '#E8EEF2',
-        boxShadow: 24,
-        borderRadius: "12px",
-        p: 1,
-    };
-    useEffect(() => {
-        if (wasActiveTab !== "") {
+    const preservedView = () => {
+        if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
             var allClasses = document.getElementsByClassName('coinClass');
             for (var i = 0; i < allClasses.length; i++) {
                 allClasses[i].classList.remove('coin-class-selected');
@@ -60,27 +42,51 @@ export function TeamCreation() {
                     document.getElementById('superstars').classList.add('display-none');
                 }
             }
-            document.getElementById('' + wasActiveTab + '-tab').classList.add('coin-class-selected');
+            document.getElementById(wasActiveTab + '-tab').classList.add('coin-class-selected');
         } else {
             document.getElementById('mooning').classList.add('display-none');
             document.getElementById('rekt').classList.add('display-none');
-            document.getElementById('superstars' + '-tab').classList.add('coin-class-selected');
+            document.getElementById('superstars-tab').classList.add('coin-class-selected');
         }
+    }
+    const handleOpen = (event) => {
+        setGraphCoin(event.target.innerText.toLowerCase());
+        // preservedView();
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setGraphCoin("");
+        // preservedView();
+        setOpen(false);
+    }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "max(50%,300px)",
+        bgcolor: '#E8EEF2',
+        boxShadow: 24,
+        borderRadius: "12px",
+        p: 1,
+    };
+    useEffect(() => {
+        preservedView();
     }, [wasActiveTab, graphCoin]);
 
     const Superstars = () => {
         return (
             <Grid style={{ color: "var(--black)" }} container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {
-                    superstars.map((coin) => {
+                    superstars.map((coin, index) => {
                         // const coinlogo = ;
                         return (
                             <Grid className="coin-card-wrapper" item xs={6}>
-                                <div className="coin-card">
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
                                     <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} onerror="this.src = '../../../../public/coinLogos/bitcoin.jpg';" width="40px" height="40px" />
                                     <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin}</span>
                                     <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" >Add</Button>
-                                </div>
+                                </motion.div>
 
                             </Grid>
                         );
@@ -92,14 +98,14 @@ export function TeamCreation() {
         return (
             <Grid style={{ color: "var(--black)" }} container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {
-                    mooning.map((coin) => {
+                    mooning.map((coin, index) => {
                         return (
                             <Grid className="coin-card-wrapper" item xs={6}>
-                                <div className="coin-card">
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
                                     <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} width="40px" height="40px" />
                                     <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin}</span>
                                     <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" >Add</Button>
-                                </div>
+                                </motion.div>
                             </Grid>
                         );
                     })
@@ -110,14 +116,14 @@ export function TeamCreation() {
         return (
             <Grid style={{ color: "var(--black)" }} container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {
-                    rekt.map((coin) => {
+                    rekt.map((coin, index) => {
                         return (
                             <Grid className="coin-card-wrapper" item xs={6}>
-                                <div className="coin-card">
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
                                     <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} width="40px" height="40px" />
                                     <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin}</span>
                                     <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" >Add</Button>
-                                </div>
+                                </motion.div>
 
                             </Grid>
                         );
@@ -129,7 +135,6 @@ export function TeamCreation() {
     const LeftComponent = () => {
         return (
             <div className="fullpage">
-
                 <div className="teamcreate-bar pl-20 pt-10 mb-20">
                     <ArrowBackIosIcon fontSize="medium" className="go-back-button" onClick={() => navigate(-1)} />
                     <span className="ml-20 font-size-25 font-weight-700" >Choose Coins</span>
