@@ -4,29 +4,57 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Button, Grid } from "@mui/material";
 import Box from '@mui/material/Box';
+import ReactLoading from "react-loading";
 import Modal from '@mui/material/Modal';
 import OpenChart from "../../Charts/src";
 import { motion } from 'framer-motion/dist/framer-motion'
+import { getAllCoins } from "../../../APIS/apis";
 import '../style/index.css'
 
 
 export function TeamCreation() {
     const navigate = useNavigate();
-    const [wasActiveTab, setWasActiveTab] = useState("");
+    const [wasActiveTab, setWasActiveTab] = useState("superstars");
     const [graphCoin, setGraphCoin] = useState("");
-    const superstars = ['Bitcoin', 'Ethereum', 'Tether', 'Matic'];
-    const mooning = ['Cardano', 'Litecoin', 'ADA', 'PolkaDot', 'Chainlink', 'Stellar', '1inch', 'Monero', 'AAVE', 'Uniswap', 'NEO', 'Solana', 'XRP', 'Enjin'];
-    const rekt = ['Maker', 'Litecoin', 'Zcash', 'IOTA', 'DogeCoin', '1inch', 'Compound', 'Monero', 'Enjin', 'ADA', 'Stellar', 'Uniswap', 'Solana', 'XRP'];
+    const [coins, setCoins] = useState([]);
+    var coin2sym = {};
+    var superstars = [];
+    var mooning = [];
+    var rekt = [];
     const selectedSuperstars = [];
     const selectedMooning = [];
     const selectedRekt = [];
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    async function fetchCoins() {
+        setCoins(await getAllCoins());
+    }
+    useEffect(() => {
+        console.log("fetching coins......");
+        fetchCoins();
+        // preservedView();
+    }, [])
+    for (var i = 0; i < coins.length; i++) {
+        coin2sym[coins[i].name.toLowerCase() + ""] = coins[i].symbol;
+        if (coins[i].category === 'Superstar') {
+            superstars.push(coins[i]);
+        }
+        if (coins[i].category === 'Mooning') {
+            mooning.push(coins[i]);
+        }
+        if (coins[i].category === 'Defi') {
+            rekt.push(coins[i]);
+        }
+    }
+    console.log(coin2sym);
     const preservedView = () => {
+        console.log("preseved view .....");
         if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
             var allClasses = document.getElementsByClassName('coinClass');
+
             for (var i = 0; i < allClasses.length; i++) {
                 allClasses[i].classList.remove('coin-class-selected');
             }
+            document.getElementById(wasActiveTab + '-tab').classList.add('coin-class-selected');
             if (wasActiveTab === "superstars") {
                 document.getElementById('superstars').classList.remove('display-none');
                 document.getElementById('mooning').classList.add('display-none');
@@ -42,7 +70,7 @@ export function TeamCreation() {
                     document.getElementById('superstars').classList.add('display-none');
                 }
             }
-            document.getElementById(wasActiveTab + '-tab').classList.add('coin-class-selected');
+
         } else {
             document.getElementById('mooning').classList.add('display-none');
             document.getElementById('rekt').classList.add('display-none');
@@ -51,12 +79,10 @@ export function TeamCreation() {
     }
     const handleOpen = (event) => {
         setGraphCoin(event.target.innerText.toLowerCase());
-        // preservedView();
         setOpen(true);
     }
     const handleClose = () => {
         setGraphCoin("");
-        // preservedView();
         setOpen(false);
     }
     const style = {
@@ -79,12 +105,12 @@ export function TeamCreation() {
             <Grid style={{ color: "var(--black)" }} container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {
                     superstars.map((coin, index) => {
-                        // const coinlogo = ;
+
                         return (
                             <Grid className="coin-card-wrapper" item xs={6}>
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
-                                    <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} onerror="this.src = '../../../../public/coinLogos/bitcoin.jpg';" width="40px" height="40px" />
-                                    <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin}</span>
+                                    <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} onerror="this.src = '../../../../public/coinLogos/bitcoin.jpg';" width="40px" height="40px" />
+                                    <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin.name}</span>
                                     <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" >Add</Button>
                                 </motion.div>
 
@@ -99,11 +125,12 @@ export function TeamCreation() {
             <Grid style={{ color: "var(--black)" }} container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {
                     mooning.map((coin, index) => {
+
                         return (
                             <Grid className="coin-card-wrapper" item xs={6}>
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
-                                    <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} width="40px" height="40px" />
-                                    <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin}</span>
+                                    <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="40px" height="40px" />
+                                    <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin.name}</span>
                                     <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" >Add</Button>
                                 </motion.div>
                             </Grid>
@@ -120,8 +147,8 @@ export function TeamCreation() {
                         return (
                             <Grid className="coin-card-wrapper" item xs={6}>
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
-                                    <img src={require('../../../../public/coinLogos/' + coin.toLowerCase() + '.png').default} width="40px" height="40px" />
-                                    <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin}</span>
+                                    <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="40px" height="40px" />
+                                    <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin.name}</span>
                                     <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" >Add</Button>
                                 </motion.div>
 
@@ -140,17 +167,19 @@ export function TeamCreation() {
                     <span className="ml-20 font-size-25 font-weight-700" >Choose Coins</span>
                 </div><br /><br />
                 <div className="coin-classes mb-10">
-                    <span id="superstars-tab" className="coinClass ml-20" onClick={changeTabs}>SuperStars</span>
+                    <span id="superstars-tab" className="coinClass coin-class-selected ml-20" onClick={changeTabs}>SuperStars</span>
                     <span id="mooning-tab" className="coinClass ml-20" onClick={changeTabs}>Mooning</span>
                     <span id="rekt-tab" className="coinClass ml-20" onClick={changeTabs}>Rekt</span>
                 </div>
                 <div className="coins">
+                    {coins.length === 0 ? <div className="loading-component"><ReactLoading type={"spin"} color="var(--violet-blue)" /> </div> : <></>}
                     <div id="superstars" className="coinClass-content"><Superstars /></div>
-                    <div id="mooning" className="coinClass-content"><Mooning /></div>
-                    <div id="rekt" className="coinClass-content"><Rekt /></div>
+                    <div id="mooning" className="coinClass-content display-none"><Mooning /></div>
+                    <div id="rekt" className="coinClass-content display-none"><Rekt /></div>
                     <div className="assign-roles-div mt-20">
                         <Button style={{ borderRadius: "12px", backgroundColor: "var(--golden)" }} variant="contained" className="role-button ml-auto">Assign Roles</Button>
                     </div>
+
 
                 </div>
             </div>

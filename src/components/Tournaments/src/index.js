@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FolioplayBar from "../../FolioplayBar/src";
 import { Button, LinearProgress } from "@mui/material";
-import { tournaments } from "../common/demoTournaments";
+import ReactLoading from "react-loading";
+
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { useNavigate } from 'react-router-dom'
@@ -9,10 +10,11 @@ import '../style/index.css';
 import { motion } from 'framer-motion/dist/framer-motion'
 import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { getAllTournaments } from "../../../APIS/apis";
 import { useContext } from "react";
 
 export default function Tournaments() {
-
+    const [tournaments, setTournaments] = useState([]);
     const pad = num => ("0" + num).slice(-2);
     const navigate = new useNavigate();
     const getTimeFromDate = timestamp => {
@@ -22,12 +24,17 @@ export default function Tournaments() {
             seconds = date.getSeconds();
         return pad(hours) + ":" + pad(minutes)
     }
-
+    async function fetchTournaments() {
+        setTournaments(await getAllTournaments());
+    }
+    useEffect(() => {
+        fetchTournaments();
+    }, [])
 
     const tournamentsList = tournaments.map((tournament, index) => {
         const seatsFilled = 100 * tournament.filled_spots / tournament.total_spots;
-        const startDate = new Date(tournament.start);
-        const finishDate = new Date(tournament.end);
+        const startDate = new Date(tournament.start_time);
+        const finishDate = new Date(tournament.end_time);
         const currDate = new Date();
         // console.log(startDate);
         return (
@@ -35,16 +42,16 @@ export default function Tournaments() {
                 <div className="tournament-info" >
                     <span className="tournament-image">
                     </span>
-                    <span style={{ textAlign: "left" }} onClick={() => navigate(`/tournaments/${tournament.id}`)}>
+                    <span style={{ textAlign: "left" }} onClick={() => navigate(`/tournaments/${tournament._id}`)}>
                         {tournament.name}
                         <br />
                         <span className="tournaments-spots">
                             {tournament.live ? <><FiberManualRecordIcon fontSize="small" style={{ fontSize: "12px", color: "var(--green)" }} /> Live</> :
-                                <>{getTimeFromDate(tournament.start)} hrs - {getTimeFromDate(tournament.end)} hrs</>
+                                <>{getTimeFromDate(startDate.getTime())} hrs - {getTimeFromDate(finishDate.getTime())} hrs</>
                             }
                         </span>
                     </span>
-                    <Button className="tournament-fee" size="small" style={{}}>{tournament.entry_price} MGT</Button>
+                    <Button className="tournament-fee" size="small" style={{}}>{tournament.required_points} MGT</Button>
                 </div>
                 <div>
                     <LinearProgress variant="determinate" style={{ backgroundColor: "var(--dim-white)" }} value={seatsFilled} />
@@ -68,7 +75,9 @@ export default function Tournaments() {
                     <span style={{ letterSpacing: "1px" }}>Time to turn the tables with your skills</span>
                 </div>
                 <div className="tournaments-wrapper">
-                    {tournamentsList}
+                    {tournaments.length === 0 ? <div className="loading-component"><ReactLoading type={"spin"} color="var(--violet-blue)" /> </div> :
+                        <>{ tournamentsList }</>
+                    }
                 </div>
             </div>
         );

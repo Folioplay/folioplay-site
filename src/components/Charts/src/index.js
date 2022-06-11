@@ -73,7 +73,7 @@ function OpenChart({ coin }) {
                     {
                     "symbols": [
                       [
-                        "${coinTosymbol[coin]}"+"USD"
+                        "${coinTosymbol[coin].toUpperCase()}"+"USD"
                       ]
                     ],
                     "trendLineColor": 'rgba(69, 61, 241, 0.8)',
