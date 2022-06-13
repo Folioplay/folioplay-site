@@ -5,10 +5,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button, Grid } from "@mui/material";
 import { motion } from 'framer-motion/dist/framer-motion'
-
+import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import '../style/index.css';
 export function AssignRole() {
-    const teamCoins = ['Cardano', 'Litecoin', 'ADA', 'PolkaDot', 'Chainlink', 'Stellar', '1inch', 'Monero', 'AAVE', 'Uniswap', 'NEO'];
+    const teamCoins = ['Cardano', 'Litecoin', 'PolkaDot', 'Chainlink', 'Stellar', '1inch', 'Monero', 'AAVE', 'Uniswap', 'NEO'];
     var finalRanks = new Map();
     for (var i = 0; i < teamCoins.length; i++) {
         finalRanks.set("" + teamCoins[i].toLowerCase(), -1);
@@ -39,13 +39,13 @@ export function AssignRole() {
                 finalRanks[teamCoins[i].toLowerCase()] = -1;
             }
             if (finalRanks[teamCoins[i].toLowerCase()] === 1) {
-                document.getElementById('coin-rank-1').src = require('../../../images/coinLogos/' + teamCoins[i].toLowerCase() + ".png").default;
+                document.getElementById('coin-rank-1').src = require('../../../images/coinLogos/' + coinTosymbol[teamCoins[i].toLowerCase()].toLowerCase() + ".png").default;
             }
             if (finalRanks[teamCoins[i].toLowerCase()] === 2) {
-                document.getElementById('coin-rank-2').src = require('../../../images/coinLogos/' + teamCoins[i].toLowerCase() + ".png").default;
+                document.getElementById('coin-rank-2').src = require('../../../images/coinLogos/' + coinTosymbol[teamCoins[i].toLowerCase()].toLowerCase() + ".png").default;
             }
             if (finalRanks[teamCoins[i].toLowerCase()] === 3) {
-                document.getElementById('coin-rank-3').src = require('../../../images/coinLogos/' + teamCoins[i].toLowerCase() + ".png").default;
+                document.getElementById('coin-rank-3').src = require('../../../images/coinLogos/' + coinTosymbol[teamCoins[i].toLowerCase()].toLowerCase() + ".png").default;
             }
         }
         console.log(finalRanks);
@@ -57,7 +57,7 @@ export function AssignRole() {
 
                 <div className="upper-half">
                     <input id="team-name" className="mb-5 pl-5 pr-5" placeholder="Enter Team Name"></input>
-                    <img id="crown" src={require('../../../images/crown1.png').default}  />
+                    <img id="crown" src={require('../../../images/crown1.png').default} />
                     <div>
                         <img id="coin-rank-2" src={require('../../../images/default.png').default} width="60px" height="60px" />
                         <img id="coin-rank-1" src={require('../../../images/default.png').default} width="60px" height="60px" />

@@ -28,5 +28,6 @@ export const coinTosymbol = {
     xrp: "xrp",
     "yearn.finance": "yfi",
     zcash: "zec",
-    ziliqa: "zil"
+    ziliqa: "zil",
+    '1inch': "1inch"
 }
