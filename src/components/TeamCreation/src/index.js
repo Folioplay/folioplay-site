@@ -89,8 +89,11 @@ export function TeamCreation() {
         setOpen(true);
     }
     const handleClose = () => {
-        setGraphCoin("");
-        setOpen(false);
+        document.getElementById('modal-view').classList.add('animate-modal');
+        setTimeout(function () {
+            setGraphCoin("");
+            setOpen(false);
+        }, 500);
     }
 
     const style = {
@@ -235,7 +238,7 @@ export function TeamCreation() {
                     aria-describedby="modal-modal-description"
                     disableAutoFocus={true}
                 >
-                    <motion.div initial={{ x: "50vw", y: "200vh" }} animate={{ scale: 1, x: "50vw", y: "50vh" }} transition={{ duration: 0.5 }}>
+                    <motion.div id="modal-view" initial={{ x: "50vw", y: "200vh" }} animate={{ scale: 1, x: "50vw", y: "50vh" }} transition={{ duration: 0.5 }}>
                         <Box sx={style}>
                             <OpenChart coin={graphCoin} />
                         </Box>

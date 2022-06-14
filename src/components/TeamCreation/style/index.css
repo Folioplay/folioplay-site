@@ -114,3 +114,17 @@
     transition: all 0.2s ease-in-out;
 }
 
+.animate-modal {
+    animation: move;
+    animation-duration: 0.5s;
+}
+
+@keyframes move {
+    from {
+        transform: translate(50vw, 50vh);
+    }
+
+    to {
+        transform: translate(50vw, 200vh);
+    }
+}
