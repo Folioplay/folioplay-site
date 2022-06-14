@@ -28,13 +28,13 @@ export default function Tournaments() {
         const currDate = new Date();
         // console.log(startDate);
         return (
-            <div key={"tournament__" + index} className="tournament" >
-                <div className="tournament-info" >
+            <div key={"tournament__" + index} className="tournament">
+                <div className="tournament-info">
                     <span className="tournament-image">
                     </span>
-                    <span style={{ textAlign: "left" }} onClick={() => navigate(`/tournaments/${tournament.id}`)}>
+                    <span style={{textAlign: "left"}} onClick={() => navigate(`/tournaments/${tournament.id}`)}>
                         {tournament.name}
-                        <br />
+                        <br/>
                         <span className="tournaments-spots">
                             {getTimeFromDate(tournament.start)} hrs - {getTimeFromDate(tournament.end)} hrs
                         </span>
@@ -46,21 +46,21 @@ export default function Tournaments() {
                     <span style={{ minWidth: "100px", color: "var(--dark-dim-white)" }}>{tournament.filled_spots}/{tournament.total_spots} Spots Filled</span>
                 </div>
                 <div className="tournament-reward">
-                    <EmojiEventsOutlinedIcon />{tournament.reward} MGT
+                    <EmojiEventsOutlinedIcon/>{tournament.reward} MGT
                 </div>
 
-            </div >
+            </div>
         );
     })
     const LeftComponent = () => {
         return (
             <div className="fullpage">
-                <FolioplayBar />
-                <div style={{ marginTop: "40px", textAlign: "left", marginLeft: "3.75%", marginBottom: "40px" }}>
-                    <span className="font-weight-800 font-size-30" >
+                <FolioplayBar/>
+                <div style={{marginTop: "40px", textAlign: "left", marginLeft: "3.75%", marginBottom: "40px"}}>
+                    <span className="font-weight-800 font-size-30">
                         Welcome
-                    </span><br />
-                    <span style={{ letterSpacing: "1px" }}>Time to turn the tables with your skills</span>
+                    </span><br/>
+                    <span style={{letterSpacing: "1px"}}>Time to turn the tables with your skills</span>
                 </div>
                 <div className="tournaments-wrapper">
                     {tournamentsList}
@@ -71,12 +71,12 @@ export default function Tournaments() {
     const RightComponent = () => {
         return (
             <div id='tournament-page-image'>
-                <h1 style={{ letterSpacing: "2px", fontSize: "2.7rem", fontWeight: "900" }}>Let the game begin!</h1>
-                <h3 style={{ letterSpacing: "2px" }}>Choose a contest to start playing...</h3>
+                <h1 style={{letterSpacing: "2px", fontSize: "2.7rem", fontWeight: "900"}}>Let the game begin!</h1>
+                <h3 style={{letterSpacing: "2px"}}>Choose a contest to start playing...</h3>
             </div>
         );
     }
     return (
-        <FolioPlayLayout LeftComponent={LeftComponent} RightComponent={RightComponent} />
+        <FolioPlayLayout LeftComponent={LeftComponent} RightComponent={RightComponent}/>
     );
 }

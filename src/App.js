@@ -6,18 +6,41 @@ import './App.css';
 import { TeamCreation } from './components/TeamCreation/src';
 import { AssignRole } from './components/AssignRole/src';
 import OpenChart from './components/Charts/src';
+import {useMoralis} from "react-moralis";
+import {Navigate, useLocation} from "react-router";
 
 function App() {
+
+  function AuthenticatedRoute({ children }) {
+    const {isAuthenticated } = useMoralis();
+
+    console.log("authntiated route ", isAuthenticated);
+    if (!isAuthenticated) {
+      return <Navigate to="/" />;
+    }
+    return children;
+  }
+
+  function LoginRoute({ children }) {
+    const {isAuthenticated } = useMoralis();
+    console.log("login route ", isAuthenticated);
+    if (isAuthenticated) {
+      return <Navigate to="/tournaments" />;
+    }
+    return children;
+  }
+
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<LoginPage />} />
-          <Route exact path="/tournaments" element={<Tournaments />} />
-          <Route exact path="/tournaments/:tournamentId" element={<TournamentView />} />
-          <Route exact path="/teams/createteam" element={<TeamCreation />} />
-          <Route exact path="/assignrole" element={<AssignRole />} />
-          <Route exact path="/chart" element={<OpenChart />} />
+          <Route exact path="/" element={<LoginRoute><LoginPage /></LoginRoute>} />
+          <Route exact path="/tournaments" element={<AuthenticatedRoute><Tournaments /></AuthenticatedRoute>} />
+          <Route exact path="/tournaments/:tournamentId" element={<AuthenticatedRoute><TournamentView /></AuthenticatedRoute>} />
+          <Route exact path="/teams/createteam" element={<AuthenticatedRoute><TeamCreation /></AuthenticatedRoute>} />
+          <Route exact path="/assignrole" element={<AuthenticatedRoute><AssignRole /></AuthenticatedRoute>} />
+          <Route exact path="/chart" element={<AuthenticatedRoute><OpenChart /></AuthenticatedRoute>} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -25,55 +48,3 @@ function App() {
 }
 
 export default App;
-
-// import React, { useEffect } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-// import { useMoralis } from "react-moralis";
-//
-// function App() {
-//
-//     const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
-//
-//     const login = async () => {
-//         if (!isAuthenticated) {
-//
-//             await authenticate({ provider: "walletconnect", chainId: 137 })
-//                 .then(function (user) {
-//                     console.log(user.get("ethAddress"));
-//                 })
-//                 .catch(function (error) {
-//                     console.log(error);
-//                 });
-//         }
-//     }
-//
-//     const metamaskLogin = async () => {
-//         if (!isAuthenticated) {
-//
-//             await authenticate()
-//                 .then(function (user) {
-//                     console.log(user.get("ethAddress"));
-//                 })
-//                 .catch(function (error) {
-//                     console.log(error);
-//                 });
-//         }
-//     }
-//
-//
-//     const logOut = async () => {
-//         await logout();
-//         console.log("logged out");
-//     }
-//
-//     return (
-//         <div>
-//             <h1>Moralis Hello World!</h1>
-//             <button onClick={login}>Moralis Metamask Login</button>
-//             <button onClick={logOut} disabled={isAuthenticating}>Logout</button>
-//         </div>
-//     );
-// }
-//
-// export default App;
