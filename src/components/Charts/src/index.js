@@ -68,7 +68,7 @@ function OpenChart({ coin }) {
         let mounted = true;
         if (mounted) {
             let scriptContent = `
-            <!-- TradingView Widget BEGIN -->
+
             new TradingView.MediumWidget(
                     {
                     "symbols": [

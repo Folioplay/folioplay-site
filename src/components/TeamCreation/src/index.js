@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import OpenChart from "../../Charts/src";
 import { motion } from 'framer-motion/dist/framer-motion'
 import { getAllCoins } from "../../../APIS/apis";
+import CancelIcon from '@mui/icons-material/Cancel';
+import TickerWidget from "../../TickerWidget/src";
 import '../style/index.css'
 
 
@@ -23,6 +25,7 @@ export function TeamCreation() {
     var localSuperstars = JSON.parse(window.localStorage.getItem('superstars'));
     var localMooning = JSON.parse(window.localStorage.getItem('mooning'));
     var localRekt = JSON.parse(window.localStorage.getItem('rekt'));
+
     console.log(localSuperstars, localMooning, localRekt);
     const [open, setOpen] = useState(false);
     async function fetchCoins() {
@@ -31,8 +34,8 @@ export function TeamCreation() {
     useEffect(() => {
         console.log("fetching coins......");
         fetchCoins();
-        // preservedView();
-    }, [])
+    }, []);
+
     for (var i = 0; i < coins.length; i++) {
         if (window.localStorage.getItem('superstars') === null && coins[i].category === 'Superstar') {
             superstars.push(coins[i]);
@@ -47,17 +50,15 @@ export function TeamCreation() {
             rekt[rekt.length - 1]['selected'] = false;
         }
     }
+
     if (localMooning !== null) { mooning = localMooning; console.log("inlocal", mooning); };
     if (localSuperstars !== null) { superstars = localSuperstars; console.log("inlocal", superstars); };
     if (localRekt !== null) { rekt = localRekt };
-    // setSelectedMooning(mooning);
-    // setSelectedRekt(rekt);
-    // setSelectedSuperStars(superstars);
+
     const preservedView = () => {
         console.log("preseved view .....");
         if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
             var allClasses = document.getElementsByClassName('coinClass');
-
             for (var i = 0; i < allClasses.length; i++) {
                 allClasses[i].classList.remove('coin-class-selected');
             }
@@ -77,7 +78,6 @@ export function TeamCreation() {
                     document.getElementById('superstars').classList.add('display-none');
                 }
             }
-
         } else {
             document.getElementById('mooning').classList.add('display-none');
             document.getElementById('rekt').classList.add('display-none');
@@ -92,20 +92,22 @@ export function TeamCreation() {
         setGraphCoin("");
         setOpen(false);
     }
+
     const style = {
         position: 'absolute',
-        top: '50%',
-        left: '50%',
+
         transform: 'translate(-50%, -50%)',
-        width: "max(50%,300px)",
+        width: "max(70%,300px)",
         bgcolor: '#E8EEF2',
         boxShadow: 24,
         borderRadius: "12px",
         p: 1,
     };
+
     useEffect(() => {
         preservedView();
     }, [wasActiveTab, graphCoin]);
+
     function assignRoles() {
 
     }
@@ -119,8 +121,6 @@ export function TeamCreation() {
                     superstars[i].selected = updateCoin;
                 }
             }
-            console.log("updating superstars");
-            console.log(superstars)
             window.localStorage.setItem('superstars', JSON.stringify(superstars));
         }
         if (wasActiveTab === 'mooning') {
@@ -129,8 +129,6 @@ export function TeamCreation() {
                     mooning[i].selected = updateCoin;
                 }
             }
-            console.log("updating mooning");
-            console.log(mooning)
             window.localStorage.setItem('mooning', JSON.stringify(mooning));
         }
         if (wasActiveTab === 'rekt') {
@@ -139,8 +137,6 @@ export function TeamCreation() {
                     rekt[i].selected = updateCoin;
                 }
             }
-            console.log("updating rekt");
-            console.log(rekt)
             window.localStorage.setItem('rekt', JSON.stringify(rekt));
         }
         event.target.innerText = (prevVal === 'ADD') ? 'ADDED' : "ADD";
@@ -224,12 +220,11 @@ export function TeamCreation() {
                     <div className="assign-roles-div mt-20">
                         <Button style={{ borderRadius: "12px", backgroundColor: "var(--golden)" }} variant="contained" className="role-button ml-auto" onClick={assignRoles}>Assign Roles</Button>
                     </div>
-
-
                 </div>
             </div>
         );
     }
+
     const RightComponent = () => {
         return (
             <div id='team-create-page-image'>
@@ -238,14 +233,23 @@ export function TeamCreation() {
                     onClose={handleClose}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    disableAutoFocus={true}
                 >
-                    <Box sx={style}>
-                        <OpenChart coin={graphCoin} />
-                    </Box>
+                    <motion.div initial={{ x: "50vw", y: "200vh" }} animate={{ scale: 1, x: "50vw", y: "50vh" }} transition={{ duration: 0.5 }}>
+                        <Box sx={style}>
+                            <OpenChart coin={graphCoin} />
+                        </Box>
+                        <motion.span onClick={handleClose}><CancelIcon id="cross-modal" fontSize="large" /></motion.span>
+                    </motion.div>
+                    {/* <motion.p initial={{ x: "70vw", y: "400vh" }} animate={{ scale: 1, x: "50vw", y: "50vh" }} transition={{ duration: 0.5 }}><CancelIcon fontSize="large" /></motion.p> */}
                 </Modal>
-                <h1>Here's what you can win!</h1>
-                <h3>Doesn't these big winnings look WOW?
-                    Ofcourse they do!</h3>
+                <div>
+                    <h1>Here's what you can win!</h1>
+                    <h3>Doesn't these big winnings look WOW?
+                        Ofcourse they do!</h3>
+                </div>
+
+                {/* <TickerWidget /> */}
             </div>
         );
     }

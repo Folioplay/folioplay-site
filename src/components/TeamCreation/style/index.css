@@ -98,3 +98,19 @@
 .graph:hover {
     cursor: pointer;
 }
+
+#cross-modal {
+    position: relative;
+    transform: translate(-50%, -270px);
+    font-size: 40px;
+    color: var(--dim-white);
+    transition: all 0.2s ease-in-out;
+
+}
+
+#cross-modal:hover {
+    font-size: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+

@@ -6,7 +6,7 @@ import './App.css';
 import { TeamCreation } from './components/TeamCreation/src';
 import { AssignRole } from './components/AssignRole/src';
 import OpenChart from './components/Charts/src';
-
+import TickerWidget from './components/TickerWidget/src';
 function App() {
   return (
     <div className="App">
@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/tournaments/:tournamentId" element={<TournamentView />} />
           <Route exact path="/teams/createteam" element={<TeamCreation />} />
           <Route exact path="/assignrole" element={<AssignRole />} />
-          <Route exact path="/chart" element={<OpenChart />} />
+          <Route exact path="/chart" element={<TickerWidget />} />
         </Routes>
       </BrowserRouter>
     </div>
