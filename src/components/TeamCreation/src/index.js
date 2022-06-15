@@ -93,7 +93,7 @@ export function TeamCreation() {
         setTimeout(function () {
             setGraphCoin("");
             setOpen(false);
-        }, 500);
+        }, 400);
     }
 
     const style = {

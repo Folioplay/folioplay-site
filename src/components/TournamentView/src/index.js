@@ -7,15 +7,52 @@ import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import '../style/index.css'
 import { Button } from "@mui/material";
-import { motion } from 'framer-motion/dist/framer-motion'
+import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion'
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { getTouirnamentById } from "../../../APIS/apis";
 export default function TournamentView() {
     var navigate = useNavigate();
     const [tournament, setTournament] = useState(undefined);
     const params = useParams();
-
+    const [chooseTeamBool, setChooseTeamBool] = useState(false);
     const _id = params.tournamentId;
+    const teams = [{
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }, {
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }, {
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }, {
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }, {
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }, {
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }, {
+        'name': "Team 1",
+        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
+        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
+        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
+    }];
     async function fetchTournament() {
         setTournament(await getTouirnamentById({ _id: _id }));
     }
@@ -37,7 +74,7 @@ export default function TournamentView() {
     const LeftComponent = () => {
         return (
             <div className="fullpage">
-                {tournament === undefined ? <div className="loading-component"><ReactLoading type={"spin"} color="var(--white)" /> </div>: <>
+                {tournament === undefined ? <div className="loading-component"><ReactLoading type={"spin"} color="var(--white)" /> </div> : <>
                     <div className="tournament-view-bar">
                         <ArrowBackIosIcon fontSize="medium" className="go-back-button" onClick={() => navigate(-1)} />
                         <span className="ml-20 font-size-25 font-weight-700" >{tournament.name}</span>
@@ -54,7 +91,15 @@ export default function TournamentView() {
                                 </span>
                                 <span className="ml-auto">
                                     <span style={{ color: "var(--grey-shade)", fontSize: "15px" }}>Entry Fee</span><br />
-                                    <Button className="tournament-fee" size="small">{tournament.required_points} MGT</Button>
+                                    <Button className="tournament-fee" size="small" onClick={() => {
+                                        document.getElementById('choose-team-div').classList.remove('animation-move-down');
+                                        setTimeout(() => {
+                                            document.getElementById('choose-team-div').classList.add('animation-move-up');
+                                        }, 100);
+                                        setTimeout(() => {
+                                            document.getElementById('choose-team-div').classList.remove('display-none');
+                                        }, 400)
+                                    }}>{tournament.required_points} MGT</Button>
                                 </span>
                             </div>
                             <div>
@@ -65,7 +110,54 @@ export default function TournamentView() {
                         <div className="folioplay-tabs">
                             <LeaderBoardTabs />
                         </div>
+                        {/* initial={{ y: "150vh" }} animate={{ y: "0vh" }} exit={{ y: "150vh" }} transition={{ duration: 0.5 }} */}
+                        {/* <AnimatePresence >
+                            {chooseTeamBool && */}
+                        <div key={"enter-tournament"} id="choose-team-div" className="display-none">
+                            <CancelIcon onClick={() => {
+                                document.getElementById('choose-team-div').classList.remove('animation-move-up');
+                                setTimeout(() => {
+                                    document.getElementById('choose-team-div').classList.add('animation-move-down');
+                                }, 100);
 
+                                setTimeout(() => {
+                                    document.getElementById('choose-team-div').classList.add('display-none');;
+                                }, 700)
+                            }}
+                                style={{ color: "var(--grey-shade)" }}
+                                fontSize="large"
+                                id="cross-choose-team"
+                            />
+                            <div id="all-teams-info">
+                                <div>
+                                    <span className="font-size-25 font-weight-800 mb-10" style={{ color: "var(--black)" }}>Choose Team</span><br />
+                                    <span className="font-size-15 font-weight-500" style={{ color: "var(--grey-shade)" }}>Select a team that you think should represent you in this contest.</span>
+                                </div>
+
+                                <div className="all-teams">
+                                    {teams.map((team, index) => {
+                                        return (
+                                            <div id={'team-' + index} className="team mb-15">
+                                                <span className="font-size-20 font-weight-600" style={{ color: "var(--grey-shade)" }}>{team.name}</span>
+                                                <span style={{ marginLeft: "auto" }}>
+                                                    <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/xbt.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/eth.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/neo.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <span className="moved-coin-image-3" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/default.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                </span>
+                                            </div>
+
+                                        );
+                                    })}
+                                </div>
+                                <div className="mt-10" id="create-new-button-div">
+                                    <Button style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }}>Create New Team</Button>
+                                </div>
+
+                            </div>
+                        </div>
+                        {/* }
+                        </AnimatePresence> */}
                     </div>
                 </>}
             </div >
@@ -83,4 +175,4 @@ export default function TournamentView() {
     return (
         <FolioPlayLayout LeftComponent={LeftComponent} RightComponent={RightComponent} />
     );
-}
+} 
