@@ -68,12 +68,12 @@ function OpenChart({ coin }) {
         let mounted = true;
         if (mounted) {
             let scriptContent = `
-            <!-- TradingView Widget BEGIN -->
+
             new TradingView.MediumWidget(
                     {
                     "symbols": [
                       [
-                        "${coinTosymbol[coin]}"+"USD"
+                        "${coinTosymbol[coin].toUpperCase()}"+"USD"
                       ]
                     ],
                     "trendLineColor": 'rgba(69, 61, 241, 0.8)',

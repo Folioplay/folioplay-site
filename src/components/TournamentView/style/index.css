@@ -1,6 +1,6 @@
 .empty-area {
     width: 100%;
-    height: 130px;
+    height: 8.125em;
 }
 
 #tournament-view-page-image {
@@ -18,9 +18,9 @@
 
 #tournament-view-page-image h1 {
     letter-spacing: 2px;
-    font-size: 2.7rem;
+    font-size: 2.7em;
     font-weight: 900;
-    max-width: 380px;
+    max-width: 23.75em;
     text-align: center;
 }
 
@@ -31,13 +31,13 @@
 
 #tournament-view-page-image h3 {
     letter-spacing: 2px;
-    max-width: 450px;
+    max-width: 28.125em;
     text-align: center;
 }
 
 .tournament-view-bar {
     padding-left: 3.75%;
-    padding-top: 10px;
+    padding-top: 0.625em;
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -46,16 +46,16 @@
 .tournament-view-card {
     width: 85%;
     color: var(--black);
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
     margin-left: auto;
     margin-right: auto;
     background-color: var(--white);
     transform: translateY(-75px);
     border-radius: 8px;
-    height: 120px;
+    height: 7.5em;
     box-shadow: 0px 6px 26px 5px rgba(118, 133, 160, 0.1);
 }
 
@@ -73,5 +73,5 @@
 
 .folioplay-tabs {
     color: var(--black);
-    transform: translatey(-55px);
+    transform: translatey(-3.4375em);
 }

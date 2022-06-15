@@ -9,7 +9,9 @@ export const tournaments = [
         "reward": 1000,
         "entry_price": 250,
         "image": "path",
-        "id": 1
+        "id": 1,
+        "live": true,
+        "completed": false
     }
     , {
         "name": "Ten from Cent",
@@ -21,7 +23,9 @@ export const tournaments = [
         "reward": 1000,
         "entry_price": 250,
         "image": "path",
-        "id": 2
+        "id": 2,
+        "live": true,
+        "completed": false
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -32,7 +36,9 @@ export const tournaments = [
         "reward": 1000,
         "entry_price": 250,
         "image": "path",
-        "id": 3
+        "id": 3,
+        "live": false,
+        "completed": true
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -43,7 +49,9 @@ export const tournaments = [
         "reward": 1000,
         "entry_price": 250,
         "image": "path",
-        "id": 4
+        "id": 4,
+        "live": false,
+        "completed": false
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -54,7 +62,9 @@ export const tournaments = [
         "reward": 1000,
         "entry_price": 250,
         "image": "path",
-        "id": 5
+        "id": 5,
+        "live": false,
+        "completed": false
     }, {
         "name": "Ten from Cent",
         "start": 1651943861,
@@ -65,6 +75,8 @@ export const tournaments = [
         "reward": 1000,
         "entry_price": 250,
         "image": "path",
-        "id": 6
+        "id": 6,
+        "live": false,
+        "completed": false
     }
 ]

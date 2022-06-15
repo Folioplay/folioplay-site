@@ -7,8 +7,8 @@
     width: 100%;
     min-height: 80%;
     background-color: var(--white);
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
     overflow-y: scroll;
     scrollbar-width: none;
 }
@@ -23,8 +23,8 @@
 
 .coin-card {
     border-radius: 12px;
-    min-width: 160px;
-    height: 160px;
+    min-width: 10em;
+    height: 10em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +36,7 @@
 }
 
 .coin-classes {
-    font-size: 17px;
+    font-size: 1.0625em;
     color: #B2C6DB;
     font-weight: 400;
     letter-spacing: 0.5px;
@@ -49,7 +49,7 @@
 }
 
 .coin-classes span {
-    padding: 8px;
+    padding: 0.5em;
     transition: 0.2s ease-in-out;
 }
 
@@ -97,4 +97,34 @@
 
 .graph:hover {
     cursor: pointer;
+}
+
+#cross-modal {
+    position: relative;
+    transform: translate(-50%, -270px);
+    font-size: 40px;
+    color: var(--dim-white);
+    transition: all 0.2s ease-in-out;
+
+}
+
+#cross-modal:hover {
+    font-size: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.animate-modal {
+    animation: move;
+    animation-duration: 0.5s;
+}
+
+@keyframes move {
+    from {
+        transform: translate(50vw, 50vh);
+    }
+
+    to {
+        transform: translate(50vw, 200vh);
+    }
 }

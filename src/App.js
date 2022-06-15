@@ -8,6 +8,7 @@ import { AssignRole } from './components/AssignRole/src';
 import OpenChart from './components/Charts/src';
 import {useMoralis} from "react-moralis";
 import {Navigate, useLocation} from "react-router";
+import TickerWidget from './components/TickerWidget/src';
 
 function App() {
 

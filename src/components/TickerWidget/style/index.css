@@ -1,0 +1,12 @@
+#ticker-wrapper {
+    width: 100%;
+    /* margin-top: auto; */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#ticker {
+    width: 100%;
+}
