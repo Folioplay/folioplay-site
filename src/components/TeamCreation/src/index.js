@@ -112,7 +112,7 @@ export function TeamCreation() {
     }, [wasActiveTab, graphCoin]);
 
     function assignRoles() {
-
+        navigate('/assignrole')
     }
     function addCoin(event) {
         const prevVal = event.target.innerText;

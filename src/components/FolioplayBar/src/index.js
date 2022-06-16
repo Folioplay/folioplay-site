@@ -21,13 +21,10 @@ export default function FolioplayBar() {
     const { logout, user } = useMoralis();
     console.log(user);
 
-
     const logOut = async () => {
         await logout();
         window.location.pathname="/";
     }
-
-
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -74,17 +71,6 @@ export default function FolioplayBar() {
                     <ListItemText primary={"Logout"} onClick={logOut} />
                 </ListItem>
             </List>
-            {/* <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>
-                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List> */}
         </Box>
     );
     return (

@@ -8,7 +8,7 @@ export async function getAllTournaments() {
         .then((res) => res.json());
 }
 
-export async function getTouirnamentById({ _id }) {
+export async function getTournamentById({ _id }) {
     return await fetch(`${SERVER}/tournament/info/` + _id, {
         method: "GET"
     }).then((res) => res.json());

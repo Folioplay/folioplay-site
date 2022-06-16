@@ -142,17 +142,22 @@
 }
 
 .team {
-    width: 90%;
+    width: 88%;
     height: 40px;
     /* background-color: var(--dim-white); */
     border: 1px solid #EEF4FA;
-    border-radius: 8px;
+    border-radius: 12px;
     transition: all 0.2s ease-in-out;
     display: flex;
     /* justify-content: space-between; */
     align-items: center;
     align-content: center;
 
+}
+
+.selected-background {
+    background-color: var(--dim-golden);
+    border: 3px solid var(--golden);
 }
 
 .team:hover {
@@ -195,4 +200,8 @@
 .moved-coin-image-3 {
     transform: translateX(-45px);
     z-index: 3;
+}
+
+#visible-coins span {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }

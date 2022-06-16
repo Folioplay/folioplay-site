@@ -98,12 +98,12 @@ export default function LoginPage() {
                 <h3 style={{ textAlign: "center" }}>Connect your web3 wallet</h3>
                 <div className="folioplay-connect" >
                     <div className='wallets' onClick={metamaskLogin}>
-                        <img className='mr-3' alt="metamask-icon" src={metamaskIcon} width={"30px"} height={"30px"} />
+                        <img className='mr-3' alt="metamask-icon" src={metamaskIcon} width={"40px"} height={"40px"} />
                         <h5 className='mt-0 mb-10'>MetaMask</h5>
                     </div>
 
                     <div className='wallets' onClick={walletConnectLogin}>
-                        <img className='mr-3' alt="walletconnect-icon" src={walletconnectIcon} width={"30px"} height={"30px"} />
+                        <img className='mr-3' alt="walletconnect-icon" src={walletconnectIcon} width={"40px"} height={"40px"} />
                         <h5 className='mt-0 mb-10'>WalletConnect</h5>
                     </div>
                     {/* <div className='wallets'>

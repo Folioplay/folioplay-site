@@ -63,7 +63,6 @@ export function AssignRole() {
                         <img id="coin-rank-1" src={require('../../../images/default.png').default} width="60px" height="60px" />
                         <img id="coin-rank-3" src={require('../../../images/default.png').default} width="60px" height="60px" />
                     </div>
-                    {/* <img id="rank-image" src={require('../../../images/ranks.png').default} width="317.5px" height="250px" /> */}
                     <img id="rank-image" src={require('../../../images/ranks.png').default} width="250px" height="196.9px" />
                 </div>
                 {/* <div id="save-team-button">
@@ -72,7 +71,6 @@ export function AssignRole() {
                 <div className="lower-half pt-20">
 
                     <span id="rank-info" className="pl-10 pt-20 pr-10 pb-20 mb-5 mt-5 font-weight-500">Rank 1 gets 2x points, 2 gets 1.75x, 3 gets 1.5x</span>
-
                     {
                         teamCoins.map((coin, index) => {
                             return (

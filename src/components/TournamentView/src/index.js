@@ -10,7 +10,7 @@ import { Button } from "@mui/material";
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion'
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from '@mui/icons-material/Cancel';
-import { getTouirnamentById } from "../../../APIS/apis";
+import { getTournamentById } from "../../../APIS/apis";
 export default function TournamentView() {
     var navigate = useNavigate();
     const [tournament, setTournament] = useState(undefined);
@@ -54,7 +54,7 @@ export default function TournamentView() {
         "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
     }];
     async function fetchTournament() {
-        setTournament(await getTouirnamentById({ _id: _id }));
+        setTournament(await getTournamentById({ _id: _id }));
     }
     useEffect(() => {
         fetchTournament();
@@ -71,6 +71,15 @@ export default function TournamentView() {
     if (tournament !== undefined) {
         seatsFilled = 100 * tournament.filled_spots / tournament.total_spots;
     }
+    console.log(tournament)
+    function selectTeam(clickedId) {
+        var allTeams = document.getElementsByClassName('team');
+        var selectedTeam = document.getElementById(clickedId);
+        for (var i = 0; i < allTeams.length; i++) {
+            allTeams[i].classList.remove('selected-background');
+        }
+        if ([...selectedTeam.classList].includes('selected-background') === false) { selectedTeam.classList.add('selected-background'); }
+    }
     const LeftComponent = () => {
         return (
             <div className="fullpage">
@@ -82,7 +91,6 @@ export default function TournamentView() {
                     <div className="empty-area">
                     </div>
                     <div className="tournament-info-container">
-
                         <motion.div initial={{ scale: 0 }} animate={{ scale: 1, y: -90 }} transition={{ duration: 0.3 }} className="tournament-view-card">
                             <div className="tournament-info" >
                                 <span style={{ textAlign: "left" }}>
@@ -99,7 +107,7 @@ export default function TournamentView() {
                                         setTimeout(() => {
                                             document.getElementById('choose-team-div').classList.remove('display-none');
                                         }, 400)
-                                    }}>{tournament.required_points} MGT</Button>
+                                    }}>{tournament.entryFee} MGT</Button>   
                                 </span>
                             </div>
                             <div>
@@ -136,10 +144,11 @@ export default function TournamentView() {
 
                                 <div className="all-teams">
                                     {teams.map((team, index) => {
+                                        var clickedId = 'team-' + index;
                                         return (
-                                            <div id={'team-' + index} className="team mb-15">
+                                            <div id={'team-' + index} className="team mb-15" onClick={() => selectTeam(clickedId)}>
                                                 <span className="font-size-20 font-weight-600" style={{ color: "var(--grey-shade)" }}>{team.name}</span>
-                                                <span style={{ marginLeft: "auto" }}>
+                                                <span id="visible-coins" style={{ marginLeft: "auto" }}>
                                                     <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/xbt.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
                                                     <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/eth.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
                                                     <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/neo.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
@@ -151,7 +160,7 @@ export default function TournamentView() {
                                     })}
                                 </div>
                                 <div className="mt-10" id="create-new-button-div">
-                                    <Button style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }}>Create New Team</Button>
+                                    <Button style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }} onClick={() => navigate('/teams/createteam')}>Create New Team</Button>
                                 </div>
 
                             </div>
