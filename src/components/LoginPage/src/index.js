@@ -12,6 +12,7 @@ import walletconnectIcon from '../../../images/walletconnect.png'
 import terastationIcon from '../../../images/terastation.png'
 import { useMoralis } from "react-moralis";
 import Moralis from "moralis";
+import {getAuthToken} from "../../../APIS/apis";
 
 
 
@@ -53,7 +54,13 @@ export default function LoginPage() {
         if (!isAuthenticated) {
 
             await authenticate()
-                .then(function (user) {
+                // .then(async (user) => {
+                //     const walletAddress = user.get("ethAddress");
+                //     const walletSignature = user["attributes"].authData.moralisEth.signature;
+                //     // console.log(walletAddress, walletSignature);
+                //     await getAuthToken(walletAddress, walletSignature);
+                // })
+                .then((user) =>{
                     window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
