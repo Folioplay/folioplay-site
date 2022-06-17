@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -15,11 +15,27 @@ import {Logout} from "@mui/icons-material";
 import {AuthContext} from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
 import { useMoralis } from "react-moralis";
+import {ethers} from "ethers";
 
 export default function FolioplayBar() {
 
     const { logout, user } = useMoralis();
     console.log(user);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-rpc.com/`);
+    const [balance, setBalance] = useState("");
+
+
+    useEffect(()=>{
+        const ethBalanceSet = async () => {
+            console.log(user.get("ethAddress"));
+            const bal = await provider.getBalance(user.get("ethAddress"));
+            setBalance(ethers.utils.formatEther(bal));
+        }
+        ethBalanceSet();
+    },[user])
+
 
     const logOut = async () => {
         await logout();
@@ -125,7 +141,7 @@ export default function FolioplayBar() {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <MenuItem  >
-                        {/*Balance : {user.get("walletbalance")}*/}
+                        Balance : {balance}
                     </MenuItem>
                     <Divider />
                     <MenuItem  >
