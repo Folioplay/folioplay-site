@@ -27,13 +27,15 @@ export default function FolioplayBar() {
     const [balance, setBalance] = useState("");
 
 
-    useEffect(()=>{
-        const ethBalanceSet = async () => {
-            console.log(user.get("ethAddress"));
+
+
+    useEffect( () => {
+        async function ethBalanceSet() {
             const bal = await provider.getBalance(user.get("ethAddress"));
             setBalance(ethers.utils.formatEther(bal));
         }
-        ethBalanceSet();
+        if(user)
+            ethBalanceSet();
     },[user])
 
 
