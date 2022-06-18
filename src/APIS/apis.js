@@ -19,3 +19,17 @@ export async function getAllCoins() {
         method: "GET"
     }).then((res) => res.json());
 }
+
+export async function getAuthToken(walletAddress, walletSignature, email) {
+    return await fetch(`${SERVER}/user/login`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({walletAddress: walletAddress, signature: walletSignature, email: email})
+    })
+        .then((res)=> res.json())
+        .then((data)=> {
+            return localStorage.setItem("authtoken", data.accessToken)
+        })
+}

@@ -12,6 +12,7 @@ import walletconnectIcon from '../../../images/walletconnect.png'
 import terastationIcon from '../../../images/terastation.png'
 import { useMoralis } from "react-moralis";
 import Moralis from "moralis";
+import {getAuthToken} from "../../../APIS/apis";
 
 
 
@@ -19,6 +20,10 @@ export default function LoginPage() {
 
     const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
     console.log(isAuthenticated, isAuthenticating, user, account);
+
+
+    const [email, setEmail] = useState("");
+
 
     const loginWithMail = async () => {
         const email = document.getElementById("email-field").value;
@@ -28,10 +33,13 @@ export default function LoginPage() {
             apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY, // Enter API key from Magic Dashboard https://dashboard.magic.link/
             network: "mainnet"
         })
-        console.log("Magic Logged In");
-        if(isAuthenticated){
-            window.location.pathname="/tournaments";
-        }
+            .then(async (user) => {
+                await getAuthTokenFunction(user);
+                console.log(user);
+            })
+            .then(function () {
+                window.location.pathname="/tournaments";
+            })
     }
 
     const walletConnectLogin = async () => {
@@ -39,8 +47,11 @@ export default function LoginPage() {
             localStorage.clear();
 
             await authenticate({ provider: "walletconnect", chainId: 137 })
-                .then(function (user) {
+                .then(async (user) => {
+                    await getAuthTokenFunction(user);
                     console.log(user);
+                })
+                .then(function () {
                     window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
@@ -53,13 +64,22 @@ export default function LoginPage() {
         if (!isAuthenticated) {
 
             await authenticate()
-                .then(function (user) {
+                .then(async (user) => {
+                    await getAuthTokenFunction(user);
+                })
+                .then((user) =>{
                     window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         }
+    }
+
+    const getAuthTokenFunction = async(user) => {
+        const walletAddress = user.get("ethAddress");
+        const walletSignature = user["attributes"].authData.moralisEth.signature;
+        await getAuthToken(walletAddress, walletSignature, email);
     }
 
     //Modal Section
@@ -114,6 +134,7 @@ export default function LoginPage() {
                 <h4 id="folioplay-text-separator-wrapper"><span>Or</span></h4>
                 <CssTextField type="email" sx={{ input: { color: "var(--white)" }, "label": { color: "var(--white)" } }} id="email-field" label="Email address" variant="standard" style={{ marginBottom: "20px" }} required />
                 <Button id="folioplay-login-mail-button" onClick={loginWithMail} variant="filled">Sign in via mail</Button>
+                {/*<button onClick={logout}>logout</button>*/}
             </div>
         );
     }
