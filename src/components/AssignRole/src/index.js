@@ -52,9 +52,13 @@ export function AssignRole() {
     for (var i = 0; i < coins.length; i++) {
         finalRanks.set("" + coins[i].name.toLowerCase(), -1);
     }
-    if (superstars.length < 1 || superstars.length > 2 || mooning.length < 4 || mooning.length > 8 || rekt.length < 3 || rekt.length > 6) {
-        navigate('/teams/createteam');
-    }
+    // if (superstars.length < 1 || superstars.length > 2 || mooning.length < 4 || mooning.length > 8 || rekt.length < 3 || rekt.length > 6) {
+    //     return (
+    //         <div>
+    //             Select coins First.
+    //         </div>
+    //     );
+    // }
     const selectRank = event => {
         const rank = event.target.innerText;
         var coinClicked = event.target.parentElement.id;

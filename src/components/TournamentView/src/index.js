@@ -25,6 +25,9 @@ export default function TournamentView() {
         setTeams(await getAllUserTeams());
     }
     useEffect(() => {
+        if ('superstars' in window.localStorage) window.localStorage.removeItem('superstars');
+        if ('mooning' in window.localStorage) window.localStorage.removeItem('mooning');
+        if ('rekt' in window.localStorage) window.localStorage.removeItem('rekt');
         fetchTournament();
         fetchTeams();
     }, [])
@@ -47,7 +50,23 @@ export default function TournamentView() {
         for (var i = 0; i < allTeams.length; i++) {
             allTeams[i].classList.remove('selected-background');
         }
-        if ([...selectedTeam.classList].includes('selected-background') === false) { selectedTeam.classList.add('selected-background'); }
+        if ([...selectedTeam.classList].includes('selected-background') === false) {
+            document.getElementById('jointournament-button').style.display = 'block';
+            selectedTeam.classList.add('selected-background');
+        }
+    }
+    function joinTournament() {
+        var allTeams = document.getElementsByClassName('team');
+        var teamId = "";
+        const tournamentId = tournament.id;
+        for (var i = 0; i < allTeams.length; i++) {
+            if ([...allTeams[i].classList].includes('selected-background') === true) {
+                var id = allTeams[i].getAttribute('id');
+                teamId = teams[parseInt(id.split('-')[1])].id;
+                break;
+            }
+        }
+        console.log(teamId, tournamentId);
     }
     const LeftComponent = () => {
         return (
@@ -121,7 +140,7 @@ export default function TournamentView() {
                                                     <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/' + team.selectedCoins[0].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
                                                     <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[1].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
                                                     <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[2].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                    <div className="moved-coin-image-3" style={{  borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div>
+                                                    <div className="moved-coin-image-3" style={{ borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div>
                                                 </span>
                                             </div>
 
@@ -129,7 +148,8 @@ export default function TournamentView() {
                                     })}
                                 </div>
                                 <div className="mt-10" id="create-new-button-div">
-                                    <Button style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }} onClick={() => navigate('/teams/createteam')}>Create New Team</Button>
+                                    <Button id="jointournament-button" style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }} onClick={() => joinTournament()}>Continue</Button>
+                                    <Button className="display-none" style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }} onClick={() => navigate('/teams/createteam')}>Create New</Button>
                                 </div>
 
                             </div>

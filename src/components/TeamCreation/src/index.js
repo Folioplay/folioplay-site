@@ -158,6 +158,8 @@ export function TeamCreation() {
         const prevVal = event.target.innerText;
         const clickedCoin = event.target.previousSibling.innerText;
         const updateCoin = (prevVal === 'ADD') ? true : false;
+        event.target.classList.toggle('coin-add-button');
+        event.target.classList.toggle('coin-added-button');
         if (wasActiveTab === 'superstars') {
             for (var i = 0; i < superstars.length; i++) {
                 if (superstars[i].name === clickedCoin) {
@@ -195,7 +197,8 @@ export function TeamCreation() {
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
                                     <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} onerror="this.src = '../../../../public/coinLogos/bitcoin.jpg';" width="40px" height="40px" />
                                     <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin.name}</span>
-                                    <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>{coin.selected ? 'Added' : 'Add'}</Button>
+                                    {coin.selected ? <Button className="coin-added-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>Added</Button> :
+                                        <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>Add</Button>}
                                 </motion.div>
 
                             </Grid>
@@ -234,7 +237,8 @@ export function TeamCreation() {
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
                                     <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="40px" height="40px" />
                                     <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin.name}</span>
-                                    <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>{coin.selected ? 'Added' : 'Add'}</Button>
+                                    {coin.selected ? <Button className="coin-added-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>Added</Button> :
+                                        <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>Add</Button>}
                                 </motion.div>
 
                             </Grid>
