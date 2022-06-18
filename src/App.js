@@ -39,7 +39,7 @@ function App() {
           <Route exact path="/tournaments" element={<AuthenticatedRoute><Tournaments /></AuthenticatedRoute>} />
           <Route exact path="/tournaments/:tournamentId" element={<AuthenticatedRoute><TournamentView /></AuthenticatedRoute>} />
           <Route exact path="/teams/createteam" element={<AuthenticatedRoute ><TeamCreation /></AuthenticatedRoute>} />
-          <Route exact path="/assignrole" element={<AuthenticatedRoute><AssignRole /></AuthenticatedRoute>} />
+          <Route exact path="/teams/createteam/assignrole" element={<AuthenticatedRoute><AssignRole /></AuthenticatedRoute>} />
           <Route exact path="/chart" element={<AuthenticatedRoute><OpenChart /></AuthenticatedRoute>} />
         </Routes>
       </BrowserRouter>

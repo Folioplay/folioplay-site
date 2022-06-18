@@ -5,9 +5,9 @@
 
 .coins {
     width: 100%;
-    min-height: 80%;
+    min-height: 82%;
     background-color: var(--white);
-    padding-top: 1.25em;
+    /* padding-top: 1.25em; */
     padding-bottom: 1.25em;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -95,6 +95,11 @@
     border: 1px solid var(--golden) !important;
 }
 
+.coin-added-button {
+    color: var(--green) !important;
+    border: 1px solid var(--green) !important;
+}
+
 .graph:hover {
     cursor: pointer;
 }
@@ -127,4 +132,19 @@
     to {
         transform: translate(50vw, 200vh);
     }
+}
+
+.tip-div {
+    color: var(--golden);
+    padding: 0.9em;
+    height: 50px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    box-shadow: inset 0px -1px 0px #DBE4EF;
+}
+
+.tip-div span {
+    color: var(--grey-shade);
 }

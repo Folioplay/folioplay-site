@@ -118,25 +118,21 @@
 }
 
 #save-team-button {
-    /* position: absolute;
-    top: 90%;
-    left: 20%; */
-    font-size: 13px !important;
-    padding: 10px 16px !important;
-    height: 40px !important;
-    background: #FEA31B;
-    border-radius: 10px;
-    text-transform: capitalize;
-    font-weight: 600 !important;
+    position: fixed;
+    bottom: 20px;
+    width: 450px;
+}
+
+#save-team-button button {
+    margin-left: 65%;
 }
 
 @media only screen and (max-width: 600px) {
     #save-team-button {
-        position: absolute;
-        top: 90%;
-        left: 60%;
+        width: 100%;
     }
 }
-#crown{
-    transform: translate(0.6rem,2.3rem);
+
+#crown {
+    transform: translate(0.6rem, 2.3rem);
 }

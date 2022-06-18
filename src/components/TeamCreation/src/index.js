@@ -8,9 +8,12 @@ import ReactLoading from "react-loading";
 import Modal from '@mui/material/Modal';
 import OpenChart from "../../Charts/src";
 import { motion } from 'framer-motion/dist/framer-motion'
+import Snackbar from '@mui/material/Snackbar';
 import { getAllCoins } from "../../../APIS/apis";
 import CancelIcon from '@mui/icons-material/Cancel';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import TickerWidget from "../../TickerWidget/src";
+import MuiAlert from '@mui/material/Alert';
 import '../style/index.css'
 
 
@@ -19,6 +22,7 @@ export function TeamCreation() {
     const [wasActiveTab, setWasActiveTab] = useState("superstars");
     const [graphCoin, setGraphCoin] = useState("");
     const [coins, setCoins] = useState([]);
+    const [snackOpen, setSnackOpen] = useState(false);
     var superstars = [];
     var mooning = [];
     var rekt = [];
@@ -27,7 +31,40 @@ export function TeamCreation() {
     var localRekt = JSON.parse(window.localStorage.getItem('rekt'));
 
     console.log(localSuperstars, localMooning, localRekt);
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackOpen(false);
+
+    };
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+    const style = {
+        position: 'absolute',
+        transform: 'translate(-50%, -50%)',
+        width: "max(70%,300px)",
+        bgcolor: '#E8EEF2',
+        boxShadow: 24,
+        borderRadius: "12px",
+        p: 1,
+    };
     const [open, setOpen] = useState(false);
+
+    const handleOpen = (event) => {
+        setGraphCoin(event.target.innerText.toLowerCase());
+        setSnackOpen(false);
+        setOpen(true);
+    }
+    const handleClose = () => {
+        document.getElementById('modal-view').classList.add('animate-modal');
+        setTimeout(function () {
+            setGraphCoin("");
+            setOpen(false);
+        }, 400);
+    }
+
     async function fetchCoins() {
         setCoins(await getAllCoins());
     }
@@ -56,6 +93,7 @@ export function TeamCreation() {
     if (localRekt !== null) { rekt = localRekt };
 
     const preservedView = () => {
+        console.log(wasActiveTab);
         console.log("preseved view .....");
         if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
             var allClasses = document.getElementsByClassName('coinClass');
@@ -84,35 +122,37 @@ export function TeamCreation() {
             document.getElementById('superstars-tab').classList.add('coin-class-selected');
         }
     }
-    const handleOpen = (event) => {
-        setGraphCoin(event.target.innerText.toLowerCase());
-        setOpen(true);
-    }
-    const handleClose = () => {
-        document.getElementById('modal-view').classList.add('animate-modal');
-        setTimeout(function () {
-            setGraphCoin("");
-            setOpen(false);
-        }, 400);
-    }
 
-    const style = {
-        position: 'absolute',
-
-        transform: 'translate(-50%, -50%)',
-        width: "max(70%,300px)",
-        bgcolor: '#E8EEF2',
-        boxShadow: 24,
-        borderRadius: "12px",
-        p: 1,
-    };
 
     useEffect(() => {
         preservedView();
-    }, [wasActiveTab, graphCoin]);
+    }, [wasActiveTab, graphCoin, snackOpen]);
 
     function assignRoles() {
-        navigate('/assignrole')
+        var selectedSuperstars = [];
+        var selectedMooning = [];
+        var selectedRekt = [];
+        for (var i = 0; i < superstars.length; i++) {
+            if (superstars[i].selected === true) {
+                selectedSuperstars.push(superstars[i]);
+            }
+        }
+        for (var i = 0; i < mooning.length; i++) {
+            if (mooning[i].selected === true) {
+                selectedMooning.push(mooning[i]);
+            }
+        }
+        for (var i = 0; i < rekt.length; i++) {
+            if (rekt[i].selected === true) {
+                selectedRekt.push(rekt[i]);
+            }
+        }
+        if (selectedSuperstars.length < 1 || selectedSuperstars.length > 2 || selectedMooning.length < 4 || selectedMooning.length > 8 || selectedRekt.length < 3 || selectedRekt.length > 6) {
+            setSnackOpen(true);
+            return;
+        }
+
+        navigate('/teams/createteam/assignrole')
     }
     function addCoin(event) {
         const prevVal = event.target.innerText;
@@ -175,7 +215,8 @@ export function TeamCreation() {
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.07 * index }} className="coin-card">
                                     <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="40px" height="40px" />
                                     <span onClick={handleOpen} className="graph font-size-15 font-weight-700 mt-5 mb-10">{coin.name}</span>
-                                    <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>{coin.selected ? 'Added' : 'Add'}</Button>
+                                    {coin.selected ? <Button className="coin-added-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>Added</Button> :
+                                        <Button className="coin-add-button" style={{ borderRadius: "12px" }} variant="outlined" size="small" onClick={(event) => addCoin(event)}>Add</Button>}
                                 </motion.div>
                             </Grid>
                         );
@@ -202,7 +243,7 @@ export function TeamCreation() {
                 }
             </Grid>);
     }
-    const changeTabs = event => setWasActiveTab(event.target.innerText.toLowerCase());
+    const changeTabs = (event) => { setSnackOpen(false); setWasActiveTab(event.target.innerText.toLowerCase()); }
     const LeftComponent = () => {
         return (
             <div className="fullpage">
@@ -216,13 +257,23 @@ export function TeamCreation() {
                     <span id="rekt-tab" className="coinClass ml-20" onClick={changeTabs}>Rekt</span>
                 </div>
                 <div className="coins">
-                    {coins.length === 0 ? <div className="loading-component"><ReactLoading type={"spin"} color="var(--violet-blue)" /> </div> : <></>}
+                    <div className="tip-div"><WbSunnyOutlinedIcon /><span className="font-size-15 ml-8">TIP: Below players might show a steep increase <br />
+                        Select {wasActiveTab === "superstars" ? <>1 - 2</> : <>{wasActiveTab === "mooning" ? <>4-8</> : <>3-6</>}</>} from this bucket</span></div>
+                    {coins.length === 0 ? <div className="loading-component"><ReactLoading type={"spin"} color="var(--violet-blue)" /></div> : <></>}
                     <div id="superstars" className="coinClass-content"><Superstars /></div>
                     <div id="mooning" className="coinClass-content display-none"><Mooning /></div>
                     <div id="rekt" className="coinClass-content display-none"><Rekt /></div>
                     <div className="assign-roles-div mt-20">
-                        <Button style={{ borderRadius: "12px", backgroundColor: "var(--golden)" }} variant="contained" className="role-button ml-auto" onClick={assignRoles}>Assign Roles</Button>
+                        <Button style={{ borderRadius: "8px", backgroundColor: "var(--golden)" }} variant="contained" className="role-button ml-auto" onClick={assignRoles}>Assign Roles</Button>
                     </div>
+                    <Snackbar open={snackOpen} autoHideDuration={3500} onClose={handleSnackClose}>
+                        <motion.div id="snack-bar-div" initial={{ y: 200 }} animate={{ y: 0 }} transition={{ duration: 0.3 }}>
+                            <Alert id="team-creation-message" onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+                                Please read the tips given above.<br />Total selected coins must be 11.
+                            </Alert>
+                        </motion.div>
+
+                    </Snackbar>
                 </div>
             </div>
         );
@@ -244,7 +295,6 @@ export function TeamCreation() {
                         </Box>
                         <motion.span onClick={handleClose}><CancelIcon id="cross-modal" fontSize="large" /></motion.span>
                     </motion.div>
-                    {/* <motion.p initial={{ x: "70vw", y: "400vh" }} animate={{ scale: 1, x: "50vw", y: "50vh" }} transition={{ duration: 0.5 }}><CancelIcon fontSize="large" /></motion.p> */}
                 </Modal>
                 <div>
                     <h1>Here's what you can win!</h1>

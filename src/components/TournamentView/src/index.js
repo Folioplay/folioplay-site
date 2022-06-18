@@ -10,54 +10,23 @@ import { Button } from "@mui/material";
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion'
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from '@mui/icons-material/Cancel';
-import { getTournamentById } from "../../../APIS/apis";
+import { getTournamentById, getAllUserTeams } from "../../../APIS/apis";
 export default function TournamentView() {
     var navigate = useNavigate();
     const [tournament, setTournament] = useState(undefined);
     const params = useParams();
     const [chooseTeamBool, setChooseTeamBool] = useState(false);
     const _id = params.tournamentId;
-    const teams = [{
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }, {
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }, {
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }, {
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }, {
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }, {
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }, {
-        'name': "Team 1",
-        "superstars": [{ "name": "Bitcoin" }, { "name": "Ethereum" }],
-        "mooning": [{ "name": "Cardano" }, { "name": "PolkaDot" }, { "name": "Monero" }, { "name": "NEO" }, { "name": "Maker" }, { "name": "Vechain" }, { "name": "EOS" }],
-        "rekt": [{ "name": "AAVE" }, { "name": "Uniswap" }]
-    }];
+    const [teams, setTeams] = useState([]);
     async function fetchTournament() {
         setTournament(await getTournamentById({ _id: _id }));
     }
+    async function fetchTeams() {
+        setTeams(await getAllUserTeams());
+    }
     useEffect(() => {
         fetchTournament();
+        fetchTeams();
     }, [])
     const pad = num => ("0" + num).slice(-2);
     const getTimeFromDate = timestamp => {
@@ -71,7 +40,7 @@ export default function TournamentView() {
     if (tournament !== undefined) {
         seatsFilled = 100 * tournament.filled_spots / tournament.total_spots;
     }
-    console.log(tournament)
+    console.log(teams);
     function selectTeam(clickedId) {
         var allTeams = document.getElementsByClassName('team');
         var selectedTeam = document.getElementById(clickedId);
@@ -107,7 +76,7 @@ export default function TournamentView() {
                                         setTimeout(() => {
                                             document.getElementById('choose-team-div').classList.remove('display-none');
                                         }, 400)
-                                    }}>{tournament.entryFee} MGT</Button>   
+                                    }}>{tournament.entryFee} MGT</Button>
                                 </span>
                             </div>
                             <div>
@@ -149,10 +118,10 @@ export default function TournamentView() {
                                             <div id={'team-' + index} className="team mb-15" onClick={() => selectTeam(clickedId)}>
                                                 <span className="font-size-20 font-weight-600" style={{ color: "var(--grey-shade)" }}>{team.name}</span>
                                                 <span id="visible-coins" style={{ marginLeft: "auto" }}>
-                                                    <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/xbt.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                    <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/eth.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                    <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/neo.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                    <span className="moved-coin-image-3" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/default.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/' + team.selectedCoins[0].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[1].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[2].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
+                                                    <div className="moved-coin-image-3" style={{  borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div>
                                                 </span>
                                             </div>
 
