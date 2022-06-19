@@ -12,9 +12,10 @@ import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from '@mui/icons-material/Cancel';
 import {getTournamentById, getAllUserTeams, joinTournament} from "../../../APIS/apis";
 import {useMoralis} from "react-moralis";
-import {ethers} from "ethers";
+import {ethers, providers} from "ethers";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 export default function TournamentView() {
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -81,8 +82,22 @@ export default function TournamentView() {
 
         const bal = await provider.getBalance(user.get("ethAddress"));
         console.log(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal)))
-        if(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal))){
-            const providerWallet = new ethers.providers.Web3Provider(window.ethereum);
+        if(Number(tournament.entryFee)>Number(ethers.utils.formatEther(bal))){
+            let providerWallet;
+            // eslint-disable-next-line default-case
+            switch(localStorage.getItem("walletType")){
+                case "metamask": providerWallet = new ethers.providers.Web3Provider(window.ethereum);break;
+                case "walletConnect":
+                    const providerWC = new WalletConnectProvider({
+                        rpc: {
+                            137: "https://polygon-rpc.com/"
+                        },
+                    });
+                    await providerWC.enable();
+                    providerWallet = new providers.Web3Provider(providerWC);
+                    break;
+            }
+
             const signer = providerWallet.getSigner()
             const gas = await providerWallet.getGasPrice();
 

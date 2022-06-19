@@ -38,6 +38,7 @@ export default function LoginPage() {
                 console.log(user);
             })
             .then(function () {
+                localStorage.setItem("walletType", "magicLink")
                 window.location.pathname="/tournaments";
             })
     }
@@ -52,6 +53,7 @@ export default function LoginPage() {
                     console.log(user);
                 })
                 .then(function () {
+                    localStorage.setItem("walletType", "walletConnect")
                     window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
@@ -68,6 +70,7 @@ export default function LoginPage() {
                     await getAuthTokenFunction(user);
                 })
                 .then((user) =>{
+                    localStorage.setItem("walletType", "metamask")
                     window.location.pathname="/tournaments";
                 })
                 .catch(function (error) {
