@@ -40,6 +40,8 @@ export default function FolioplayBar() {
 
 
     const logOut = async () => {
+        localStorage.setItem("authtoken", null);
+        localStorage.removeItem("walletconnect");
         await logout();
         window.location.pathname="/";
     }

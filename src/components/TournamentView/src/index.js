@@ -13,8 +13,12 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {getTournamentById, getAllUserTeams, joinTournament} from "../../../APIS/apis";
 import {useMoralis} from "react-moralis";
 import {ethers} from "ethers";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 export default function TournamentView() {
-
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
     const provider = new ethers.providers.JsonRpcProvider(`https://polygon-rpc.com/`);
     const {user} = useMoralis();
 
@@ -77,7 +81,7 @@ export default function TournamentView() {
 
         const bal = await provider.getBalance(user.get("ethAddress"));
         console.log(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal)))
-        if(Number(tournament.entryFee)>Number(ethers.utils.formatEther(bal))){
+        if(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal))){
             const providerWallet = new ethers.providers.Web3Provider(window.ethereum);
             const signer = providerWallet.getSigner()
             const gas = await providerWallet.getGasPrice();
@@ -100,12 +104,22 @@ export default function TournamentView() {
             //     await joinTournament();
             // }
         }
-        // else{
-        //     // SNACKBAR
-        // }
+        else{
+            setSnackOpen(true);
+        }
 
         console.log(teamId, tournamentId);
     }
+    //Snackbar Component
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [snackOpen, setSnackOpen] = useState(false);
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackOpen(false);
+    };
+
     const LeftComponent = () => {
         return (
             <div className="fullpage">
@@ -185,6 +199,13 @@ export default function TournamentView() {
                                         );
                                     })}
                                 </div>
+                                <Snackbar open={snackOpen} autoHideDuration={3500} onClose={handleSnackClose}>
+                                    <motion.div id="snack-bar-div" initial={{ y: 200 }} animate={{ y: 0 }} transition={{ duration: 0.3 }}>
+                                        <Alert id="team-creation-message" onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+                                            Not sufficient balance
+                                        </Alert>
+                                    </motion.div>
+                                </Snackbar>
                                 <div className="mt-10" id="create-new-button-div">
                                     <Button id="jointournament-button" style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }} onClick={() => joinTournament()}>Continue</Button>
                                     <Button className="display-none" style={{ color: "var(--golden)", fontWeight: "600", fontSize: "17px" }} onClick={() => navigate('/teams/createteam')}>Create New</Button>
@@ -211,4 +232,4 @@ export default function TournamentView() {
     return (
         <FolioPlayLayout LeftComponent={LeftComponent} RightComponent={RightComponent} />
     );
-} 
+}
