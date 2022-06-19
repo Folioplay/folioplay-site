@@ -37,7 +37,7 @@ export async function getAllUserTeams() {
     return await fetch(`${SERVER}/teams/`, {
         method: "GET",
         headers: {
-            "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWM5ZDI3N2U3ZTk4MWQ1NDc3ZDBjZiIsImVtYWlsIjoiaG9uZXlAZm9saW9wbGF5LmluIiwiaWF0IjoxNjU1NDgwODE2LCJleHAiOjE2NTU1NjcyMTZ9.LzmTrOjF1KnCsOXnKUFJ3vJNJh7BPP826Sv1JOaeNlo"
+            "x-access-token": localStorage.getItem("authtoken")
         }
     }).then((res) => res.json());
 }
@@ -47,11 +47,28 @@ export async function createTeam({ selectedCoins, name, }) {
         method: "POST",
         headers: {
             "Content-type": "Application/json",
-            "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYWM5ZDI3N2U3ZTk4MWQ1NDc3ZDBjZiIsImVtYWlsIjoiaG9uZXlAZm9saW9wbGF5LmluIiwiaWF0IjoxNjU1NDgwODE2LCJleHAiOjE2NTU1NjcyMTZ9.LzmTrOjF1KnCsOXnKUFJ3vJNJh7BPP826Sv1JOaeNlo"
+            "x-access-token": localStorage.getItem("authtoken")
         },
         body: JSON.stringify({
             selectedCoins: selectedCoins,
             name: name
         })
     }).then(res => res.json());
+}
+
+export async function joinTournament(tournamentId, teamId) {
+    console.log("678")
+    return await fetch(`${SERVER}/tournament/join`, {
+        method: "POST",
+        headers: {
+            "Content-type": "Application/json",
+            "x-access-token": localStorage.getItem("authtoken")
+        },
+        body: JSON.stringify({
+            tournamentId: tournamentId,
+            teamId: teamId
+        })
+    })
+        .then(res => res.json())
+        .catch(err=>err)
 }

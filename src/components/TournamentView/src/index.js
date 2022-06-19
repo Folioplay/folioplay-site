@@ -10,9 +10,16 @@ import { Button } from "@mui/material";
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion'
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from '@mui/icons-material/Cancel';
-import { getTournamentById, getAllUserTeams } from "../../../APIS/apis";
+import {getTournamentById, getAllUserTeams, joinTournament} from "../../../APIS/apis";
+import {useMoralis} from "react-moralis";
+import {ethers} from "ethers";
 export default function TournamentView() {
+
+    const provider = new ethers.providers.JsonRpcProvider(`https://polygon-rpc.com/`);
+    const {user} = useMoralis();
+
     var navigate = useNavigate();
+    const [balance, setBalance] = useState("");
     const [tournament, setTournament] = useState(undefined);
     const params = useParams();
     const [chooseTeamBool, setChooseTeamBool] = useState(false);
@@ -55,7 +62,7 @@ export default function TournamentView() {
             selectedTeam.classList.add('selected-background');
         }
     }
-    function joinTournament() {
+    const joinTournament = async() => {
         var allTeams = document.getElementsByClassName('team');
         var teamId = "";
         const tournamentId = tournament.id;
@@ -63,9 +70,40 @@ export default function TournamentView() {
             if ([...allTeams[i].classList].includes('selected-background') === true) {
                 var id = allTeams[i].getAttribute('id');
                 teamId = teams[parseInt(id.split('-')[1])].id;
+                console.log(teams[parseInt(id.split('-')[1])]);
                 break;
             }
         }
+
+        const bal = await provider.getBalance(user.get("ethAddress"));
+        console.log(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal)))
+        if(Number(tournament.entryFee)>Number(ethers.utils.formatEther(bal))){
+            const providerWallet = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = providerWallet.getSigner()
+            const gas = await providerWallet.getGasPrice();
+
+            const tx = {
+                from: signer._address,
+                to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
+                value: ethers.utils.parseEther(`0.001`),
+                maxFeePerGas: gas,
+                maxPriorityFeePerGas: gas
+            };
+            await signer.sendTransaction(tx)
+                .then(async (transaction) => {
+                    console.log(transaction)
+                    console.log("Send finished!")
+                })
+                .catch(err=>err)
+
+            // if(paymentDone){
+            //     await joinTournament();
+            // }
+        }
+        // else{
+        //     // SNACKBAR
+        // }
+
         console.log(teamId, tournamentId);
     }
     const LeftComponent = () => {
@@ -101,7 +139,7 @@ export default function TournamentView() {
                             <div>
                                 <LinearProgress variant="determinate" style={{ backgroundColor: "var(--dim-white)" }} value={seatsFilled} />
                                 <span className="font-size-15" style={{ minWidth: "100px", color: "var(--dark-dim-white)" }}>{tournament.filled_spots}/{tournament.total_spots} Spots Filled</span>
-                            </div>
+                            </div>async
                         </motion.div>
                         <div className="folioplay-tabs">
                             <LeaderBoardTabs />
@@ -131,7 +169,7 @@ export default function TournamentView() {
                                 </div>
 
                                 <div className="all-teams">
-                                    {teams.map((team, index) => {
+                                    {teams.length && teams.map((team, index) => {
                                         var clickedId = 'team-' + index;
                                         return (
                                             <div id={'team-' + index} className="team mb-15" onClick={() => selectTeam(clickedId)}>

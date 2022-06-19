@@ -15,6 +15,7 @@ import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import TickerWidget from "../../TickerWidget/src";
 import MuiAlert from '@mui/material/Alert';
 import '../style/index.css'
+import {ethers} from "ethers";
 
 
 export function TeamCreation() {
