@@ -10,7 +10,7 @@ import { Button } from "@mui/material";
 import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion'
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from '@mui/icons-material/Cancel';
-import {getTournamentById, getAllUserTeams, joinTournament} from "../../../APIS/apis";
+import {getTournamentById, getAllUserTeams, joinTournamentAPI} from "../../../APIS/apis";
 import {useMoralis} from "react-moralis";
 import {ethers, providers} from "ethers";
 import Snackbar from "@mui/material/Snackbar";
@@ -67,63 +67,72 @@ export default function TournamentView() {
             selectedTeam.classList.add('selected-background');
         }
     }
+
+
+
+
+
     const joinTournament = async() => {
-        var allTeams = document.getElementsByClassName('team');
-        var teamId = "";
+        const allTeams = document.getElementsByClassName('team');
+        let teamId = "";
         const tournamentId = tournament.id;
-        for (var i = 0; i < allTeams.length; i++) {
+        for (let i = 0; i < allTeams.length; i++) {
+            console.log(i);
             if ([...allTeams[i].classList].includes('selected-background') === true) {
-                var id = allTeams[i].getAttribute('id');
+                const id = allTeams[i].getAttribute('id');
                 teamId = teams[parseInt(id.split('-')[1])].id;
                 console.log(teams[parseInt(id.split('-')[1])]);
                 break;
             }
         }
 
-        const bal = await provider.getBalance(user.get("ethAddress"));
-        console.log(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal)))
-        if(Number(tournament.entryFee)>Number(ethers.utils.formatEther(bal))){
-            let providerWallet;
-            // eslint-disable-next-line default-case
-            switch(localStorage.getItem("walletType")){
-                case "metamask": providerWallet = new ethers.providers.Web3Provider(window.ethereum);break;
-                case "walletConnect":
-                    const providerWC = new WalletConnectProvider({
-                        rpc: {
-                            137: "https://polygon-rpc.com/"
-                        },
-                    });
-                    await providerWC.enable();
-                    providerWallet = new providers.Web3Provider(providerWC);
-                    break;
-            }
-
-            const signer = providerWallet.getSigner()
-            const gas = await providerWallet.getGasPrice();
-
-            const tx = {
-                from: signer._address,
-                to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
-                value: ethers.utils.parseEther(`0.001`),
-                maxFeePerGas: gas,
-                maxPriorityFeePerGas: gas
-            };
-            await signer.sendTransaction(tx)
-                .then(async (transaction) => {
-                    console.log(transaction)
-                    console.log("Send finished!")
-                })
-                .catch(err=>err)
-
-            // if(paymentDone){
-            //     await joinTournament();
-            // }
-        }
-        else{
-            setSnackOpen(true);
-        }
-
-        console.log(teamId, tournamentId);
+        joinTournamentAPI(tournamentId, teamId)
+            .then(()=>window.location.pathname=`/tournaments/${tournamentId}`)
+            .catch(err=> console.log(err))
+        // const bal = await provider.getBalance(user.get("ethAddress"));
+        // console.log(Number(tournament.entryFee)<=Number(ethers.utils.formatEther(bal)))
+        // if(Number(tournament.entryFee)>Number(ethers.utils.formatEther(bal))){
+        //     let providerWallet;
+        //     // eslint-disable-next-line default-case
+        //     switch(localStorage.getItem("walletType")){
+        //         case "metamask": providerWallet = new ethers.providers.Web3Provider(window.ethereum);break;
+        //         case "walletConnect":
+        //             const providerWC = new WalletConnectProvider({
+        //                 rpc: {
+        //                     137: "https://polygon-rpc.com/"
+        //                 },
+        //             });
+        //             await providerWC.enable();
+        //             providerWallet = new providers.Web3Provider(providerWC);
+        //             break;
+        //     }
+        //
+        //     const signer = providerWallet.getSigner()
+        //     const gas = await providerWallet.getGasPrice();
+        //
+        //     const tx = {
+        //         from: signer._address,
+        //         to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
+        //         value: ethers.utils.parseEther(`0.001`),
+        //         maxFeePerGas: gas,
+        //         maxPriorityFeePerGas: gas
+        //     };
+        //     await signer.sendTransaction(tx)
+        //         .then(async (transaction) => {
+        //             console.log(transaction)
+        //             console.log("Send finished!")
+        //         })
+        //         .catch(err=>err)
+        //
+        //     // if(paymentDone){
+        //     //     await joinTournament();
+        //     // }
+        // }
+        // else{
+        //     setSnackOpen(true);
+        // }
+        //
+        // console.log(teamId, tournamentId);
     }
     //Snackbar Component
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -168,10 +177,10 @@ export default function TournamentView() {
                             <div>
                                 <LinearProgress variant="determinate" style={{ backgroundColor: "var(--dim-white)" }} value={seatsFilled} />
                                 <span className="font-size-15" style={{ minWidth: "100px", color: "var(--dark-dim-white)" }}>{tournament.filled_spots}/{tournament.total_spots} Spots Filled</span>
-                            </div>async
+                            </div>
                         </motion.div>
                         <div className="folioplay-tabs">
-                            <LeaderBoardTabs />
+                            <LeaderBoardTabs tournamentId={tournament.id}/>
                         </div>
                         {/* initial={{ y: "150vh" }} animate={{ y: "0vh" }} exit={{ y: "150vh" }} transition={{ duration: 0.5 }} */}
                         {/* <AnimatePresence >

@@ -56,12 +56,12 @@ export async function createTeam({ selectedCoins, name, }) {
     }).then(res => res.json());
 }
 
-export async function joinTournament(tournamentId, teamId) {
+export async function joinTournamentAPI(tournamentId, teamId) {
     console.log("678")
     return await fetch(`${SERVER}/tournament/join`, {
         method: "POST",
         headers: {
-            "Content-type": "Application/json",
+            "Content-type": "application/json",
             "x-access-token": localStorage.getItem("authtoken")
         },
         body: JSON.stringify({
@@ -71,4 +71,13 @@ export async function joinTournament(tournamentId, teamId) {
     })
         .then(res => res.json())
         .catch(err=>err)
+}
+
+export async function getLeaderboard(tournament_id) {
+    return await fetch(`${SERVER}/tournament/leaderboard/${tournament_id}`, {
+        method: "GET",
+        headers: {
+            "x-access-token": localStorage.getItem("authtoken")
+        },
+    }).then(res => res.json());
 }
