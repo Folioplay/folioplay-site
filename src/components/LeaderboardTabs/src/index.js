@@ -7,26 +7,27 @@ import TabPanel from '@mui/lab/TabPanel';
 import { motion } from 'framer-motion/dist/framer-motion'
 import { leaderboard } from '../../TournamentView/common/leaderboard';
 import '../style/index.css'
+import {useEffect, useState} from "react";
+import {getLeaderboard} from "../../../APIS/apis";
 
-export default function LeaderBoardTabs() {
+export default function LeaderBoardTabs({tournamentId}) {
     const [value, setValue] = React.useState('1');
+
+
+    const [leaderBoard, setLeaderBoard] = useState([]);
+
+    useEffect(()=>{
+        async function getLeader() {
+            const data = await getLeaderboard(tournamentId);
+            setLeaderBoard(data);
+        }
+        getLeader();
+    },[])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    const leaderBoard = leaderboard.map((entry, index) => {
-        return (
-            <motion.div initial={{ x: 400 }} animate={{ x: 0 }} transition={{ duration: 0.1 * index }} className='leaderboard-entry ml-auto mr-auto mb-20 pb-10'>
-                <span className='mr-10'>
-                    # {index + 1}
-                </span>
-                <div className='leaderboard-profile-image' ></div>
-                <span className='leaderboard-username ml-20'>{entry.name}</span>
-                {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
-                <span className='ml-auto'>{entry.points}</span>
-            </motion.div >
-        );
-    })
+    // const leaderBoardCom =
     return (
         <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
@@ -48,7 +49,21 @@ export default function LeaderBoardTabs() {
                         {/* <span className='ml-auto'>Team</span> */}
                         <span className='ml-auto'>Points</span>
                     </div >
-                    {leaderBoard}
+                    {
+                        leaderBoard.length && leaderBoard.map((entry, index) => {
+                            return (
+                                <motion.div initial={{ x: 400 }} animate={{ x: 0 }} transition={{ duration: 0.1 * index }} className='leaderboard-entry ml-auto mr-auto mb-20 pb-10'>
+                                    <span className='mr-10'>
+                                        {index+1}
+                                    </span>
+                                    <div className='leaderboard-profile-image' ></div>
+                                    <span className='leaderboard-username ml-20'>{entry.user.walletAddress}</span>
+                                    {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
+                                    <span className='ml-auto'>{entry.points}</span>
+                                </motion.div >
+                            );
+                        })
+                    }
                 </TabPanel>
             </TabContext>
         </Box>
