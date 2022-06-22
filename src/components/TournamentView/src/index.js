@@ -203,7 +203,7 @@ export default function TournamentView() {
     //       }
 
     await joinTournamentAPI(tournamentId, teamId)
-      // .then(()=>window.location.pathname=`/tournaments/${tournamentId}`)
+      .then(()=>window.location.pathname=`/tournaments/${tournamentId}`)
       .catch((err) => console.log(err));
   };
   //Snackbar Component
