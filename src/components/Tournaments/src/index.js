@@ -87,6 +87,7 @@ export default function Tournaments() {
     const startDate = new Date(tournament.start_time);
     const finishDate = new Date(tournament.end_time);
     const currDate = new Date();
+    console.log(startDate, finishDate);
     // console.log(startDate);
     return (
       <motion.div

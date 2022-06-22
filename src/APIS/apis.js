@@ -41,20 +41,6 @@ export async function getAllUserTeams() {
   }).then((res) => res.json());
 }
 
-export async function createTeam({ selectedCoins, name }) {
-  return await fetch(`${SERVER}/teams/`, {
-    method: "POST",
-    headers: {
-      "Content-type": "Application/json",
-      "x-access-token": localStorage.getItem("authtoken"),
-    },
-    body: JSON.stringify({
-      selectedCoins: selectedCoins,
-      name: name,
-    }),
-  }).then((res) => res.json());
-}
-
 export async function joinTournamentAPI(tournamentId, teamId) {
   console.log("678");
   return await fetch(`${SERVER}/tournament/join`, {
@@ -80,21 +66,21 @@ export async function getLeaderboard(tournament_id) {
     },
   }).then((res) => res.json());
 }
-// export async function createTeam({ selectedCoins, name }) {
-//   const authtoken = localStorage.getItem("authtoken");
-//
-//   return await fetch(`${SERVER}/teams/`, {
-//     method: "POST",
-//     headers: {
-//       "Content-type": "Application/json",
-//       "x-access-token": authtoken,
-//     },
-//     body: JSON.stringify({
-//       selectedCoins: selectedCoins,
-//       name: name,
-//     }),
-//   }).then((res) => res.json());
-// }
+export async function createTeam({ selectedCoins, name }) {
+  const authtoken = localStorage.getItem("authtoken");
+
+  return await fetch(`${SERVER}/teams/`, {
+    method: "POST",
+    headers: {
+      "Content-type": "Application/json",
+      "x-access-token": authtoken,
+    },
+    body: JSON.stringify({
+      selectedCoins: selectedCoins,
+      name: name,
+    }),
+  }).then((res) => res.json());
+}
 export async function deleteTeam({ teamId, teamIndex }) {
   const authtoken = localStorage.getItem("authtoken");
 
