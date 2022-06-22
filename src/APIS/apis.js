@@ -30,7 +30,8 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
     })
         .then((res) => res.json())
         .then((data) => {
-            return localStorage.setItem("authtoken", data.accessToken)
+            localStorage.removeItem("authtoken")
+            localStorage.setItem("authtoken", data.accessToken)
         })
 }
 export async function getAllUserTeams() {

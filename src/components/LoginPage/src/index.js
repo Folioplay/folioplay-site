@@ -79,6 +79,24 @@ export default function LoginPage() {
         }
     }
 
+    const web3AuthLogin = async () =>{
+        if (!isAuthenticated) {
+            await authenticate({
+                provider: "web3Auth",
+                clientId: process.env.REACT_APP_WEB3AUTH_KEY,
+                chainId: 137,
+                theme: "dark"
+            })
+                .then((user) => {
+                    localStorage.setItem("walletType", "web3Auth")
+                    window.location.pathname="/tournaments";
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
     const getAuthTokenFunction = async(user) => {
         const walletAddress = user.get("ethAddress");
         const walletSignature = user["attributes"].authData.moralisEth.signature;
@@ -111,12 +129,12 @@ export default function LoginPage() {
     const LeftComponent = () => {
         return (
             <div id="folioplay-login-wrapper">
-                <Button id="folioplay-login-google-button" variant="contained">
-                    <img className='mr-3' alt="google-icon" src={googleIcon} width={"20px"} height={"20px"} />
-                    Continue With Google</Button>
-                <Button id="folioplay-login-meta-button" variant="contained">
-                    <FacebookIcon className='mr-3' style={{ color: "var(--violet-blue)" }} />
-                    Continue With Meta</Button>
+                <Button id="folioplay-login-google-button" variant="contained" onClick={web3AuthLogin}>
+                    {/*<img className='mr-3' alt="google-icon" src={googleIcon} width={"20px"} height={"20px"} />*/}
+                    Continue With Web3Auth</Button>
+                {/*<Button id="folioplay-login-meta-button" variant="contained">*/}
+                {/*    <FacebookIcon className='mr-3' style={{ color: "var(--violet-blue)" }} />*/}
+                {/*    Continue With Meta</Button>*/}
                 <h4 id="folioplay-text-separator-wrapper"><span >Or</span></h4>
                 <h3 style={{ textAlign: "center" }}>Connect your web3 wallet</h3>
                 <div className="folioplay-connect" >
