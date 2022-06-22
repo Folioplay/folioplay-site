@@ -11,10 +11,10 @@ import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from "@mui/icons-material/Cancel";
 import {
-  getTournamentById,
-  getAllUserTeams,
-  joinTournamentAPI,
-  deleteTeam,
+    getTournamentById,
+    getAllUserTeams,
+    joinTournamentAPI,
+    deleteTeam, joinValidTournamentAPI,
 } from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";
 import { ethers, providers } from "ethers";
@@ -130,82 +130,88 @@ export default function TournamentView() {
       }
     }
   }
-  //   const checkNFTHolder = async () => {
-  //     let providerWallet = await getCurrentWalletProvider();
-  //     console.log(providerWallet)
-  //     const signer = providerWallet.getSigner()
-  //     console.log(signer)
-  //     const contract = new ethers.Contract("0x99Dc6574e41B4c76e747BaDfe61aDec906e92624", NFTMarketPlace.abi, signer);
+    const checkNFTHolder = async () => {
+      let providerWallet = await getCurrentWalletProvider();
+      console.log(providerWallet)
+      const signer = providerWallet.getSigner()
+      console.log(signer)
+      const contract = new ethers.Contract("0x99Dc6574e41B4c76e747BaDfe61aDec906e92624", NFTMarketPlace.abi, signer);
 
-  //     return await contract.checkNFTowner("0xead495ad5324219A0a6384E6a0924335baE8cfFf", "0x79650abEA193B0a6b8Ae25e2b95ee880C6Ba5b9e");
-  // }
+      return await contract.checkNFTowner("0xead495ad5324219A0a6384E6a0924335baE8cfFf", "0x79650abEA193B0a6b8Ae25e2b95ee880C6Ba5b9e");
+  }
 
-  // const getCurrentWalletProvider = async () => {
-  //     let providerWallet;
-  //     // eslint-disable-next-line default-case
-  //     switch (localStorage.getItem("walletType")) {
-  //         case "metamask":
-  //             providerWallet = new ethers.providers.Web3Provider(window.ethereum);
-  //             break;
-  //         case "walletConnect":
-  //             const providerWC = new WalletConnectProvider({
-  //                 rpc: {
-  //                     137: "https://polygon-rpc.com/"
-  //                 },
-  //             });
-  //             await providerWC.enable();
-  //             providerWallet = new providers.Web3Provider(providerWC);
-  //             break;
-  //     }
-  //     return providerWallet;
-  // }
+  const getCurrentWalletProvider = async () => {
+      let providerWallet;
+      // eslint-disable-next-line default-case
+      switch (localStorage.getItem("walletType")) {
+          case "metamask":
+              providerWallet = new ethers.providers.Web3Provider(window.ethereum);
+              break;
+          case "walletConnect":
+              const providerWC = new WalletConnectProvider({
+                  rpc: {
+                      137: "https://polygon-rpc.com/"
+                  },
+              });
+              await providerWC.enable();
+              providerWallet = new providers.Web3Provider(providerWC);
+              break;
+      }
+      return providerWallet;
+  }
 
-  // const paymentTournament = async () => {
+  const paymentTournament = async () => {
 
-  //     const bal = await provider.getBalance(user.get("ethAddress"));
-  //     console.log(Number(tournament.entryFee) <= Number(ethers.utils.formatEther(bal)))
-  //     if (Number(tournament.entryFee) > Number(ethers.utils.formatEther(bal))) {
+      const bal = await provider.getBalance(user.get("ethAddress"));
+      console.log(Number(tournament.entryFee) <= Number(ethers.utils.formatEther(bal)))
+      if (Number(tournament.entryFee) > Number(ethers.utils.formatEther(bal))) {
 
-  //         let providerWallet = await getCurrentWalletProvider();
-  //         const signer = providerWallet.getSigner()
-  //         const gas = await providerWallet.getGasPrice();
+          let providerWallet = await getCurrentWalletProvider();
+          const signer = providerWallet.getSigner()
+          const gas = await providerWallet.getGasPrice();
 
-  //         const tx = {
-  //             from: signer._address,
-  //             to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
-  //             value: ethers.utils.parseEther(`0.001`),
-  //             maxFeePerGas: gas,
-  //             maxPriorityFeePerGas: gas
-  //         };
-  //         const txn = await signer.sendTransaction(tx)
-  //         await txn.wait();
-  //     }
-  // }
+          const tx = {
+              from: signer._address,
+              to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
+              value: ethers.utils.parseEther(`0.001`),
+              maxFeePerGas: gas,
+              maxPriorityFeePerGas: gas
+          };
+          const txn = await signer.sendTransaction(tx)
+          await txn.wait();
+      }
+  }
 
   const joinTournament = async () => {
-    var teamId = "";
-    const tournamentId = tournament.id;
-    for (var i = 0; i < teams.length; i++) {
-      if (
-        [...document.getElementById("team-" + i).classList].includes(
-          "selected-background"
-        ) === true
-      ) {
-        teamId = teams[parseInt(i)].id;
-        break;
+      var teamId = "";
+      const tournamentId = tournament.id;
+      for (var i = 0; i < teams.length; i++) {
+          if (
+              [...document.getElementById("team-" + i).classList].includes(
+                  "selected-background"
+              ) === true
+          ) {
+              teamId = teams[parseInt(i)].id;
+              break;
+          }
       }
-    }
 
-    // const NFTHolder = await checkNFTHolder();
+      await joinValidTournamentAPI(tournamentId, teamId)
+          .then(async () => {
+              const NFTHolder = await checkNFTHolder();
+              if (!NFTHolder) {
+                  await paymentTournament();
+              }
 
-    //       if (!NFTHolder) {
-    //           await paymentTournament();
-    //       }
+              await joinTournamentAPI(tournamentId, teamId)
+                  .then(() => window.location.pathname = `/tournaments/${tournamentId}`)
+                  .catch((err) => console.log(err));
+          })
+          .catch((err) => {
+              console.log(err)
+          })
+  }
 
-    await joinTournamentAPI(tournamentId, teamId)
-      .then(()=>window.location.pathname=`/tournaments/${tournamentId}`)
-      .catch((err) => console.log(err));
-  };
   //Snackbar Component
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [snackOpen, setSnackOpen] = useState(false);
@@ -327,7 +333,7 @@ export default function TournamentView() {
                 </div>
               </motion.div>
               <div className="folioplay-tabs">
-                <LeaderBoardTabs />
+                <LeaderBoardTabs tournamentId={tournament.id}/>
               </div>
               <div
                 key={"enter-tournament"}
