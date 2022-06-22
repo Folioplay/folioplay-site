@@ -19,21 +19,18 @@ export async function getAllCoins() {
 }
 
 export async function getAuthToken(walletAddress, walletSignature, email) {
-  return await fetch(`${SERVER}/user/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      walletAddress: walletAddress,
-      signature: walletSignature,
-      email: email,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      return localStorage.setItem("authtoken", data.accessToken);
-    });
+    return await fetch(`${SERVER}/user/login`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ walletAddress: walletAddress, signature: walletSignature, email: email })
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            localStorage.removeItem("authtoken")
+            localStorage.setItem("authtoken", data.accessToken)
+        })
 }
 export async function getAllUserTeams() {
   return await fetch(`${SERVER}/teams/`, {
@@ -83,21 +80,21 @@ export async function getLeaderboard(tournament_id) {
     },
   }).then((res) => res.json());
 }
-export async function createTeam({ selectedCoins, name }) {
-  const authtoken = localStorage.getItem("authtoken");
-
-  return await fetch(`${SERVER}/teams/`, {
-    method: "POST",
-    headers: {
-      "Content-type": "Application/json",
-      "x-access-token": authtoken,
-    },
-    body: JSON.stringify({
-      selectedCoins: selectedCoins,
-      name: name,
-    }),
-  }).then((res) => res.json());
-}
+// export async function createTeam({ selectedCoins, name }) {
+//   const authtoken = localStorage.getItem("authtoken");
+//
+//   return await fetch(`${SERVER}/teams/`, {
+//     method: "POST",
+//     headers: {
+//       "Content-type": "Application/json",
+//       "x-access-token": authtoken,
+//     },
+//     body: JSON.stringify({
+//       selectedCoins: selectedCoins,
+//       name: name,
+//     }),
+//   }).then((res) => res.json());
+// }
 export async function deleteTeam({ teamId, teamIndex }) {
   const authtoken = localStorage.getItem("authtoken");
 
