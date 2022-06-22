@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactLoading from "react-loading";
-import { LinearProgress } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import "../style/index.css";
-import { Button } from "@mui/material";
+import { Modal, Box } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -25,8 +25,8 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import NFTMarketPlace from "../../../contracts/NFTMarketplace.json";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
+// import Modal from "@mui/material/Modal";
+// import Box from "@mui/material/Box";
 // import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 // import PreviewIcon from "@mui/icons-material/Preview";
 // import DeleteIcon from "@mui/icons-material/Delete";
@@ -110,106 +110,97 @@ export default function TournamentView() {
       document.getElementById("jointournament-button").style.display = "block";
       selectedTeam.classList.add("selected-background");
     }
+    var seatsFilled = 0;
+    if (tournament !== undefined) {
+      seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
+    }
+    console.log(teams);
+    function selectTeam(clickedId) {
+      var allTeams = document.getElementsByClassName("team");
+      var selectedTeam = document.getElementById(clickedId);
+      for (var i = 0; i < allTeams.length; i++) {
+        allTeams[i].classList.remove("selected-background");
+      }
+      if (
+        [...selectedTeam.classList].includes("selected-background") === false
+      ) {
+        document.getElementById("jointournament-button").style.display =
+          "block";
+        selectedTeam.classList.add("selected-background");
+      }
+    }
   }
-  var seatsFilled = 0;
-  if (tournament !== undefined) {
-    seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
-  }
-  console.log(teams);
+  //   const checkNFTHolder = async () => {
+  //     let providerWallet = await getCurrentWalletProvider();
+  //     console.log(providerWallet)
+  //     const signer = providerWallet.getSigner()
+  //     console.log(signer)
+  //     const contract = new ethers.Contract("0x99Dc6574e41B4c76e747BaDfe61aDec906e92624", NFTMarketPlace.abi, signer);
 
-  function selectTeam(clickedId) {
-    // var allTeams = document.getElementsByClassName('team');
-    var selectedTeam = document.getElementById(clickedId);
-    for (var i = 0; i < teams.length; i++) {
-      document
-        .getElementById("team-" + i)
-        .classList.remove("selected-background");
-    }
-    if ([...selectedTeam.classList].includes("selected-background") === false) {
-      document.getElementById("jointournament-button").style.display = "block";
-      selectedTeam.classList.add("selected-background");
-    }
-  }
+  //     return await contract.checkNFTowner("0xead495ad5324219A0a6384E6a0924335baE8cfFf", "0x79650abEA193B0a6b8Ae25e2b95ee880C6Ba5b9e");
+  // }
 
-  const checkNFTHolder = async () => {
-    let providerWallet = await getCurrentWalletProvider();
-    console.log(providerWallet);
-    const signer = providerWallet.getSigner();
-    console.log(signer);
-    const contract = new ethers.Contract(
-      "0x99Dc6574e41B4c76e747BaDfe61aDec906e92624",
-      NFTMarketPlace.abi,
-      signer
-    );
+  // const getCurrentWalletProvider = async () => {
+  //     let providerWallet;
+  //     // eslint-disable-next-line default-case
+  //     switch (localStorage.getItem("walletType")) {
+  //         case "metamask":
+  //             providerWallet = new ethers.providers.Web3Provider(window.ethereum);
+  //             break;
+  //         case "walletConnect":
+  //             const providerWC = new WalletConnectProvider({
+  //                 rpc: {
+  //                     137: "https://polygon-rpc.com/"
+  //                 },
+  //             });
+  //             await providerWC.enable();
+  //             providerWallet = new providers.Web3Provider(providerWC);
+  //             break;
+  //     }
+  //     return providerWallet;
+  // }
 
-    return await contract.checkNFTowner(
-      "0xead495ad5324219A0a6384E6a0924335baE8cfFf",
-      "0x79650abEA193B0a6b8Ae25e2b95ee880C6Ba5b9e"
-    );
-  };
+  // const paymentTournament = async () => {
 
-  const getCurrentWalletProvider = async () => {
-    let providerWallet;
-    // eslint-disable-next-line default-case
-    switch (localStorage.getItem("walletType")) {
-      case "metamask":
-        providerWallet = new ethers.providers.Web3Provider(window.ethereum);
-        break;
-      case "walletConnect":
-        const providerWC = new WalletConnectProvider({
-          rpc: {
-            137: "https://polygon-rpc.com/",
-          },
-        });
-        await providerWC.enable();
-        providerWallet = new providers.Web3Provider(providerWC);
-        break;
-    }
-    return providerWallet;
-  };
+  //     const bal = await provider.getBalance(user.get("ethAddress"));
+  //     console.log(Number(tournament.entryFee) <= Number(ethers.utils.formatEther(bal)))
+  //     if (Number(tournament.entryFee) > Number(ethers.utils.formatEther(bal))) {
 
-  const paymentTournament = async () => {
-    const bal = await provider.getBalance(user.get("ethAddress"));
-    console.log(
-      Number(tournament.entryFee) <= Number(ethers.utils.formatEther(bal))
-    );
-    if (Number(tournament.entryFee) > Number(ethers.utils.formatEther(bal))) {
-      let providerWallet = await getCurrentWalletProvider();
-      const signer = providerWallet.getSigner();
-      const gas = await providerWallet.getGasPrice();
+  //         let providerWallet = await getCurrentWalletProvider();
+  //         const signer = providerWallet.getSigner()
+  //         const gas = await providerWallet.getGasPrice();
 
-      const tx = {
-        from: signer._address,
-        to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
-        value: ethers.utils.parseEther(`0.001`),
-        maxFeePerGas: gas,
-        maxPriorityFeePerGas: gas,
-      };
-      const txn = await signer.sendTransaction(tx);
-      await txn.wait();
-    }
-  };
+  //         const tx = {
+  //             from: signer._address,
+  //             to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
+  //             value: ethers.utils.parseEther(`0.001`),
+  //             maxFeePerGas: gas,
+  //             maxPriorityFeePerGas: gas
+  //         };
+  //         const txn = await signer.sendTransaction(tx)
+  //         await txn.wait();
+  //     }
+  // }
 
   const joinTournament = async () => {
-    const allTeams = document.getElementsByClassName("team");
-    let teamId = "";
+    var teamId = "";
     const tournamentId = tournament.id;
-    for (let i = 0; i < allTeams.length; i++) {
-      console.log(i);
-      if ([...allTeams[i].classList].includes("selected-background") === true) {
-        const id = allTeams[i].getAttribute("id");
-        teamId = teams[parseInt(id.split("-")[1])].id;
-        console.log(teams[parseInt(id.split("-")[1])]);
+    for (var i = 0; i < teams.length; i++) {
+      if (
+        [...document.getElementById("team-" + i).classList].includes(
+          "selected-background"
+        ) === true
+      ) {
+        teamId = teams[parseInt(i)].id;
         break;
       }
     }
 
-    //check if team is allowed or not
-    const NFTHolder = await checkNFTHolder();
+    // const NFTHolder = await checkNFTHolder();
 
-    if (!NFTHolder) {
-      await paymentTournament();
-    }
+    //       if (!NFTHolder) {
+    //           await paymentTournament();
+    //       }
 
     await joinTournamentAPI(tournamentId, teamId)
       // .then(()=>window.location.pathname=`/tournaments/${tournamentId}`)
@@ -224,7 +215,22 @@ export default function TournamentView() {
     }
     setSnackOpen(false);
   };
-
+  // function joinTournament() {
+  //   // var allTeams = document.getElementsByClassName("team");
+  //   var teamId = "";
+  //   const tournamentId = tournament.id;
+  //   for (var i = 0; i < teams.length; i++) {
+  //     if (
+  //       [...document.getElementById("team-" + i).classList].includes(
+  //         "selected-background"
+  //       ) === true
+  //     ) {
+  //       teamId = teams[parseInt(i)].id;
+  //       break;
+  //     }
+  //   }
+  //   console.log(teamId, tournamentId);
+  // }
   function deleteClickedTeam(event) {
     var teamId =
       event.target.parentNode.parentNode.parentNode.getAttribute("id");
@@ -232,7 +238,6 @@ export default function TournamentView() {
     teamId = teams[parseInt(teamIndex)].id;
     deleteTeam({ teamId, teamIndex });
   }
-
   const LeftComponent = () => {
     return (
       <div className="fullpage">
