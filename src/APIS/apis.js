@@ -26,7 +26,10 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
         },
         body: JSON.stringify({ walletAddress: walletAddress, signature: walletSignature, email: email })
     })
-        .then((res) => res.json())
+        .then((res) => {
+          if(!res.ok) throw 'Invalid user';
+          else return res.json();
+        })
         .then((data) => {
             localStorage.removeItem("authtoken")
             localStorage.setItem("authtoken", data.accessToken)
@@ -97,7 +100,6 @@ export async function deleteTeam({ teamId, teamIndex }) {
 }
 
 export async function joinValidTournamentAPI(tournamentId, teamId) {
-  console.log("678");
   return await fetch(`${SERVER}/tournament/join/is_valid`, {
     method: "POST",
     headers: {
@@ -110,5 +112,20 @@ export async function joinValidTournamentAPI(tournamentId, teamId) {
     }),
   })
       .then((res) => res.json())
+      .catch((err) => err);
+}
+
+
+export async function validUser() {
+  return await fetch(`${SERVER}/user/is-valid`, {
+    method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("authtoken"),
+    },
+  })
+      .then((res) => {
+        if(!res.ok) throw 'Invalid user';
+        else return res.json();
+      })
       .catch((err) => err);
 }

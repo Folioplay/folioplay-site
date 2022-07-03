@@ -18,8 +18,15 @@ import {getAuthToken} from "../../../APIS/apis";
 
 export default function LoginPage() {
 
-    const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
+    const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout, isInitialized } = useMoralis();
     console.log(isAuthenticated, isAuthenticating, user, account);
+
+    // useEffect(()=>{
+    //     // const { isAuthenticated, isInitialized } = useMoralis();
+    //     // console.log("isauyth", isAuthenticated, isInitialized)
+    //     // if(isAuthenticated && isInitialized)
+    //     //     window.location.pathname="/tournaments";
+    // })
 
 
     const [email, setEmail] = useState("");
@@ -30,7 +37,7 @@ export default function LoginPage() {
         const user = await authenticate({
             provider: "magicLink",
             email: email,
-            apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY, // Enter API key from Magic Dashboard https://dashboard.magic.link/
+            apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
             network: "mainnet"
         })
             .then(async (user) => {
@@ -97,10 +104,22 @@ export default function LoginPage() {
         }
     }
 
+    const logOut = async () => {
+        localStorage.setItem("authtoken", null);
+        localStorage.removeItem("walletconnect");
+        await logout();
+        window.location.pathname="/";
+    }
+
     const getAuthTokenFunction = async(user) => {
         const walletAddress = user.get("ethAddress");
         const walletSignature = user["attributes"].authData.moralisEth.signature;
-        await getAuthToken(walletAddress, walletSignature, email);
+        try{
+            await getAuthToken(walletAddress, walletSignature, email);
+        }
+        catch (e) {
+            await logOut();
+        }
     }
 
     //Modal Section

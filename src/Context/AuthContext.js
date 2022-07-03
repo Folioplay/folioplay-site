@@ -1,27 +1,35 @@
-import React, {createContext, useEffect, useState} from "react";
-import {useMoralis} from "react-moralis";
+import React, { createContext, useState, useEffect } from "react";
 
 
 export const AuthContext = createContext({});
+const SERVER = "https://folioplay-api.ssrivastava.tech";
 
 export const AuthContextProvider = ({ children }) => {
-
-    const {isAuthenticated } = useMoralis();
-    console.log(isAuthenticated);
+    const [validToken, setValidToken] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
-        if(!isAuthenticated && window.location.pathname!=="/"){
-            window.location.pathname="/";
-        }
-        if(isAuthenticated && window.location.pathname==="/"){
-            window.location.pathname="/tournaments";
-        }
-    })
+        fetch(`${SERVER}/user/is-valid`, {
+            method: "GET",
+            headers: {
+                "x-access-token": localStorage.getItem("authtoken"),
+            },
+        })
+            .then((res) => {
+                if(!res.ok) {
+                    localStorage.clear();
+                    window.location.pathname="/";
+                }
+            })
+            .catch((err) => err)
+            .finally(()=> setIsLoading(false));
+
+    },[])
 
     return (
         <AuthContext.Provider
-            value={{ }}>
-            {children}
+            value={validToken}>
+            {!isLoading && children}
         </AuthContext.Provider>
     );
 }
