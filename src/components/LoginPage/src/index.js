@@ -13,13 +13,6 @@ export default function LoginPage() {
   const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout, isInitialized } = useMoralis();
   console.log(isAuthenticated, isAuthenticating, user, account);
 
-  // useEffect(()=>{
-  //     // const { isAuthenticated, isInitialized } = useMoralis();
-  //     // console.log("isauyth", isAuthenticated, isInitialized)
-  //     // if(isAuthenticated && isInitialized)
-  //     //     window.location.pathname="/tournaments";
-  // })
-
   const [email, setEmail] = useState("");
 
   const loginWithMail = async () => {
@@ -27,50 +20,51 @@ export default function LoginPage() {
     const user = await authenticate({
       provider: "magicLink",
       email: email,
-      apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY, // Enter API key from Magic Dashboard https://dashboard.magic.link/
+      apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
       network: "mainnet",
     })
-      .then(async (user) => {
-        await getAuthTokenFunction(user);
-        console.log(user);
-      })
-      .then(function () {
-        localStorage.setItem("walletType", "magicLink");
-        window.location.pathname = "/tournaments";
-      });
+        .then(async (user) => {
+          await getAuthTokenFunction(user);
+          console.log(user);
+        })
+        .then(function () {
+          localStorage.setItem("walletType", "magicLink");
+          window.location.pathname = "/tournaments";
+        });
   };
 
   const walletConnectLogin = async () => {
     if (!isAuthenticated) {
       localStorage.clear();
       await authenticate({ provider: "walletconnect", chainId: 137 })
-        .then(async (user) => {
-          await getAuthTokenFunction(user);
-          console.log(user);
-        })
-        .then(function () {
-          localStorage.setItem("walletType", "walletConnect");
-          window.location.pathname = "/tournaments";
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .then(async (user) => {
+            await getAuthTokenFunction(user);
+            console.log(user);
+          })
+          .then(function () {
+            localStorage.setItem("walletType", "walletConnect");
+            window.location.pathname = "/tournaments";
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
   };
 
   const metamaskLogin = async () => {
+      // console.log("--=======")
     if (!isAuthenticated) {
       await authenticate()
-        .then(async (user) => {
-          await getAuthTokenFunction(user);
-        })
-        .then((user) => {
-          localStorage.setItem("walletType", "metamask");
-          window.location.pathname = "/tournaments";
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .then(async (user) => {
+            await getAuthTokenFunction(user);
+          })
+          .then((user) => {
+            localStorage.setItem("walletType", "metamask");
+            // window.location.pathname = "/tournaments";
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
   };
 
@@ -82,13 +76,13 @@ export default function LoginPage() {
         chainId: 137,
         theme: "dark",
       })
-        .then((user) => {
-          localStorage.setItem("walletType", "web3Auth");
-          window.location.pathname = "/tournaments";
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .then((user) => {
+            localStorage.setItem("walletType", "web3Auth");
+            window.location.pathname = "/tournaments";
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
   };
 
@@ -109,6 +103,7 @@ export default function LoginPage() {
       await logOut();
     }
   }
+
 
   //Modal Section
   const CssTextField = withStyles({

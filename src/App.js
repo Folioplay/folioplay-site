@@ -32,12 +32,10 @@ function App() {
           const redirectBuffer = () =>{
               window.location.pathname="tournaments";
           }
-          setTimeout(redirectBuffer, 1500);
-        // return <Navigate to="/tournaments" />;
+          setTimeout(redirectBuffer, 1000);
+        return <Navigate to="/tournaments" />;
       }
-      else{
-          return children;
-      }
+      return children;
   }
 
 
