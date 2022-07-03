@@ -31,17 +31,14 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
       localStorage.removeItem("authtoken")
       localStorage.setItem("authtoken", data.accessToken)
     })
-<<<<<<< HEAD
-        .then((res) => {
-          if(!res.ok) throw 'Invalid user';
-          else return res.json();
-        })
-        .then((data) => {
-            localStorage.removeItem("authtoken")
-            localStorage.setItem("authtoken", data.accessToken)
-        })
-=======
->>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
+    .then((res) => {
+      if (!res.ok) throw 'Invalid user';
+      else return res.json();
+    })
+    .then((data) => {
+      localStorage.removeItem("authtoken")
+      localStorage.setItem("authtoken", data.accessToken)
+    })
 }
 export async function getAllUserTeams() {
   return await fetch(`${SERVER}/teams/`, {
@@ -108,8 +105,6 @@ export async function deleteTeam({ teamId, teamIndex }) {
     document.getElementById("jointournament-button").style.display = "none";
   });
 }
-
-<<<<<<< HEAD
 export async function joinValidTournamentAPI(tournamentId, teamId) {
   return await fetch(`${SERVER}/tournament/join/is_valid`, {
     method: "POST",
@@ -122,8 +117,8 @@ export async function joinValidTournamentAPI(tournamentId, teamId) {
       teamId: teamId,
     }),
   })
-      .then((res) => res.json())
-      .catch((err) => err);
+    .then((res) => res.json())
+    .catch((err) => err);
 }
 
 
@@ -134,12 +129,12 @@ export async function validUser() {
       "x-access-token": localStorage.getItem("authtoken"),
     },
   })
-      .then((res) => {
-        if(!res.ok) throw 'Invalid user';
-        else return res.json();
-      })
-      .catch((err) => err);
-=======
+    .then((res) => {
+      if (!res.ok) throw 'Invalid user';
+      else return res.json();
+    })
+    .catch((err) => err);
+}
 export async function getRank({ tournamentId }) {
   const authtoken = localStorage.getItem('authtoken');
   return await fetch(`${SERVER}/tournament/rank/` + tournamentId + "/", {
@@ -147,6 +142,5 @@ export async function getRank({ tournamentId }) {
     headers: {
       'x-access-token': authtoken
     }
-  }).then((res) =>  res.json());
->>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
+  }).then((res) => res.json());
 }

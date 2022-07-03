@@ -14,15 +14,6 @@ import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import { motion } from "framer-motion/dist/framer-motion";
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from "@mui/icons-material/Cancel";
-<<<<<<< HEAD
-import {
-    getTournamentById,
-    getAllUserTeams,
-    joinTournamentAPI,
-    deleteTeam, joinValidTournamentAPI,
-} from "../../../APIS/apis";
-=======
->>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
 import { useMoralis } from "react-moralis";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -75,128 +66,7 @@ export default function TournamentView() {
   if (tournament !== undefined) {
     seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
   }
-<<<<<<< HEAD
-  console.log(teams);
-  function selectTeam(clickedId) {
-    // var allTeams = document.getElementsByClassName("team");
-    var selectedTeam = document.getElementById(clickedId);
-    for (var i = 0; i < teams.length; i++) {
-      document
-        .getElementById("team-" + i)
-        .classList.remove("selected-background");
-    }
-    if ([...selectedTeam.classList].includes("selected-background") === false) {
-      document.getElementById("jointournament-button").style.display = "block";
-      selectedTeam.classList.add("selected-background");
-    }
-    var seatsFilled = 0;
-    if (tournament !== undefined) {
-      seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
-    }
-    console.log(teams);
-    function selectTeam(clickedId) {
-      var allTeams = document.getElementsByClassName("team");
-      var selectedTeam = document.getElementById(clickedId);
-      for (var i = 0; i < allTeams.length; i++) {
-        allTeams[i].classList.remove("selected-background");
-      }
-      if (
-        [...selectedTeam.classList].includes("selected-background") === false
-      ) {
-        document.getElementById("jointournament-button").style.display =
-          "block";
-        selectedTeam.classList.add("selected-background");
-      }
-    }
-  }
-    const checkNFTHolder = async () => {
-      let providerWallet = await getCurrentWalletProvider();
-      console.log(providerWallet)
-      const signer = providerWallet.getSigner()
-      console.log(signer)
-      const contract = new ethers.Contract("0x99Dc6574e41B4c76e747BaDfe61aDec906e92624", NFTMarketPlace.abi, signer);
-
-      return await contract.checkNFTowner("0xead495ad5324219A0a6384E6a0924335baE8cfFf", "0x79650abEA193B0a6b8Ae25e2b95ee880C6Ba5b9e");
-  }
-
-  const getCurrentWalletProvider = async () => {
-      let providerWallet;
-      // eslint-disable-next-line default-case
-      switch (localStorage.getItem("walletType")) {
-          case "metamask":
-              providerWallet = new ethers.providers.Web3Provider(window.ethereum);
-              break;
-          case "walletConnect":
-              const providerWC = new WalletConnectProvider({
-                  rpc: {
-                      137: "https://polygon-rpc.com/"
-                  },
-              });
-              await providerWC.enable();
-              providerWallet = new providers.Web3Provider(providerWC);
-              break;
-      }
-      return providerWallet;
-  }
-
-  const paymentTournament = async () => {
-
-      const bal = await provider.getBalance(user.get("ethAddress"));
-      console.log(Number(tournament.entryFee) <= Number(ethers.utils.formatEther(bal)))
-      if (Number(tournament.entryFee) > Number(ethers.utils.formatEther(bal))) {
-
-          let providerWallet = await getCurrentWalletProvider();
-          const signer = providerWallet.getSigner()
-          const gas = await providerWallet.getGasPrice();
-
-          const tx = {
-              from: signer._address,
-              to: `0xD5f3758458b985106A6AaDB0F5595f4deB7242Db`,
-              value: ethers.utils.parseEther(`0.001`),
-              maxFeePerGas: gas,
-              maxPriorityFeePerGas: gas
-          };
-          const txn = await signer.sendTransaction(tx)
-          await txn.wait();
-      }
-  }
-
-  const joinTournament = async () => {
-      var teamId = "";
-      const tournamentId = tournament.id;
-      for (var i = 0; i < teams.length; i++) {
-          if (
-              [...document.getElementById("team-" + i).classList].includes(
-                  "selected-background"
-              ) === true
-          ) {
-              teamId = teams[parseInt(i)].id;
-              break;
-          }
-      }
-
-      await joinValidTournamentAPI(tournamentId, teamId)
-          .then(async () => {
-              const NFTHolder = await checkNFTHolder();
-              if (!NFTHolder) {
-                  await paymentTournament();
-              }
-
-              await joinTournamentAPI(tournamentId, teamId)
-                  .then(() => window.location.pathname = `/tournaments/${tournamentId}`)
-                  .catch((err) => console.log(err));
-          })
-          .catch((err) => {
-              console.log(err)
-          })
-  }
-
-  //Snackbar Component
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [snackOpen, setSnackOpen] = useState(false);
-=======
-
->>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -312,11 +182,7 @@ export default function TournamentView() {
                 <></>}
 
               <div className="folioplay-tabs">
-<<<<<<< HEAD
-                <LeaderBoardTabs tournamentId={tournament.id}/>
-=======
                 <LeaderBoardTabs tournamentId={tournament.id} />
->>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
               </div>
               <div
                 key={"enter-tournament"}
