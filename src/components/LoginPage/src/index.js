@@ -60,7 +60,7 @@ export default function LoginPage() {
           })
           .then((user) => {
             localStorage.setItem("walletType", "metamask");
-            // window.location.pathname = "/tournaments";
+            window.location.pathname = "/tournaments";
           })
           .catch(function (error) {
             console.log(error);
