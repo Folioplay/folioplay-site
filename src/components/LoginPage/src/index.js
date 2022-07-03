@@ -8,6 +8,12 @@ import metamaskIcon from "../../../images/metamask.png";
 import walletconnectIcon from "../../../images/walletconnect.png";
 import { useMoralis } from "react-moralis";
 import { getAuthToken } from "../../../APIS/apis";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function LoginPage() {
   const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout, isInitialized } = useMoralis();
@@ -51,22 +57,81 @@ export default function LoginPage() {
     }
   };
 
-  const metamaskLogin = async () => {
-      // console.log("--=======")
+  //Snackbar Wallet component
+    const [openWallet, setOpenWallet] = useState(false);
+    const handleWalletClick = () => {
+        setOpenWallet(true);
+    };
+    const handleWalletClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenWallet(false);
+    };
+
+    //Snackbar Chain component
+    const [openChain, setOpenChain] = useState(false);
+    const handleChainClick = () => {
+        setOpenChain(true);
+    };
+    const handleChainClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenChain(false);
+    };
+
+
+
+    const metamaskLogin = async () => {
     if (!isAuthenticated) {
-      await authenticate()
-          .then(async (user) => {
-            await getAuthTokenFunction(user);
-          })
-          .then((user) => {
-            localStorage.setItem("walletType", "metamask");
-            window.location.pathname = "/tournaments";
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        if(window.ethereum.networkVersion===137 && window.ethereum.isMetaMask) {
+            await authenticate()
+                .then(async (user) => {
+                    await getAuthTokenFunction(user);
+                })
+                .then((user) => {
+                    localStorage.setItem("walletType", "metamask");
+                    window.location.pathname = "/tournaments";
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+        else{
+            if(!window.ethereum.isMetaMask)
+                handleWalletClick();
+            else{
+                if(window.ethereum.networkVersion!==137)
+                    handleChainClick()
+            }
+        }
     }
   };
+
+  const snackBarChangeWalletComponent = () => {
+      return(
+          <Snackbar open={openWallet} autoHideDuration={6000} onClose={handleWalletClose}>
+              <Alert onClose={handleWalletClose} severity="error" sx={{ width: '100%' }}>
+                  Metamask is not your default wallet. Please change your default wallet to metamask.
+              </Alert>
+          </Snackbar>
+      )
+  }
+
+    const snackBarChangeChainComponent = () => {
+        return(
+            <Snackbar open={openChain} autoHideDuration={6000} onClose={handleChainClose}>
+                <Alert onClose={handleChainClose} severity="error" sx={{ width: '100%' }}>
+                    Connect your wallet to Matic mainnet.
+                    <a target="_blank" href="https://decentralizedcreator.com/add-polygon-matic-network-to-metamask/#:~:text=To%20add%20manually%2C%20open%20your,and%20block%20explorer%20URL%20manually.">
+                        Find more details on this link.
+                    </a>
+                </Alert>
+            </Snackbar>
+        )
+    }
+
 
   const web3AuthLogin = async () => {
     if (!isAuthenticated) {
@@ -201,6 +266,8 @@ export default function LoginPage() {
         >
           Sign in via mail
         </Button>
+          {snackBarChangeWalletComponent()}
+          {snackBarChangeChainComponent()}
         {/*<button onClick={logout}>logout</button>*/}
       </div>
     );
