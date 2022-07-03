@@ -15,10 +15,10 @@
 }
 
 .leaderboard-username {
-    max-width: 6.25em;
+    /* max-width: 6.25em;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
     transition: 0.2s all ease-in-out;
 }
 

@@ -10,16 +10,22 @@ import OpenChart from "../../Charts/src";
 import { motion } from "framer-motion/dist/framer-motion";
 import Snackbar from "@mui/material/Snackbar";
 import { getAllCoins } from "../../../APIS/apis";
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import CancelIcon from "@mui/icons-material/Cancel";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import TickerWidget from "../../TickerWidget/src";
-import MuiAlert from '@mui/material/Alert';
-import '../style/index.css'
-import {ethers} from "ethers";
+import { useTheme } from '@material-ui/core/styles';
+import MuiAlert from "@mui/material/Alert";
+import preservedView from "../common/preservedView";
+import assignRoles from "../common/assignRole";
+import addCoin from "../common/addCoin";
+import TeamPreview from "../common/TeamPreview";
+import "../style/index.css";
 export function TeamCreation() {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [wasActiveTab, setWasActiveTab] = useState("superstars");
   const [graphCoin, setGraphCoin] = useState("");
+  const [open, setOpen] = useState(false);
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
   var superstars = [];
@@ -28,8 +34,18 @@ export function TeamCreation() {
   var localSuperstars = JSON.parse(window.localStorage.getItem("superstars"));
   var localMooning = JSON.parse(window.localStorage.getItem("mooning"));
   var localRekt = JSON.parse(window.localStorage.getItem("rekt"));
-
-  console.log(localSuperstars, localMooning, localRekt);
+  const style = {
+    position: "absolute",
+    transform: "translate(-30%, -50%)",
+    width: "max(70%,300px)",
+    bgcolor: "#E8EEF2",
+    boxShadow: 24,
+    borderRadius: "12px",
+    p: 1,
+    ['@media (max-width:1200px)']: {
+      transform: "translate(-50%, -50%)",
+    }
+  };
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -39,16 +55,6 @@ export function TeamCreation() {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  const style = {
-    position: "absolute",
-    transform: "translate(-50%, -50%)",
-    width: "max(70%,300px)",
-    bgcolor: "#E8EEF2",
-    boxShadow: 24,
-    borderRadius: "12px",
-    p: 1,
-  };
-  const [open, setOpen] = useState(false);
 
   const handleOpen = (event) => {
     setGraphCoin(event.target.innerText.toLowerCase());
@@ -68,6 +74,9 @@ export function TeamCreation() {
   }
   useEffect(() => {
     console.log("fetching coins......");
+    localStorage.removeItem("superstars");
+    localStorage.removeItem("mooning");
+    localStorage.removeItem("rekt");
     fetchCoins();
   }, []);
 
@@ -107,110 +116,26 @@ export function TeamCreation() {
     rekt = localRekt;
   }
 
-  const preservedView = () => {
-    console.log(wasActiveTab);
-    console.log("preseved view .....");
-    if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
-      var allClasses = document.getElementsByClassName("coinClass");
-      for (var i = 0; i < allClasses.length; i++) {
-        allClasses[i].classList.remove("coin-class-selected");
-      }
-      document
-        .getElementById(wasActiveTab + "-tab")
-        .classList.add("coin-class-selected");
-      if (wasActiveTab === "superstars") {
-        document.getElementById("superstars").classList.remove("display-none");
-        document.getElementById("mooning").classList.add("display-none");
-        document.getElementById("rekt").classList.add("display-none");
-      } else {
-        if (wasActiveTab === "mooning") {
-          document.getElementById("mooning").classList.remove("display-none");
-          document.getElementById("superstars").classList.add("display-none");
-          document.getElementById("rekt").classList.add("display-none");
-        } else {
-          document.getElementById("rekt").classList.remove("display-none");
-          document.getElementById("mooning").classList.add("display-none");
-          document.getElementById("superstars").classList.add("display-none");
+  useEffect(() => {
+    console.log("preserved view");
+    preservedView(wasActiveTab, superstars, mooning, rekt);
+    var coinsLimit = wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 8 : 5;
+    var allButtons = document.querySelectorAll("#" + wasActiveTab + " .coin-add-button");
+    console.log(document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length, coinsLimit);
+    console.log(allButtons[0]);
+    if (document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length >= coinsLimit) {
+      console.log("if condition");
+      for (var i = 0; i < allButtons.length; i++) {
+        if (allButtons[i].innerText === "ADD") {
+          console.log("add button");
+          console.log(allButtons[i].classList)
+          allButtons[i].classList.add("disabled-button");
+          console.log(allButtons[i].classList)
         }
       }
-    } else {
-      document.getElementById("mooning").classList.add("display-none");
-      document.getElementById("rekt").classList.add("display-none");
-      document
-        .getElementById("superstars-tab")
-        .classList.add("coin-class-selected");
     }
-  };
-
-  useEffect(() => {
-    preservedView();
   }, [wasActiveTab, graphCoin, snackOpen]);
 
-  function assignRoles() {
-    var selectedSuperstars = [];
-    var selectedMooning = [];
-    var selectedRekt = [];
-    for (var i = 0; i < superstars.length; i++) {
-      if (superstars[i].selected === true) {
-        selectedSuperstars.push(superstars[i]);
-      }
-    }
-    for (var i = 0; i < mooning.length; i++) {
-      if (mooning[i].selected === true) {
-        selectedMooning.push(mooning[i]);
-      }
-    }
-    for (var i = 0; i < rekt.length; i++) {
-      if (rekt[i].selected === true) {
-        selectedRekt.push(rekt[i]);
-      }
-    }
-    if (
-      selectedSuperstars.length < 1 ||
-      selectedSuperstars.length > 2 ||
-      selectedMooning.length < 4 ||
-      selectedMooning.length > 8 ||
-      selectedRekt.length < 3 ||
-      selectedRekt.length > 6
-    ) {
-      setSnackOpen(true);
-      return;
-    }
-
-    navigate("/teams/createteam/assignrole");
-  }
-  function addCoin(event) {
-    const prevVal = event.target.innerText;
-    const clickedCoin = event.target.previousSibling.innerText;
-    const updateCoin = prevVal === "ADD" ? true : false;
-    event.target.classList.toggle("coin-add-button");
-    event.target.classList.toggle("coin-added-button");
-    if (wasActiveTab === "superstars") {
-      for (var i = 0; i < superstars.length; i++) {
-        if (superstars[i].name === clickedCoin) {
-          superstars[i].selected = updateCoin;
-        }
-      }
-      window.localStorage.setItem("superstars", JSON.stringify(superstars));
-    }
-    if (wasActiveTab === "mooning") {
-      for (var i = 0; i < mooning.length; i++) {
-        if (mooning[i].name === clickedCoin) {
-          mooning[i].selected = updateCoin;
-        }
-      }
-      window.localStorage.setItem("mooning", JSON.stringify(mooning));
-    }
-    if (wasActiveTab === "rekt") {
-      for (var i = 0; i < rekt.length; i++) {
-        if (rekt[i].name === clickedCoin) {
-          rekt[i].selected = updateCoin;
-        }
-      }
-      window.localStorage.setItem("rekt", JSON.stringify(rekt));
-    }
-    event.target.innerText = prevVal === "ADD" ? "ADDED" : "ADD";
-  }
   const Superstars = () => {
     return (
       <Grid
@@ -234,7 +159,7 @@ export function TeamCreation() {
                       coin.symbol.toLowerCase() +
                       ".png").default
                   }
-                  onerror="this.src = '../../../../public/coinLogos/bitcoin.jpg';"
+                  onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
                   width="40px"
                   height="40px"
                 />
@@ -250,7 +175,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) => addCoin(event)}
+                    onClick={(event) =>
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
+                    }
                   >
                     Added
                   </Button>
@@ -260,7 +187,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) => addCoin(event)}
+                    onClick={(event) =>
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
+                    }
                   >
                     Add
                   </Button>
@@ -310,7 +239,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) => addCoin(event)}
+                    onClick={(event) =>
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
+                    }
                   >
                     Added
                   </Button>
@@ -320,7 +251,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) => addCoin(event)}
+                    onClick={(event) =>
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
+                    }
                   >
                     Add
                   </Button>
@@ -370,7 +303,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) => addCoin(event)}
+                    onClick={(event) =>
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
+                    }
                   >
                     Added
                   </Button>
@@ -380,7 +315,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) => addCoin(event)}
+                    onClick={(event) =>
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
+                    }
                   >
                     Add
                   </Button>
@@ -465,10 +402,15 @@ export function TeamCreation() {
               style={{ borderRadius: "8px", backgroundColor: "var(--golden)" }}
               variant="contained"
               className="role-button ml-auto"
-              onClick={assignRoles}
+              onClick={() =>
+                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate)
+              }
             >
               Assign Roles
             </Button>
+          </div>
+          <div className="error-cannot-add-coin">
+            <ErrorOutlineOutlinedIcon />  <span className="ml-10">Cannot add more coin to this basket !!</span>
           </div>
           <Snackbar
             open={snackOpen}
@@ -518,14 +460,15 @@ export function TeamCreation() {
               <OpenChart coin={graphCoin} />
             </Box>
             <motion.span onClick={handleClose}>
-              <CancelIcon id="cross-modal" fontSize="large" />
+              {/* <CancelIcon id="cross-modal" fontSize="large" /> */}
             </motion.span>
           </motion.div>
         </Modal>
         <div>
-          <h1>Here's what you can win!</h1>
-          <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3>
+          <h1>Team Preview</h1>
+          {/* <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3> */}
         </div>
+        <TeamPreview superstars={superstars} mooning={mooning} rekt={rekt} />
 
         {/* <TickerWidget /> */}
       </div>

@@ -3,30 +3,43 @@ import FolioplayBar from "../../FolioplayBar/src";
 import { Button, LinearProgress } from "@mui/material";
 import ReactLoading from "react-loading";
 import {
-  getTournamentById,
   getAllUserTeams,
   deleteTeam,
+  joinTournamentAPI,
 } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import "../style/index.css";
 import { motion } from "framer-motion/dist/framer-motion";
-import FiberManualRecordOutlinedIcon from "@mui/icons-material/FiberManualRecordOutlined";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { getAllTournaments } from "../../../APIS/apis";
 import PreviewIcon from "@mui/icons-material/Preview";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useContext } from "react";
-import { CleaningServices } from "@mui/icons-material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import joinTournament from "../common/joinTournament";
+import deleteClickedTeam from "../common/deleteClickedTeam";
+import selectTeam from "../common/selectTeam";
+import { Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+
 
 export default function Tournaments() {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const status = { 3: { "value": "Completed", "color": "#ff000096" }, 1: { "value": "Closed", "color": "#ff000096" }, 0: { "value": "Open", "color": "#00ff00d6" }, 2: { "value": "Running", "color": "#00ff00d6" } }
   const [tournaments, setTournaments] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [errorMessage, setErrorMessage] = useState({ message: "", variant: "" });
+  const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
   const pad = (num) => ("0" + num).slice(-2);
   const navigate = new useNavigate();
+  var tournamentId;
   const getTimeFromDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
     let hours = date.getHours(),
@@ -44,50 +57,19 @@ export default function Tournaments() {
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
-  var tournamentId;
-  function selectTeam(clickedId) {
-    var allTeams = document.getElementsByClassName("team");
-    var selectedTeam = document.getElementById(clickedId);
-    for (var i = 0; i < teams.length; i++) {
-      document
-        .getElementById("team-" + i)
-        .classList.remove("selected-background");
+
+  const handleErrorMessageSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
-    if ([...selectedTeam.classList].includes("selected-background") === false) {
-      document.getElementById("jointournament-button").style.display = "block";
-      selectedTeam.classList.add("selected-background");
-    }
-  }
-  var tournamentId;
-  function joinTournament() {
-    // var allTeams = document.getElementsByClassName("team");
-    var teamId = "";
-    for (var i = 0; i < teams.length; i++) {
-      if (
-        [...document.getElementById("team-" + i).classList].includes(
-          "selected-background"
-        ) === true
-      ) {
-        teamId = teams[parseInt(i)].id;
-        break;
-      }
-    }
-    console.log(teamId, tournamentId);
-  }
-  function deleteClickedTeam(event) {
-    var teamId =
-      event.target.parentNode.parentNode.parentNode.getAttribute("id");
-    var teamIndex = teamId.split("-")[1];
-    teamId = teams[parseInt(teamIndex)].id;
-    deleteTeam({ teamId, teamIndex });
-  }
+    setErrorMessageSnackOpen(false);
+  };
   const tournamentsList = tournaments.map((tournament, index) => {
     const seatsFilled =
       (100 * tournament.filled_spots) / tournament.total_spots;
     const startDate = new Date(tournament.start_time);
     const finishDate = new Date(tournament.end_time);
     const currDate = new Date();
-    console.log(startDate, finishDate);
     // console.log(startDate);
     return (
       <motion.div
@@ -117,8 +99,11 @@ export default function Tournaments() {
                 </>
               ) : (
                 <>
-                  {getTimeFromDate(startDate.getTime())} hrs -{" "}
-                  {getTimeFromDate(finishDate.getTime())} hrs
+                  <span className="font-size-12">
+                    {startDate.getHours()} : {startDate.getMinutes() == 0 ? "00" : startDate.getMinutes()} hrs -{" "}
+                    {finishDate.getHours()} : {finishDate.getMinutes() == 0 ? "00" : finishDate.getMinutes()} hrs<br />
+                    {startDate.getDate()} {monthNames[startDate.getMonth()]} - {finishDate.getDate()}  {monthNames[finishDate.getMonth()]} {startDate.getFullYear()}
+                  </span>
                 </>
               )}
             </span>
@@ -160,8 +145,11 @@ export default function Tournaments() {
           </span>
         </div>
         <div className="tournament-reward">
-          <EmojiEventsOutlinedIcon />
-          {tournament.reward} MGT
+          <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span>
+          <span>
+            <EmojiEventsOutlinedIcon />
+            {tournament.reward} MGT
+          </span>
         </div>
       </motion.div>
     );
@@ -237,7 +225,7 @@ export default function Tournaments() {
               </div>
 
               <div className="all-teams">
-                <div>
+                <div style={{ padding: "0" }}>
                   {teams.map((team, index) => {
                     var clickedId = "team-" + index;
                     return (
@@ -248,7 +236,7 @@ export default function Tournaments() {
                       >
                         <div className="team">
                           <span
-                            className="font-size-20 font-weight-600"
+                            className="font-size-18 font-weight-600"
                             style={{ color: "var(--grey-shade)" }}
                           >
                             {team.name}
@@ -257,12 +245,9 @@ export default function Tournaments() {
                             id="visible-coins"
                             style={{ marginLeft: "auto" }}
                           >
-                            {/* <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/' + team.selectedCoins[0].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                         <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[1].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                    <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[2].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span> */}
                             <CheckCircleIcon
                               className="select-team-button team-buttons"
-                              onClick={() => selectTeam(clickedId)}
+                              onClick={() => selectTeam(clickedId, teams)}
                               fontSize="large"
                             />
                             <PreviewIcon
@@ -296,7 +281,7 @@ export default function Tournaments() {
                             />
                             <DeleteIcon
                               className="delete-team-button team-buttons ml-5"
-                              onClick={(event) => deleteClickedTeam(event)}
+                              onClick={(event) => deleteClickedTeam(event, teams, deleteTeam)}
                               fontSize="large"
                             />
                             {/* <div className="moved-coin-image-3" style={{ borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div> */}
@@ -342,7 +327,7 @@ export default function Tournaments() {
                     fontWeight: "600",
                     fontSize: "17px",
                   }}
-                  onClick={() => joinTournament()}
+                  onClick={() => joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen)}
                 >
                   Continue
                 </Button>
@@ -355,7 +340,6 @@ export default function Tournaments() {
                     fontSize: "17px",
                   }}
                   onClick={(event) => {
-                    // document.querySelector' .preview-team-button').classList.add('display-none');
                     var allSelectButtons =
                       document.getElementsByClassName("select-team-button");
                     var allTeams = document.getElementsByClassName("team");
@@ -389,6 +373,25 @@ export default function Tournaments() {
             </div>
           </div>
         </div>
+        <Snackbar
+          open={errorMessageSnackOpen}
+          autoHideDuration={3000}
+          onClose={handleErrorMessageSnackClose}
+        >
+          <motion.div
+            initial={{ y: 200 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Alert
+              onClose={handleErrorMessageSnackClose}
+              severity={errorMessage.variant}
+              sx={{ width: "100%" }}
+            >
+              {errorMessage.message}
+            </Alert>
+          </motion.div>
+        </Snackbar>
       </div>
     );
   };

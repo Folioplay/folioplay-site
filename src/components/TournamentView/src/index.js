@@ -1,80 +1,65 @@
+import {
+  getTournamentById,
+  getAllUserTeams,
+  joinTournamentAPI,
+  deleteTeam,
+  getRank,
+} from "../../../APIS/apis";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { Button, LinearProgress } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
-import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
-import "../style/index.css";
-import { Modal, Box } from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion/dist/framer-motion";
+import { motion } from "framer-motion/dist/framer-motion";
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
 import CancelIcon from "@mui/icons-material/Cancel";
+<<<<<<< HEAD
 import {
     getTournamentById,
     getAllUserTeams,
     joinTournamentAPI,
     deleteTeam, joinValidTournamentAPI,
 } from "../../../APIS/apis";
+=======
+>>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
 import { useMoralis } from "react-moralis";
-import { ethers, providers } from "ethers";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import NFTMarketPlace from "../../../contracts/NFTMarketplace.json";
-// import Modal from "@mui/material/Modal";
-// import Box from "@mui/material/Box";
-// import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-// import PreviewIcon from "@mui/icons-material/Preview";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
+import deleteClickedTeam from "../common/deleteClickedTeam";
+import joinTournament from "../common/joinTournament";
+import selectTeam from "../common/selectTeam";
+import "../style/index.css";
 export default function TournamentView() {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  const provider = new ethers.providers.JsonRpcProvider(
-    `https://polygon-rpc.com/`
-  );
-  const { user } = useMoralis();
-  // var navigate = useNavigate();
-  const [balance, setBalance] = useState("");
-  // const params = useParams();
-  // const [chooseTeamBool, setChooseTeamBool] = useState(false);
-  // const _id = params.tournamentId;
-  // const [teams, setTeams] = useState([]);
-  // async function fetchTournament() {
-  //     setTournament(await getTournamentById({ _id: _id }));
   var navigate = useNavigate();
+  const { user } = useMoralis();
+  const [balance, setBalance] = useState("");
+  const [balanceSnackOpen, setBalanceSnackOpen] = useState(false);
+  const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({ message: "", variant: "error" });
   const [tournament, setTournament] = useState(undefined);
-  const [teamViewOpen, setTeamViewOpen] = useState(false);
+  const [rank, setRank] = useState(undefined);
   const params = useParams();
-  // const [chooseTeamBool, setChooseTeamBool] = useState(false);
-  // const [viewTeamId, setViewTeamId] = useState(0);
   const _id = params.tournamentId;
   const [teams, setTeams] = useState([]);
-  const style = {
-    position: "absolute",
-    transform: "translate(-50%, -50%)",
-    width: "max(70%,300px)",
-    bgcolor: "#E8EEF2",
-    boxShadow: 24,
-    borderRadius: "12px",
-    p: 1,
-  };
-  function handleTeamViewClose(event, reason) {
-    if (reason === "clickaway") {
-      return;
-    }
-    setTeamViewOpen(false);
-  }
+  var seatsFilled = 0;
+
   async function fetchTournament() {
     setTournament(await getTournamentById({ _id: _id }));
   }
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
+  }
+  async function fetchRank() {
+    const data = await getRank({ tournamentId: _id });
+    console.log(data);
+    setRank(data);
   }
   useEffect(() => {
     if ("superstars" in window.localStorage)
@@ -84,19 +69,13 @@ export default function TournamentView() {
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
     fetchTournament();
     fetchTeams();
+    fetchRank();
   }, []);
-  const pad = (num) => ("0" + num).slice(-2);
-  const getTimeFromDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    let hours = date.getHours(),
-      minutes = date.getMinutes(),
-      seconds = date.getSeconds();
-    return pad(hours) + ":" + pad(minutes);
-  };
-  var seatsFilled = 0;
+
   if (tournament !== undefined) {
     seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
   }
+<<<<<<< HEAD
   console.log(teams);
   function selectTeam(clickedId) {
     // var allTeams = document.getElementsByClassName("team");
@@ -215,35 +194,22 @@ export default function TournamentView() {
   //Snackbar Component
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [snackOpen, setSnackOpen] = useState(false);
+=======
+
+>>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setSnackOpen(false);
+    setBalanceSnackOpen(false);
   };
-  // function joinTournament() {
-  //   // var allTeams = document.getElementsByClassName("team");
-  //   var teamId = "";
-  //   const tournamentId = tournament.id;
-  //   for (var i = 0; i < teams.length; i++) {
-  //     if (
-  //       [...document.getElementById("team-" + i).classList].includes(
-  //         "selected-background"
-  //       ) === true
-  //     ) {
-  //       teamId = teams[parseInt(i)].id;
-  //       break;
-  //     }
-  //   }
-  //   console.log(teamId, tournamentId);
-  // }
-  function deleteClickedTeam(event) {
-    var teamId =
-      event.target.parentNode.parentNode.parentNode.getAttribute("id");
-    var teamIndex = teamId.split("-")[1];
-    teamId = teams[parseInt(teamIndex)].id;
-    deleteTeam({ teamId, teamIndex });
-  }
+  const handleErrorMessageSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorMessageSnackOpen(false);
+  };
+  console.log(rank, "rank is here");
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -332,8 +298,25 @@ export default function TournamentView() {
                   </span>
                 </div>
               </motion.div>
+              {rank !== undefined && rank !== null && rank.length > 0 ?
+                <motion.div initial={{ x: -500, y: -70 }} animate={{ x: 0 }} transition={{ duration: 0.4 }} className="user-rank-div">
+                  <span>
+                    Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team<b>&ensp;{rank[0].team.name}&ensp;</b> and points <b>&ensp;{rank[0].portfolio}</b>
+                  </span>
+                </motion.div> :
+                // <div className="user-rank-div">
+                //   <span>
+                //     Participate in tournament
+                //   </span>
+                // </div>
+                <></>}
+
               <div className="folioplay-tabs">
+<<<<<<< HEAD
                 <LeaderBoardTabs tournamentId={tournament.id}/>
+=======
+                <LeaderBoardTabs tournamentId={tournament.id} />
+>>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
               </div>
               <div
                 key={"enter-tournament"}
@@ -380,7 +363,7 @@ export default function TournamentView() {
                   </div>
 
                   <div className="all-teams">
-                    <div>
+                    <div style={{ padding: "0" }}>
                       {teams.map((team, index) => {
                         var clickedId = "team-" + index;
                         return (
@@ -391,7 +374,7 @@ export default function TournamentView() {
                           >
                             <div className="team">
                               <span
-                                className="font-size-20 font-weight-600"
+                                className="font-size-18 font-weight-600"
                                 style={{ color: "var(--grey-shade)" }}
                               >
                                 {team.name}
@@ -400,12 +383,11 @@ export default function TournamentView() {
                                 id="visible-coins"
                                 style={{ marginLeft: "auto" }}
                               >
-                                {/* <span style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }}><img src={require('../../../images/coinLogos/' + team.selectedCoins[0].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                         <span className="moved-coin-image-1" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[1].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span>
-                                                    <span className="moved-coin-image-2" style={{ display: 'inline-block', backgroundColor: "var(--white)", width: "40px", height: "40px", borderRadius: "100%" }} ><img src={require('../../../images/coinLogos/' + team.selectedCoins[2].symbol.toLowerCase() + '.png').default} width={40} height={40} style={{ borderRadius: "100%", border: "1px solid var(--dim-white)" }} /></span> */}
                                 <CheckCircleIcon
                                   className="select-team-button team-buttons"
-                                  onClick={() => selectTeam(clickedId)}
+                                  onClick={() =>
+                                    selectTeam(clickedId, teams, tournament)
+                                  }
                                   fontSize="large"
                                 />
                                 <PreviewIcon
@@ -441,10 +423,11 @@ export default function TournamentView() {
                                 />
                                 <DeleteIcon
                                   className="delete-team-button team-buttons ml-5"
-                                  onClick={(event) => deleteClickedTeam(event)}
+                                  onClick={(event) =>
+                                    deleteClickedTeam(event, teams, deleteTeam)
+                                  }
                                   fontSize="large"
                                 />
-                                {/* <div className="moved-coin-image-3" style={{ borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div> */}
                               </span>
                             </div>
                             <div
@@ -487,7 +470,16 @@ export default function TournamentView() {
                         fontWeight: "600",
                         fontSize: "17px",
                       }}
-                      onClick={() => joinTournament()}
+                      onClick={() =>
+                        joinTournament(
+                          user,
+                          tournament,
+                          teams,
+                          joinTournamentAPI,
+                          setErrorMessage,
+                          setErrorMessageSnackOpen
+                        )
+                      }
                     >
                       Continue
                     </Button>
@@ -500,7 +492,6 @@ export default function TournamentView() {
                         fontSize: "17px",
                       }}
                       onClick={(event) => {
-                        // document.querySelector' .preview-team-button').classList.add('display-none');
                         var allSelectButtons =
                           document.getElementsByClassName("select-team-button");
                         var allTeams = document.getElementsByClassName("team");
@@ -530,57 +521,64 @@ export default function TournamentView() {
                     >
                       Create New
                     </Button>
-                    <Snackbar
-                      open={snackOpen}
-                      autoHideDuration={3500}
-                      onClose={handleSnackClose}
-                    >
-                      <motion.div
-                        id="snack-bar-div"
-                        initial={{ y: 200 }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Alert
-                          id="team-creation-message"
-                          onClose={handleSnackClose}
-                          severity="error"
-                          sx={{ width: "100%" }}
-                        >
-                          Not sufficient balance
-                        </Alert>
-                      </motion.div>
-                    </Snackbar>
+
+
                   </div>
                 </div>
               </div>
             </div>
           </>
         )}
-        <Modal
-          open={teamViewOpen}
-          onClose={handleTeamViewClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          disableAutoFocus={true}
+        <Snackbar
+          open={balanceSnackOpen}
+          autoHideDuration={3500}
+          onClose={handleSnackClose}
         >
           <motion.div
-            id="modal-view"
-            initial={{ x: "50vw", y: "200vh" }}
-            animate={{ scale: 1, x: "50vw", y: "50vh" }}
-            transition={{ duration: 0.5 }}
+            id="snack-bar-div"
+            initial={{ y: 200 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <Box sx={style}></Box>
+            <Alert
+              id="team-creation-message"
+              onClose={handleSnackClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              Not sufficient balance
+            </Alert>
           </motion.div>
-        </Modal>
+        </Snackbar>
+        <Snackbar
+          open={errorMessageSnackOpen}
+          autoHideDuration={3000}
+          onClose={handleErrorMessageSnackClose}
+        >
+          <motion.div
+            initial={{ y: 200 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Alert
+              onClose={handleErrorMessageSnackClose}
+              severity={errorMessage.variant}
+              sx={{ width: "100%" }}
+            >
+              {errorMessage.message}
+            </Alert>
+          </motion.div>
+        </Snackbar>
       </div>
     );
   };
+
   const RightComponent = () => {
     return (
       <div id="tournament-view-page-image">
         <h1>Here's what you can win!</h1>
         <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3>
+
       </div>
     );
   };

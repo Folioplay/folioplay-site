@@ -1,7 +1,7 @@
 export const coinTosymbol = {
     aave: "aave",
     "binance coin": "BNB",
-    bitcoin: "xbt",
+    bitcoin: "btc",
     "bitcoin cash": "bch",
     cardano: "ada",
     chainlink: "link",

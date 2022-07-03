@@ -1,6 +1,6 @@
 .folioplay-left-view {
-    width: 450px;
-    flex: 0 0 450px;
+    width: 28.125em;
+    flex: 0 0 28.125em;
     background-color: var(--violet-blue);
     height: 100vh;
     display: flex;

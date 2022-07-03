@@ -5,12 +5,12 @@
 
 .coins {
     width: 100%;
-    min-height: 82%;
+    min-height: 87%;
     background-color: var(--white);
     /* padding-top: 1.25em; */
     padding-bottom: 1.25em;
     overflow-y: scroll;
-    scrollbar-width: none;
+    scrollbar-width: none;  
 }
 
 .coin-card-wrapper {
@@ -106,7 +106,7 @@
 
 #cross-modal {
     position: relative;
-    transform: translate(-50%, -270px);
+    transform: translate(500%, -260px);
     font-size: 40px;
     color: var(--dim-white);
     transition: all 0.2s ease-in-out;
@@ -114,7 +114,8 @@
 }
 
 #cross-modal:hover {
-    font-size: 60px;
+    /* font-size: 50px;  */
+    transform: translate(500%, -260px) scale(1.1);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
@@ -148,3 +149,77 @@
 .tip-div span {
     color: var(--grey-shade);
 }
+.bucket-preview{
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.coin-preview{
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    box-shadow: inset 0px 2px 44px rgba(0, 0, 0, 0.45);
+    border-radius: 100%;
+}
+.team-preview{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin-left: 10em;
+    /* align-content: center; */
+}
+.error-cannot-add-coin{
+    width: 20.5em;
+    height: 3.5em;
+    padding-left: 10px;
+    padding-right:10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #d32f2f;
+    position: fixed;
+    bottom:1.5em;
+    left: 1.5em;
+    visibility: hidden;
+    color: white;
+    border-radius: 3px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+.show{
+    visibility: visible;
+    animation: fadein 0.5s,fadeout 0.5s 1.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 1.5em; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 1.5em; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 1.5em; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 1.5em; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  .disabled-button{
+    color:grey !important;
+    border: 1px solid grey !important;
+  }

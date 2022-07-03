@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import { useNavigate } from "react-router-dom";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import { motion } from "framer-motion/dist/framer-motion";
-import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import saveTeam from "../common/saveTeam";
+import selectRank from "../common/selectRank";
 import { createTeam } from "../../../APIS/apis";
+import TeamPreview from "../../TeamCreation/common/TeamPreview";
+import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import "../style/index.css";
-export function AssignRole() {
-  const teamCoins = [
-    "Cardano",
-    "Litecoin",
-    "PolkaDot",
-    "Chainlink",
-    "Stellar",
-    "1inch",
-    "Monero",
-    "AAVE",
-    "Uniswap",
-    "NEO",
-  ];
+export function AssignRole({teams}) {
   const navigate = new useNavigate();
   const [nameSnackOpen, setNameSnackOpen] = useState(false);
   const [successSnackOpen, setSuccessSnackOpen] = useState(false);
@@ -36,6 +25,8 @@ export function AssignRole() {
     if (reason === "clickaway") {
       return;
     }
+
+    console.log("name snack")
     setNameSnackOpen(false);
   };
   const handleSuccessSnackClose = (event, reason) => {
@@ -44,12 +35,15 @@ export function AssignRole() {
     }
     setSuccessSnackOpen(false);
   };
+
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+
   superstars = JSON.parse(window.localStorage.getItem("superstars"));
   mooning = JSON.parse(window.localStorage.getItem("mooning"));
   rekt = JSON.parse(window.localStorage.getItem("rekt"));
+
   for (var i = 0; i < superstars.length; i++) {
     if (superstars[i].selected) coins.push(superstars[i]);
   }
@@ -62,121 +56,56 @@ export function AssignRole() {
   for (var i = 0; i < coins.length; i++) {
     finalRanks.set("" + coins[i].name.toLowerCase(), -1);
   }
-  // if (superstars.length < 1 || superstars.length > 2 || mooning.length < 4 || mooning.length > 8 || rekt.length < 3 || rekt.length > 6) {
-  //     return (
-  //         <div>
-  //             Select coins First.
-  //         </div>
-  //     );
-  // }
-  const selectRank = (event) => {
-    const rank = event.target.innerText;
-    var coinClicked = event.target.parentElement.id;
-    var coinClickedName = coinClicked.split("-")[1];
-    var allChoicesClickedCoin = document.querySelectorAll(
-      "#" + coinClicked + " .rank-choices"
-    );
-    var allChoices = document.getElementsByClassName("rank-choices");
-    for (var i = 0; i < allChoices.length; i++) {
-      if (allChoices[i].innerText === rank) {
-        allChoices[i].classList.remove("isselected");
+  useEffect(() => {
+    for (var j = 0; j < superstars.length; j++) {
+      var bucketPreview = document.getElementsByClassName("superstars-preview");
+      if (superstars[j].selected) {
+        for (var i = 0; i < bucketPreview.length; i++) {
+          if (bucketPreview[i].childElementCount === 0) {
+            var coinImage = document.createElement('img');
+            coinImage.src = require('../../../images/coinLogos/' + coinTosymbol[superstars[j].name.toLowerCase()].toLowerCase() + ".png").default;
+            coinImage.width = "80";
+            coinImage.height = "80";
+            coinImage.id = superstars[j].name + "-preview";
+            bucketPreview[i].appendChild(coinImage);
+            break;
+          }
+        }
       }
     }
-    for (var i = 0; i < allChoicesClickedCoin.length; i++) {
-      if ([...allChoicesClickedCoin[i].classList].includes("isselected")) {
-        document.getElementById(
-          "coin-rank-" + allChoicesClickedCoin[i].innerText
-        ).src = require("../../../images/default.png").default;
-        allChoicesClickedCoin[i].classList.remove("isselected");
+    for (var j = 0; j < mooning.length; j++) {
+      var bucketPreview = document.getElementsByClassName("mooning-preview");
+      if (mooning[j].selected) {
+        for (var i = 0; i < bucketPreview.length; i++) {
+          if (bucketPreview[i].childElementCount === 0) {
+            var coinImage = document.createElement('img');
+            coinImage.src = require('../../../images/coinLogos/' + coinTosymbol[mooning[j].name.toLowerCase()].toLowerCase() + ".png").default;
+            coinImage.width = "80";
+            coinImage.height = "80";
+            coinImage.id = mooning[j].name + "-preview";
+            bucketPreview[i].appendChild(coinImage);
+            break;
+          }
+        }
       }
     }
-
-    finalRanks[coinClickedName] = parseInt(rank);
-
-    event.target.classList.toggle("isselected");
-    for (var i = 0; i < coins.length; i++) {
-      if (
-        coinClickedName !== coins[i].name.toLowerCase() &&
-        finalRanks[coins[i].name.toLowerCase()] === parseInt(rank)
-      ) {
-        finalRanks[coins[i].name.toLowerCase()] = -1;
-        document.getElementById(
-          "coin-" + coins[i].name.toLowerCase()
-        ).childNodes[1].childNodes[2].innerText = "10000";
-      }
-      if (finalRanks[coins[i].name.toLowerCase()] === 1) {
-        document.getElementById("coin-rank-1").src =
-          require("../../../images/coinLogos/" +
-            coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
-            ".png").default;
-        document.getElementById(
-          "coin-" + coins[i].name.toLowerCase()
-        ).childNodes[1].childNodes[2].innerText = "20000";
-      }
-      if (finalRanks[coins[i].name.toLowerCase()] === 2) {
-        document.getElementById("coin-rank-2").src =
-          require("../../../images/coinLogos/" +
-            coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
-            ".png").default;
-        document.getElementById(
-          "coin-" + coins[i].name.toLowerCase()
-        ).childNodes[1].childNodes[2].innerText = "17500";
-      }
-      if (finalRanks[coins[i].name.toLowerCase()] === 3) {
-        document.getElementById("coin-rank-3").src =
-          require("../../../images/coinLogos/" +
-            coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
-            ".png").default;
-        document.getElementById(
-          "coin-" + coins[i].name.toLowerCase()
-        ).childNodes[1].childNodes[2].innerText = "15000";
+    for (var j = 0; j < rekt.length; j++) {
+      var bucketPreview = document.getElementsByClassName("rekt-preview");
+      if (rekt[j].selected) {
+        for (var i = 0; i < bucketPreview.length; i++) {
+          if (bucketPreview[i].childElementCount === 0) {
+            var coinImage = document.createElement('img');
+            coinImage.src = require('../../../images/coinLogos/' + coinTosymbol[rekt[j].name.toLowerCase()].toLowerCase() + ".png").default;
+            coinImage.width = "80";
+            coinImage.height = "80";
+            coinImage.id = rekt[j].name + "-preview";
+            bucketPreview[i].appendChild(coinImage);
+            break;
+          }
+        }
       }
     }
-  };
-  function saveTeam(event) {
-    event.preventDefault();
-    var rankAssigned = 0;
-    var selectedCoins = [];
-    for (var i = 0; i < coins.length; i++) {
-      coins[i]["rank"] =
-        finalRanks[coins[i].name.toLowerCase() + ""] === undefined
-          ? -1
-          : finalRanks[coins[i].name.toLowerCase() + ""];
-      selectedCoins.push({
-        name: coins[i].name,
-        rank: coins[i]["rank"],
-        symbol: coins[i].symbol,
-        category: coins[i].category,
-      });
-      if (coins[i]["rank"] !== -1) {
-        rankAssigned++;
-      }
-    }
-    console.log(rankAssigned);
-    if (rankAssigned !== 3) {
-      setError("Assign all three roles to coins.");
-      setNameSnackOpen(true);
-      return;
-    }
-    // api
-    var name = document.getElementById("team-name").value;
-    if (name !== null && name !== undefined && name.length > 0) {
-      createTeam({ selectedCoins: selectedCoins, name: name });
-      setSuccessSnackOpen(true);
-      setTimeout(() => {
-        if ("superstars" in window.localStorage)
-          window.localStorage.removeItem("superstars");
-        if ("mooning" in window.localStorage)
-          window.localStorage.removeItem("mooning");
-        if ("rekt" in window.localStorage)
-          window.localStorage.removeItem("rekt");
-        navigate(-2);
-      }, 2000);
-    } else {
-      setError("Team name can't be empty.");
-      setNameSnackOpen(true);
-    }
-  }
+  }, []);
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -186,13 +115,23 @@ export function AssignRole() {
             className="mb-5 pl-5 pr-5"
             placeholder="Enter Team Name"
             required
+            maxlength="15"
           ></input>
           <div id="save-team-button">
             <Button
               variant="contained"
               style={{ backgroundColor: "var(--golden)", borderRadius: "8px" }}
               onClick={(event) => {
-                saveTeam(event);
+                saveTeam(
+                  event,
+                  coins,
+                  finalRanks,
+                  setError,
+                  setNameSnackOpen,
+                  setSuccessSnackOpen,
+                  createTeam,
+                  navigate
+                );
               }}
             >
               Save Team
@@ -258,18 +197,18 @@ export function AssignRole() {
                   <span className="ml-15">
                     {coin.name}
                     <br />
-                    <span className="allocation font-size-12">10000</span>
+                    <span className="allocation font-size-12">10000</span> $
                   </span>
                   <span
                     className="rank-choices mr-5 ml-auto"
-                    onClick={selectRank}
+                    onClick={(event) => selectRank(event, coins, finalRanks)}
                   >
                     1
                   </span>
-                  <span className="rank-choices mr-5" onClick={selectRank}>
+                  <span className="rank-choices mr-5" onClick={(event) => selectRank(event, coins, finalRanks)}>
                     2
                   </span>
-                  <span className="rank-choices" onClick={selectRank}>
+                  <span className="rank-choices" onClick={(event) => selectRank(event, coins, finalRanks)}>
                     3
                   </span>
                 </motion.div>
@@ -326,8 +265,11 @@ export function AssignRole() {
   const RightComponent = () => {
     return (
       <div id="team-create-page-image">
-        <h1>Here's what you can win!</h1>
-        <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3>
+        <div>
+          <h1>Team Preview</h1>
+          {/* <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3> */}
+        </div>
+        <TeamPreview superstars={superstars} mooning={mooning} rekt={rekt} />
       </div>
     );
   };

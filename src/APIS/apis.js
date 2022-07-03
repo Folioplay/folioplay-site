@@ -19,13 +19,19 @@ export async function getAllCoins() {
 }
 
 export async function getAuthToken(walletAddress, walletSignature, email) {
-    return await fetch(`${SERVER}/user/login`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ walletAddress: walletAddress, signature: walletSignature, email: email })
+  return await fetch(`${SERVER}/user/login`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ walletAddress: walletAddress, signature: walletSignature, email: email })
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      localStorage.removeItem("authtoken")
+      localStorage.setItem("authtoken", data.accessToken)
     })
+<<<<<<< HEAD
         .then((res) => {
           if(!res.ok) throw 'Invalid user';
           else return res.json();
@@ -34,6 +40,8 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
             localStorage.removeItem("authtoken")
             localStorage.setItem("authtoken", data.accessToken)
         })
+=======
+>>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
 }
 export async function getAllUserTeams() {
   return await fetch(`${SERVER}/teams/`, {
@@ -70,6 +78,7 @@ export async function getLeaderboard(tournament_id) {
     },
   }).then((res) => res.json());
 }
+
 export async function createTeam({ selectedCoins, name }) {
   const authtoken = localStorage.getItem("authtoken");
 
@@ -85,6 +94,7 @@ export async function createTeam({ selectedCoins, name }) {
     }),
   }).then((res) => res.json());
 }
+
 export async function deleteTeam({ teamId, teamIndex }) {
   const authtoken = localStorage.getItem("authtoken");
 
@@ -99,6 +109,7 @@ export async function deleteTeam({ teamId, teamIndex }) {
   });
 }
 
+<<<<<<< HEAD
 export async function joinValidTournamentAPI(tournamentId, teamId) {
   return await fetch(`${SERVER}/tournament/join/is_valid`, {
     method: "POST",
@@ -128,4 +139,14 @@ export async function validUser() {
         else return res.json();
       })
       .catch((err) => err);
+=======
+export async function getRank({ tournamentId }) {
+  const authtoken = localStorage.getItem('authtoken');
+  return await fetch(`${SERVER}/tournament/rank/` + tournamentId + "/", {
+    method: "GET",
+    headers: {
+      'x-access-token': authtoken
+    }
+  }).then((res) =>  res.json());
+>>>>>>> cb22905 (Restructured, leaderboard api,status api,rank api connected.)
 }
