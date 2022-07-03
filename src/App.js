@@ -29,15 +29,15 @@ function App() {
       const { isAuthenticated, isInitialized } = useMoralis();
       console.log("login route ", isAuthenticated);
       if (isAuthenticated && isInitialized) {
-        //   const redirectBuffer = () =>{
-        //       window.location.pathname="tournaments";
-        //   }
-        //   setTimeout(redirectBuffer, 1000);
-        // return <Navigate to="/tournaments" />;
+        return <Navigate to="/tournaments" />;
       }
       return children;
   }
-
+//   const redirectBuffer = () =>{
+        //       window.location.pathname="tournaments";
+        //   }
+        //   setTimeout(redirectBuffer, 1000);
+        // return
 
   return (
     <div className="App">
@@ -46,9 +46,9 @@ function App() {
           <Route exact path="/" element={<LoginRoute><LoginPage /></LoginRoute>} />
             <Route exact path="/tournaments" element={
                 <AuthenticatedRoute>
-                    <AuthContextProvider>
+                    {/*<AuthContextProvider>*/}
                         <Tournaments />
-                    </AuthContextProvider>
+                    {/*</AuthContextProvider>*/}
                 </AuthenticatedRoute>
             } />
           <Route exact path="/tournaments/:tournamentId" element={

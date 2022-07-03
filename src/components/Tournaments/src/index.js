@@ -3,9 +3,9 @@ import FolioplayBar from "../../FolioplayBar/src";
 import { Button, LinearProgress } from "@mui/material";
 import ReactLoading from "react-loading";
 import {
-  getAllUserTeams,
-  deleteTeam,
-  joinTournamentAPI,
+    getAllUserTeams,
+    deleteTeam,
+    joinTournamentAPI, getAuthToken,
 } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
@@ -23,9 +23,26 @@ import deleteClickedTeam from "../common/deleteClickedTeam";
 import selectTeam from "../common/selectTeam";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
+import {useMoralis} from "react-moralis";
 
 
 export default function Tournaments() {
+
+    const { user, isAuthenticated } = useMoralis();
+
+    useEffect(()=>{
+        async function authTokenGet(){
+            console.log("==========-------------authtoken get")
+            if(isAuthenticated && localStorage.getItem("authtoken")==null){
+                console.log("----------------------------sadasdasdasd")
+                await getAuthToken(user)
+            }
+        }
+        authTokenGet();
+    },[])
+
+
+
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];

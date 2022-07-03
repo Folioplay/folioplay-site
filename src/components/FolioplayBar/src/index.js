@@ -174,12 +174,6 @@ export default function FolioplayBar() {
             </ListItemIcon>
             Add Money
           </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Manage Transactions
-          </MenuItem>
         </Menu>
       </React.Fragment>
     </div>

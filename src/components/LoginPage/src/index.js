@@ -85,7 +85,7 @@ export default function LoginPage() {
 
     const metamaskLogin = async () => {
     if (!isAuthenticated) {
-        if(window.ethereum.networkVersion===137 && window.ethereum.isMetaMask) {
+        if(window.ethereum.networkVersion==="137" && window.ethereum.isMetaMask) {
             await authenticate()
                 .then(async (user) => {
                     await getAuthTokenFunction(user);
@@ -102,7 +102,7 @@ export default function LoginPage() {
             if(!window.ethereum.isMetaMask)
                 handleWalletClick();
             else{
-                if(window.ethereum.networkVersion!==137)
+                if(window.ethereum.networkVersion!=="137")
                     handleChainClick()
             }
         }
@@ -123,7 +123,7 @@ export default function LoginPage() {
         return(
             <Snackbar open={openChain} autoHideDuration={6000} onClose={handleChainClose}>
                 <Alert onClose={handleChainClose} severity="error" sx={{ width: '100%' }}>
-                    Connect your wallet to Matic mainnet.
+                    Connect your wallet to Matic mainnet. And refresh page.
                     <a target="_blank" href="https://decentralizedcreator.com/add-polygon-matic-network-to-metamask/#:~:text=To%20add%20manually%2C%20open%20your,and%20block%20explorer%20URL%20manually.">
                         Find more details on this link.
                     </a>
