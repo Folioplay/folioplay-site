@@ -23,6 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import joinTournament from "../common/joinTournament";
 import selectTeam from "../common/selectTeam";
+import { chooseTeamClose, chooseTeamOpen } from "../common/chooseTeamAnimations";
 import "../style/index.css";
 export default function TournamentView() {
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -52,12 +53,20 @@ export default function TournamentView() {
     console.log(data);
     setRank(data);
   }
+
   useEffect(() => {
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
     if ("mooning" in window.localStorage)
       window.localStorage.removeItem("mooning");
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
+    document.getElementsByClassName('overlay-div')[0].addEventListener('mouseup', function (event) {
+      var pol = document.getElementById('choose-team-div');
+      if (event.target != pol && event.target.parentNode != pol) {
+        chooseTeamClose();
+        return;
+      }
+    });
     fetchTournament();
     fetchTeams();
     fetchRank();
@@ -79,7 +88,6 @@ export default function TournamentView() {
     }
     setErrorMessageSnackOpen(false);
   };
-  console.log(rank, "rank is here");
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -131,19 +139,7 @@ export default function TournamentView() {
                       className="tournament-fee"
                       size="small"
                       onClick={() => {
-                        document
-                          .getElementById("choose-team-div")
-                          .classList.remove("animation-move-down");
-                        setTimeout(() => {
-                          document
-                            .getElementById("choose-team-div")
-                            .classList.add("animation-move-up");
-                        }, 100);
-                        setTimeout(() => {
-                          document
-                            .getElementById("choose-team-div")
-                            .classList.remove("display-none");
-                        }, 400);
+                        chooseTeamOpen();
                       }}
                     >
                       {tournament.entryFee} MGT
@@ -156,16 +152,14 @@ export default function TournamentView() {
                     style={{ backgroundColor: "var(--dim-white)" }}
                     value={seatsFilled}
                   />
-                  <span
-                    className="font-size-15"
-                    style={{
-                      minWidth: "100px",
-                      color: "var(--dark-dim-white)",
-                    }}
-                  >
-                    {tournament.filled_spots}/{tournament.total_spots} Spots
-                    Filled
-                  </span>
+                  <div className="spots-wrapper">
+                    <span className="font-size-12 font-weight-500 mt-5" style={{ color: "var(--golden)" }}>
+                      {tournament.total_spots - tournament.filled_spots} spots left
+                    </span>
+                    <span className="font-size-12 font-weight-500 mt-5" style={{ color: "var(--dark-dim-white)" }}>
+                      {tournament.total_spots} spots
+                    </span>
+                  </div>
                 </div>
               </motion.div>
               {rank !== undefined && rank !== null && rank.length > 0 ?
@@ -189,31 +183,19 @@ export default function TournamentView() {
                 id="choose-team-div"
                 className="display-none"
               >
-                <CancelIcon
+                {/* <CancelIcon
                   onClick={() => {
-                    document
-                      .getElementById("choose-team-div")
-                      .classList.remove("animation-move-up");
-                    setTimeout(() => {
-                      document
-                        .getElementById("choose-team-div")
-                        .classList.add("animation-move-down");
-                    }, 100);
-
-                    setTimeout(() => {
-                      document
-                        .getElementById("choose-team-div")
-                        .classList.add("display-none");
-                    }, 700);
+                    chooseTeamClose();
                   }}
                   style={{ color: "var(--grey-shade)" }}
                   fontSize="large"
                   id="cross-choose-team"
-                />
+                /> */}
+                <div className="choose-team-bar"></div>
                 <div id="all-teams-info">
                   <div>
                     <span
-                      className="font-size-25 font-weight-800 mb-10"
+                      className="font-size-25 font-weight-700 mb-10"
                       style={{ color: "var(--black)" }}
                     >
                       Choose Team
@@ -377,18 +359,31 @@ export default function TournamentView() {
                     >
                       Back
                     </Button>
-                    <Button
-                      style={{
-                        color: "var(--golden)",
-                        fontWeight: "600",
-                        fontSize: "17px",
-                      }}
-                      onClick={() => navigate("/teams/createteam")}
-                    >
-                      Create New
-                    </Button>
+                    {teams.length === 0 ?
+                      <Button
+                        variant="contained"
+                        id="new-team-type1"
+                        style={{
 
-
+                        }}
+                        onClick={() => navigate("/teams/createteam")}
+                      >
+                        Create New Team
+                      </Button>
+                      :
+                      <Button
+                        id="new-team-type2"
+                        style={{
+                          color: "var(--golden)",
+                          fontWeight: "600",
+                          fontSize: "15px",
+                          textTransform: "capitalize"
+                        }}
+                        onClick={() => navigate("/teams/createteam")}
+                      >
+                        Create New Team
+                      </Button>
+                    }
                   </div>
                 </div>
               </div>

@@ -16,9 +16,14 @@ import { AuthContext } from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
 import { useMoralis } from "react-moralis";
 import { ethers } from "ethers";
-
+import HomeIcon from '@mui/icons-material/Home';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import HistoryIcon from '@mui/icons-material/History';
+import LogoutIcon from '@mui/icons-material/Logout';
 export default function FolioplayBar() {
   const { logout, user } = useMoralis();
+  var icons = [<HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />, <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />, <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />]
+
   console.log(user);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,18 +82,15 @@ export default function FolioplayBar() {
         {["Home", "Tournaments", "Activity"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
-              {index % 2 === 0 ? (
-                <InboxIcon style={{ color: "var(--dim-white)" }} />
-              ) : (
-                <MailIcon style={{ color: "var(--dim-white)" }} />
-              )}
+              {icons[index]}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
+
         <ListItem button>
           <ListItemIcon>
-            <InboxIcon style={{ color: "var(--dim-white)" }} />
+            <LogoutIcon style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
           <ListItemText primary={"Logout"} onClick={logOut} />
         </ListItem>
@@ -120,7 +122,8 @@ export default function FolioplayBar() {
       >
         {list("left")}
       </Drawer>
-      <span className="font-weight-800 font-size-25">FolioPlay</span>
+      {/* <span className="font-weight-700 font-size-25">FolioPlay</span> */}
+      <img src={require('../../../images/FolioPlaySmall.svg').default} />
       <React.Fragment>
         <img
           id="folioplay-wallet"

@@ -6,7 +6,9 @@ import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
 import metamaskIcon from "../../../images/metamask.png";
 import walletconnectIcon from "../../../images/walletconnect.png";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useMoralis } from "react-moralis";
+import { makeStyles } from "@material-ui/core/styles";
 import { getAuthToken } from "../../../APIS/apis";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -18,6 +20,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function LoginPage() {
   const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout, isInitialized } = useMoralis();
   console.log(isAuthenticated, isAuthenticating, user, account);
+
+  useEffect(() => {
+    console.log("isauyth", isAuthenticated, isInitialized)
+    if (isAuthenticated && isInitialized)
+      window.location.pathname = "/tournaments";
+  }, [])
 
   const [email, setEmail] = useState("");
 
@@ -134,12 +142,17 @@ export default function LoginPage() {
 
 
   const web3AuthLogin = async () => {
+
     if (!isAuthenticated) {
+      console.log("not auth and i am in web3 auth");
       await authenticate({
         provider: "web3Auth",
         clientId: process.env.REACT_APP_WEB3AUTH_KEY,
-        chainId: 137,
-        theme: "dark",
+        chainId: 137
+      }).then((user) => {
+        console.log(user);
+        localStorage.setItem("walletType", "web3Auth");
+        // window.location.pathname = "/tournaments";
       })
           .then((user) => {
             localStorage.setItem("walletType", "web3Auth");
@@ -171,6 +184,11 @@ export default function LoginPage() {
 
 
   //Modal Section
+  const styles = makeStyles(theme => ({
+    textField: {
+      border: "1px solid white"
+    }
+  }))
   const CssTextField = withStyles({
     root: {
       '& label.Mui-focused': {
@@ -198,12 +216,18 @@ export default function LoginPage() {
       },
     },
   })(TextField);
-
+  const classes = styles();
   const LeftComponent = () => {
     return (
       <div id="folioplay-login-wrapper">
+        <span className="font-size-30 font-weight-700 mr-auto ml-auto" style={{ lineHeight: "40px", textAlign: "center", transform: "translateY(-50px)" }}>Continue using</span>
         <Button
-          id="folioplay-login-google-button"
+          style={{
+            marginLeft: "auto", marginRight: "auto",
+            width: "min(320px,100%)",
+            height: "45px"
+          }}
+          className="folioplay-login-google-button"
           variant="contained"
           onClick={web3AuthLogin}
         >
@@ -213,63 +237,67 @@ export default function LoginPage() {
         {/*<Button id="folioplay-login-meta-button" variant="contained">*/}
         {/*    <FacebookIcon className='mr-3' style={{ color: "var(--violet-blue)" }} />*/}
         {/*    Continue With Meta</Button>*/}
-        <h4 id="folioplay-text-separator-wrapper">
+        <h4 className="folioplay-text-separator-wrapper">
           <span>Or</span>
         </h4>
-        <h3 style={{ textAlign: "center" }}>Connect your web3 wallet</h3>
+        <div style={{ width: "100%", height: "30px" }}></div>
+        <h3 style={{ textAlign: "center" }} className="font-weight-500">Connect your web3 wallet</h3>
         <div className="folioplay-connect">
-          <div className="wallets" onClick={metamaskLogin}>
+          <Button
+            style={{
+              width: "min(320px,100%)",
+              height: "45px"
+            }}
+            className="folioplay-login-google-button mb-15"
+            variant="contained"
+            onClick={metamaskLogin}
+          >
             <img
-              className="mr-3"
+              className="mr-8"
               alt="metamask-icon"
               src={metamaskIcon}
-              width={"40px"}
-              height={"40px"}
-            />
-            <h5 className="mt-0 mb-10">MetaMask</h5>
-          </div>
-
-          <div className="wallets" onClick={walletConnectLogin}>
+              width={"24px"}
+              height={"22px"}
+            /> MetaMask
+          </Button>
+          <Button
+            style={{
+              width: "min(320px,100%)",
+              height: "45px"
+            }}
+            className="folioplay-login-google-button"
+            variant="contained"
+            onClick={walletConnectLogin}
+          >
             <img
-              className="mr-3"
-              alt="walletconnect-icon"
+              className="mr-8"
+              alt="metamask-icon"
               src={walletconnectIcon}
-              width={"40px"}
-              height={"40px"}
-            />
-            <h5 className="mt-0 mb-10">WalletConnect</h5>
-          </div>
-          {/* <div className='wallets'>
-                        <img className='mr-3' alt="terastation-icon" src={terastationIcon} width={"30px"} height={"30px"} />
-                        <h5 className='mt-0 mb-10'>TeraStation</h5>
-                    </div> */}
+              width={"24px"}
+              height={"24px"}
+            /> Wallet Connect
+          </Button>
         </div>
-        <h4 id="folioplay-text-separator-wrapper">
+        <div style={{ width: "100%", height: "20px" }}></div>
+        <h4 className="folioplay-text-separator-wrapper">
           <span>Or</span>
         </h4>
-        <CssTextField
-          type="email"
-          sx={{
-            input: { color: "var(--white)" },
-            label: { color: "var(--white)" },
-          }}
-          id="email-field"
-          label="Email address"
-          variant="standard"
-          style={{ marginBottom: "20px" }}
-          required
-        />
+        <div style={{ width: "100%", height: "30px" }}></div>
+        <label style={{ width: "min(320px,100%)" }} className="ml-auto mr-auto" htmlFor="email-field">Email ID</label>
+        <input type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" />
+
         <Button
           id="folioplay-login-mail-button"
           onClick={loginWithMail}
           variant="filled"
+          size="medium"
         >
-          Sign in via mail
+          Continue <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />
         </Button>
           {snackBarChangeWalletComponent()}
           {snackBarChangeChainComponent()}
         {/*<button onClick={logout}>logout</button>*/}
-      </div>
+      </div >
     );
   };
 
