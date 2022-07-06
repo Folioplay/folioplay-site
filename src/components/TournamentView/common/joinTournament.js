@@ -1,4 +1,7 @@
-export default async function joinTournament(user, tournament, teams, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen) {
+import checkNFTHolder from "./checkNFTHolder";
+import paymentTournament from "./paymentTournament";
+
+export default async function joinTournament(user, tournament, teams, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, account) {
   var teamId = "";
   const tournamentId = tournament.id;
   for (var i = 0; i < teams.length; i++) {
@@ -11,7 +14,8 @@ export default async function joinTournament(user, tournament, teams, joinTourna
       break;
     }
   }
-  // const NFTHolder = await checkNFTHolder();
+  // const NFTHolder = await checkNFTHolder(tournament.valid_nfts, account);
+  // console.log("NFTHolder",NFTHolder);
   //       if (!NFTHolder) {
   //           await paymentTournament(user,tournament);
   //       }

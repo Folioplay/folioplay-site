@@ -343,7 +343,8 @@ export default function TournamentView() {
                           teams,
                           joinTournamentAPI,
                           setErrorMessage,
-                          setErrorMessageSnackOpen
+                          setErrorMessageSnackOpen,
+                            user.attributes.accounts[0]
                         )
                       }
                     >

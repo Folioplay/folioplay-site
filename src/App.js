@@ -26,11 +26,11 @@ function App() {
   }
 
   function LoginRoute({ children }) {
-      const { isAuthenticated, isInitialized } = useMoralis();
-      console.log("login route ", isAuthenticated);
-      if (isAuthenticated && isInitialized) {
-        return <Navigate to="/tournaments" />;
-      }
+      // const { isAuthenticated, isInitialized } = useMoralis();
+      // console.log("login route ", isAuthenticated);
+      // if (isAuthenticated && isInitialized) {
+      //   return <Navigate to="/tournaments" />;
+      // }
       return children;
   }
 //   const redirectBuffer = () =>{
