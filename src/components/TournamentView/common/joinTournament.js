@@ -23,7 +23,7 @@ export default async function joinTournament(user, tournament, teams, joinTourna
   await joinTournamentAPI(tournamentId, teamId)
     .then((res) => {
       var status = res.statusCode;
-      if (status != 200) {
+      if (status !== 200) {
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "error" }));
         setErrorMessageSnackOpen(true);
       } else {
