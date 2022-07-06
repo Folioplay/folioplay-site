@@ -20,7 +20,7 @@
     padding-top: 2.75em;
 }
 
-.css-5xe99f-MuiLinearProgress-bar1 {
+.css-5xe99f-MuiLinearProgress-bar1 , .css-t752vm {
     background-color: var(--golden) !important;
 }
 
@@ -52,8 +52,8 @@
 
 .tournament-image {
     margin-right: 10px;
-    width: 2.5em;
-    height: 2.5em;
+    width: 3.125em;
+    height: 3.125em;
     border-radius: 100%;
     background-color: var(--dim-white);
 }
@@ -73,12 +73,13 @@
     align-items: center;
     margin-top: 30px;
     width: 100%;
-    height: 2em;
+    height: 2.5em;
     border-top: 1px solid var(--dim-white);
 
 }
 .tournament-reward span{
     display: flex;
+    align-items: center;
 }
 .tournaments-spots {
     width: 100%;
@@ -97,4 +98,8 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+.spots-wrapper{
+    display: flex;
+    justify-content: space-between;
 }

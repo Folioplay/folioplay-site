@@ -2,6 +2,7 @@ import checkNFTHolder from "./checkNFTHolder";
 import paymentTournament from "./paymentTournament";
 
 export default async function joinTournament(user, tournament, teams, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, account) {
+  document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
   var teamId = "";
   const tournamentId = tournament.id;
   for (var i = 0; i < teams.length; i++) {
@@ -33,5 +34,4 @@ export default async function joinTournament(user, tournament, teams, joinTourna
         }, 2000)
       }
     })
-    .catch((err) => console.log(err));
 }

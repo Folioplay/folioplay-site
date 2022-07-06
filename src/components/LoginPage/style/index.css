@@ -1,14 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
 #folioplay-login-wrapper {
-    width: 65%;
+    width: 80%;
     display: flex;
     flex-direction: column;
+    font-family: "poppins" !important;
 }
 
-#folioplay-login-google-button {
-    background-color: var(--white);
-    color: black;
-    margin-bottom: 10px;
-    text-transform: capitalize;
+.folioplay-login-google-button {
+    font-family:"poppins" !important;
+    background-color: var(--white) !important;
+    color: #071F36 !important;
+    margin-bottom: 10px !important;
+    text-transform: capitalize !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
 }
 
 #folioplay-login-meta-button {
@@ -18,7 +24,7 @@
     text-transform: capitalize;
 }
 
-#folioplay-text-separator-wrapper {
+.folioplay-text-separator-wrapper {
     width: 100%;
     text-align: center;
     color: rgb(188, 188, 188);
@@ -29,20 +35,19 @@
     margin-left: auto;
 }
 
-#folioplay-text-separator-wrapper span {
+.folioplay-text-separator-wrapper span {
     background: var(--violet-blue);
     padding: 0 10px;
 }
 
 .folioplay-connect {
-    margin-left: auto;
-    margin-right: auto;
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     /* flex-direction: column; */
     /* align-items: center; */
+    align-items: center;
     width: 100%;
-    padding: 0.675em;
     border-radius: 20px;
     transition: 0.3s all ease-in-out;
 }
@@ -67,12 +72,23 @@
 }
 
 #folioplay-login-mail-button {
+    max-width: 125px;
+    height: 40px;
     text-transform: capitalize;
     background-color: rgba(255, 255, 255);
     font-weight: 600;
-    color: rgb(82, 82, 82);
+    color: var(--white);
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    background: #FEA31B;
+    border-radius: 10px;
+    margin-left:auto;
+    margin-top: 1.5em;
 }
-
+#folioplay-login-mail-button :hover{
+    color:var(--dim-white) !important;
+}
 #folioplay-login-mail-button:hover {
     color: rgb(47, 47, 47);
 }
@@ -89,3 +105,57 @@
     background-position: center;
     background-size: cover;
 }
+#email-field{
+    width:min(100%,320px);
+    height: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+    border: 1px solid #D2E0EE;
+    border-radius: 2px;
+    font-family: "poppins";
+    font-size: 16px;
+}
+#email-field::-webkit-input-placeholder { /* WebKit browsers */
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    font-family:"poppins";
+    /* identical to box height, or 143% */
+
+    /* Neutral Colours / N500 */
+    color: #869EB6; /* 1em -> input font-size * 1 -> 40px * 1 = 40px */
+}
+
+#email-field:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    font-family:"poppins";
+    /* identical to box height, or 143% */
+
+    /* Neutral Colours / N500 */
+    color: #869EB6;
+}
+
+#email-field::-moz-placeholder { /* Mozilla Firefox 19+ */
+     font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    font-family:"poppins";
+    /* identical to box height, or 143% */
+
+    /* Neutral Colours / N500 */
+    color: #869EB6;
+}
+
+#email-field:-ms-input-placeholder { /* Internet Explorer 10+ */
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    font-family:"poppins";
+    /* identical to box height, or 143% */
+
+    /* Neutral Colours / N500 */
+    color: #869EB6;
+} 

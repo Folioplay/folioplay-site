@@ -3,9 +3,9 @@ import FolioplayBar from "../../FolioplayBar/src";
 import { Button, LinearProgress } from "@mui/material";
 import ReactLoading from "react-loading";
 import {
-    getAllUserTeams,
-    deleteTeam,
-    joinTournamentAPI, getAuthToken,
+  getAllUserTeams,
+  deleteTeam,
+  joinTournamentAPI, getAuthToken,
 } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
@@ -23,23 +23,24 @@ import deleteClickedTeam from "../common/deleteClickedTeam";
 import selectTeam from "../common/selectTeam";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import {useMoralis} from "react-moralis";
+import { useMoralis } from "react-moralis";
+import { chooseTeamClose, chooseTeamOpen } from "../common/chooseTeamAnimations";
 
 
 export default function Tournaments() {
 
-    const { user, isAuthenticated } = useMoralis();
+  const { user, isAuthenticated } = useMoralis();
 
-    useEffect(()=>{
-        async function authTokenGet(){
-            console.log("==========-------------authtoken get")
-            if(isAuthenticated && localStorage.getItem("authtoken")==null){
-                console.log("----------------------------sadasdasdasd")
-                await getAuthToken(user)
-            }
-        }
-        authTokenGet();
-    },[])
+  useEffect(() => {
+    async function authTokenGet() {
+      console.log("==========-------------authtoken get")
+      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+        console.log("----------------------------sadasdasdasd")
+        await getAuthToken(user)
+      }
+    }
+    authTokenGet();
+  }, [])
 
 
 
@@ -57,14 +58,14 @@ export default function Tournaments() {
   const pad = (num) => ("0" + num).slice(-2);
   const navigate = new useNavigate();
   var tournamentId;
-  const getTimeFromDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    let hours = date.getHours(),
-      minutes = date.getMinutes(),
-      seconds = date.getSeconds();
-    return pad(hours) + ":" + pad(minutes);
-  };
   useEffect(() => {
+    document.getElementsByClassName('overlay-div')[0].addEventListener('mouseup', function (event) {
+      var pol = document.getElementById('choose-team-div');
+      if (event.target != pol && event.target.parentNode != pol) {
+        chooseTeamClose();
+        return;
+      }
+    });
     fetchTournaments();
     fetchTeams();
   }, []);
@@ -87,6 +88,12 @@ export default function Tournaments() {
     const startDate = new Date(tournament.start_time);
     const finishDate = new Date(tournament.end_time);
     const currDate = new Date();
+    if (tournament.id === "62c45abedfe60c1bada2355f") {
+      tournament.imageURL = "../../../images/bulls.png";
+    }
+    if (tournament.id === "62c45a6ddfe60c1bada234a8") {
+      tournament.imageURL = "../../../images/justice.png";
+    }
     // console.log(startDate);
     return (
       <motion.div
@@ -98,12 +105,17 @@ export default function Tournaments() {
         className="tournament"
       >
         <div className="tournament-info">
-          <span className="tournament-image"></span>
+          <span className="tournament-image" style={{ borderRadius: "100%" }}>
+            {tournament.id === "62c45a6ddfe60c1bada234a8" ?
+              <img style={{ borderRadius: "100%" }} src={require("../../../images/bulls.png").default} width="50px" height={"50px"} />
+              : <> {tournament.id === "62c45abedfe60c1bada2355f" ?
+                <img style={{ borderRadius: "100%" }} src={require("../../../images/justice.png").default} width="50px" height={"50px"} />
+                : <></>}</>}</span>
           <span
             style={{ textAlign: "left" }}
             onClick={() => navigate(`/tournaments/${tournament._id}`)}
           >
-            {tournament.name}
+            <span style={{ color: "#071F36", fontWeight: "700" }}>{tournament.name}</span>
             <br />
             <span className="tournaments-spots">
               {tournament.live ? (
@@ -117,9 +129,8 @@ export default function Tournaments() {
               ) : (
                 <>
                   <span className="font-size-12">
-                    {startDate.getHours()} : {startDate.getMinutes() == 0 ? "00" : startDate.getMinutes()} hrs -{" "}
-                    {finishDate.getHours()} : {finishDate.getMinutes() == 0 ? "00" : finishDate.getMinutes()} hrs<br />
-                    {startDate.getDate()} {monthNames[startDate.getMonth()]} - {finishDate.getDate()}  {monthNames[finishDate.getMonth()]} {startDate.getFullYear()}
+                    {startDate.getDate()} {monthNames[startDate.getMonth()]}'{startDate.getFullYear() % 100},&ensp;{startDate.getHours() / 10 < 1 ? "0" + startDate.getHours() : startDate.getHours()} : {startDate.getMinutes() / 10 < 1 ? "0" + startDate.getMinutes() : startDate.getMinutes()} hrs -{" "}
+                    {finishDate.getHours() / 10 < 1 ? "0" + finishDate.getHours() : finishDate.getHours()} : {finishDate.getMinutes() / 10 < 1 ? "0" + finishDate.getMinutes() : finishDate.getMinutes()} hrs
                   </span>
                 </>
               )}
@@ -133,19 +144,7 @@ export default function Tournaments() {
                 event.target.parentNode.parentNode.getAttribute("id");
               tournamentId = tournamentId.split("-")[1];
               console.log(tournamentId);
-              document
-                .getElementById("choose-team-div")
-                .classList.remove("animation-move-down");
-              setTimeout(() => {
-                document
-                  .getElementById("choose-team-div")
-                  .classList.add("animation-move-up");
-              }, 100);
-              setTimeout(() => {
-                document
-                  .getElementById("choose-team-div")
-                  .classList.remove("display-none");
-              }, 400);
+              chooseTeamOpen();
             }}
           >
             {tournament.entryFee} MGT
@@ -157,15 +156,21 @@ export default function Tournaments() {
             style={{ backgroundColor: "var(--dim-white)" }}
             value={seatsFilled}
           />
-          <span style={{ minWidth: "100px", color: "var(--dark-dim-white)" }}>
-            {tournament.filled_spots}/{tournament.total_spots} Spots Filled
-          </span>
+          <div className="spots-wrapper">
+            <span className="font-size-12 font-weight-500 mt-5" style={{ color: "var(--golden)" }}>
+              {tournament.total_spots - tournament.filled_spots} spots left
+            </span>
+            <span className="font-size-12 font-weight-500 mt-5" style={{ color: "var(--dark-dim-white)" }}>
+              {tournament.total_spots} spots
+            </span>
+          </div>
         </div>
         <div className="tournament-reward">
           <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span>
-          <span>
+          <span className="font-size-12">
             <EmojiEventsOutlinedIcon />
-            {tournament.reward} MGT
+            {/* {tournament.reward} MGT */}
+            <span>1000 MGT</span>
           </span>
         </div>
       </motion.div>
@@ -183,13 +188,14 @@ export default function Tournaments() {
             marginBottom: "40px",
           }}
         >
-          <span className="font-weight-800 font-size-30">Welcome</span>
+          <span className="font-weight-700 font-size-30">Welcome</span>
           <br />
           <span style={{ letterSpacing: "1px" }}>
             Time to turn the tables with your skills
           </span>
         </div>
         <div className="tournaments-wrapper">
+          <span className="font-size-15 font-weight-500 mr-auto ml-20 mb-20" style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}>Trendings</span>
           {tournaments.length === 0 ? (
             <div className="loading-component">
               <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
@@ -202,31 +208,19 @@ export default function Tournaments() {
             id="choose-team-div"
             className="display-none"
           >
-            <CancelIcon
+            {/* <CancelIcon
               onClick={() => {
-                document
-                  .getElementById("choose-team-div")
-                  .classList.remove("animation-move-up");
-                setTimeout(() => {
-                  document
-                    .getElementById("choose-team-div")
-                    .classList.add("animation-move-down");
-                }, 100);
-
-                setTimeout(() => {
-                  document
-                    .getElementById("choose-team-div")
-                    .classList.add("display-none");
-                }, 700);
+                chooseTeamClose();
               }}
               style={{ color: "var(--grey-shade)" }}
               fontSize="large"
               id="cross-choose-team"
-            />
+            /> */}
+            <div className="choose-team-bar"></div>
             <div id="all-teams-info">
               <div>
                 <span
-                  className="font-size-25 font-weight-800 mb-10"
+                  className="font-size-25 font-weight-700 mb-10"
                   style={{ color: "var(--black)" }}
                 >
                   Choose Team
@@ -376,16 +370,30 @@ export default function Tournaments() {
                 >
                   Back
                 </Button>
-                <Button
-                  style={{
-                    color: "var(--golden)",
-                    fontWeight: "600",
-                    fontSize: "17px",
-                  }}
-                  onClick={() => navigate("/teams/createteam")}
-                >
-                  Create New
-                </Button>
+                {teams.length === 0 ?
+                  <Button
+                    variant="contained"
+                    id="new-team-type1"
+                    style={{
+
+                    }}
+                    onClick={() => navigate("/teams/createteam")}
+                  >
+                    Create New Team
+                  </Button>
+                  :
+                  <Button
+                    style={{
+                      color: "var(--golden)",
+                      fontWeight: "600",
+                      fontSize: "15px",
+                      textTransform: "capitalize"
+                    }}
+                    onClick={() => navigate("/teams/createteam")}
+                  >
+                    Create New Team
+                  </Button>
+                }
               </div>
             </div>
           </div>
@@ -415,18 +423,12 @@ export default function Tournaments() {
   const RightComponent = () => {
     return (
       <div id="tournament-page-image">
-        <h1
-          style={{
-            letterSpacing: "2px",
-            fontSize: "2.7rem",
-            fontWeight: "900",
-          }}
-        >
+        <span className="font-size-36 font-weight-700 mb-0">
           Let the game begin!
-        </h1>
-        <h3 style={{ letterSpacing: "2px" }}>
+        </span>
+        <span className="font-size-20 font-weight-500 mt-0" style={{ letterSpacing: "1px" }}>
           Choose a contest to start playing...
-        </h3>
+        </span>
       </div>
     );
   };

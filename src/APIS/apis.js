@@ -19,6 +19,7 @@ export async function getAllCoins() {
 }
 
 export async function getAuthToken(walletAddress, walletSignature, email) {
+  console.log("getting auth token");
   return await fetch(`${SERVER}/user/login`, {
     method: "POST",
     headers: {
