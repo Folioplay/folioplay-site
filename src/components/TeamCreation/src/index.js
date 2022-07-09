@@ -73,7 +73,6 @@ export function TeamCreation() {
     setCoins(await getAllCoins());
   }
   useEffect(() => {
-    console.log("fetching coins......");
     localStorage.removeItem("superstars");
     localStorage.removeItem("mooning");
     localStorage.removeItem("rekt");
@@ -117,20 +116,13 @@ export function TeamCreation() {
   }
 
   useEffect(() => {
-    console.log("preserved view");
     preservedView(wasActiveTab, superstars, mooning, rekt);
     var coinsLimit = wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 8 : 5;
     var allButtons = document.querySelectorAll("#" + wasActiveTab + " .coin-add-button");
-    console.log(document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length, coinsLimit);
-    console.log(allButtons[0]);
     if (document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length >= coinsLimit) {
-      console.log("if condition");
       for (var i = 0; i < allButtons.length; i++) {
         if (allButtons[i].innerText === "ADD") {
-          console.log("add button");
-          console.log(allButtons[i].classList)
           allButtons[i].classList.add("disabled-button");
-          console.log(allButtons[i].classList)
         }
       }
     }
@@ -141,8 +133,8 @@ export function TeamCreation() {
       <Grid
         style={{ color: "var(--black)" }}
         container
-        rowSpacing={5}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        rowSpacing={"1em"}
+      // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {superstars.map((coin, index) => {
           return (
@@ -153,19 +145,17 @@ export function TeamCreation() {
                 transition={{ duration: 0.07 * index }}
                 className="coin-card"
               >
-                <img
-                  src={
-                    require("../../../images/coinLogos/" +
-                      coin.symbol.toLowerCase() +
-                      ".png").default
-                  }
-                  onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
-                  width="40px"
-                  height="40px"
-                />
+                <span className="coin-image-wrapper">
+                  <img
+                    src={process.env.REACT_APP_API_SERVER + coin.imageUrl}
+                    onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
+                    width="40px"
+                    height="40px"
+                  />
+                </span>
                 <span
                   onClick={handleOpen}
-                  className="graph font-size-15 font-weight-700 mt-5 mb-10"
+                  className="graph font-size-15 font-weight-500 mt-5 mb-10"
                 >
                   {coin.name}
                 </span>
@@ -206,8 +196,8 @@ export function TeamCreation() {
       <Grid
         style={{ color: "var(--black)" }}
         container
-        rowSpacing={5}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        rowSpacing={"1em"}
+      // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {mooning.map((coin, index) => {
           return (
@@ -218,18 +208,18 @@ export function TeamCreation() {
                 transition={{ duration: 0.07 * index }}
                 className="coin-card"
               >
-                <img
-                  src={
-                    require("../../../images/coinLogos/" +
-                      coin.symbol.toLowerCase() +
-                      ".png").default
-                  }
-                  width="40px"
-                  height="40px"
-                />
+                <span className="coin-image-wrapper">
+                  <img
+                    src={
+                      process.env.REACT_APP_API_SERVER + coin.imageUrl
+                    }
+                    width="40px"
+                    height="40px"
+                  />
+                </span>
                 <span
                   onClick={handleOpen}
-                  className="graph font-size-15 font-weight-700 mt-5 mb-10"
+                  className="graph font-size-15 font-weight-500 mt-5 mb-10"
                 >
                   {coin.name}
                 </span>
@@ -270,8 +260,8 @@ export function TeamCreation() {
       <Grid
         style={{ color: "var(--black)" }}
         container
-        rowSpacing={5}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        rowSpacing={"1em"}
+      // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {rekt.map((coin, index) => {
           return (
@@ -282,18 +272,18 @@ export function TeamCreation() {
                 transition={{ duration: 0.07 * index }}
                 className="coin-card"
               >
-                <img
-                  src={
-                    require("../../../images/coinLogos/" +
-                      coin.symbol.toLowerCase() +
-                      ".png").default
-                  }
-                  width="40px"
-                  height="40px"
-                />
+                <span className="coin-image-wrapper">
+                  <img
+                    src={
+                      process.env.REACT_APP_API_SERVER + coin.imageUrl
+                    }
+                    width="40px"
+                    height="40px"
+                  />
+                </span>
                 <span
                   onClick={handleOpen}
-                  className="graph font-size-15 font-weight-700 mt-5 mb-10"
+                  className="graph font-size-15 font-weight-500 mt-5 mb-10"
                 >
                   {coin.name}
                 </span>
@@ -342,11 +332,10 @@ export function TeamCreation() {
             className="go-back-button"
             onClick={() => navigate(-1)}
           />
-          <span className="ml-20 font-size-25 font-weight-700">
+          <span className="ml-20 font-size-20 font-weight-700">
             Choose Coins
           </span>
         </div>
-        <br />
         <br />
         <div className="coin-classes mb-10">
           <span
@@ -370,13 +359,13 @@ export function TeamCreation() {
         <div className="coins">
           <div className="tip-div">
             <WbSunnyOutlinedIcon />
-            <span className="font-size-15 ml-8">
+            <span className="font-size-12 ml-8">
               TIP: Below players might show a steep increase <br />
               Select{" "}
               {wasActiveTab === "superstars" ? (
                 <>1 - 2</>
               ) : (
-                <>{wasActiveTab === "mooning" ? <>4-8</> : <>3-6</>}</>
+                <>{wasActiveTab === "mooning" ? <>3-6</> : <>3-6</>}</>
               )}{" "}
               from this bucket
             </span>
@@ -399,7 +388,7 @@ export function TeamCreation() {
           </div>
           <div className="assign-roles-div mt-20">
             <Button
-              style={{ borderRadius: "8px", backgroundColor: "var(--golden)" }}
+              id="assign-role-button"
               variant="contained"
               className="role-button ml-auto"
               onClick={() =>
@@ -465,7 +454,7 @@ export function TeamCreation() {
           </motion.div>
         </Modal>
         <div>
-          <h1>Team Preview</h1>
+          <span className="font-size-36 font-weight-700 mb-20 mt-20">Here is your team preview!</span>
           {/* <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3> */}
         </div>
         <TeamPreview superstars={superstars} mooning={mooning} rekt={rekt} />

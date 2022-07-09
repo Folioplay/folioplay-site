@@ -2,7 +2,7 @@ import { coinTosymbol } from '../../../CoinAndSymbols/symbols';
 export default function addCoin(event, wasActiveTab, superstars, mooning, rekt) {
 
   var checkArray = wasActiveTab === "superstars" ? superstars : (wasActiveTab === "mooning") ? mooning : rekt;
-  var coinsLimit = wasActiveTab === "superstars" ? 2 : (wasActiveTab === "mooning") ? 8 : 5;
+  var coinsLimit = wasActiveTab === "superstars" ? 2 : 6;
   const prevVal = event.target.innerText;
   const clickedCoin = event.target.previousSibling.innerText;
   const updateCoin = prevVal === "ADD" ? true : false;
@@ -52,8 +52,8 @@ export default function addCoin(event, wasActiveTab, superstars, mooning, rekt) 
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement('img');
           coinImage.src = require('../../../images/coinLogos/' + coinTosymbol[clickedCoin.toLowerCase()].toLowerCase() + ".png").default;
-          coinImage.width = "80";
-          coinImage.height = "80";
+          coinImage.width = "75";
+          coinImage.height = "75";
           coinImage.id = clickedCoin + "-preview";
           bucketPreview[i].appendChild(coinImage);
           break;

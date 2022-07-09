@@ -33,12 +33,6 @@ function App() {
     }
     return children;
   }
-  //   const redirectBuffer = () =>{
-  //       window.location.pathname="tournaments";
-  //   }
-  //   setTimeout(redirectBuffer, 1000);
-  // return
-
   return (
     <div className="App">
       <BrowserRouter>

@@ -57,11 +57,13 @@
     border-radius: 100%;
     background-color: var(--dim-white);
 }
-
+.disable-join-button{
+    background-color: var(--dark-dim-white) !important;
+}
 .tournament-fee {
     margin-left: auto !important;
     border-radius: 4px !important;
-    background-color: var(--golden) !important;
+    /* background-color: var(--golden) !important; */
     color: var(--white) !important;
 }
 

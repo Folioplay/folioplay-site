@@ -1,0 +1,97 @@
+#image-slider-wrapper{
+    width:95%;
+    height: 150px;
+    /* background-color: var(--dim-white); */
+    background: transparent;
+    border-radius: 8px;
+    display: flex;
+    transition: all 0.5s ease-in-out;
+    position: relative;
+}
+#indicators{
+    display: flex;
+    position: absolute;
+    color: var(--dark-dim-white) !important;
+    bottom: 2px; 
+    left: calc( (100% - 75px) / 2 );
+    transition: all 0.3s ease-in-out;
+    z-index: 5;
+    /* font-size: 20px !important; */
+}
+.active-image{
+    transform: scale(1.1);
+}
+.image-div img{
+    border-radius: 8px;
+}
+.image-div{
+    min-width: 100%;
+    height: 100%;
+    /* background-color: green; */
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+}
+.image-1{
+    /* background-color: yellow; */
+    /* animation: imageSlideForFirst 0.5s ease-in-out; */
+    /* transform: translateX(0px); */
+    border-radius: 8px;
+}
+.image-2{
+    /* background-color: red; */
+    /* transform: translateX(calc(-100% - 20px )); */
+    /* transform:translateX(0px); */
+    /* transition: all 0.5s ease-in-out; */
+    border-radius: 8px;
+}
+.image-3{
+    /* background-color: rgb(0, 0, 0); */
+    /* transform: translateX(calc(-100% - 20px )); */
+    /* transform:translateX(0px); */
+    /* transition: all 0.5s ease-in-out; */
+    border-radius: 8px;
+}
+.image-4{
+    /* background-color: rgb(117, 46, 179); */
+    /* transform: translateX(calc(-100% - 20px )); */
+    /* transform:translateX(0px); */
+    /* transition: all 0.5s ease-in-out; */
+    border-radius: 8px;
+}
+@keyframes imageSlide {
+    from {
+        transform:translateX(0px);
+
+    }
+    to{
+        transform:translateX(calc(-100% - 20px ));
+        /* transform:translateX(0px); */
+    }
+}
+.animation-image-out{
+    animation: imageSlideOut 0.5s ease-in-out;
+}
+.animation-image-in{
+    animation: imageSlide 0.5s ease-in-out;
+}
+.animation-image-first-in{
+    animation: imageSlideForFirst 0.5s ease-in-out;
+}
+@keyframes imageSlideOut {
+    from {
+        transform:translateX(0px);
+
+    }
+    to{
+        /* transform:translateX(calc(-100% - 20px )); */
+        transform:translateX(-100%);
+    }
+}
+@keyframes imageSlideForFirst {
+    from {
+        transform:translateX(100%);
+    }
+    to{
+        transform:translateX(0px);
+    }
+}

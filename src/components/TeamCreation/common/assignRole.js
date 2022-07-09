@@ -20,10 +20,10 @@ export default function assignRoles(superstars, mooning, rekt, setSnackOpen, nav
   if (
     selectedSuperstars.length < 1 ||
     selectedSuperstars.length > 2 ||
-    selectedMooning.length < 4 ||
-    selectedMooning.length > 8 ||
+    selectedMooning.length < 3 ||
+    selectedMooning.length > 6 ||
     selectedRekt.length < 3 ||
-    selectedRekt.length > 5 || selectedSuperstars.length + selectedMooning.length + selectedRekt.length !== 11
+    selectedRekt.length > 6 || selectedSuperstars.length + selectedMooning.length + selectedRekt.length !== 11
   ) {
     setSnackOpen(true);
     return;
