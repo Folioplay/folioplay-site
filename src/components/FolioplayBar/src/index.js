@@ -19,6 +19,7 @@ import { ethers } from "ethers";
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import HistoryIcon from '@mui/icons-material/History';
+import SecurityIcon from '@mui/icons-material/Security';
 import LogoutIcon from '@mui/icons-material/Logout';
 export default function FolioplayBar() {
   const { logout, user } = useMoralis();
@@ -77,22 +78,28 @@ export default function FolioplayBar() {
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
+      style={{ fontFamily: "poppins" }}
     >
-      <List>
+      <List style={{ fontFamily: "poppins" }}>
         {["Home", "Tournaments", "Activity"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {icons[index]}
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText style={{ fontFamily: "poppins" }} primary={text} />
           </ListItem>
         ))}
-
+        <ListItem button key={"policies"}>
+          <ListItemIcon>
+            <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"} />
+        </ListItem>
         <ListItem button>
           <ListItemIcon>
             <LogoutIcon style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText primary={"Logout"} onClick={logOut} />
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Logout"} onClick={logOut} />
         </ListItem>
       </List>
     </Box>

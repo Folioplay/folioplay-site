@@ -1,5 +1,4 @@
-
-export default async function joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournaments) {
+export default async function joinTournament(user, tournamentId, teams, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournament, tournaments, changeTournament) {
   document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
   var teamId = "";
   for (var i = 0; i < teams.length; i++) {
@@ -23,14 +22,27 @@ export default async function joinTournament(teams, tournamentId, joinTournament
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "error" }));
         setErrorMessageSnackOpen(true);
       } else {
-        for (var i = 0; i < tournaments.length; i++) {
-          if (tournaments[i].id === tournamentId) {
-            tournaments[i].filled_spots++;
+        // const prevSpots = document.getElementById(tournamentId + '-left-spots').innerText;
+        // document.getElementById(tournamentId + '-left-spots').innerText = parseInt(prevSpots) - 1;
+        // console.log(document.getElementById(tournamentId + '-left-spots').innerText);
+        if (changeTournament === false) {
+          tournament.filled_spots++;
+        } else {
+          for (var i = 0; i < tournaments.length; i++) {
+            if (tournaments[i].id === tournamentId) {
+              tournaments[i].filled_spots++;
+            }
           }
         }
+
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "success" }));
         setErrorMessageSnackOpen(true);
+        // setTimeout(() => {
+        //   window.location.pathname = `/tournaments/${tournamentId}`
+        // }, 2000)
       }
     })
-    .catch((err) => console.log(err));
 }
+
+
+

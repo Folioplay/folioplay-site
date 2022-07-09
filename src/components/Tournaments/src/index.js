@@ -24,26 +24,13 @@ import selectTeam from "../common/selectTeam";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { useMoralis } from "react-moralis";
+import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import { chooseTeamClose, chooseTeamOpen } from "../common/chooseTeamAnimations";
+import ImageSlider from "../../ImageSlider/src";
 
 
 export default function Tournaments() {
-
   const { user, isAuthenticated } = useMoralis();
-
-  useEffect(() => {
-    async function authTokenGet() {
-      console.log("==========-------------authtoken get")
-      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
-        console.log("----------------------------sadasdasdasd")
-        await getAuthToken(user)
-      }
-    }
-    authTokenGet();
-  }, [])
-
-
-
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
@@ -51,13 +38,21 @@ export default function Tournaments() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const status = { 3: { "value": "Completed", "color": "#ff000096" }, 1: { "value": "Closed", "color": "#ff000096" }, 0: { "value": "Open", "color": "#00ff00d6" }, 2: { "value": "Running", "color": "#00ff00d6" } }
-  const [tournaments, setTournaments] = useState([]);
-  const [teams, setTeams] = useState([]);
+  const [tournaments, setTournaments] = useState(undefined);
+  const [teams, setTeams] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState({ message: "", variant: "" });
   const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
   const pad = (num) => ("0" + num).slice(-2);
   const navigate = new useNavigate();
   var tournamentId;
+  useEffect(() => {
+    async function authTokenGet() {
+      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+        await getAuthToken(user)
+      }
+    }
+    authTokenGet();
+  }, [])
   useEffect(() => {
     document.getElementsByClassName('overlay-div')[0].addEventListener('mouseup', function (event) {
       var pol = document.getElementById('choose-team-div');
@@ -82,19 +77,39 @@ export default function Tournaments() {
     }
     setErrorMessageSnackOpen(false);
   };
-  const tournamentsList = tournaments.map((tournament, index) => {
+  var currImage = 1;
+  var allImages;
+  var len;
+  const [intervalId, setIntervalId] = useState(undefined);
+  useEffect(() => {
+    allImages = document.getElementsByClassName("image-div");
+    // console.log(allImages);
+    len = allImages.length;
+    // nextImage();
+    setIntervalId(setInterval(nextImage, 2000))
+  }, []);
+  function nextImage() {
+    var leftMargin = -1 * currImage * 100;
+    var buffer = -1 * currImage * 20;
+    // console.log(len);
+    if (currImage !== len) {
+      allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
+      // allImages[0].style = `margin-left:calc( ${leftMargin} + ${buffer}px )`;
+      currImage++;
+    } else {
+      allImages[0].style = `margin-left:0px`;
+      currImage = 1;
+    }
+    console.log(currImage);
+  }
+  const tournamentsList = tournaments ? tournaments.map((tournament, index) => {
     const seatsFilled =
       (100 * tournament.filled_spots) / tournament.total_spots;
     const startDate = new Date(tournament.start_time);
     const finishDate = new Date(tournament.end_time);
     const currDate = new Date();
-    if (tournament.id === "62c45abedfe60c1bada2355f") {
-      tournament.imageURL = "../../../images/bulls.png";
-    }
-    if (tournament.id === "62c45a6ddfe60c1bada234a8") {
-      tournament.imageURL = "../../../images/justice.png";
-    }
-    // console.log(startDate);
+    const disabledClass = tournament.status === 3 ? " disable-join-button" : "";
+    const disabledTournament = tournament.status === 3 ? true : false;
     return (
       <motion.div
         id={"tournament-" + tournament._id}
@@ -113,7 +128,7 @@ export default function Tournaments() {
                 : <></>}</>}</span>
           <span
             style={{ textAlign: "left" }}
-            onClick={() => navigate(`/tournaments/${tournament._id}`)}
+            onClick={() => { console.log("intervalId is here", intervalId); clearInterval(intervalId); navigate(`/tournaments/${tournament._id}`); }}
           >
             <span style={{ color: "#071F36", fontWeight: "700" }}>{tournament.name}</span>
             <br />
@@ -137,8 +152,9 @@ export default function Tournaments() {
             </span>
           </span>
           <Button
-            className="tournament-fee"
+            className={disabledClass + " tournament-fee"}
             size="small"
+            style={disabledTournament ? {} : { backgroundColor: "var(--golden)" }}
             onClick={(event) => {
               tournamentId =
                 event.target.parentNode.parentNode.getAttribute("id");
@@ -146,6 +162,7 @@ export default function Tournaments() {
               console.log(tournamentId);
               chooseTeamOpen();
             }}
+            disabled={disabledTournament}
           >
             {tournament.entryFee} MGT
           </Button>
@@ -175,12 +192,12 @@ export default function Tournaments() {
         </div>
       </motion.div>
     );
-  });
+  }) : <></>;
   const LeftComponent = () => {
     return (
       <div className="fullpage">
         <FolioplayBar />
-        <div
+        {/* <div
           style={{
             marginTop: "40px",
             textAlign: "left",
@@ -193,22 +210,23 @@ export default function Tournaments() {
           <span style={{ letterSpacing: "1px" }}>
             Time to turn the tables with your skills
           </span>
-        </div>
+        </div> */}
+        <ImageSlider />
         <div className="tournaments-wrapper">
           <span className="font-size-15 font-weight-500 mr-auto ml-20 mb-20" style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}>Trendings</span>
-          {tournaments.length === 0 ? (
+          {tournaments === undefined || tournaments.length === 0 || teams === undefined ? (
             <div className="loading-component">
               <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
             </div>
           ) : (
-            <>{tournamentsList}</>
-          )}
-          <div
-            key={"enter-tournament"}
-            id="choose-team-div"
-            className="display-none"
-          >
-            {/* <CancelIcon
+            <>{tournamentsList}
+              {/* <JoinTournamentDrawer user={user} teams={teams} tournamentId={tournamentId} joinTournamentAPI={joinTournamentAPI} setErrorMessage={setErrorMessage} setErrorMessageSnackOpen={setErrorMessageSnackOpen} tournament={{}} tournaments={tournaments} changeTournament={true} navigate={navigate} /> */}
+              <div
+                key={"enter-tournament"}
+                id="choose-team-div"
+                className="display-none"
+              >
+                {/* <CancelIcon
               onClick={() => {
                 chooseTeamClose();
               }}
@@ -216,187 +234,189 @@ export default function Tournaments() {
               fontSize="large"
               id="cross-choose-team"
             /> */}
-            <div className="choose-team-bar"></div>
-            <div id="all-teams-info">
-              <div>
-                <span
-                  className="font-size-25 font-weight-700 mb-10"
-                  style={{ color: "var(--black)" }}
-                >
-                  Choose Team
-                </span>
-                <br />
-                <span
-                  className="font-size-15 font-weight-500"
-                  style={{ color: "var(--grey-shade)" }}
-                >
-                  Select a team that you think should represent you in this
-                  contest.
-                </span>
-              </div>
+                <div className="choose-team-bar"></div>
+                <div id="all-teams-info">
+                  <div>
+                    <span
+                      className="font-size-25 font-weight-700 mb-10"
+                      style={{ color: "var(--black)" }}
+                    >
+                      Choose Team
+                    </span>
+                    <br />
+                    <span
+                      className="font-size-15 font-weight-500"
+                      style={{ color: "var(--grey-shade)" }}
+                    >
+                      Select a team that you think should represent you in this
+                      contest.
+                    </span>
+                  </div>
 
-              <div className="all-teams">
-                <div style={{ padding: "0" }}>
-                  {teams.map((team, index) => {
-                    var clickedId = "team-" + index;
-                    return (
-                      <div
-                        id={"team-" + index}
-                        className="mb-15"
-                        style={{ padding: "0", borderRadius: "12px" }}
-                      >
-                        <div className="team">
-                          <span
-                            className="font-size-18 font-weight-600"
-                            style={{ color: "var(--grey-shade)" }}
+                  <div className="all-teams">
+                    <div style={{ padding: "0" }}>
+                      {teams.map((team, index) => {
+                        var clickedId = "team-" + index;
+                        return (
+                          <div
+                            id={"team-" + index}
+                            className="mb-15"
+                            style={{ padding: "0", borderRadius: "12px" }}
                           >
-                            {team.name}
-                          </span>
-                          <span
-                            id="visible-coins"
-                            style={{ marginLeft: "auto" }}
-                          >
-                            <CheckCircleIcon
-                              className="select-team-button team-buttons"
-                              onClick={() => selectTeam(clickedId, teams)}
-                              fontSize="large"
-                            />
-                            <PreviewIcon
-                              className="preview-team-button team-buttons ml-5"
-                              fontSize="large"
-                              onClick={() => {
-                                console.log(
-                                  "#" + clickedId + " .select-team-button"
-                                );
-                                document.querySelector(
-                                  "#" + clickedId + " .select-team-button"
-                                ).style.display = "none";
-                                var allTeams =
-                                  document.getElementsByClassName("team");
-                                for (var i = 0; i < allTeams.length; i++) {
-                                  if (clickedId !== "team-" + i)
-                                    allTeams[i].classList.add("display-none");
-                                }
-                                document
-                                  .getElementById(clickedId)
-                                  .classList.remove("display-none");
-                                document
-                                  .getElementById(
-                                    "team-coins-" + clickedId.split("-")[1]
-                                  )
-                                  .classList.remove("display-none");
-                                document.getElementById(
-                                  "back-from-teamview-button"
-                                ).style.display = "block";
-                              }}
-                            />
-                            <DeleteIcon
-                              className="delete-team-button team-buttons ml-5"
-                              onClick={(event) => deleteClickedTeam(event, teams, deleteTeam)}
-                              fontSize="large"
-                            />
-                            {/* <div className="moved-coin-image-3" style={{ borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div> */}
-                          </span>
-                        </div>
-                        <div
-                          id={"team-coins-" + index}
-                          className="team-coins display-none"
-                        >
-                          {team.selectedCoins.map((coin, index) => {
-                            return (
-                              <div className="teamview-coin-card mr-10 ">
-                                <img
-                                  src={
-                                    require("../../../images/coinLogos/" +
-                                      coin.symbol.toLowerCase() +
-                                      ".png").default
-                                  }
-                                  width="40"
-                                  height="40"
+                            <div className="team">
+                              <span
+                                className="font-size-18 font-weight-600"
+                                style={{ color: "var(--grey-shade)" }}
+                              >
+                                {team.name}
+                              </span>
+                              <span
+                                id="visible-coins"
+                                style={{ marginLeft: "auto" }}
+                              >
+                                <CheckCircleIcon
+                                  className="select-team-button team-buttons"
+                                  onClick={() => selectTeam(clickedId, teams)}
+                                  fontSize="large"
                                 />
-                                <span className="font-size-12 font-weight-500">
-                                  {coin.name}
-                                </span>
-                                <span className="font-size-12 font-weight-500">
-                                  {coin.category}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
+                                <PreviewIcon
+                                  className="preview-team-button team-buttons ml-5"
+                                  fontSize="large"
+                                  onClick={() => {
+                                    console.log(
+                                      "#" + clickedId + " .select-team-button"
+                                    );
+                                    document.querySelector(
+                                      "#" + clickedId + " .select-team-button"
+                                    ).style.display = "none";
+                                    var allTeams =
+                                      document.getElementsByClassName("team");
+                                    for (var i = 0; i < allTeams.length; i++) {
+                                      if (clickedId !== "team-" + i)
+                                        allTeams[i].classList.add("display-none");
+                                    }
+                                    document
+                                      .getElementById(clickedId)
+                                      .classList.remove("display-none");
+                                    document
+                                      .getElementById(
+                                        "team-coins-" + clickedId.split("-")[1]
+                                      )
+                                      .classList.remove("display-none");
+                                    document.getElementById(
+                                      "back-from-teamview-button"
+                                    ).style.display = "block";
+                                  }}
+                                />
+                                <DeleteIcon
+                                  className="delete-team-button team-buttons ml-5"
+                                  onClick={(event) => deleteClickedTeam(event, teams, deleteTeam)}
+                                  fontSize="large"
+                                />
+                                {/* <div className="moved-coin-image-3" style={{ borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div> */}
+                              </span>
+                            </div>
+                            <div
+                              id={"team-coins-" + index}
+                              className="team-coins display-none"
+                            >
+                              {team.selectedCoins.map((coin, index) => {
+                                return (
+                                  <div className="teamview-coin-card mr-10 ">
+                                    <img
+                                      src={
+                                        require("../../../images/coinLogos/" +
+                                          coin.symbol.toLowerCase() +
+                                          ".png").default
+                                      }
+                                      width="40"
+                                      height="40"
+                                    />
+                                    <span className="font-size-12 font-weight-500">
+                                      {coin.name}
+                                    </span>
+                                    <span className="font-size-12 font-weight-500">
+                                      {coin.category}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-10" id="create-new-button-div">
+                    <Button
+                      variant="filled"
+                      id="jointournament-button"
+                      style={{
+                        backgroundColor: "var(--golden)",
+                        fontWeight: "600",
+                        fontSize: "17px",
+                      }}
+                      onClick={() => joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournaments)}
+                    >
+                      Continue
+                    </Button>
+                    <Button
+                      variant="filled"
+                      id="back-from-teamview-button"
+                      style={{
+                        backgroundColor: "var(--golden)",
+                        fontWeight: "600",
+                        fontSize: "17px",
+                      }}
+                      onClick={(event) => {
+                        var allSelectButtons =
+                          document.getElementsByClassName("select-team-button");
+                        var allTeams = document.getElementsByClassName("team");
+                        for (var i = 0; i < allSelectButtons.length; i++) {
+                          allSelectButtons[i].style.display = "inline-block";
+                        }
+                        console.log(allTeams);
+                        for (var i = 0; i < allTeams.length; i++) {
+                          allTeams[i].classList.remove("display-none");
+                          console.log("team-coins-" + i);
+                          document
+                            .getElementById("team-coins-" + i)
+                            .classList.add("display-none");
+                        }
+                        event.target.style.display = "none";
+                      }}
+                    >
+                      Back
+                    </Button>
+                    {teams.length === 0 ?
+                      <Button
+                        variant="contained"
+                        id="new-team-type1"
+                        style={{
+
+                        }}
+                        onClick={() => navigate("/teams/createteam")}
+                      >
+                        Create New Team
+                      </Button>
+                      :
+                      <Button
+                        style={{
+                          color: "var(--golden)",
+                          fontWeight: "600",
+                          fontSize: "15px",
+                          textTransform: "capitalize"
+                        }}
+                        onClick={() => navigate("/teams/createteam")}
+                      >
+                        Create New Team
+                      </Button>
+                    }
+                  </div>
                 </div>
               </div>
-              <div className="mt-10" id="create-new-button-div">
-                <Button
-                  variant="filled"
-                  id="jointournament-button"
-                  style={{
-                    backgroundColor: "var(--golden)",
-                    fontWeight: "600",
-                    fontSize: "17px",
-                  }}
-                  onClick={() => joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen)}
-                >
-                  Continue
-                </Button>
-                <Button
-                  variant="filled"
-                  id="back-from-teamview-button"
-                  style={{
-                    backgroundColor: "var(--golden)",
-                    fontWeight: "600",
-                    fontSize: "17px",
-                  }}
-                  onClick={(event) => {
-                    var allSelectButtons =
-                      document.getElementsByClassName("select-team-button");
-                    var allTeams = document.getElementsByClassName("team");
-                    for (var i = 0; i < allSelectButtons.length; i++) {
-                      allSelectButtons[i].style.display = "inline-block";
-                    }
-                    console.log(allTeams);
-                    for (var i = 0; i < allTeams.length; i++) {
-                      allTeams[i].classList.remove("display-none");
-                      console.log("team-coins-" + i);
-                      document
-                        .getElementById("team-coins-" + i)
-                        .classList.add("display-none");
-                    }
-                    event.target.style.display = "none";
-                  }}
-                >
-                  Back
-                </Button>
-                {teams.length === 0 ?
-                  <Button
-                    variant="contained"
-                    id="new-team-type1"
-                    style={{
-
-                    }}
-                    onClick={() => navigate("/teams/createteam")}
-                  >
-                    Create New Team
-                  </Button>
-                  :
-                  <Button
-                    style={{
-                      color: "var(--golden)",
-                      fontWeight: "600",
-                      fontSize: "15px",
-                      textTransform: "capitalize"
-                    }}
-                    onClick={() => navigate("/teams/createteam")}
-                  >
-                    Create New Team
-                  </Button>
-                }
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
         <Snackbar
           open={errorMessageSnackOpen}
@@ -411,7 +431,7 @@ export default function Tournaments() {
             <Alert
               onClose={handleErrorMessageSnackClose}
               severity={errorMessage.variant}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", fontFamily: "poppins" }}
             >
               {errorMessage.message}
             </Alert>

@@ -14,7 +14,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function LoginPage() {
@@ -37,108 +37,108 @@ export default function LoginPage() {
       apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
       network: "mainnet",
     })
-        .then(async (user) => {
-          await getAuthTokenFunction(user);
-          console.log(user);
-        })
-        .then(function () {
-          localStorage.setItem("walletType", "magicLink");
-          window.location.pathname = "/tournaments";
-        });
+      .then(async (user) => {
+        await getAuthTokenFunction(user);
+        console.log(user);
+      })
+      .then(function () {
+        localStorage.setItem("walletType", "magicLink");
+        window.location.pathname = "/tournaments";
+      });
   };
 
   const walletConnectLogin = async () => {
     if (!isAuthenticated) {
       localStorage.clear();
       await authenticate({ provider: "walletconnect", chainId: 137 })
+        .then(async (user) => {
+          await getAuthTokenFunction(user);
+          console.log(user);
+        })
+        .then(function () {
+          localStorage.setItem("walletType", "walletConnect");
+          window.location.pathname = "/tournaments";
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
+
+  //Snackbar Wallet component
+  const [openWallet, setOpenWallet] = useState(false);
+  const handleWalletClick = () => {
+    setOpenWallet(true);
+  };
+  const handleWalletClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenWallet(false);
+  };
+
+  //Snackbar Chain component
+  const [openChain, setOpenChain] = useState(false);
+  const handleChainClick = () => {
+    setOpenChain(true);
+  };
+  const handleChainClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenChain(false);
+  };
+
+
+
+  const metamaskLogin = async () => {
+    if (!isAuthenticated) {
+      if (window.ethereum.networkVersion === "137" && window.ethereum.isMetaMask) {
+        await authenticate()
           .then(async (user) => {
             await getAuthTokenFunction(user);
-            console.log(user);
           })
-          .then(function () {
-            localStorage.setItem("walletType", "walletConnect");
+          .then((user) => {
+            localStorage.setItem("walletType", "metamask");
             window.location.pathname = "/tournaments";
           })
           .catch(function (error) {
             console.log(error);
           });
-    }
-  };
-
-  //Snackbar Wallet component
-    const [openWallet, setOpenWallet] = useState(false);
-    const handleWalletClick = () => {
-        setOpenWallet(true);
-    };
-    const handleWalletClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
+      }
+      else {
+        if (!window.ethereum.isMetaMask)
+          handleWalletClick();
+        else {
+          if (window.ethereum.networkVersion !== "137")
+            handleChainClick()
         }
-        setOpenWallet(false);
-    };
-
-    //Snackbar Chain component
-    const [openChain, setOpenChain] = useState(false);
-    const handleChainClick = () => {
-        setOpenChain(true);
-    };
-    const handleChainClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpenChain(false);
-    };
-
-
-
-    const metamaskLogin = async () => {
-    if (!isAuthenticated) {
-        if(window.ethereum.networkVersion==="137" && window.ethereum.isMetaMask) {
-            await authenticate()
-                .then(async (user) => {
-                    await getAuthTokenFunction(user);
-                })
-                .then((user) => {
-                    localStorage.setItem("walletType", "metamask");
-                    window.location.pathname = "/tournaments";
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-        else{
-            if(!window.ethereum.isMetaMask)
-                handleWalletClick();
-            else{
-                if(window.ethereum.networkVersion!=="137")
-                    handleChainClick()
-            }
-        }
+      }
     }
   };
 
   const snackBarChangeWalletComponent = () => {
-      return(
-          <Snackbar open={openWallet} autoHideDuration={6000} onClose={handleWalletClose}>
-              <Alert onClose={handleWalletClose} severity="error" sx={{ width: '100%' }}>
-                  Metamask is not your default wallet. Please change your default wallet to metamask.
-              </Alert>
-          </Snackbar>
-      )
+    return (
+      <Snackbar open={openWallet} autoHideDuration={6000} onClose={handleWalletClose}>
+        <Alert onClose={handleWalletClose} severity="error" sx={{ width: '100%' }}>
+          Metamask is not your default wallet. Please change your default wallet to metamask.
+        </Alert>
+      </Snackbar>
+    )
   }
 
-    const snackBarChangeChainComponent = () => {
-        return(
-            <Snackbar open={openChain} autoHideDuration={6000} onClose={handleChainClose}>
-                <Alert onClose={handleChainClose} severity="error" sx={{ width: '100%' }}>
-                    Connect your wallet to Matic mainnet. And refresh page.
-                    <a target="_blank" href="https://decentralizedcreator.com/add-polygon-matic-network-to-metamask/#:~:text=To%20add%20manually%2C%20open%20your,and%20block%20explorer%20URL%20manually.">
-                        Find more details on this link.
-                    </a>
-                </Alert>
-            </Snackbar>
-        )
-    }
+  const snackBarChangeChainComponent = () => {
+    return (
+      <Snackbar open={openChain} autoHideDuration={6000} onClose={handleChainClose}>
+        <Alert onClose={handleChainClose} severity="error" sx={{ width: '100%' }}>
+          Connect your wallet to Matic mainnet. And refresh page.
+          <a target="_blank" href="https://decentralizedcreator.com/add-polygon-matic-network-to-metamask/#:~:text=To%20add%20manually%2C%20open%20your,and%20block%20explorer%20URL%20manually.">
+            Find more details on this link.
+          </a>
+        </Alert>
+      </Snackbar>
+    )
+  }
 
 
   const web3AuthLogin = async () => {
@@ -154,13 +154,13 @@ export default function LoginPage() {
         localStorage.setItem("walletType", "web3Auth");
         // window.location.pathname = "/tournaments";
       })
-          .then((user) => {
-            localStorage.setItem("walletType", "web3Auth");
-            window.location.pathname = "/tournaments";
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        .then((user) => {
+          localStorage.setItem("walletType", "web3Auth");
+          window.location.pathname = "/tournaments";
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 
@@ -283,7 +283,7 @@ export default function LoginPage() {
           <span>Or</span>
         </h4>
         <div style={{ width: "100%", height: "30px" }}></div>
-        <label style={{ width: "min(320px,100%)" }} className="ml-auto mr-auto" htmlFor="email-field">Email ID</label>
+        <label style={{ width: "min(320px,100%)" }} className="font-size-12 ml-auto mr-auto" htmlFor="email-field">Email ID</label>
         <input type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" />
 
         <Button
@@ -294,8 +294,8 @@ export default function LoginPage() {
         >
           Continue <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />
         </Button>
-          {snackBarChangeWalletComponent()}
-          {snackBarChangeChainComponent()}
+        {snackBarChangeWalletComponent()}
+        {snackBarChangeChainComponent()}
         {/*<button onClick={logout}>logout</button>*/}
       </div >
     );
@@ -308,15 +308,6 @@ export default function LoginPage() {
           alt="folioplay-logo"
           src={require("../../../images/folioplayLogo.png").default}
         />
-        {/* <h1
-          style={{
-            letterSpacing: "2px",
-            fontSize: "2.7rem",
-            fontWeight: "900",
-          }}
-        >
-          FOLIOPLAY
-        </h1> */}
         <img src={require('../../../images/white_folioplay.svg').default} />
         <h3 style={{ letterSpacing: "2px" }}>
           Decentralized fantasy gaming platform

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
 .leaderboard-entry {
     width: 100%;
     display: flex;
@@ -38,4 +40,17 @@
 .leaderboard-teamname:hover {
     cursor: pointer;
     transition: 0.2s all ease-in-out;
+}
+.css-1gsv261{
+    border: none !important;
+}
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected , .css-1q2h7u5.Mui-selected{
+    color:var(--black) !important;
+}
+.css-1aquho2-MuiTabs-indicator , .css-ttwr4n{
+    background-color: var(--golden) !important;
+    height: 3px !important;
+}
+#win-dash-tabs{
+    font-family: "poppins" !important;
 }

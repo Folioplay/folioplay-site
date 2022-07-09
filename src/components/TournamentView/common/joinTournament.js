@@ -27,11 +27,12 @@ export default async function joinTournament(user, tournament, teams, joinTourna
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "error" }));
         setErrorMessageSnackOpen(true);
       } else {
-        setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "success" }));
-        setErrorMessageSnackOpen(true);
-        setTimeout(() => {
-          window.location.pathname = `/tournaments/${tournamentId}`
-        }, 2000)
+        document.getElementById(tournamentId + '-left-spots').innerText = parseInt(document.getElementById(tournamentId + '-left-spots').innerText) - 1;
+        // setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "success" }));
+        // setErrorMessageSnackOpen(true);
+        // setTimeout(() => {
+        //   window.location.pathname = `/tournaments/${tournamentId}`
+        // }, 2000)
       }
     })
 }
