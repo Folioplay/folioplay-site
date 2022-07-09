@@ -15,11 +15,11 @@ export default async function joinTournament(user, tournament, teams, joinTourna
       break;
     }
   }
-  // const NFTHolder = await checkNFTHolder(tournament.valid_nfts, account);
-  // console.log("NFTHolder",NFTHolder);
-  //       if (!NFTHolder) {
-  //           await paymentTournament(user,tournament);
-  //       }
+  const NFTHolder = await checkNFTHolder(tournament.valid_nfts, account);
+  console.log("NFTHolder",NFTHolder);
+        if (!NFTHolder) {
+            await paymentTournament(user,tournament);
+        }
   await joinTournamentAPI(tournamentId, teamId)
     .then((res) => {
       var status = res.statusCode;

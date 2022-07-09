@@ -32,13 +32,18 @@ export default function FolioplayBar() {
   );
   const [balance, setBalance] = useState("");
 
-  useEffect(() => {
-    async function ethBalanceSet() {
-      const bal = await provider.getBalance(user.get("ethAddress"));
-      setBalance(ethers.utils.formatEther(bal));
-    }
-    if (user) ethBalanceSet();
-  }, [user]);
+  const intervalId = window.setInterval(async function () {
+    const bal = await provider.getBalance(user.get("ethAddress"));
+    setBalance(ethers.utils.formatEther(bal));
+  }, 1000);
+
+  // useEffect(() => {
+  //   async function ethBalanceSet() {
+  //     const bal = await provider.getBalance(user.get("ethAddress"));
+  //     setBalance(ethers.utils.formatEther(bal));
+  //   }
+  //   if (user) ethBalanceSet();
+  // }, [user]);
 
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
