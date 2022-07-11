@@ -100,7 +100,7 @@ export default function Tournaments() {
       allImages[0].style = `margin-left:0px`;
       currImage = 1;
     }
-    console.log(currImage);
+    // console.log(currImage);
   }
   const tournamentsList = tournaments ? tournaments.map((tournament, index) => {
     const seatsFilled =
@@ -358,7 +358,7 @@ export default function Tournaments() {
                       }}
                       onClick={() => joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournaments)}
                     >
-                      Continue
+                      Continue T
                     </Button>
                     <Button
                       variant="filled"

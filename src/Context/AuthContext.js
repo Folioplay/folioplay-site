@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 
-
 export const AuthContext = createContext({});
 const SERVER = "https://folioplay-api.ssrivastava.tech";
 

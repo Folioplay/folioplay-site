@@ -11,12 +11,12 @@ import deleteClickedTeam from "../common/deleteClickedTeam";
 import joinTournament from "../common/joinTournament";
 import selectTeam from "../common/selectTeam";
 import { chooseTeamClose, chooseTeamOpen } from "../common/chooseTeamAnimations";
-export default function JoinTournamentDrawer({ teams, tournamentId, tournament, user, setErrorMessage, setErrorMessageSnackOpen, navigate, tournaments, changeTournament }) {
+export default function JoinTournamentDrawer({ teams, tournamentId, tournament, user, setErrorMessage, setErrorMessageSnackOpen, navigate, tournaments, changeTournament, account }) {
     // console.log(tournamentId, "i am here baby");
     useEffect(() => {
         document.getElementsByClassName('overlay-div')[0].addEventListener('mouseup', function (event) {
             var pol = document.getElementById('choose-team-div');
-            if (event.target != pol && event.target.parentNode != pol) {
+            if (event.target !== pol && event.target.parentNode !== pol) {
                 chooseTeamClose();
                 return;
             }
@@ -164,11 +164,12 @@ export default function JoinTournamentDrawer({ teams, tournamentId, tournament, 
                                 setErrorMessageSnackOpen,
                                 tournament,
                                 tournaments,
-                                changeTournament
+                                changeTournament,
+                                account
                             )
                         }
                     >
-                        Continue
+                        Continue TF
                     </Button>
                     <Button
                         variant="filled"

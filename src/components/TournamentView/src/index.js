@@ -23,6 +23,7 @@ export default function TournamentView() {
   });
   var navigate = useNavigate();
   const { user } = useMoralis();
+  let account  = user.get("ethAddress");
   const [balance, setBalance] = useState("");
   const [balanceSnackOpen, setBalanceSnackOpen] = useState(false);
   const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
@@ -165,7 +166,7 @@ export default function TournamentView() {
               <div className="folioplay-tabs">
                 <LeaderBoardTabs tournamentId={tournament.id} />
               </div>
-              <JoinTournamentDrawer teams={teams} tournamentId={tournament.id} tournament={tournament} tournaments={[]} user={user} setErrorMessage={setErrorMessage} setErrorMessageSnackOpen={setErrorMessageSnackOpen} navigate={navigate} changeTournament={true} />
+              <JoinTournamentDrawer teams={teams} tournamentId={tournament.id} tournament={tournament} tournaments={[]} user={user} setErrorMessage={setErrorMessage} setErrorMessageSnackOpen={setErrorMessageSnackOpen} navigate={navigate} changeTournament={true} account={account} />
             </div>
           </>
         )}
