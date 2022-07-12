@@ -30,12 +30,32 @@ import ImageSlider from "../../ImageSlider/src";
 
 
 export default function Tournaments() {
-  const { user, isAuthenticated } = useMoralis();
+  const { user, isAuthenticated, logout } = useMoralis();
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const logOut = async () => {
+    localStorage.setItem("authtoken", null);
+    localStorage.removeItem("walletconnect");
+    await logout();
+    window.location.pathname = "/";
+  };
+
+  window.ethereum.on("chainChanged", async ([networkId]) => {
+    if (networkId !== '137' && localStorage.getItem("walletType")==="metamask") {
+      await logOut();
+      alert("Network ID change detected. Connect to Polygon Mainnet.")
+    }
+  });
+
+  window.ethereum.on("accountsChanged", async ([newAddress]) => {
+    if (localStorage.getItem("walletType")==="metamask") {
+      await logOut();
+      alert("Account change detected. Please Sign-in Again.")
+    }
   });
   const status = { 3: { "value": "Completed", "color": "#ff000096" }, 1: { "value": "Closed", "color": "#ff000096" }, 0: { "value": "Open", "color": "#00ff00d6" }, 2: { "value": "Running", "color": "#00ff00d6" } }
   const [tournaments, setTournaments] = useState(undefined);

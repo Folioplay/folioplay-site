@@ -78,7 +78,7 @@ export default function FolioplayBar() {
       const contract = new ethers.Contract(contractAddress, USDTABI, signer);
 
       const bal = await contract.balanceOf(walletAddress);
-      setBalance(ethers.utils.formatEther(bal));
+      setBalance(ethers.utils.formatEther(bal)*(10**12));
     }
   }, 1000);
 

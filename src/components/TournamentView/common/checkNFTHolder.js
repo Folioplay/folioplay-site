@@ -14,18 +14,13 @@ export default async function  checkNFTHolder(nft_list, account) {
     provider
     // signer
   );
-
+  console.log(nft_list);
   console.log(account);
   let returnValue = false;
-  // let val = await contract.checkNFTowner("0x635FA71793EB8d6f2f71D88560096805448a8E4C",account);
-  // console.log(val);
-  // return val;
-  //       nft_list[i],
-  //       account
-  //   ))
   for (let i=0; i< nft_list.length; i++){
+    console.log(nft_list[i].address);
     if(await contract.checkNFTowner(
-        nft_list[i],
+        nft_list[i].address,
         account
     )){
      returnValue = true;

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import {useMoralis} from "react-moralis";
 
 export const AuthContext = createContext({});
 const SERVER = "https://folioplay-api.ssrivastava.tech";
@@ -8,24 +9,47 @@ export const AuthContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
-        fetch(`${SERVER}/user/is-valid`, {
-            method: "GET",
-            headers: {
-                "x-access-token": localStorage.getItem("authtoken"),
-            },
-        })
-            .then((res) => {
-                if(!res.ok) {
-                    localStorage.clear();
-                    window.location.pathname="/";
-                }
+
+            fetch(`${SERVER}/user/is-valid`, {
+                method: "GET",
+                headers: {
+                    "x-access-token": localStorage.getItem("authtoken"),
+                },
             })
-            .catch((err) => err)
-            .finally(()=> setIsLoading(false));
-
+                .then((res) => {
+                    if (!res.ok) {
+                        localStorage.clear();
+                        window.location.pathname = "/";
+                    }
+                })
+                .catch((err) => err)
+                .finally(() => setIsLoading(false));
     },[])
+    const { logout } = useMoralis();
 
-    return (
+
+    const logOut = async () => {
+        localStorage.setItem("authtoken", null);
+        localStorage.removeItem("walletconnect");
+        await logout();
+        window.location.pathname = "/";
+    };
+
+    window.ethereum.on("chainChanged", async ([networkId]) => {
+        if (networkId !== '137' && localStorage.getItem("walletType")==="metamask") {
+            await logOut();
+            alert("Network ID change detected. Connect to Polygon Mainnet.")
+        }
+    });
+
+    window.ethereum.on("accountsChanged", async ([newAddress]) => {
+        if (localStorage.getItem("walletType")==="metamask") {
+            await logOut();
+            alert("Account change detected. Please Sign-in Again.")
+        }
+    });
+
+        return (
         <AuthContext.Provider
             value={validToken}>
             {!isLoading && children}
