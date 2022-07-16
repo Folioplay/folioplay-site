@@ -63,7 +63,7 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
 
 
 
-  const intervalId = window.setInterval(async function () {
+  const walletIntervalId = window.setInterval(async function () {
     if (user) {
       const USDTABI = [
         {
@@ -75,7 +75,7 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
         },
       ];
       const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
-      const walletAddress = "0x0B1A8E2e3C3594F63B8DF4bF4296eC916B61794b";
+      const walletAddress = user.attributes.ethAddress;
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, USDTABI, signer);
