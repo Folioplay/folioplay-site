@@ -76,9 +76,10 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
       ];
       const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
       const walletAddress = user.attributes.ethAddress;
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, USDTABI, signer);
+      console.log(walletAddress);
+      const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
+      // const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, USDTABI, provider);
 
       const bal = await contract.balanceOf(walletAddress);
       setBalance(ethers.utils.formatEther(bal) * (10 ** 12));

@@ -35,19 +35,20 @@ export const AuthContextProvider = ({ children }) => {
         window.location.pathname = "/";
     };
 
-    window.ethereum.on("chainChanged", async ([networkId]) => {
-        if (networkId !== '137' && localStorage.getItem("walletType")==="metamask") {
+    if (localStorage.getItem("walletType")==="metamask") {
+        window.ethereum.on("chainChanged", async ([networkId]) => {
+        if (networkId !== '137') {
             await logOut();
             alert("Network ID change detected. Connect to Polygon Mainnet.")
         }
     });
 
-    window.ethereum.on("accountsChanged", async ([newAddress]) => {
-        if (localStorage.getItem("walletType")==="metamask") {
-            await logOut();
-            alert("Account change detected. Please Sign-in Again.")
-        }
-    });
+        window.ethereum.on("accountsChanged", async ([newAddress]) => {
+                await logOut();
+                alert("Account change detected. Please Sign-in Again.")
+            }
+        );
+    }
 
         return (
         <AuthContext.Provider
