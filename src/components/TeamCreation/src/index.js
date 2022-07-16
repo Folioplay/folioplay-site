@@ -117,7 +117,7 @@ export function TeamCreation() {
 
   useEffect(() => {
     preservedView(wasActiveTab, superstars, mooning, rekt);
-    var coinsLimit = wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 8 : 5;
+    var coinsLimit = wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;
     var allButtons = document.querySelectorAll("#" + wasActiveTab + " .coin-add-button");
     if (document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length >= coinsLimit) {
       for (var i = 0; i < allButtons.length; i++) {
@@ -125,6 +125,10 @@ export function TeamCreation() {
           allButtons[i].classList.add("disabled-button");
         }
       }
+    } else {
+      document.getElementById('superstars' + '-selected-number').innerText = document.querySelectorAll("#" + 'superstars' + " .coin-added-button").length;
+      document.getElementById('mooning' + '-selected-number').innerText = document.querySelectorAll("#" + 'mooning' + " .coin-added-button").length;
+      document.getElementById('rekt' + '-selected-number').innerText = document.querySelectorAll("#" + 'rekt' + " .coin-added-button").length;
     }
   }, [wasActiveTab, graphCoin, snackOpen]);
 
@@ -321,7 +325,7 @@ export function TeamCreation() {
   };
   const changeTabs = (event) => {
     setSnackOpen(false);
-    setWasActiveTab(event.target.innerText.toLowerCase());
+    setWasActiveTab(event.target.firstChild.nodeValue.toLowerCase());
   };
   const LeftComponent = () => {
     return (
@@ -345,6 +349,7 @@ export function TeamCreation() {
           >
             SuperStars
           </span>
+          <span id="superstars-selected-number" className="font-size-12">0</span>
           <span
             id="mooning-tab"
             className="coinClass ml-20"
@@ -352,9 +357,11 @@ export function TeamCreation() {
           >
             Mooning
           </span>
+          <span id="mooning-selected-number" className="font-size-12">0</span>
           <span id="rekt-tab" className="coinClass ml-20" onClick={changeTabs}>
             Rekt
           </span>
+          <span id="rekt-selected-number" className="font-size-12">0</span>
         </div>
         <div className="coins">
           <div className="tip-div">

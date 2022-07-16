@@ -90,7 +90,7 @@
     color:var(--dim-white) !important;
 }
 #folioplay-login-mail-button:hover {
-    color: rgb(47, 47, 47);
+    color: var(--violet-blue);
 }
 
 #login-page-image {
@@ -112,7 +112,7 @@
     margin-right: auto;
     outline: none;
     border: 1px solid #D2E0EE;
-    border-radius: 2px;
+    border-radius: 5px;
     font-family: "poppins";
     font-size: 16px;
 }
@@ -159,3 +159,48 @@
     /* Neutral Colours / N500 */
     color: #869EB6;
 } 
+
+.policies-error{
+    width: 20.5em;
+    height: 3.5em;
+    padding-left: 10px;
+    padding-right:10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #d32f2f;
+    position: fixed;
+    bottom:1.5em;
+    left: 1.5em;
+    visibility: hidden;
+    color: white;
+    border-radius: 3px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+.show{
+    visibility: visible;
+    animation: fadein 0.5s,fadeout 0.5s 1.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 1.5em; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 1.5em; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 1.5em; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 1.5em; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }

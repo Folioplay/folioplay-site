@@ -1,0 +1,116 @@
+.activity-space{
+    width: 100%;
+    min-height:100vh;
+    background-color: var(--white);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    align-content: center;
+    font-family: "poppins";
+}
+.activity-content-wrapper{
+    width: 100%;
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+    background-color: var(--white);
+    transition: all 0.3s ease-in-out;
+}
+#activity-tabs-wrapper{
+    transform: translateY(-48px) !important;
+    transition: all 0.3s ease-in-out;
+}
+#activity-tabs{
+    margin-left:15px;
+}
+#activity-tabs .css-1gsv261{
+    border: none !important;
+}
+#activity-tabs  .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected ,#activity-tabs .css-1q2h7u5.Mui-selected{
+    color:var(--white) !important;
+}
+#activity-tabs .css-1aquho2-MuiTabs-indicator ,#activity-tabs .css-ttwr4n{
+    background-color: var(--golden) !important;
+    height: 3px !important;
+}
+#activity-tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+    color: var(--dark-dim-white) !important;
+}
+.activity-team-card{
+    width: 100%;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: var(--dim-white); */
+    height: 80px;
+    border: 1px solid #EEF4FA;
+    box-shadow: 0px 6px 26px 5px rgba(118, 133, 160, 0.1);
+    border-radius: 8px;
+}
+.activity-team-card{
+    cursor: pointer;
+}
+.activity-team-name{
+    
+    color:var(--grey-shade);
+}
+.activity-team-winnings,.activity-team-contests{
+    width: 60px;
+    max-height: 13px;
+    background: #F3F8FF;
+    border: 1px solid #B2C6DB;
+    border-radius: 2px;
+    font-size: 10px;
+    padding: 2px;
+    color: #4C6781;
+}
+.activity-team-info{
+    display: flex;
+    flex-direction: column;
+
+}
+.activity-team-coins-preview{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width:150px;
+    height: 50px;
+    /* background-color: var(--dim-white); */
+}
+.activity-team-coin-image{
+    border-radius: 100%;
+    
+}
+.image-wrappers{
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--dim-white);
+    justify-content: center;
+    align-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: var(--white);
+    border-radius: 100%;
+}
+.image-wrappers.image-2{
+    transform: translateX(-20px);
+}
+.image-wrappers.image-3{
+    transform: translateX(-40px);
+}
+.image-wrappers.coin-counter span{
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border-radius: 100%;
+    color: var(--dark-dim-white);
+}
+.image-wrappers.coin-counter{
+    transform: translateX(-60px);
+
+}

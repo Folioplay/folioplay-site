@@ -140,3 +140,13 @@ export async function getRank({ tournamentId }) {
     }
   }).then((res) => res.json());
 }
+
+export async function getPreviousUserTournaments() {
+  const authtoken = localStorage.getItem('authtoken');
+  return await fetch(`${SERVER}/user/activity/`, {
+    method: "GET",
+    headers: {
+      'x-access-token': authtoken
+    }
+  }).then((res) => res.json());
+}

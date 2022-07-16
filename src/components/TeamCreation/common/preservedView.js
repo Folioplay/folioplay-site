@@ -3,7 +3,11 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
   var allButtons = document.getElementsByClassName('coin-add-button');
   var maxSelected = 0;
   var coinsLimit = 2;
+  document.getElementById('superstars' + '-selected-number').innerText = document.querySelectorAll("#" + 'superstars' + " .coin-added-button").length;
+  document.getElementById('mooning' + '-selected-number').innerText = document.querySelectorAll("#" + 'mooning' + " .coin-added-button").length;
+  document.getElementById('rekt' + '-selected-number').innerText = document.querySelectorAll("#" + 'rekt' + " .coin-added-button").length;
   if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
+    // console.log("here baby", document.getElementsByClassName('coin-class-selected'));
     var allClasses = document.getElementsByClassName("coinClass");
     for (var j = 0; j < superstars.length; j++) {
       var bucketPreview = document.getElementsByClassName("superstars-preview");
@@ -36,7 +40,7 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
           }
         }
       }
-    } 
+    }
     for (var j = 0; j < rekt.length; j++) {
       var bucketPreview = document.getElementsByClassName("rekt-preview");
       if (rekt[j].selected) {

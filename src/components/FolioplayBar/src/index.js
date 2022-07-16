@@ -12,6 +12,9 @@ import hamburgerIcon from "../../../images/Vectorhamburger.png";
 import "../style/index.css";
 import { Menu, MenuItem } from "@mui/material";
 import { Logout } from "@mui/icons-material";
+import Typography from '@mui/material/Typography';
+import Slide from '@mui/material/Slide';
+import Modal from '@mui/material/Modal';
 import { AuthContext } from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
 import { useMoralis } from "react-moralis";
@@ -21,12 +24,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import HistoryIcon from '@mui/icons-material/History';
 import SecurityIcon from '@mui/icons-material/Security';
 import LogoutIcon from '@mui/icons-material/Logout';
-export default function FolioplayBar() {
-  const { logout, user} = useMoralis();
+import { useNavigate } from "react-router";
+export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
+  const { logout, user } = useMoralis();
+  const navigate = useNavigate();
   var icons = [<HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />, <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />, <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />]
-
-  console.log(user, user && user.attributes.ethAddress);
-
+  console.log(user);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const provider = new ethers.providers.JsonRpcProvider(
     `https://polygon-rpc.com/`
@@ -61,13 +64,13 @@ export default function FolioplayBar() {
 
 
   const intervalId = window.setInterval(async function () {
-    if(user) {
+    if (user) {
       const USDTABI = [
         {
           constant: true,
-          inputs: [{name: "_owner", type: "address"}],
+          inputs: [{ name: "_owner", type: "address" }],
           name: "balanceOf",
-          outputs: [{name: "balance", type: "uint256"}],
+          outputs: [{ name: "balance", type: "uint256" }],
           type: "function",
         },
       ];
@@ -78,7 +81,7 @@ export default function FolioplayBar() {
       const contract = new ethers.Contract(contractAddress, USDTABI, signer);
 
       const bal = await contract.balanceOf(walletAddress);
-      setBalance(ethers.utils.formatEther(bal)*(10**12));
+      setBalance(ethers.utils.formatEther(bal) * (10 ** 12));
     }
   }, 1000);
 
@@ -120,7 +123,6 @@ export default function FolioplayBar() {
 
     setState({ ...state, [anchor]: open });
   };
-
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -130,20 +132,23 @@ export default function FolioplayBar() {
       style={{ fontFamily: "poppins" }}
     >
       <List style={{ fontFamily: "poppins" }}>
-        {["Home", "Tournaments", "Activity"].map((text, index) => (
-          <ListItem button key={text}>
+        {[{ name: "Home", link: "/tournaments" }, { name: "Tournaments", link: "/tournaments" }, { name: "Activity", link: "/activity" }].map((text, index) => (
+          <ListItem button key={text.name}>
             <ListItemIcon>
               {icons[index]}
             </ListItemIcon>
-            <ListItemText style={{ fontFamily: "poppins" }} primary={text} />
+            <ListItemText style={{ fontFamily: "poppins" }} primary={text.name} onClick={() => { clearInterval(intervalId); navigate(text.link) }} />
           </ListItem>
         ))}
         <ListItem button key={"policies"}>
           <ListItemIcon>
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"} />
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"} onClick={() => { }} />
         </ListItem>
+        <div>
+
+        </div>
         <ListItem button>
           <ListItemIcon>
             <LogoutIcon style={{ color: "var(--dim-white)" }} />
@@ -154,8 +159,8 @@ export default function FolioplayBar() {
     </Box>
   );
   return (
-      <>
-        {user ?
+    <>
+      {user ?
         <div className="folioplay-bar-content-wrapper">
           <img
             id="folioplay-hamburger"
@@ -239,8 +244,8 @@ export default function FolioplayBar() {
           </React.Fragment>
           {/*{getUSDTBalance}*/}
         </div>
-            :
-            <></>}
-        </>
+        :
+        <></>}
+    </>
   );
 }

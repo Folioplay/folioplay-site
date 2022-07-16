@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@mui/material/TextField";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
 import metamaskIcon from "../../../images/metamask.png";
 import walletconnectIcon from "../../../images/walletconnect.png";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useMoralis } from "react-moralis";
-import { makeStyles } from "@material-ui/core/styles";
 import { getAuthToken } from "../../../APIS/apis";
 import Snackbar from "@mui/material/Snackbar";
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import MuiAlert from "@mui/material/Alert";
+import { useEventCallback } from "@mui/material";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -20,7 +19,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function LoginPage() {
   const { authenticate, authError, isAuthenticated, isAuthenticating, user, account, logout, isInitialized } = useMoralis();
   console.log(isAuthenticated, isAuthenticating, user, account);
-
+  const [policiesAccepted, setPoliciesAccepted] = useState(false);
   useEffect(() => {
     console.log("isauyth", isAuthenticated, isInitialized)
     if (isAuthenticated && isInitialized)
@@ -28,9 +27,20 @@ export default function LoginPage() {
   }, [])
 
   const [email, setEmail] = useState("");
-
+  const handleChange = (event) => {
+    event.preventDefault();
+    setEmail(event.target.value);
+  }
   const loginWithMail = async () => {
-    const email = document.getElementById("email-field").value;
+    if (!policiesAccepted) {
+      document.getElementsByClassName('policies-error')[0].classList.remove("show");
+      document.getElementsByClassName('policies-error')[0].classList.add("show");
+      setTimeout(() => {
+        document.getElementsByClassName('policies-error')[0].classList.remove("show");
+      }, 2000)
+      return;
+    }
+    // const email = document.getElementById("email-field").value;
     const user = await authenticate({
       provider: "magicLink",
       email: email,
@@ -49,6 +59,14 @@ export default function LoginPage() {
 
   const walletConnectLogin = async () => {
     if (!isAuthenticated) {
+      if (!policiesAccepted) {
+        document.getElementsByClassName('policies-error')[0].classList.remove("show");
+        document.getElementsByClassName('policies-error')[0].classList.add("show");
+        setTimeout(() => {
+          document.getElementsByClassName('policies-error')[0].classList.remove("show");
+        }, 2000)
+        return;
+      }
       localStorage.clear();
       await authenticate({ provider: "walletconnect", chainId: 137 })
         .then(async (user) => {
@@ -93,6 +111,14 @@ export default function LoginPage() {
 
   const metamaskLogin = async () => {
     if (!isAuthenticated) {
+      if (!policiesAccepted) {
+        document.getElementsByClassName('policies-error')[0].classList.remove("show");
+        document.getElementsByClassName('policies-error')[0].classList.add("show");
+        setTimeout(() => {
+          document.getElementsByClassName('policies-error')[0].classList.remove("show");
+        }, 2000)
+        return;
+      }
       if (window.ethereum.networkVersion === "137" && window.ethereum.isMetaMask) {
         await authenticate()
           .then(async (user) => {
@@ -144,6 +170,14 @@ export default function LoginPage() {
   const web3AuthLogin = async () => {
 
     if (!isAuthenticated) {
+      if (!policiesAccepted) {
+        document.getElementsByClassName('policies-error')[0].classList.remove("show");
+        document.getElementsByClassName('policies-error')[0].classList.add("show");
+        setTimeout(() => {
+          document.getElementsByClassName('policies-error')[0].classList.remove("show");
+        }, 2000)
+        return;
+      }
       console.log("not auth and i am in web3 auth");
       await authenticate({
         provider: "web3Auth",
@@ -182,41 +216,6 @@ export default function LoginPage() {
     }
   }
 
-
-  //Modal Section
-  const styles = makeStyles(theme => ({
-    textField: {
-      border: "1px solid white"
-    }
-  }))
-  const CssTextField = withStyles({
-    root: {
-      '& label.Mui-focused': {
-        color: 'var(--white)',
-      },
-      '& .MuiInput-underline:after': {
-        borderBottomColor: 'var(--white)',
-      },
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: 'var(--white)',
-        },
-        '&:hover fieldset': {
-          borderColor: 'var(--white)',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: 'var(--white)',
-        },
-      },
-      "&:hover fieldset": {
-        borderColor: "var(--white)",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "var(--white)",
-      },
-    },
-  })(TextField);
-  const classes = styles();
   const LeftComponent = () => {
     return (
       <div id="folioplay-login-wrapper">
@@ -231,12 +230,8 @@ export default function LoginPage() {
           variant="contained"
           onClick={web3AuthLogin}
         >
-          {/*<img className='mr-3' alt="google-icon" src={googleIcon} width={"20px"} height={"20px"} />*/}
           Continue With Web3Auth
         </Button>
-        {/*<Button id="folioplay-login-meta-button" variant="contained">*/}
-        {/*    <FacebookIcon className='mr-3' style={{ color: "var(--violet-blue)" }} />*/}
-        {/*    Continue With Meta</Button>*/}
         <h4 className="folioplay-text-separator-wrapper">
           <span>Or</span>
         </h4>
@@ -284,8 +279,7 @@ export default function LoginPage() {
         </h4>
         <div style={{ width: "100%", height: "30px" }}></div>
         <label style={{ width: "min(320px,100%)" }} className="font-size-12 ml-auto mr-auto" htmlFor="email-field">Email ID</label>
-        <input type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" />
-
+        <input autoFocus key="email-id" type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" value={email} onChange={(event) => handleChange(event)} />
         <Button
           id="folioplay-login-mail-button"
           onClick={loginWithMail}
@@ -296,6 +290,13 @@ export default function LoginPage() {
         </Button>
         {snackBarChangeWalletComponent()}
         {snackBarChangeChainComponent()}
+        <span className="mt-20">
+          <input type="checkbox" required name="privacy-policies" id="privacy-policies" style={{ width: "30px" }} checked={policiesAccepted} onChange={() => { setPoliciesAccepted(!policiesAccepted) }} />
+          <label className="font-size-15 ml-auto mr-auto" htmlFor="privacy-policies">Agree to Folioplay <u>Privacy Policies</u></label>
+        </span>
+        <div className="policies-error">
+          <ErrorOutlineOutlinedIcon />  <span className="ml-10">Accept Privacy Policies !!</span>
+        </div>
         {/*<button onClick={logout}>logout</button>*/}
       </div >
     );

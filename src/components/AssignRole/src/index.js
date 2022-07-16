@@ -125,9 +125,13 @@ export function AssignRole() {
             <img
               id="rank-image"
               src={require("../../../images/ranks.png").default}
-              width="250px"
-              height="196.9px"
+              width="280px"
+              height="220.58px"
             />
+          </div>
+          <div id="ramp-wrapper">
+            <div id="ramp">
+            </div>
           </div>
 
           <div className="lower-half pt-20">

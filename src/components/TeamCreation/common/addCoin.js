@@ -1,4 +1,5 @@
 import { coinTosymbol } from '../../../CoinAndSymbols/symbols';
+import updateSelectedCoins from './updateSelectedCoins';
 export default function addCoin(event, wasActiveTab, superstars, mooning, rekt) {
 
   var checkArray = wasActiveTab === "superstars" ? superstars : (wasActiveTab === "mooning") ? mooning : rekt;
@@ -23,6 +24,7 @@ export default function addCoin(event, wasActiveTab, superstars, mooning, rekt) 
     //   }
     // }
   } else {
+    updateSelectedCoins({ wasActiveTab, add: updateCoin })
     event.target.classList.toggle("coin-add-button");
     event.target.classList.toggle("coin-added-button");
     maxSelected = 0;

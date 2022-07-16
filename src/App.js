@@ -10,12 +10,13 @@ import { useMoralis } from "react-moralis";
 import { Navigate, useLocation } from "react-router";
 import TickerWidget from './components/TickerWidget/src';
 import { validUser } from "./APIS/apis";
-import { useContext } from "react";
+import { useState, useEffect } from "react";
 import { AuthContext, AuthContextProvider } from "./Context/AuthContext";
 import { tournaments } from "./components/Tournaments/common/demoTournaments";
-
+import Joyride from 'react-joyride';
+import MyTeams from './components/MyTeams/src';
+// import React, { useEffect, useState } from "react";
 function App() {
-
   function AuthenticatedRoute({ children }) {
     const { isAuthenticated, isWeb3Enabled, user, isInitialized, logout } = useMoralis();
     console.log("authenticated route ", isAuthenticated, isWeb3Enabled, user, isInitialized);
@@ -33,8 +34,42 @@ function App() {
     }
     return children;
   }
+  const steps = [
+    {
+      target: "#folioplay-hamburger",
+      disableBeacon: true,
+      content: "Explore here"
+    },
+    {
+      target: "#folioplay-wallet",
+      disableBeacon: true,
+      content: "World step"
+    },
+    {
+      target: "#image-slider-wrapper",
+      // position: "middle-bottom",
+      disableBeacon: true,
+      content: "Hello step 1"
+    }
+  ];
   return (
     <div className="App">
+      {/* <Joyride
+        run={true}
+        steps={steps}
+        showProgress={true}
+        styles={{
+          options: {
+            arrowColor: 'var(--dim-white)',
+            backgroundColor: 'var(--dim-white)',
+            overlayColor: 'rgba(0, 0, 0, 0.7)',
+            primaryColor: '#000',
+            textColor: 'var(--dark-grey)',
+            width: 300,
+            zIndex: 1000,
+          }
+        }}
+      /> */}
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<LoginRoute><LoginPage /></LoginRoute>} />
@@ -61,6 +96,12 @@ function App() {
             <AuthenticatedRoute>
               <AuthContextProvider>
                 <AssignRole />
+              </AuthContextProvider>
+            </AuthenticatedRoute>} />
+          <Route exact path="/activity" element={
+            <AuthenticatedRoute>
+              <AuthContextProvider>
+                <MyTeams />
               </AuthContextProvider>
             </AuthenticatedRoute>} />
           <Route exact path="/chart" element={
