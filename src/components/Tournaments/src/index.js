@@ -54,19 +54,24 @@ export default function Tournaments() {
     window.location.pathname = "/";
   };
 
-  window.ethereum.on("chainChanged", async ([networkId]) => {
-    if (networkId !== '137' && localStorage.getItem("walletType") === "metamask") {
-      await logOut();
-      alert("Network ID change detected. Connect to Polygon Mainnet.")
-    }
-  });
+  if (window.ethereum) {
+    const { ethereum } = window;
+    if (ethereum && ethereum.isMetaMask) {
+      if (localStorage.getItem("walletType") === "metamask") {
+        window.ethereum.on("chainChanged", async ([networkId]) => {
+          if (networkId !== '137' && localStorage.getItem("walletType") === "metamask") {
+            await logOut();
+            alert("Network ID change detected. Connect to Polygon Mainnet.")
+          }
+        });
 
-  window.ethereum.on("accountsChanged", async ([newAddress]) => {
-    if (localStorage.getItem("walletType") === "metamask") {
-      await logOut();
-      alert("Account change detected. Please Sign-in Again.")
-    }
-  });
+        window.ethereum.on("accountsChanged", async ([newAddress]) => {
+          if (localStorage.getItem("walletType") === "metamask") {
+            await logOut();
+            alert("Account change detected. Please Sign-in Again.")
+          }
+        });
+      }}}
   const status = { 3: { "value": "Completed", "color": "#ff000096" }, 1: { "value": "Closed", "color": "#ff000096" }, 0: { "value": "Open", "color": "#00ff00d6" }, 2: { "value": "Running", "color": "#00ff00d6" } }
   const [tournaments, setTournaments] = useState(undefined);
   const [teams, setTeams] = useState(undefined);

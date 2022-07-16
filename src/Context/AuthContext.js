@@ -35,19 +35,26 @@ export const AuthContextProvider = ({ children }) => {
         window.location.pathname = "/";
     };
 
-    if (localStorage.getItem("walletType")==="metamask") {
-        window.ethereum.on("chainChanged", async ([networkId]) => {
-        if (networkId !== '137') {
-            await logOut();
-            alert("Network ID change detected. Connect to Polygon Mainnet.")
-        }
-    });
+    if (window.ethereum) {
+        const { ethereum } = window;
+        if (ethereum && ethereum.isMetaMask) {
+            if (localStorage.getItem("walletType") === "metamask") {
+                // console.log(localStorage.getItem("walletType") === "metamask" && window.ethereum);
+                window.ethereum.on("chainChanged", async ([networkId]) => {
+                    console.log("in bhai")
+                    if (networkId !== '137') {
+                        await logOut();
+                        alert("Network ID change detected. Connect to Polygon Mainnet.")
+                    }
+                });
 
-        window.ethereum.on("accountsChanged", async ([newAddress]) => {
-                await logOut();
-                alert("Account change detected. Please Sign-in Again.")
+                window.ethereum.on("accountsChanged", async ([newAddress]) => {
+                        await logOut();
+                        alert("Account change detected. Please Sign-in Again.")
+                    }
+                );
             }
-        );
+        }
     }
 
         return (
