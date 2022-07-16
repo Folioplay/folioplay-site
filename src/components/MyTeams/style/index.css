@@ -34,7 +34,7 @@
     background-color: var(--golden) !important;
     height: 3px !important;
 }
-#activity-tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+#activity-tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root,#activity-tabs .css-1q2h7u5{
     color: var(--dark-dim-white) !important;
 }
 .activity-team-card{
