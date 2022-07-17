@@ -68,7 +68,7 @@ export default function Tournaments() {
         window.ethereum.on("accountsChanged", async ([newAddress]) => {
           if (localStorage.getItem("walletType") === "metamask") {
             await logOut();
-            alert("Account change detected. Please Sign-in Again.")
+            alert("Account change detected. Please Sign-in Again.");
           }
         });
       }}}
