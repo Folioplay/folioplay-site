@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  install:
+    command:
+      - curl -fsSL https://deb.nodesource.com/setup_18.x | -E bash -
+      - apt install -y nodejs npm
+  pre-build:
+    commands:
+      - export NODE_ENV=production
+      - npm ci --only=production && npm cache clean --force
+  build:
+    commands: 
+      - npm run build
+      
+artifacts:
+  files:
+    - "**/*"
+  discard-paths: no
+  base-directory: dist
