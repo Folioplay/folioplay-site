@@ -218,7 +218,7 @@ export default function LoginPage() {
   const [isVisible, setIsVisible] = useState(true);
   setTimeout(() => {
     setIsVisible(false);
-  }, 2500)
+  }, 3500)
   const LeftComponent = () => {
     return (
       <div id="folioplay-login-wrapper">
