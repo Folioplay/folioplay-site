@@ -11,7 +11,7 @@ import Snackbar from "@mui/material/Snackbar";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import MuiAlert from "@mui/material/Alert";
 import { useEventCallback } from "@mui/material";
-
+import SplashScreen from "../common/SplashScreen";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -215,10 +215,14 @@ export default function LoginPage() {
       await logOut();
     }
   }
-
+  const [isVisible, setIsVisible] = useState(true);
+  setTimeout(() => {
+    setIsVisible(false);
+  }, 3500)
   const LeftComponent = () => {
     return (
       <div id="folioplay-login-wrapper">
+        <SplashScreen isVisible={isVisible} />
         <span className="font-size-30 font-weight-700 mr-auto ml-auto" style={{ lineHeight: "40px", textAlign: "center", transform: "translateY(-50px)" }}>Continue using</span>
         <Button
           style={{
