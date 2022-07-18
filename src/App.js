@@ -15,6 +15,7 @@ import { AuthContext, AuthContextProvider } from "./Context/AuthContext";
 import { tournaments } from "./components/Tournaments/common/demoTournaments";
 import Joyride from 'react-joyride';
 import MyTeams from './components/MyTeams/src';
+import UserProfile from './components/UserProfile/src';
 // import React, { useEffect, useState } from "react";
 function App() {
   function AuthenticatedRoute({ children }) {
@@ -102,6 +103,12 @@ function App() {
             <AuthenticatedRoute>
               <AuthContextProvider>
                 <MyTeams />
+              </AuthContextProvider>
+            </AuthenticatedRoute>} />
+          <Route exact path="/user/profile" element={
+            <AuthenticatedRoute>
+              <AuthContextProvider>
+                <UserProfile />
               </AuthContextProvider>
             </AuthenticatedRoute>} />
           <Route exact path="/chart" element={

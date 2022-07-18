@@ -18,6 +18,7 @@ import Modal from '@mui/material/Modal';
 import { AuthContext } from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
 import { useMoralis } from "react-moralis";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ethers } from "ethers";
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
@@ -25,10 +26,19 @@ import HistoryIcon from '@mui/icons-material/History';
 import SecurityIcon from '@mui/icons-material/Security';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router";
-export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
+import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
+export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
+  const [openPolicies, setOpenPolicies] = useState(false);
+  const handleOpenPolicies = () => setOpenPolicies(true);
+  const handleClosePolicies = () => setOpenPolicies(false);
   const navigate = useNavigate();
-  var icons = [<HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />, <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />, <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />]
+  var icons = [
+    <HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />
+  ]
   console.log(user);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const provider = new ethers.providers.JsonRpcProvider(
@@ -84,7 +94,7 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
       const bal = await contract.balanceOf(walletAddress);
       setBalance(ethers.utils.formatEther(bal) * (10 ** 12));
     }
-  }, 5000);
+  }, 1000);
 
   // useEffect(() => {
   //   async function ethBalanceSet() {
@@ -133,7 +143,7 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
       style={{ fontFamily: "poppins" }}
     >
       <List style={{ fontFamily: "poppins" }}>
-        {[{ name: "Home", link: "/tournaments" }, { name: "Tournaments", link: "/tournaments" }, { name: "Activity", link: "/activity" }].map((text, index) => (
+        {[{ name: "Home", link: "/tournaments" }, { name: "Tournaments", link: "/tournaments" }, { name: "Activity", link: "/activity" }, { name: "Profile", link: "/user/profile" }].map((text, index) => (
           <ListItem button key={text.name}>
             <ListItemIcon>
               {icons[index]}
@@ -145,7 +155,8 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
           <ListItemIcon>
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"} onClick={() => { }} />
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"}
+            onClick={openPrivacyPolicies} />
         </ListItem>
         <div>
 
@@ -157,6 +168,7 @@ export default function FolioplayBar({ handleOpenPolicies, intervalId }) {
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Logout"} onClick={logOut} />
         </ListItem>
       </List>
+
     </Box>
   );
   return (

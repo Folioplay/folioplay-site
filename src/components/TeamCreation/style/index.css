@@ -37,7 +37,7 @@
 }
 
 .coin-classes {
-    font-size: 1.0625em;
+    font-size: 0.9rem;
     color: #B2C6DB;
     font-weight: 400;
     letter-spacing: 0.5px;
@@ -57,7 +57,7 @@
 .coin-class-selected {
     color: var(--white);
     font-weight: 600;
-    border-bottom: 3px solid var(--golden);
+    border-bottom: 3.5px solid var(--golden);
     transition: 0.2s ease-in-out;
 }
 

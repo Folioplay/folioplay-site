@@ -243,3 +243,6 @@
         transform:translateY(calc(100vh - 120px));
     }
 }
+.login-privacy-policies:hover{
+    cursor: pointer;
+}

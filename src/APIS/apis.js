@@ -1,4 +1,4 @@
-const SERVER = "https://folioplay-api.ssrivastava.tech";
+const SERVER = process.env.REACT_APP_API_SERVER;
 
 export async function getAllTournaments() {
   return await fetch(`${SERVER}/tournament/`, {

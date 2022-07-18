@@ -41,15 +41,16 @@ export const AuthContextProvider = ({ children }) => {
             if (localStorage.getItem("walletType") === "metamask") {
                 // console.log(localStorage.getItem("walletType") === "metamask" && window.ethereum);
                 window.ethereum.on("chainChanged", async ([networkId]) => {
+                    console.log("in bhai")
                     if (networkId !== '137') {
-                        alert("Network ID change detected. Connect to Polygon Mainnet.")
                         await logOut();
+                        alert("Network ID change detected. Connect to Polygon Mainnet.")
                     }
                 });
 
                 window.ethereum.on("accountsChanged", async ([newAddress]) => {
-                    alert("Account change detected. Please Sign-in Again.")
-                    await logOut();
+                        await logOut();
+                        alert("Account change detected. Please Sign-in Again.")
                     }
                 );
             }

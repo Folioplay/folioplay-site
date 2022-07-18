@@ -12,6 +12,7 @@ import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import MuiAlert from "@mui/material/Alert";
 import { useEventCallback } from "@mui/material";
 import SplashScreen from "../common/SplashScreen";
+import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -296,11 +297,12 @@ export default function LoginPage() {
         {snackBarChangeChainComponent()}
         <span className="mt-20">
           <input type="checkbox" required name="privacy-policies" id="privacy-policies" style={{ width: "30px" }} checked={policiesAccepted} onChange={() => { setPoliciesAccepted(!policiesAccepted) }} />
-          <label className="font-size-15 ml-auto mr-auto" htmlFor="privacy-policies">Agree to Folioplay <u>Privacy Policies</u></label>
+          <label className="font-size-15 ml-auto mr-auto" htmlFor="privacy-policies">Agree to Folioplay <span className="login-privacy-policies" onClick={openPrivacyPolicies}><u>Privacy Policies</u></span></label>
         </span>
         <div className="policies-error">
           <ErrorOutlineOutlinedIcon />  <span className="ml-10">Accept Privacy Policies !!</span>
         </div>
+
         {/*<button onClick={logout}>logout</button>*/}
       </div >
     );
