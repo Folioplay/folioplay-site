@@ -14,7 +14,7 @@ phases:
       - echo Installing source Yarn dependencies...
       - export NODE_ENV=production
       - yarn install
-      - aws secretsmanager get-secret-value --secret-id $SECRET_ENV_NAME --query SecretString --output text >> ../.env
+      - aws secretsmanager get-secret-value --secret-id $SECRET_NAME --query SecretString --output text >> ../.env
   build:
     commands: 
       - yarn build
