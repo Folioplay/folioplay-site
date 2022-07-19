@@ -7,6 +7,9 @@ phases:
       nodejs: 16
     commands:
       - printenv
+      - echo $SECRET_NAME
+      - pwd
+      - aws secretsmanager get-secret-value --secret-id $SECRET_NAME --query SecretString --output text
       - echo Installing Yarn...
       - npm install -g yarn
   pre_build:
