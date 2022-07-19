@@ -3,7 +3,7 @@ phases:
   install:
     command:
       - curl -fsSL https://deb.nodesource.com/setup_18.x | -E bash -
-      - apt install -y nodejs npm
+      - apt install -y nodejs yarn
   pre-build:
     commands:
       - export NODE_ENV=production
