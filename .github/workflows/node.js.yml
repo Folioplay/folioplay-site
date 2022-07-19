@@ -27,6 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+        cache-dependency-path: ./package.json
     - name: Install dependencies
       run: yarn install
     - name: Making Build
