@@ -1,11 +1,14 @@
 version: 0.2
 phases:
   install:
-    command:
-      - curl -fsSL https://deb.nodesource.com/setup_18.x | -E bash -
-      - apt install -y nodejs yarn
+    runtime-versions:
+      nodejs: 16  
+    commands:
+      - echo Installing Yarn...
+      - npm install -g yarn
   pre-build:
     commands:
+      - echo Installing source Yarn dependencies...
       - export NODE_ENV=production
       - yarn install
   build:
@@ -14,6 +17,5 @@ phases:
       
 artifacts:
   files:
-    - "**/*"
-  discard-paths: no
-  base-directory: dist
+    - build/
+    - devops/appspec.yml
