@@ -6,7 +6,7 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - env
+      - printenv
       - echo Installing Yarn...
       - npm install -g yarn
   pre_build:
