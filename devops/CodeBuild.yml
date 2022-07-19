@@ -7,10 +7,10 @@ phases:
   pre-build:
     commands:
       - export NODE_ENV=production
-      - npm ci --only=production && npm cache clean --force
+      - yarn install
   build:
     commands: 
-      - npm run build
+      - yarn build
       
 artifacts:
   files:
