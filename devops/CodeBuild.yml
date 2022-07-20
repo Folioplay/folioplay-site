@@ -6,10 +6,7 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - printenv
-      - echo $SECRET_NAME
-      - pwd
-      - aws secretsmanager get-secret-value --secret-id $SECRET_NAME --query SecretString --output text
+      - python --version
       - echo Installing Yarn...
       - npm install -g yarn
   pre_build:
@@ -17,7 +14,7 @@ phases:
       - echo Installing source Yarn dependencies...
       - export NODE_ENV=production
       - yarn install
-      - aws secretsmanager get-secret-value --secret-id $SECRET_NAME --query SecretString --output text >> ../.env
+      - aws secretsmanager get-secret-value --secret-id $SECRET_NAME --query SecretString --output text | python -c 'import json, sys; t = [ print(f"{k}={v}") for k,v in json.load(sys.stdin).items()]' > .env
   build:
     commands: 
       - yarn build
