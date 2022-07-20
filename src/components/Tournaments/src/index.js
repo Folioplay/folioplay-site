@@ -12,15 +12,9 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import "../style/index.css";
 import { motion } from "framer-motion/dist/framer-motion";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { getAllTournaments } from "../../../APIS/apis";
 import PreviewIcon from "@mui/icons-material/Preview";
-import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Typography from '@mui/material/Typography';
-import Slide from '@mui/material/Slide';
-import Modal from '@mui/material/Modal';
-import { Box } from "@mui/system";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import joinTournament from "../common/joinTournament";
 import deleteClickedTeam from "../common/deleteClickedTeam";
@@ -28,16 +22,9 @@ import selectTeam from "../common/selectTeam";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { useMoralis } from "react-moralis";
-import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import { chooseTeamClose, chooseTeamOpen } from "../common/chooseTeamAnimations";
 import ImageSlider from "../../ImageSlider/src";
-import { isSwipeable, useSwipeable } from 'react-swipeable';
-import introJs from "intro.js";
-import { Steps, Hints } from "intro.js-react";
-import "intro.js/introjs.css";
 import Joyride from 'react-joyride';
-import PrivacyPolicies from "../../PrivacyPolicies/src";
-
 
 export default function Tournaments() {
   const { user, isAuthenticated, logout } = useMoralis();

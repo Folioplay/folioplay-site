@@ -11,6 +11,7 @@ import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import { LinearProgress } from "@mui/material";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 export default function ActivityTabs({ teams, tournaments }) {
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -110,7 +111,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         {teams !== undefined && tournaments !== undefined ? <>{
                             teams.map((team, index) => {
                                 return (
-                                    <motion.div initial={{ y: "100vh" }} animate={{ y: 0 }} transition={{ delay: 0 + 0.08 * index, duration: 0.35 }} className="activity-team-card mb-15">
+                                    <motion.div id={"team-" + index} onClick={(event) => { navigate('/activity/team/' + team.id) }} initial={{ y: "100vh" }} animate={{ y: 0 }} transition={{ delay: 0 + 0.08 * index, duration: 0.35 }} className="activity-team-card mb-15">
                                         <span className="activity-team-info">
                                             <span className="activity-team-name font-size-20 font-weight-600">{team.name}
                                             </span>
@@ -133,10 +134,12 @@ export default function ActivityTabs({ teams, tournaments }) {
                                                 <span className="font-size-12 font-weight-600">+8</span>
                                             </span>
                                         </div>
+
                                     </motion.div>);
                             })
                         }</>
                             : <></>}
+                        
                     </div>
                 </TabPanel>
             </TabContext >

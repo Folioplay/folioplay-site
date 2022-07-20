@@ -3,9 +3,12 @@ import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import FolioplayBar from "../../FolioplayBar/src";
 import '../style/index.css'
 import '../common/ActivityTabs'
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useNavigate } from "react-router";
 import ActivityTabs from "../common/ActivityTabs";
 import { getAllUserTeams, getPreviousUserTournaments } from "../../../APIS/apis";
 export default function MyTeams() {
+    const navigate = useNavigate();
     const [teams, setTeams] = useState(undefined);
     async function fetchTeams() {
         setTeams(await getAllUserTeams());
@@ -26,8 +29,10 @@ export default function MyTeams() {
                 <br />
                 <span className="font-size-30 font-weight-700 ml-20 mb-20">My Activity</span><br /><br /><br />
                 <div className="activity-content-wrapper mt-20">
+                    <div className="activity-add-team-buttton"><AddCircleIcon className="mr-10" id="circle-add-team-button" onClick={() => { navigate('/teams/createteam/') }} /></div>
                     <div id="activity-tabs-wrapper">
                         <ActivityTabs teams={teams} tournaments={tournaments} />
+                        {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
                     </div>
                 </div>
             </div>

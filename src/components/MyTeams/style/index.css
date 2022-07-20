@@ -114,3 +114,23 @@
     transform: translateX(-60px);
 
 }
+.activity-add-team-buttton{
+    width: 450px;
+    position: fixed;
+    bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1;
+}
+@media only screen and (max-width: 600px) {
+    .activity-add-team-buttton{
+        width: 100%;
+    }
+  }
+#circle-add-team-button{
+    color: var(--golden);
+    font-size: 60px;
+}
+#circle-add-team-button:hover{
+    cursor: pointer;
+}

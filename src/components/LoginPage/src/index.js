@@ -30,6 +30,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
     event.preventDefault();
+    console.log(event.target.value);
     setEmail(event.target.value);
   }
   const loginWithMail = async () => {
@@ -42,6 +43,7 @@ export default function LoginPage() {
       return;
     }
     // const email = document.getElementById("email-field").value;
+    console.log(email);
     const user = await authenticate({
       provider: "magicLink",
       email: email,
@@ -284,7 +286,7 @@ export default function LoginPage() {
         </h4>
         <div style={{ width: "100%", height: "30px" }}></div>
         <label style={{ width: "min(320px,100%)" }} className="font-size-12 ml-auto mr-auto" htmlFor="email-field">Email ID</label>
-        <input autoFocus key="email-id" type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" value={email} onChange={(event) => handleChange(event)} />
+        <input key="email-id" type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" value={email} onChange={(event) => handleChange(event)} />
         <Button
           id="folioplay-login-mail-button"
           onClick={loginWithMail}
