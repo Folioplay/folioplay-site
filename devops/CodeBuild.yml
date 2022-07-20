@@ -6,21 +6,26 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - python --version
       - echo Installing Yarn...
       - npm install -g yarn
   pre_build:
     commands:
       - echo Installing source Yarn dependencies...
       - export NODE_ENV=production
-      - yarn install
       - aws secretsmanager get-secret-value --secret-id $SECRET_NAME --query SecretString --output text | python -c 'import json, sys; t = [ print(f"{k}={v}") for k,v in json.load(sys.stdin).items()]' > .env
+      - cat .env && pwd
+      - yarn install
   build:
     commands: 
       - yarn build
+  post_build:
+    commands:
+      - systemctl restart nginx > devops/post_install.sh
+      - chmod +x post_install.sh
       
 artifacts:
   files:
     - build/
     - devops/appspec.yml
+    - devops/post_install.sh
 
