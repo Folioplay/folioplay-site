@@ -286,7 +286,7 @@ export default function LoginPage() {
         </h4>
         <div style={{ width: "100%", height: "30px" }}></div>
         <label style={{ width: "min(320px,100%)" }} className="font-size-12 ml-auto mr-auto" htmlFor="email-field">Email ID</label>
-        <input key="email-id" type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" value={email} onChange={(event) => handleChange(event)} />
+        <input autoFocus key="email-id" type={"email"} placeholder="Mention your Email ID here" required name="email-field" id="email-field" value={email} onChange={(event) => handleChange(event)} />
         <Button
           id="folioplay-login-mail-button"
           onClick={loginWithMail}
