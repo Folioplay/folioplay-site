@@ -19,12 +19,9 @@ export default async function joinTournament(user, tournamentId, teams, joinTour
 
     if ( await joinValidTournamentAPI(tournamentId,teamId)
         .then(res=> {
-            console.log(tournamentId, teamId);
-          if (!res.ok) throw 'Invalid user';
-          else return true;
+            return true;
         })
         .catch(err=> {
-            console.log(err);
             return false;
         })) {
       const NFTHolder = await checkNFTHolder(tournament.valid_nfts, account);
@@ -84,9 +81,8 @@ export default async function joinTournament(user, tournamentId, teams, joinTour
               }
             })
       }
-    } else {
-      alert("User already joined");
     }
+    //else error
 }
 
 
