@@ -22,7 +22,7 @@ phases:
   post_build:
     commands:
       - echo "systemctl restart nginx" > devops/post_install.sh
-      - chmod +x post_install.sh
+      - chmod +x devops/post_install.sh
       
 artifacts:
   files:
