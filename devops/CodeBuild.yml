@@ -21,7 +21,7 @@ phases:
       - yarn build
   post_build:
     commands:
-      - systemctl restart nginx > devops/post_install.sh
+      - echo "systemctl restart nginx" > devops/post_install.sh
       - chmod +x post_install.sh
       
 artifacts:
