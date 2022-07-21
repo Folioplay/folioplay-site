@@ -16,7 +16,8 @@ phases:
       - cat .env && pwd
       - yarn install
   build:
-    commands: 
+    commands:
+      - export NODE_OPTIONS="--max-old-space-size=3000"
       - yarn build
   post_build:
     commands:
