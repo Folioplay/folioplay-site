@@ -94,7 +94,7 @@ export default function FolioplayBar({ intervalId }) {
       const bal = await contract.balanceOf(walletAddress);
       setBalance(ethers.utils.formatEther(bal) * (10 ** 12));
     }
-  }, 1000);
+  }, 6000);
 
   // useEffect(() => {
   //   async function ethBalanceSet() {

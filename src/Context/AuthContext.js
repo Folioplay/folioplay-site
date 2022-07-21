@@ -32,7 +32,6 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem("authtoken", null);
         localStorage.removeItem("walletconnect");
         await logout();
-        window.location.pathname = "/";
     };
 
     if (window.ethereum) {
