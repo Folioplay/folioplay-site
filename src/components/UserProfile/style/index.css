@@ -58,22 +58,3 @@
     animation: fadein 0.5s,fadeout 0.5s 1.5s;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
 }
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 1.5em; opacity: 1;}
-  }
-  
-  @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 1.5em; opacity: 1;}
-  }
-  
-  @-webkit-keyframes fadeout {
-    from {bottom: 1.5em; opacity: 1;} 
-    to {bottom: 0; opacity: 0;}
-  }
-  
-  @keyframes fadeout {
-    from {bottom: 1.5em; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
-  }

@@ -29,9 +29,6 @@ import { useNavigate } from "react-router";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
-  const [openPolicies, setOpenPolicies] = useState(false);
-  const handleOpenPolicies = () => setOpenPolicies(true);
-  const handleClosePolicies = () => setOpenPolicies(false);
   const navigate = useNavigate();
   var icons = [
     <HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />,
@@ -40,38 +37,11 @@ export default function FolioplayBar({ intervalId }) {
     <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />
   ]
   console.log(user);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   const provider = new ethers.providers.JsonRpcProvider(
     `https://polygon-rpc.com/`
   );
   const [balance, setBalance] = useState("");
-
-  // Get balance as USDT
-  // const getUSDTBalance = async () => {
-  //   console.log("------------------------------")
-  //   const USDTABI = [
-  //     {
-  //       constant: true,
-  //       inputs: [{name: "_owner", type: "address"}],
-  //       name: "balanceOf",
-  //       outputs: [{name: "balance", type: "uint256"}],
-  //       type: "function",
-  //     },
-  //   ];
-  //   const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
-  //   const walletAddress = "0x0B1A8E2e3C3594F63B8DF4bF4296eC916B61794b";
-  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //   console.log(provider);
-  //   const signer = provider.getSigner();
-  //   console.log(signer.getBalance());
-  //
-  //   const contract = new ethers.Contract(contractAddress, USDTABI, signer);
-  //
-  //   const bal = await contract.balanceOf(walletAddress);
-  //   console.log(bal);
-  // }
-
-
 
   const walletIntervalId = window.setInterval(async function () {
     if (user) {
@@ -86,7 +56,7 @@ export default function FolioplayBar({ intervalId }) {
       ];
       const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
       const walletAddress = user.attributes.ethAddress;
-      console.log(walletAddress);
+      // console.log(walletAddress);
       const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
       // const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, USDTABI, provider);
@@ -94,7 +64,7 @@ export default function FolioplayBar({ intervalId }) {
       const bal = await contract.balanceOf(walletAddress);
       setBalance(ethers.utils.formatEther(bal) * (10 ** 12));
     }
-  }, 6000);
+  }, 6000)
 
   // useEffect(() => {
   //   async function ethBalanceSet() {

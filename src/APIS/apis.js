@@ -150,3 +150,12 @@ export async function getPreviousUserTournaments() {
     }
   }).then((res) => res.json());
 }
+export async function getTeamByid({ teamId }) {
+  const authtoken = localStorage.getItem('authtoken');
+  return await fetch(`${SERVER}/teams/` + teamId, {
+    method: "GET",
+    headers: {
+      'x-access-token': authtoken
+    }
+  }).then((res) => res.json());
+}

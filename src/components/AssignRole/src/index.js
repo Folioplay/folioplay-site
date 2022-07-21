@@ -9,7 +9,6 @@ import saveTeam from "../common/saveTeam";
 import selectRank from "../common/selectRank";
 import { createTeam } from "../../../APIS/apis";
 import TeamPreview from "../../TeamCreation/common/TeamPreview";
-import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import teamPreview from "../common/teamPreview";
 import { getAllUserTeams } from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";

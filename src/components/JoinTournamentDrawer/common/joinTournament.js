@@ -37,9 +37,6 @@ export default async function joinTournament(user, tournamentId, teams, joinTour
                   setErrorMessage((errorMessage) => ({...errorMessage, message: res.message, variant: "error"}));
                   setErrorMessageSnackOpen(true);
                 } else {
-                  // const prevSpots = document.getElementById(tournamentId + '-left-spots').innerText;
-                  // document.getElementById(tournamentId + '-left-spots').innerText = parseInt(prevSpots) - 1;
-                  // console.log(document.getElementById(tournamentId + '-left-spots').innerText);
                   if (changeTournament === false) {
                     tournament.filled_spots++;
                   } else {

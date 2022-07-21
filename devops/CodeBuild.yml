@@ -16,12 +16,13 @@ phases:
       - cat .env && pwd
       - yarn install
   build:
-    commands: 
+    commands:
+      - export NODE_OPTIONS="--max-old-space-size=5120"
       - yarn build
   post_build:
     commands:
-      - systemctl restart nginx > devops/post_install.sh
-      - chmod +x post_install.sh
+      - echo "systemctl restart nginx" > devops/post_install.sh
+      - chmod +x devops/post_install.sh
       
 artifacts:
   files:

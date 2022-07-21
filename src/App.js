@@ -16,6 +16,7 @@ import { tournaments } from "./components/Tournaments/common/demoTournaments";
 import Joyride from 'react-joyride';
 import MyTeams from './components/MyTeams/src';
 import UserProfile from './components/UserProfile/src';
+import TeamPreview from './components/TeamPreview/src';
 // import React, { useEffect, useState } from "react";
 function App() {
   function AuthenticatedRoute({ children }) {
@@ -109,6 +110,12 @@ function App() {
             <AuthenticatedRoute>
               <AuthContextProvider>
                 <UserProfile />
+              </AuthContextProvider>
+            </AuthenticatedRoute>} />
+          <Route exact path="/activity/team/:teamId" element={
+            <AuthenticatedRoute>
+              <AuthContextProvider>
+                <TeamPreview />
               </AuthContextProvider>
             </AuthenticatedRoute>} />
           <Route exact path="/chart" element={

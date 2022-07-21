@@ -30,6 +30,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
     event.preventDefault();
+    console.log(event.target.value);
     setEmail(event.target.value);
   }
   const loginWithMail = async () => {
@@ -42,6 +43,7 @@ export default function LoginPage() {
       return;
     }
     // const email = document.getElementById("email-field").value;
+    console.log(email);
     const user = await authenticate({
       provider: "magicLink",
       email: email,
