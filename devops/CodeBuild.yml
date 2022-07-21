@@ -17,7 +17,7 @@ phases:
       - yarn install
   build:
     commands:
-      - export NODE_OPTIONS="--max-old-space-size=3000"
+      - export NODE_OPTIONS="--max-old-space-size=5120"
       - yarn build
   post_build:
     commands:
