@@ -52,7 +52,8 @@ export default async function joinTournament(user, tournamentId, teams, joinTour
                 }
               })
         }
-      } else {
+      else{}}
+    else {
         await joinTournamentAPI(tournamentId, teamId)
             .then((res) => {
               var status = res.statusCode;

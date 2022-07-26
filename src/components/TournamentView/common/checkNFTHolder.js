@@ -3,7 +3,8 @@ import { ethers } from "ethers";
 import NFTMarketPlace from "../../../contracts/NFTMarketplace.json";
 
 export default async function  checkNFTHolder(nft_list, account) {
-  if(nft_list[0].name === '') {
+  console.log(nft_list[0].address === '');
+  if(nft_list[0].address !== '') {
     let providerWallet = "https://polygon-mumbai.g.alchemy.com/v2/0fxK7G9YegGNIVwnav0XwkoMV9bb7qf1";
     const provider = new ethers.providers.JsonRpcProvider(providerWallet);
     const contract = new ethers.Contract(
