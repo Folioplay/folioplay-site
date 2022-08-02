@@ -40,7 +40,8 @@ export default function FolioplayBar({ intervalId }) {
   const provider = new ethers.providers.JsonRpcProvider(
     `https://polygon-rpc.com/`
   );
-  const [balance, setBalance] = useState("");
+  const [balanceUSDT, setBalanceUSDT] = useState("Loading");
+  const [balanceUSDC, setBalanceUSDC] = useState("Loading");
 
   const walletIntervalId = window.setInterval(async function () {
     if (user) {
@@ -56,21 +57,30 @@ export default function FolioplayBar({ intervalId }) {
       const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
       const walletAddress = user.attributes.ethAddress;
       const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
-      // const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, USDTABI, provider);
 
       const bal = await contract.balanceOf(walletAddress);
-      setBalance(ethers.utils.formatEther(bal) * (10 ** 12));
+      setBalanceUSDT(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
+    }
+    if (user) {
+      const USDCABI = [
+        {
+          constant: true,
+          inputs: [{ name: "_owner", type: "address" }],
+          name: "balanceOf",
+          outputs: [{ name: "balance", type: "uint256" }],
+          type: "function",
+        },
+      ];
+      const contractAddress = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
+      const walletAddress = user.attributes.ethAddress;
+      const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
+      const contract = new ethers.Contract(contractAddress, USDCABI, provider);
+
+      const bal = await contract.balanceOf(walletAddress);
+      setBalanceUSDC(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
     }
   }, 10000);
-
-  // useEffect(() => {
-  //   async function ethBalanceSet() {
-  //     const bal = await provider.getBalance(user.get("ethAddress"));
-  //     setBalance(ethers.utils.formatEther(bal));
-  //   }
-  //   if (user) ethBalanceSet();
-  // }, [user]);
 
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
@@ -213,7 +223,7 @@ export default function FolioplayBar({ intervalId }) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem>Balance : {balance}</MenuItem>
+              <MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>
               <Divider />
               <MenuItem>
                 <ListItemIcon>
