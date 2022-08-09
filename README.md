@@ -3,7 +3,7 @@
 #### Make sure you have nodejs, yarn installed on your system
 
 
-### Create env at ___./env___
+### Create env at ___./.env___
 #### Ask a working developer for env credentials to get started 
 ### Installation
 
