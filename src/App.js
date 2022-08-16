@@ -17,6 +17,7 @@ import Joyride from 'react-joyride';
 import MyTeams from './components/MyTeams/src';
 import UserProfile from './components/UserProfile/src';
 import TeamPreview from './components/TeamPreview/src';
+import AddMoney from "./components/AddMoney/src";
 // import React, { useEffect, useState } from "react";
 function App() {
   function AuthenticatedRoute({ children }) {
@@ -122,6 +123,12 @@ function App() {
             <AuthenticatedRoute>
               <AuthContextProvider>
                 <OpenChart />
+              </AuthContextProvider>
+            </AuthenticatedRoute>} />
+        <Route exact path="/add_money" element={
+            <AuthenticatedRoute>
+              <AuthContextProvider>
+                <AddMoney />
               </AuthContextProvider>
             </AuthenticatedRoute>} />
         </Routes>

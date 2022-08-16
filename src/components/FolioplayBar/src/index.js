@@ -10,7 +10,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import walletIcon from "../../../images/Vectorwallet.png";
 import hamburgerIcon from "../../../images/Vectorhamburger.png";
 import "../style/index.css";
-import { Menu, MenuItem } from "@mui/material";
+import {Link, Menu, MenuItem} from "@mui/material";
 import { Logout } from "@mui/icons-material";
 import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
@@ -225,7 +225,7 @@ export default function FolioplayBar({ intervalId }) {
             >
               <MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>
               <Divider />
-              <MenuItem>
+              <MenuItem onClick={()=> window.location.pathname="add_money"}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>

@@ -34,10 +34,15 @@ export const AuthContextProvider = ({ children }) => {
         await logout();
     };
 
-    if (window.ethereum) {
-        const { ethereum } = window;
-        if (ethereum && ethereum.isMetaMask) {
+    // if (window.ethereum) {
+    //     const { ethereum } = window;
+    //     if (ethereum && ethereum.isMetaMask) {
             if (localStorage.getItem("walletType") === "metamask") {
+                // console.log("ftfryfyffiuf5ttt", window.ethereum);
+                if (!window.ethereum.networkVersion && window.ethereum.networkVersion!=='137') {
+                    // console.log("esdrftgyhuj",window.ethereum)
+                    logOut();
+                }
                 // console.log(localStorage.getItem("walletType") === "metamask" && window.ethereum);
                 window.ethereum.on("chainChanged", async ([networkId]) => {
                     console.log("in bhai")
@@ -53,8 +58,8 @@ export const AuthContextProvider = ({ children }) => {
                     }
                 );
             }
-        }
-    }
+    //     }
+    // }
 
         return (
         <AuthContext.Provider

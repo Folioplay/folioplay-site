@@ -19,6 +19,7 @@ export default async function joinTournament(user, tournamentId, teams, joinTour
 
     if ( await joinValidTournamentAPI(tournamentId,teamId)
         .then(res=> {
+            console.log(res);
             return true;
         })
         .catch(err=> {
@@ -26,33 +27,41 @@ export default async function joinTournament(user, tournamentId, teams, joinTour
         })) {
       const NFTHolder = await checkNFTHolder(tournament.valid_nfts, account);
       if (!NFTHolder) {
-        if (await paymentTournament(user, tournament)) {
-          await joinTournamentAPI(tournamentId, teamId)
-              .then((res) => {
-                const status = res.statusCode;
-                if (status !== 200) {
-                  setErrorMessage((errorMessage) => ({...errorMessage, message: res.message, variant: "error"}));
-                  setErrorMessageSnackOpen(true);
-                } else {
-                  if (changeTournament === false) {
-                    tournament.filled_spots++;
-                  } else {
-                    for (let i = 0; i < tournaments.length; i++) {
-                      if (tournaments[i].id === tournamentId) {
-                        tournaments[i].filled_spots++;
-                      }
-                    }
-                  }
+          if (await paymentTournament(user, tournament)) {
+              await joinTournamentAPI(tournamentId, teamId)
+                  .then((res) => {
+                      const status = res.statusCode;
+                      if (status !== 200) {
+                          setErrorMessage((errorMessage) => ({
+                              ...errorMessage,
+                              message: res.message,
+                              variant: "error"
+                          }));
+                          setErrorMessageSnackOpen(true);
+                      } else {
+                          if (changeTournament === false) {
+                              tournament.filled_spots++;
+                          } else {
+                              for (let i = 0; i < tournaments.length; i++) {
+                                  if (tournaments[i].id === tournamentId) {
+                                      tournaments[i].filled_spots++;
+                                  }
+                              }
+                          }
 
-                  setErrorMessage((errorMessage) => ({...errorMessage, message: res.message, variant: "success"}));
-                  setErrorMessageSnackOpen(true);
-                  // setTimeout(() => {
-                  //   window.location.pathname = `/tournaments/${tournamentId}`
-                  // }, 2000)
-                }
-              })
-        }
-      else{}}
+                          setErrorMessage((errorMessage) => ({
+                              ...errorMessage,
+                              message: res.message,
+                              variant: "success"
+                          }));
+                          setErrorMessageSnackOpen(true);
+                          // setTimeout(() => {
+                          //   window.location.pathname = `/tournaments/${tournamentId}`
+                          // }, 2000)
+                      }
+                  })
+          }
+      }
     else {
         await joinTournamentAPI(tournamentId, teamId)
             .then((res) => {

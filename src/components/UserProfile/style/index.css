@@ -13,7 +13,20 @@
     background-color: var(--white);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
 }
+.add_money_details{
+    color: #4C6781;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    padding-top: 1rem;
+}
+
 .wallet-info{
     display: flex;
     justify-content: flex-start;
