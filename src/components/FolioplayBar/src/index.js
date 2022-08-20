@@ -122,28 +122,28 @@ export default function FolioplayBar({ intervalId }) {
     >
       <List style={{ fontFamily: "poppins" }}>
         {[{ name: "Home", link: "/tournaments" }, { name: "Tournaments", link: "/tournaments" }, { name: "Activity", link: "/activity" }, { name: "Profile", link: "/user/profile" }].map((text, index) => (
-          <ListItem button key={text.name}>
+          <ListItem button key={text.name} onClick={() => { clearInterval(intervalId); navigate(text.link) }}>
             <ListItemIcon>
               {icons[index]}
             </ListItemIcon>
-            <ListItemText style={{ fontFamily: "poppins" }} primary={text.name} onClick={() => { clearInterval(intervalId); navigate(text.link) }} />
+            <ListItemText style={{ fontFamily: "poppins" }} primary={text.name} />
           </ListItem>
         ))}
-        <ListItem button key={"policies"}>
+        <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"}
-            onClick={openPrivacyPolicies} />
+          />
         </ListItem>
         <div>
 
         </div>
-        <ListItem button>
+        <ListItem button onClick={logOut}>
           <ListItemIcon>
             <LogoutIcon style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Logout"} onClick={logOut} />
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Logout"} />
         </ListItem>
       </List>
 

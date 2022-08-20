@@ -15,19 +15,25 @@ import { useMoralis } from "react-moralis";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
-import { chooseTeamClose, chooseTeamOpen } from "../common/chooseTeamAnimations";
-import '../style/index.css'
+import {
+  chooseTeamClose,
+  chooseTeamOpen,
+} from "../common/chooseTeamAnimations";
+import "../style/index.css";
 export default function TournamentView() {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   var navigate = useNavigate();
   const { user } = useMoralis();
-  let account  = user.get("ethAddress");
+  let account = user.get("ethAddress");
   const [balance, setBalance] = useState("");
   const [balanceSnackOpen, setBalanceSnackOpen] = useState(false);
   const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({ message: "", variant: "error" });
+  const [errorMessage, setErrorMessage] = useState({
+    message: "",
+    variant: "error",
+  });
   const [tournament, setTournament] = useState(undefined);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
@@ -75,8 +81,10 @@ export default function TournamentView() {
     setErrorMessageSnackOpen(false);
   };
   const LeftComponent = () => {
-    var disabledClass = tournament && tournament.status === 3 ? " disable-join-button" : "";
-    var disabledTournament = tournament && tournament.status === 3 ? true : false;
+    var disabledClass =
+      tournament && tournament.status === 3 ? " disable-join-button" : "";
+    var disabledTournament =
+      tournament && tournament.status === 3 ? true : false;
     disabledTournament = false;
     return (
       <div className="fullpage">
@@ -129,7 +137,11 @@ export default function TournamentView() {
                     <Button
                       className={disabledClass + " tournament-fee"}
                       size="small"
-                      style={disabledTournament ? {} : { backgroundColor: "var(--golden)" }}
+                      style={
+                        disabledTournament
+                          ? {}
+                          : { backgroundColor: "var(--golden)" }
+                      }
                       onClick={() => {
                         chooseTeamOpen();
                       }}
@@ -146,27 +158,56 @@ export default function TournamentView() {
                     value={seatsFilled}
                   />
                   <div className="spots-wrapper">
-                    <span className="font-size-12 font-weight-500 mt-5" style={{ color: "var(--golden)" }}>
-                      <span id={tournament.id + "-left-spots"}>{tournament.total_spots - tournament.filled_spots}</span> spots left
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--golden)" }}
+                    >
+                      <span id={tournament.id + "-left-spots"}>
+                        {tournament.total_spots - tournament.filled_spots}
+                      </span>{" "}
+                      spots left
                     </span>
-                    <span className="font-size-12 font-weight-500 mt-5" style={{ color: "var(--dark-dim-white)" }}>
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--dark-dim-white)" }}
+                    >
                       {tournament.total_spots} spots
                     </span>
                   </div>
                 </div>
               </motion.div>
-              {rank !== undefined && rank !== null && rank.length > 0 ?
-                <motion.div initial={{ x: -500, y: -70 }} animate={{ x: 0 }} transition={{ duration: 0.4 }} className="user-rank-div">
+              {rank !== undefined && rank !== null && rank.length > 0 ? (
+                <motion.div
+                  initial={{ x: -500, y: -70 }}
+                  animate={{ x: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="user-rank-div"
+                >
                   <span>
-                    Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team<b>&ensp;{rank[0].team.name}&ensp;</b> and points <b>&ensp;{rank[0].portfolio}</b>
+                    Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team
+                    <b>&ensp;{rank[0].team.name}&ensp;</b> and points{" "}
+                    <b>&ensp;{rank[0].portfolio}</b>
                   </span>
-                </motion.div> :
-                <></>}
+                </motion.div>
+              ) : (
+                <></>
+              )}
 
               <div className="folioplay-tabs">
                 <LeaderBoardTabs tournamentId={tournament.id} />
               </div>
-              <JoinTournamentDrawer teams={teams} tournamentId={tournament.id} tournament={tournament} tournaments={[]} user={user} setErrorMessage={setErrorMessage} setErrorMessageSnackOpen={setErrorMessageSnackOpen} navigate={navigate} changeTournament={true} account={account} />
+              <JoinTournamentDrawer
+                teams={teams}
+                tournamentId={tournament.id}
+                tournament={tournament}
+                tournaments={[]}
+                user={user}
+                setErrorMessage={setErrorMessage}
+                setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+                navigate={navigate}
+                changeTournament={true}
+                account={account}
+              />
             </div>
           </>
         )}
@@ -217,8 +258,12 @@ export default function TournamentView() {
   const RightComponent = () => {
     return (
       <div id="tournament-view-page-image">
-        <span className="font-size-36 font-weight-700 mb-5">Here's what you can win!</span>
-        <span className="font-size-20 font-weight-500">Doesn't these big winnings look WOW? Ofcourse they do!</span>
+        <span className="font-size-36 font-weight-700 mb-5">
+          Here's what you can win!
+        </span>
+        <span className="font-size-20 font-weight-500">
+          Doesn't these big winnings look WOW? Ofcourse they do!
+        </span>
       </div>
     );
   };
