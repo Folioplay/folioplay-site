@@ -1,12 +1,12 @@
 import React from "react";
 
-export default function TeamPreview({ superstars, mooning, rekt }) {
+export default function TeamPreview({ }) {
     // superstars = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
     // mooning = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
     // rekt = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
-    superstars = [{ name: "default" }, { name: "default" }]
-    mooning = [{ name: "default" }, { name: "default" }, { name: "default" }, { name: "default" }, { name: "default" }, { name: "default" }]
-    rekt = [{ name: "default" }, { name: "default" }, { name: "default" }, { name: "default" }, { name: "default" }, { name: "default" }]
+    var superstars = [{ name: "default" }]
+    var mooning = [{ name: "default" }, { name: "default" }, { name: "default" }]
+    var rekt = [{ name: "default" }, { name: "default" }, { name: "default" }]
     return (
         <div className="team-preview">
             <div className="bucket-preview mb-20">
