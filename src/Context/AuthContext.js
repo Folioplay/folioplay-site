@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import {useMoralis} from "react-moralis";
 
 export const AuthContext = createContext({});
-const SERVER = "https://folioplay-api.ssrivastava.tech";
+const SERVER = process.env.REACT_APP_API_SERVER;
 
 export const AuthContextProvider = ({ children }) => {
     const [validToken, setValidToken] = useState(false);
