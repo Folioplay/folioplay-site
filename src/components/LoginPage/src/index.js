@@ -31,10 +31,11 @@ export default function LoginPage() {
   console.log(isAuthenticated, isAuthenticating, user, account);
   const [policiesAccepted, setPoliciesAccepted] = useState(false);
   useEffect(() => {
-    console.log("isauyth", isAuthenticated, isInitialized);
+    console.log("isauth", isAuthenticated, isInitialized);
     if (isAuthenticated && isInitialized)
       window.location.pathname = "/tournaments";
   }, []);
+  console.log("gg")
 
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
@@ -57,11 +58,11 @@ export default function LoginPage() {
       }, 2000);
       return;
     }
-    const emailValue = document.getElementById("email-field").value;
-    console.log(email);
+    // const emailValue = document.getElementById("email-field").value;
+    // console.log(email);
     const user = await authenticate({
       provider: "magicLink",
-      email: emailValue,
+      email: magicEmail,
       apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
       network: "mainnet",
     })
@@ -258,6 +259,11 @@ export default function LoginPage() {
     window.location.pathname = "/";
   };
 
+  const [magicEmail, setMagicEmail] = useState('');
+  const setMagicEmailFunc = (e) => {
+    setMagicEmail(e.target.value);
+  }
+
   const getAuthTokenFunction = async (user) => {
     const walletAddress = user.get("ethAddress");
     const walletSignature = user["attributes"].authData.moralisEth.signature;
@@ -362,6 +368,7 @@ export default function LoginPage() {
           required
           name="email-field"
           id="email-field"
+          onChange={()=>setMagicEmailFunc}
         />
         <Button
           id="folioplay-login-mail-button"
