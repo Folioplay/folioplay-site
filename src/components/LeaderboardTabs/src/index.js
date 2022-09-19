@@ -57,7 +57,8 @@ export default function LeaderBoardTabs({ tournamentId }) {
                   <span className="mr-10">#{" "}{index + 1}</span>
                   {/* <div className="leaderboard-profile-image"></div> */}
                   <span className={"leaderboard-username ml-20"}>
-                    {entry.user.walletAddress.substring(0, 6)}****{entry.user.walletAddress.substring(entry.user.walletAddress.length - 4)}
+                    {entry.user.username}
+                    {/* {entry.user.walletAddress.substring(0, 6)}****{entry.user.walletAddress.substring(entry.user.walletAddress.length - 4)} */}
                   </span>
                   {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
                   <span className="ml-auto">{entry.portfolio}</span>
