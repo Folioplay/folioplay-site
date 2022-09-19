@@ -37,27 +37,27 @@ export const AuthContextProvider = ({ children }) => {
     // if (window.ethereum) {
     //     const { ethereum } = window;
     //     if (ethereum && ethereum.isMetaMask) {
-            if (localStorage.getItem("walletType") === "metamask") {
-                // console.log("ftfryfyffiuf5ttt", window.ethereum);
-                if (!window.ethereum.networkVersion && window.ethereum.networkVersion!=='137') {
-                    // console.log("esdrftgyhuj",window.ethereum)
-                    logOut();
-                }
-                // console.log(localStorage.getItem("walletType") === "metamask" && window.ethereum);
-                window.ethereum.on("chainChanged", async ([networkId]) => {
-                    console.log("in bhai")
-                    if (networkId !== '137') {
-                        await logOut();
-                        alert("Network ID change detected. Connect to Polygon Mainnet.")
-                    }
-                });
-
-                window.ethereum.on("accountsChanged", async ([newAddress]) => {
-                        await logOut();
-                        alert("Account change detected. Please Sign-in Again.")
-                    }
-                );
-            }
+    //         if (localStorage.getItem("walletType") === "metamask") {
+    //             // console.log("ftfryfyffiuf5ttt", window.ethereum);
+    //             if (!window.ethereum.networkVersion && window.ethereum.networkVersion!=='137') {
+    //                 // console.log("esdrftgyhuj",window.ethereum)
+    //                 logOut();
+    //             }
+                // // console.log(localStorage.getItem("walletType") === "metamask" && window.ethereum);
+                // window.ethereum.on("chainChanged", async ([networkId]) => {
+                //     console.log("in bhai")
+                //     if (networkId !== '137') {
+                //         await logOut();
+                //         alert("Network ID change detected. Connect to Polygon Mainnet.")
+                //     }
+                // });
+                //
+                // window.ethereum.on("accountsChanged", async ([newAddress]) => {
+                //         await logOut();
+                //         alert("Account change detected. Please Sign-in Again.")
+                //     }
+                // );
+            // }
     //     }
     // }
 

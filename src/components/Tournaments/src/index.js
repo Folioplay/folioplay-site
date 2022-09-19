@@ -56,29 +56,29 @@ export default function Tournaments() {
     await logout();
   };
 
-  if (window.ethereum) {
-    const { ethereum } = window;
-    if (ethereum && ethereum.isMetaMask) {
-      if (localStorage.getItem("walletType") === "metamask") {
-        window.ethereum.on("chainChanged", async ([networkId]) => {
-          if (
-            networkId !== "137" &&
-            localStorage.getItem("walletType") === "metamask"
-          ) {
-            await logOut();
-            alert("Network ID change detected. Connect to Polygon Mainnet.");
-          }
-        });
-
-        window.ethereum.on("accountsChanged", async ([newAddress]) => {
-          if (localStorage.getItem("walletType") === "metamask") {
-            await logOut();
-            alert("Account change detected. Please Sign-in Again.");
-          }
-        });
-      }
-    }
-  }
+  // if (window.ethereum) {
+  //   const { ethereum } = window;
+  //   if (ethereum && ethereum.isMetaMask) {
+  //     if (localStorage.getItem("walletType") === "metamask") {
+  //       window.ethereum.on("chainChanged", async ([networkId]) => {
+  //         if (
+  //           networkId !== "137" &&
+  //           localStorage.getItem("walletType") === "metamask"
+  //         ) {
+  //           await logOut();
+  //           alert("Network ID change detected. Connect to Polygon Mainnet.");
+  //         }
+  //       });
+  //
+  //       window.ethereum.on("accountsChanged", async ([newAddress]) => {
+  //         if (localStorage.getItem("walletType") === "metamask") {
+  //           await logOut();
+  //           alert("Account change detected. Please Sign-in Again.");
+  //         }
+  //       });
+  //     }
+  //   }
+  // }
   const status = {
     3: { value: "Completed", color: "#ff000096" },
     1: { value: "Closed", color: "#ff000096" },
