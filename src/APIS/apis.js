@@ -159,3 +159,15 @@ export async function getTeamByid({ teamId }) {
     }
   }).then((res) => res.json());
 }
+
+export async function checkAvailableUsername() {
+  const authtoken = localStorage.getItem('authtoken');
+  return await fetch(`${SERVER}/user/username/available`, {
+    method: "GET",
+    headers: {
+      'x-access-token': authtoken
+    }
+  }).then((res) => {
+    return res.ok;
+  });
+}

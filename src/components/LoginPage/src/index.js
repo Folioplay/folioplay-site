@@ -308,9 +308,9 @@ export default function LoginPage() {
           <span>Or</span>
         </h4>
         <div style={{ width: "100%", height: "30px" }}></div>
-        <h3 style={{ textAlign: "center" }} className="font-weight-500">
-          Connect your web3 wallet
-        </h3>
+        {/*<h3 style={{ textAlign: "center" }} className="font-weight-500">*/}
+        {/*  Connect your web3 wallet*/}
+        {/*</h3>*/}
         <div className="folioplay-connect">
           <Button
             style={{

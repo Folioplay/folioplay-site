@@ -13,9 +13,48 @@
     background-color: var(--white);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    padding: 2rem;
+    color: black;
     /*display: flex;*/
     /*flex-wrap: wrap;*/
 }
+
+.headingPersonalInfo{
+    font-size: 1.3rem;
+    font-weight: 700;
+
+}
+
+.personalDetails{
+    padding: 0.5rem;
+    padding-left: 0.8rem;
+    border: 1px solid #B2C6DB;
+    border-radius: 0.5rem;
+    width: 23rem;
+}
+
+.sectionHeading{
+    color: #4C6781;
+    font-size: 1rem;
+}
+
+.sectionDetails{
+    display: flex;
+    align-items: center;
+    font-size: 1.15rem;
+}
+
+.editIcon{
+    margin-left: 0.7rem;
+    cursor: pointer;
+}
+
+.inputField{
+    background-color: transparent;
+    border: 0;
+    padding: 8px;
+}
+
 .add_money_details{
     color: #4C6781;
     display: flex;
@@ -70,4 +109,36 @@
     visibility: visible;
     animation: fadein 0.5s,fadeout 0.5s 1.5s;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+
+.profileHeader{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 90%;
+    width: 90%;
+    flex-wrap: wrap;
+}
+
+.profilePicture{
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    margin-right: 2rem;
+}
+
+.userDetails{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.userName{
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.userWalletAddress{
+    font-size: 1rem;
+    font-weight: 300;
 }
