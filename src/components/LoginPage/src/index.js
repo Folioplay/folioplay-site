@@ -13,6 +13,13 @@ import MuiAlert from "@mui/material/Alert";
 import { useEventCallback } from "@mui/material";
 import SplashScreen from "../common/SplashScreen";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
+import googleIcon from "../../../images/google_icon.webp";
+import metaIcon from "../../../images/meta.png";
+import { Magic } from 'magic-sdk';
+import { OAuthExtension } from '@magic-ext/oauth';
+const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
+  extensions: [new OAuthExtension()],
+});
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -58,15 +65,17 @@ export default function LoginPage() {
       }, 2000);
       return;
     }
-    // const emailValue = document.getElementById("email-field").value;
-    // console.log(email);
+    const emailValue = document.getElementById("email-field").value;
+    console.log(email);
+    console.log(magicEmail);
     const user = await authenticate({
       provider: "magicLink",
-      email: magicEmail,
+      email: emailValue,
       apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
       network: "mainnet",
     })
       .then(async (user) => {
+        console.log(user)
         await getAuthTokenFunction(user);
         console.log(user);
       })
@@ -215,42 +224,19 @@ export default function LoginPage() {
     );
   };
 
-  const web3AuthLogin = async () => {
-    if (!isAuthenticated) {
-      if (!policiesAccepted) {
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.remove("show");
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.add("show");
-        setTimeout(() => {
-          document
-            .getElementsByClassName("policies-error")[0]
-            .classList.remove("show");
-        }, 2000);
-        return;
-      }
-      console.log("not auth and i am in web3 auth");
-      await authenticate({
-        provider: "web3Auth",
-        clientId: process.env.REACT_APP_WEB3AUTH_KEY,
-        chainId: 137,
-      })
-        .then((user) => {
-          console.log(user);
-          localStorage.setItem("walletType", "web3Auth");
-          // window.location.pathname = "/tournaments";
-        })
-        .then((user) => {
-          localStorage.setItem("walletType", "web3Auth");
-          window.location.pathname = "/tournaments";
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
+  const googleOAuthLogin = async () => {
+    const test = await magic.oauth.loginWithRedirect({
+      provider: 'google',
+      redirectURI: 'https://auth.magic.link/v1/oauth2/lY3H4aMq_4Rt1Tk1f-kSPekWRGNsPoxe9JZUdk7Y9WI=/callback',
+    });
+    // const result = await magic.oauth.getRedirectResult();
+    // console.log(result);
+    console.log(test);
+  }
+  const metaOAuthLogin = () => {
+
+  }
+
 
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
@@ -291,19 +277,44 @@ export default function LoginPage() {
         >
           Continue using
         </span>
-        <Button
-          style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            width: "min(320px,100%)",
-            height: "45px",
-          }}
-          className="folioplay-login-google-button"
-          variant="contained"
-          onClick={web3AuthLogin}
-        >
-          Continue With Web3Auth
-        </Button>
+        <div className="folioplay-connect">
+          <Button
+              style={{
+                width: "min(320px,100%)",
+                height: "45px",
+              }}
+              className="folioplay-login-google-button"
+              variant="contained"
+              onClick={googleOAuthLogin}
+          >
+            <img
+                className="mr-8"
+                alt="metamask-icon"
+                src={googleIcon}
+                width={"24px"}
+                height={"24px"}
+            />{" "}
+            Google
+          </Button>
+          <Button
+              style={{
+                width: "min(320px,100%)",
+                height: "45px",
+              }}
+              className="folioplay-login-google-button"
+              variant="contained"
+              onClick={metaOAuthLogin}
+          >
+            <img
+                className="mr-8"
+                alt="metamask-icon"
+                src={metaIcon}
+                width={"24px"}
+                height={"24px"}
+            />{" "}
+            Meta
+          </Button>
+        </div>
         <h4 className="folioplay-text-separator-wrapper">
           <span>Or</span>
         </h4>
@@ -390,6 +401,7 @@ export default function LoginPage() {
             style={{ width: "30px" }}
             checked={policiesAccepted}
             onChange={() => {
+
               setPoliciesAccepted(!policiesAccepted);
             }}
           />
@@ -407,7 +419,8 @@ export default function LoginPage() {
           </label>
         </span>
         <div className="policies-error">
-          <ErrorOutlineOutlinedIcon />{" "}
+          <ErrorOutlineOutlinedIcon />
+          {" "}
           <span className="ml-10">Accept Privacy Policies !!</span>
         </div>
 
