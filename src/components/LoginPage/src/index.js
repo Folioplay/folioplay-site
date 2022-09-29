@@ -17,6 +17,8 @@ import googleIcon from "../../../images/google_icon.webp";
 import metaIcon from "../../../images/meta.png";
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
+import {useDispatch, useSelector} from "react-redux";
+import {userDetails} from "../../../Redux/AuthSlice/AuthSlice";
 const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
   extensions: [new OAuthExtension()],
 });
@@ -250,11 +252,17 @@ export default function LoginPage() {
     setMagicEmail(e.target.value);
   }
 
+  // const dispatch = useDispatch();
+  // const getUserDetailsGlobal = useSelector(state => state.AuthSlice.user);
+  // console.log(getUserDetailsGlobal);
+
   const getAuthTokenFunction = async (user) => {
     const walletAddress = user.get("ethAddress");
     const walletSignature = user["attributes"].authData.moralisEth.signature;
     try {
-      await getAuthToken(walletAddress, walletSignature, email);
+      const fetchUserDetails = await getAuthToken(walletAddress, walletSignature, email);
+      console.log(fetchUserDetails)
+      // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
     }

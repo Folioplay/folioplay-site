@@ -21,7 +21,7 @@ import AddMoney from "./components/AddMoney/src";
 // import React, { useEffect, useState } from "react";
 function App() {
   function AuthenticatedRoute({ children }) {
-    const { isAuthenticated, isWeb3Enabled, user, isInitialized, logout } = useMoralis();
+    const { isAuthenticated, isWeb3Enabled, user, isInitialized} = useMoralis();
     console.log("authenticated route ", isAuthenticated, isWeb3Enabled, user, isInitialized);
     if (!isAuthenticated && isInitialized) {
       return <Navigate to="/" />;

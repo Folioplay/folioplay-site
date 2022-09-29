@@ -7,6 +7,7 @@ const SERVER = process.env.REACT_APP_API_SERVER;
 export const AuthContextProvider = ({ children }) => {
     const [validToken, setValidToken] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [user, setUserDetails] = useState(null);
 
     useEffect(()=>{
 
@@ -19,19 +20,33 @@ export const AuthContextProvider = ({ children }) => {
                 .then((res) => {
                     if (!res.ok) {
                         localStorage.clear();
+
                         window.location.pathname = "/";
                     }
                 })
                 .catch((err) => err)
                 .finally(() => setIsLoading(false));
+
+            if(!user){
+                fetch(`${SERVER}/user/`, {
+                    method: "GET",
+                    headers: {
+                        "x-access-token": localStorage.getItem("authtoken"),
+                    },
+                })
+                    .then((res) => res.json())
+                    .then((data)=> {
+                        localStorage.setItem("folioUsername", data.username);
+                        localStorage.setItem("folioWalletAddress", data.walletAddress);
+                        setUserDetails(data);
+                    })
+                    .catch((err) => err)
+            }
     },[])
-    const { logout } = useMoralis();
 
 
-    const logOut = async () => {
-        localStorage.setItem("authtoken", null);
-        localStorage.removeItem("walletconnect");
-        await logout();
+    const logOutContext = () => {
+        setUserDetails(null);
     };
 
     // if (window.ethereum) {
@@ -63,7 +78,7 @@ export const AuthContextProvider = ({ children }) => {
 
         return (
         <AuthContext.Provider
-            value={validToken}>
+            value={{validToken, logOutContext, user}}>
             {!isLoading && children}
         </AuthContext.Provider>
     );

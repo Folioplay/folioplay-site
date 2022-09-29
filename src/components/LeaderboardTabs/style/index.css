@@ -5,8 +5,8 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    align-items: center;
     box-shadow: inset 0px -1px 0px #DBE4EF;
+    cursor: pointer;
 }
 
 .leaderboard-profile-image {

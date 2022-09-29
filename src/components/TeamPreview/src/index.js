@@ -50,6 +50,18 @@ export default function TeamPreview() {
                 // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 {team.selectedCoins.map((coin, index) => {
+                    let pointNumber;
+                    if(coin.rank===1){
+                        pointNumber =  20000;
+                    }
+                    if(coin.rank===2){
+                        pointNumber = 17500;
+                    }
+                    if(coin.rank ===3 ){
+                        pointNumber = 15000;
+                    }
+                    console.log("points table", pointNumber);
+
                   return (
                     <Grid className="coin-card-wrapper" item xs={6}>
                       <motion.div
@@ -79,6 +91,12 @@ export default function TeamPreview() {
                           style={{ color: "var(--dark-dim-white)" }}
                         >
                           {coin.rank == -1 ? <></> : <>Rank {coin.rank}</>}
+                        </span>
+                          <span
+                              className="font-size-12"
+                              style={{ color: "var(--dark-dim-white)" }}
+                          >
+                          Points {coin.rank==-1? <>10000</>: <>{pointNumber}</>}
                         </span>
                       </motion.div>
                     </Grid>

@@ -27,6 +27,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
+
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
   const navigate = useNavigate();
@@ -37,9 +38,9 @@ export default function FolioplayBar({ intervalId }) {
     <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />
   ]
 
-  const provider = new ethers.providers.JsonRpcProvider(
-    `https://polygon-rpc.com/`
-  );
+  // const provider = new ethers.providers.JsonRpcProvider(
+  //   `https://polygon-rpc.com/`
+  // );
   const [balanceUSDT, setBalanceUSDT] = useState("Loading");
   const [balanceUSDC, setBalanceUSDC] = useState("Loading");
 
@@ -81,8 +82,10 @@ export default function FolioplayBar({ intervalId }) {
       setBalanceUSDC(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
     }
   }, 10000);
-
+  const {logOutContext} = useContext(AuthContext);
+  const lg = () => logOutContext
   const logOut = async () => {
+    lg();
     localStorage.setItem("authtoken", null);
     localStorage.removeItem("walletconnect");
     await logout();

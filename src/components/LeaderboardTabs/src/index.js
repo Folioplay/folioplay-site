@@ -10,18 +10,26 @@ import "../style/index.css";
 import { useEffect, useState } from "react";
 import { getLeaderboard } from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";
+import {useNavigate} from "react-router-dom";
 
-export default function LeaderBoardTabs({ tournamentId }) {
+export default function LeaderBoardTabs({ tournamentId, tournamentStatus }) {
+  const navigate = useNavigate();
   const [value, setValue] = React.useState("1");
   const { user } = useMoralis();
   const userWalletAddress = user.attributes.ethAddress ? user.attributes.ethAddress : "";
   const [leaderBoard, setLeaderBoard] = useState([]);
+  const [prizes, setPrizes] = useState([]);
   useEffect(() => {
     async function getLeader() {
       const data = await getLeaderboard(tournamentId);
       setLeaderBoard(data);
     }
     getLeader();
+    // async function getPrizes() {
+    //   const data = await getLeaderboard(tournamentId);
+    //   setLeaderBoard(data);
+    // }
+    // getPrizes();
   }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -32,11 +40,11 @@ export default function LeaderBoardTabs({ tournamentId }) {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Winnings" value="2" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
+            <Tab label="Prizes" value="2" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
             <Tab label="Leader Board" value="1" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
           </TabList>
         </Box>
-        <TabPanel value="2">Winnings</TabPanel>
+        <TabPanel value="2">Prizes</TabPanel>
         <TabPanel value="1">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
             <span className="mr-10"># Rank</span>
@@ -47,12 +55,19 @@ export default function LeaderBoardTabs({ tournamentId }) {
           {leaderBoard.length &&
             leaderBoard.map((entry, index) => {
               const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
-              return (
+              console.log("entry", entry.team.id);
+                return (
                 <motion.div
                   initial={{ x: 400 }}
                   animate={{ x: 0 }}
                   transition={{ duration: 0.1 * index }}
                   className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
+                  onClick={()=>{
+                    if(tournamentStatus===3 || tournamentStatus===4){
+                      navigate("/activity/team/" + entry.team.id)
+                    }
+                  }
+                  }
                 >
                   <span className="mr-10">#{" "}{index + 1}</span>
                   {/* <div className="leaderboard-profile-image"></div> */}

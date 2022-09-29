@@ -81,6 +81,7 @@ export default function TournamentView() {
     setErrorMessageSnackOpen(false);
   };
   const LeftComponent = () => {
+    console.log("tournament", tournament);
     var disabledClass =
       tournament && tournament.status === 3 ? " disable-join-button" : "";
     var disabledTournament =
@@ -194,7 +195,7 @@ export default function TournamentView() {
               )}
 
               <div className="folioplay-tabs">
-                <LeaderBoardTabs tournamentId={tournament.id} />
+                <LeaderBoardTabs tournamentId={tournament.id} tournamentStatus={tournament.status}/>
               </div>
               <JoinTournamentDrawer
                 teams={teams}

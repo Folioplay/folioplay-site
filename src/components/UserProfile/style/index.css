@@ -113,7 +113,7 @@
 
 .profileHeader{
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     height: 90%;
     width: 90%;
@@ -121,10 +121,11 @@
 }
 
 .profilePicture{
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 100%;
     margin-right: 2rem;
+    border: 2px solid aliceblue;
 }
 
 .userDetails{
@@ -141,4 +142,19 @@
 .userWalletAddress{
     font-size: 1rem;
     font-weight: 300;
+}
+
+.inlineText{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nameTextField{
+    margin-right: 10px;
+    height: 2.5rem;
+    width: 18rem;
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    border: 0;
+
 }

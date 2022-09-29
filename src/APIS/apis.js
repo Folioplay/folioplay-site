@@ -25,7 +25,7 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ walletAddress: walletAddress, signature: walletSignature, email: email })
+    body: JSON.stringify({ walletAddress: walletAddress, signature: walletSignature})
   })
     .then((res) => {
       if (!res.ok) throw 'Invalid user';
@@ -34,6 +34,7 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
     .then((data) => {
       localStorage.removeItem("authtoken")
       localStorage.setItem("authtoken", data.accessToken)
+      return data.user;
     })
 }
 export async function getAllUserTeams() {
@@ -160,14 +161,34 @@ export async function getTeamByid({ teamId }) {
   }).then((res) => res.json());
 }
 
-export async function checkAvailableUsername() {
+export async function checkAvailableUsername(name) {
   const authtoken = localStorage.getItem('authtoken');
-  return await fetch(`${SERVER}/user/username/available`, {
+  return await fetch(`${SERVER}/user/username/available?username=${name}`, {
     method: "GET",
     headers: {
       'x-access-token': authtoken
-    }
+    },
   }).then((res) => {
     return res.ok;
   });
+}
+
+export async function changeUserName(name){
+  const authtoken = localStorage.getItem('authtoken');
+  return await fetch(`${SERVER}/user/username/`, {
+    method: "PUT",
+    headers: {
+      'x-access-token': authtoken,
+      'Content-Type': "application/json"
+    },
+    body: JSON.stringify({username: name.toString()})
+  }).then((res) => {
+    if (res.ok)
+      return true;
+    else
+      return false;
+  })
+      .catch((err)=> false)
+   // return x.message;
+
 }

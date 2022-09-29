@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import FolioplayBar from "../../FolioplayBar/src";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -9,33 +9,60 @@ import DoneIcon from "@mui/icons-material/Done";
 import { useMoralis } from "react-moralis";
 import InlineEdit from "../common/InlineEditComponent";
 import {TextField} from "@mui/material";
-import {checkAvailableUsername} from "../../../APIS/apis";
+import {changeUserName, checkAvailableUsername} from "../../../APIS/apis";
 import Button from "@mui/material/Button";
+import {useSelector} from "react-redux";
+import {AuthContext} from "../../../Context/AuthContext";
 export default function UserProfile() {
-  const { user } = useMoralis();
-  const walletAdd = user.attributes.ethAddress;
-  function copytoClipboard() {
-    navigator.clipboard.writeText(walletAdd);
-    document.getElementsByClassName("copied")[0].classList.remove("show");
-    document.getElementsByClassName("copied")[0].classList.add("show");
-    setTimeout(() => {
-      var selectedClass = document.getElementsByClassName("copied");
-      if (selectedClass.length > 0) selectedClass[0].classList.remove("show");
-    }, 2000);
-  }
 
+  // const { user } = useMoralis();
+  // const walletAdd = user.attributes.ethAddress;
+  // function copytoClipboard() {
+  //   navigator.clipboard.writeText(walletAdd);
+  //   document.getElementsByClassName("copied")[0].classList.remove("show");
+  //   document.getElementsByClassName("copied")[0].classList.add("show");
+  //   setTimeout(() => {
+  //     var selectedClass = document.getElementsByClassName("copied");
+  //     if (selectedClass.length > 0) selectedClass[0].classList.remove("show");
+  //   }, 2000);
+  // }
+    const {user} = useContext(AuthContext);
+    console.log(user);
   const [disabledNameField, setDisabledNameField] = useState(true);
   const [errorNameField, setErrorNameField] = useState(false);
   const [helperTextNameField, setHelperTextNameField] = useState("");
-  const [nameField, setNameField] = useState("");
+  // const [nameField, setNameField] = useState(localStorage.getItem("folioUsername"));
+  const [tickDisabled, setTickDisabled]= useState();
+    // console.log(nameField);
 
-  const setValueNameField = async (event) => {
-      const availableName = await checkAvailableUsername(event.target.value);
-      setErrorNameField(availableName);
-      if(availableName){
+  // const setValueName = (event) => {
+  //     console.log(nameField);
+  //     // event.preventDefault();
+  //     setNameField(event.target.value);
+  // }
+
+  const setValueNameField = async () => {
+      const nameField = document.getElementById("nameField").value;
+      const availableName = await checkAvailableUsername(nameField);
+      if(!availableName){
+          setErrorNameField(availableName);
           setHelperTextNameField("Username already taken");
       }
-      setNameField(event.target.value);
+      else{
+          console.log(nameField)
+          const response = await changeUserName(nameField);
+          console.log("response",response);
+          if(!response){
+              setHelperTextNameField("Input must be a non-empty string");
+          }
+          else{
+              setHelperTextNameField("");
+          }
+      }
+  }
+
+  const changeDisabledButton = () => {
+      setDisabledNameField(!disabledNameField);
   }
 
     const LeftComponent = () => {
@@ -47,10 +74,10 @@ export default function UserProfile() {
                 <img src={require("../../../images/profilepic.jpeg").default} alt="profilePic" className="profilePicture"/>
                 <div className="userDetails">
                     <div className="userName">
-                        Name
+                        {localStorage.getItem("folioUsername")}
                     </div>
                     <div className="userWalletAddress">
-                        0X9889
+                        {localStorage.getItem("folioWalletAddress")}
                     </div>
                 </div>
             </div>
@@ -83,30 +110,23 @@ export default function UserProfile() {
                         Name
                     </div>
                     <div className="sectionDetails">
-                        Nigga Singh <EditIcon fontSize="1.15rem" className="editIcon" />
-
-                    </div>
-                    <div className="inlineText">
-                        {/*<InlineEdit value={value} setValue={setValue}/>*/}
-                        <TextField
-                            error={errorNameField}
-                            id="standard-error-helper-text"
-                            defaultValue={nameField}
-                            helperText={helperTextNameField}
-                            variant="standard"
+                        <input
+                            id="nameField"
+                            defaultValue={localStorage.getItem("folioUsername")}
                             disabled={disabledNameField}
-                            onChange={setValueNameField}
+                            className="nameTextField"
                         />
-                        <Button className="setNameButton">
-                            Set Username
-                        </Button>
+                        {disabledNameField ? <EditIcon onClick={changeDisabledButton} fontSize="1.15rem" className="editIcon" />: <DoneIcon onClick={setValueNameField} fontSize="1.15rem" className="editIcon"/>}
+                    </div>
+                    <div className="errorText">
+                        {helperTextNameField}
                     </div>
                 </div>
             </div>
         </div>
-        <div className="copied">
-          <DoneIcon /> <span className="ml-10">Copied to clipboard</span>
-        </div>
+        {/*<div className="copied">*/}
+        {/*  /!*<DoneIcon /> <span className="ml-10">Copied to clipboard</span>*!/*/}
+        {/*</div>*/}
       </div>
     );
   };
