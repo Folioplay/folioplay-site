@@ -68,9 +68,6 @@ export default function UserProfile() {
                     <div className="userName">
                         {localStorage.getItem("folioUsername")}
                     </div>
-                    <div className="userWalletAddress">
-                        {localStorage.getItem("folioWalletAddress")}
-                    </div>
                 </div>
             </div>
           {/*<span className="wallet-info font-size-25 font-weight-800">*/}
