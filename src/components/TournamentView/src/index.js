@@ -106,110 +106,134 @@ export default function TournamentView() {
               </span>
             </div>
             <div className="empty-area"></div>
-            <div className="tournament-info-container">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1, y: -90 }}
-                transition={{ duration: 0.3 }}
-                className="tournament-view-card"
-              >
-                <div className="tournament-view-info">
-                  <span style={{ textAlign: "left" }}>
-                    <span
-                      className="font-size-12 font-weight-500"
-                      style={{ color: "var(--grey-shade)" }}
+                <div className="tournament-info-container">
+                  {tournament.status !== 3 ?
+                      <motion.div
+                      initial={{scale: 0}}
+                      animate={{scale: 1, y: -90}}
+                      transition={{duration: 0.3}}
+                      className="tournament-view-card"
                     >
-                      Prize Pool
+                      <div className="tournament-view-info">
+                    <span style={{textAlign: "left"}}>
+                      <span
+                          className="font-size-12 font-weight-500"
+                          style={{color: "var(--grey-shade)"}}
+                      >
+                        Prize Pool
+                      </span>
+                      <br/>
+                      <span className="font-size-20 font-weight-500">
+                        {/* {tournament.total_reward} MGT */}
+                        {tournament.rewards.prize_pool} MGT
+                      </span>
                     </span>
-                    <br />
-                    <span className="font-size-20 font-weight-500">
-                      {/* {tournament.total_reward} MGT */}
-                      1000 MGT
+                        <span className="ml-auto" style={{textAlign: "right"}}>
+                      <span
+                          className="font-size-12 font-weight-500"
+                          style={{color: "var(--grey-shade)"}}
+                      >
+                        Entry Fee
+                      </span>
+                      <br/>
+                      <Button
+                          className={disabledClass + " tournament-fee"}
+                          size="small"
+                          style={
+                            disabledTournament
+                                ? {}
+                                : {backgroundColor: "var(--golden)"}
+                          }
+                          onClick={() => {
+                            chooseTeamOpen();
+                          }}
+                          disabled={disabledTournament}
+                      >
+                        {tournament.entryFee} MGT
+                      </Button>
                     </span>
-                  </span>
-                  <span className="ml-auto" style={{ textAlign: "right" }}>
-                    <span
-                      className="font-size-12 font-weight-500"
-                      style={{ color: "var(--grey-shade)" }}
-                    >
-                      Entry Fee
-                    </span>
-                    <br />
-                    <Button
-                      className={disabledClass + " tournament-fee"}
-                      size="small"
-                      style={
-                        disabledTournament
-                          ? {}
-                          : { backgroundColor: "var(--golden)" }
-                      }
-                      onClick={() => {
-                        chooseTeamOpen();
-                      }}
-                      disabled={disabledTournament}
-                    >
-                      {tournament.entryFee} MGT
-                    </Button>
-                  </span>
-                </div>
-                <div>
-                  <LinearProgress
-                    variant="determinate"
-                    style={{ backgroundColor: "var(--dim-white)" }}
-                    value={seatsFilled}
-                  />
-                  <div className="spots-wrapper">
-                    <span
-                      className="font-size-12 font-weight-500 mt-5"
-                      style={{ color: "var(--golden)" }}
-                    >
-                      <span id={tournament.id + "-left-spots"}>
-                        {tournament.total_spots - tournament.filled_spots}
-                      </span>{" "}
-                      spots left
-                    </span>
-                    <span
-                      className="font-size-12 font-weight-500 mt-5"
-                      style={{ color: "var(--dark-dim-white)" }}
-                    >
-                      {tournament.total_spots} spots
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-              {/*{rank !== undefined && rank !== null && rank.length > 0 ? (*/}
-              {/*  <motion.div*/}
-              {/*    initial={{ x: -500, y: -70 }}*/}
-              {/*    animate={{ x: 0 }}*/}
-              {/*    transition={{ duration: 0.4 }}*/}
-              {/*    className="user-rank-div"*/}
-              {/*  >*/}
-              {/*    <span>*/}
-              {/*      Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team*/}
-              {/*      <b>&ensp;{rank[0].team.name}&ensp;</b> and points{" "}*/}
-              {/*      <b>&ensp;{rank[0].portfolio}</b>*/}
-              {/*    </span>*/}
-              {/*  </motion.div>*/}
-              {/*) : (*/}
-              {/*  <></>*/}
-              {/*)}*/}
+                      </div>
+                      <div>
+                        <LinearProgress
+                            variant="determinate"
+                            style={{backgroundColor: "var(--dim-white)"}}
+                            value={seatsFilled}
+                        />
+                        <div className="spots-wrapper">
+                      <span
+                          className="font-size-12 font-weight-500 mt-5"
+                          style={{color: "var(--golden)"}}
+                      >
+                        <span id={tournament.id + "-left-spots"}>
+                          {tournament.total_spots - tournament.filled_spots}
+                        </span>{" "}
+                        spots left
+                      </span>
+                          <span
+                              className="font-size-12 font-weight-500 mt-5"
+                              style={{color: "var(--dark-dim-white)"}}
+                          >
+                        {tournament.total_spots} spots
+                      </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                    :
+                      <motion.div
+                          initial={{scale: 0}}
+                          animate={{scale: 1, y: -90}}
+                          transition={{duration: 0.3}}
+                          className="tournament-view-card"
+                      >
+                        <div className="profileHeaderTP">
+                          <img src={require("../../../images/profilepic.jpeg").default} alt="profilePic" className="profilePicture"/>
+                          <div className="userDetails">
+                            <div className="userNameTP">
+                              {localStorage.getItem("folioUsername")}
+                            </div>
+                            <div>
+                              You won __ MGT
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    }
+                  {/*{rank !== undefined && rank !== null && rank.length > 0 ? (*/}
+                  {/*  <motion.div*/}
+                  {/*    initial={{ x: -500, y: -70 }}*/}
+                  {/*    animate={{ x: 0 }}*/}
+                  {/*    transition={{ duration: 0.4 }}*/}
+                  {/*    className="user-rank-div"*/}
+                  {/*  >*/}
+                  {/*    <span>*/}
+                  {/*      Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team*/}
+                  {/*      <b>&ensp;{rank[0].team.name}&ensp;</b> and points{" "}*/}
+                  {/*      <b>&ensp;{rank[0].portfolio}</b>*/}
+                  {/*    </span>*/}
+                  {/*  </motion.div>*/}
+                  {/*) : (*/}
+                  {/*  <></>*/}
+                  {/*)}*/}
 
-              <div className="folioplay-tabs">
-                <LeaderBoardTabs tournamentId={tournament.id} tournamentStatus={tournament.status}/>
-              </div>
-              <JoinTournamentDrawer
-                teams={teams}
-                tournamentId={tournament.id}
-                tournament={tournament}
-                tournaments={[]}
-                user={user}
-                setErrorMessage={setErrorMessage}
-                setErrorMessageSnackOpen={setErrorMessageSnackOpen}
-                navigate={navigate}
-                changeTournament={true}
-                account={account}
-              />
-            </div>
+                  <div className="folioplay-tabs">
+                    <LeaderBoardTabs tournamentId={tournament.id} tournamentStatus={tournament.status}
+                                     tournamentPrizes={tournament.rewards.distribution}
+                                     rewardSize={tournament.rewards.places_paid}/>
+                  </div>
+                  <JoinTournamentDrawer
+                      teams={teams}
+                      tournamentId={tournament.id}
+                      tournament={tournament}
+                      tournaments={[]}
+                      user={user}
+                      setErrorMessage={setErrorMessage}
+                      setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+                      navigate={navigate}
+                      changeTournament={true}
+                      account={account}
+                  />
+                </div>
+
           </>
         )}
         <Snackbar

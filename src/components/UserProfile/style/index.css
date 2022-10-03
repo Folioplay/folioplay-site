@@ -26,6 +26,8 @@
 }
 
 .personalDetails{
+    display: flex;
+    flex-wrap: wrap;
     padding: 0.5rem;
     padding-left: 0.8rem;
     border: 1px solid #B2C6DB;
@@ -36,12 +38,13 @@
 .sectionHeading{
     color: #4C6781;
     font-size: 1rem;
+    margin-top: 1rem;
 }
 
 .sectionDetails{
     display: flex;
     align-items: center;
-    font-size: 1.15rem;
+    font-size: 1rem;
 }
 
 .editIcon{

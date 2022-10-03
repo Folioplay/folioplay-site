@@ -15,19 +15,11 @@ import {useSelector} from "react-redux";
 import {AuthContext} from "../../../Context/AuthContext";
 export default function UserProfile() {
 
-  // const { user } = useMoralis();
-  // const walletAdd = user.attributes.ethAddress;
-  // function copytoClipboard() {
-  //   navigator.clipboard.writeText(walletAdd);
-  //   document.getElementsByClassName("copied")[0].classList.remove("show");
-  //   document.getElementsByClassName("copied")[0].classList.add("show");
-  //   setTimeout(() => {
-  //     var selectedClass = document.getElementsByClassName("copied");
-  //     if (selectedClass.length > 0) selectedClass[0].classList.remove("show");
-  //   }, 2000);
-  // }
-    const {user} = useContext(AuthContext);
-    console.log(user);
+  const { user } = useMoralis();
+  const walletAdd = user.attributes.ethAddress;
+  function copytoClipboard() {
+    navigator.clipboard.writeText(walletAdd);
+  }
   const [disabledNameField, setDisabledNameField] = useState(true);
   const [errorNameField, setErrorNameField] = useState(false);
   const [helperTextNameField, setHelperTextNameField] = useState("");
@@ -104,10 +96,10 @@ export default function UserProfile() {
             <div className="headingPersonalInfo">
                 Personal Information
             </div>
-            <div className="personalDetawait checkAvailableUsername(event.target.value)ails">
+            <div className="personalDetails">
                 <div className="section">
                     <div className="sectionHeading">
-                        Name
+                        User Name
                     </div>
                     <div className="sectionDetails">
                         <input
@@ -120,6 +112,19 @@ export default function UserProfile() {
                     </div>
                     <div className="errorText">
                         {helperTextNameField}
+                    </div>
+                    <div className="sectionHeading">
+                        Wallet Address
+                    </div>
+                    <div className="sectionDetails">
+                        {localStorage.getItem("folioWalletAddress").substring(0,8)}XXXXXX{localStorage.getItem("folioWalletAddress").slice(-8)}
+                        <ContentCopyIcon
+                          id="copy-to-clipboard"
+                          className="ml-20"
+                          fontSize="medium"
+                          style={{ color: "var(--black)" }}
+                          onClick={copytoClipboard}
+                        />
                     </div>
                 </div>
             </div>
