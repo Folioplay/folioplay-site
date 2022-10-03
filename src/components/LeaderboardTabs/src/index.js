@@ -8,7 +8,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { leaderboard } from "../../TournamentView/common/leaderboard";
 import "../style/index.css";
 import { useEffect, useState } from "react";
-import { getLeaderboard } from "../../../APIS/apis";
+import {getLeaderboard, getPersonalLeaderboard} from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";
 import {useNavigate} from "react-router-dom";
 
@@ -18,13 +18,19 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus }) {
   const { user } = useMoralis();
   const userWalletAddress = user.attributes.ethAddress ? user.attributes.ethAddress : "";
   const [leaderBoard, setLeaderBoard] = useState([]);
+  const [personalLeaderBoard, setPersonalLeaderBoard] = useState([]);
   const [prizes, setPrizes] = useState([]);
   useEffect(() => {
     async function getLeader() {
       const data = await getLeaderboard(tournamentId);
       setLeaderBoard(data);
     }
+    async function getPersonalLeader() {
+      const data = await getPersonalLeaderboard(tournamentId);
+      setPersonalLeaderBoard(data);
+    }
     getLeader();
+    getPersonalLeader();
     // async function getPrizes() {
     //   const data = await getLeaderboard(tournamentId);
     //   setLeaderBoard(data);
@@ -52,6 +58,34 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus }) {
             {/* <span className='ml-auto'>Team</span> */}
             <span className="ml-auto">Points</span>
           </div>
+          {personalLeaderBoard.length &&
+              personalLeaderBoard.map((entry, index) => {
+                // const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
+                // console.log("entry", entry.team.id);
+                return (
+                    <motion.div
+                        initial={{ x: 400 }}
+                        animate={{ x: 0 }}
+                        transition={{ duration: 0.1 * index }}
+                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
+                        onClick={()=>{
+                          if(tournamentStatus===3 || tournamentStatus===2){
+                            navigate("/activity/team/" + entry.id)
+                          }
+                        }
+                        }
+                    >
+                      <span className="mr-10">#{" "}{entry.rank}</span>
+                      {/* <div className="leaderboard-profile-image"></div> */}
+                      <span className={"leaderboard-username ml-20"}>
+                    {localStorage.getItem("folioUsername")}
+                        {/* {entry.user.walletAddress.substring(0, 6)}****{entry.user.walletAddress.substring(entry.user.walletAddress.length - 4)} */}
+                  </span>
+                      {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
+                      <span className="ml-auto">{entry.portfolio}</span>
+                    </motion.div>
+                );
+              })}
           {leaderBoard.length &&
             leaderBoard.map((entry, index) => {
               const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
@@ -63,7 +97,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus }) {
                   transition={{ duration: 0.1 * index }}
                   className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
                   onClick={()=>{
-                    if(tournamentStatus===3 || tournamentStatus===4){
+                    if(tournamentStatus===3 || tournamentStatus===2){
                       navigate("/activity/team/" + entry.team.id)
                     }
                   }

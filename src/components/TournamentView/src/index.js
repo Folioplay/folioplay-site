@@ -177,22 +177,22 @@ export default function TournamentView() {
                   </div>
                 </div>
               </motion.div>
-              {rank !== undefined && rank !== null && rank.length > 0 ? (
-                <motion.div
-                  initial={{ x: -500, y: -70 }}
-                  animate={{ x: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="user-rank-div"
-                >
-                  <span>
-                    Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team
-                    <b>&ensp;{rank[0].team.name}&ensp;</b> and points{" "}
-                    <b>&ensp;{rank[0].portfolio}</b>
-                  </span>
-                </motion.div>
-              ) : (
-                <></>
-              )}
+              {/*{rank !== undefined && rank !== null && rank.length > 0 ? (*/}
+              {/*  <motion.div*/}
+              {/*    initial={{ x: -500, y: -70 }}*/}
+              {/*    animate={{ x: 0 }}*/}
+              {/*    transition={{ duration: 0.4 }}*/}
+              {/*    className="user-rank-div"*/}
+              {/*  >*/}
+              {/*    <span>*/}
+              {/*      Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team*/}
+              {/*      <b>&ensp;{rank[0].team.name}&ensp;</b> and points{" "}*/}
+              {/*      <b>&ensp;{rank[0].portfolio}</b>*/}
+              {/*    </span>*/}
+              {/*  </motion.div>*/}
+              {/*) : (*/}
+              {/*  <></>*/}
+              {/*)}*/}
 
               <div className="folioplay-tabs">
                 <LeaderBoardTabs tournamentId={tournament.id} tournamentStatus={tournament.status}/>
