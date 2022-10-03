@@ -52,7 +52,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
         </Box>
         <TabPanel value="2">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
-            <span className="mr-10"># Rank</span>
+            <span className="mr-10">Rank</span>
             <span className="ml-20">User</span>
             {/* <span className='ml-auto'>Team</span> */}
             <span className="ml-auto">{tournamentStatus!==3 ? <>Points</>: <>Prizes</>}</span>
@@ -74,7 +74,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">#{" "}{entry.rank}</span>
+                      <span className="mr-10">{"  "}{entry.rank}</span>
                       {/* <div className="leaderboard-profile-image"></div> */}
                       <span className={"leaderboard-username ml-20"}>
                     {localStorage.getItem("folioUsername")}
@@ -103,7 +103,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">#{" "}{index+1}</span>
+                      <span className="mr-10">{"  "}{index+1}</span>
                       {/* <div className="leaderboard-profile-image"></div> */}
                       <span className={"leaderboard-username ml-20"}>
                         {leaderBoard.length && leaderBoard[index].user.username}
@@ -118,7 +118,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
         </TabPanel>
         <TabPanel value="1">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
-            <span className="mr-10"># Rank</span>
+            <span className="mr-10">Rank</span>
             <span className="ml-20">User</span>
             {/* <span className='ml-auto'>Team</span> */}
             <span className="ml-auto">Points</span>
@@ -140,7 +140,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">#{" "}{entry.rank}</span>
+                      <span className="mr-10">{  }{entry.rank}</span>
                       {/* <div className="leaderboard-profile-image"></div> */}
                       <span className={"leaderboard-username ml-20"}>
                     {localStorage.getItem("folioUsername")}
@@ -168,7 +168,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                   }
                   }
                 >
-                  <span className="mr-10">#{" "}{index + 1}</span>
+                  <span className="mr-10">{"  "}{index + 1}</span>
                   {/* <div className="leaderboard-profile-image"></div> */}
                   <span className={"leaderboard-username ml-20"}>
                     {entry.user.username}

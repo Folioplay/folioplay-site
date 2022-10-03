@@ -325,7 +325,7 @@ export default function Tournaments() {
             className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
-            Trendings
+            Trending
           </span>
           {tournaments === undefined ||
           tournaments.length === 0 ||
