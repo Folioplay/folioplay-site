@@ -75,6 +75,19 @@
     box-shadow: var(--tournament-card-shadow);
 }
 
+.empty-area{
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    font-weight: 700;
+    font-size: 1.1rem;
+    justify-content: space-evenly;
+}
+
+.tournament-info-container-completed-bgc{
+    background-color: #FFCCCB;
+}
+
 .tournament-view-card-completed{
     display: flex;
     flex-wrap: wrap;
@@ -89,6 +102,28 @@
     margin-left: auto;
     margin-right: auto;
     background-color: var(--white);
+    /*background-color: #FFCCCB;*/
+    transform: translateY(-75px);
+    border-radius: 8px;
+    height: 7.5em;
+    box-shadow: var(--tournament-card-shadow);
+}
+
+.tournament-view-card-completed-red{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    width: 85%;
+    color: var(--black);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+    margin-left: auto;
+    margin-right: auto;
+    /*background-color: var(--white);*/
+    background-color: #FFCCCB;
     transform: translateY(-75px);
     border-radius: 8px;
     height: 7.5em;

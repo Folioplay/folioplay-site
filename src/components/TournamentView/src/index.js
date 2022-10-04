@@ -35,6 +35,7 @@ export default function TournamentView() {
     variant: "error",
   });
   const [tournament, setTournament] = useState(undefined);
+  console.log("tournament log", tournament);
   const [amountWon, setAmountWon] = useState(0);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
@@ -87,12 +88,12 @@ export default function TournamentView() {
     setErrorMessageSnackOpen(false);
   };
   const LeftComponent = () => {
-    console.log("tournament", tournament);
     var disabledClass =
       tournament && tournament.status === 3 ? " disable-join-button" : "";
     var disabledTournament =
       tournament && tournament.status === 3 ? true : false;
     disabledTournament = false;
+    // let tournament_info_container_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
     return (
       <div className="fullpage">
         {tournament === undefined || teams === undefined ? (
@@ -111,8 +112,15 @@ export default function TournamentView() {
                 {tournament.name}
               </span>
             </div>
-            <div className="empty-area"></div>
-                <div className="tournament-info-container">
+            <div className="empty-area">
+              <div>
+                Prize Pool - {tournament.rewards.prize_pool} USDT
+              </div>
+              <div>
+                Spots - {tournament.total_spots}
+              </div>
+            </div>
+                <div className={"tournament-info-container"} >
                   {tournament.status !== 3 ?
                       <motion.div
                       initial={{scale: 0}}
@@ -189,7 +197,7 @@ export default function TournamentView() {
                           initial={{scale: 0}}
                           animate={{scale: 1, y: -90}}
                           transition={{duration: 0.3}}
-                          className="tournament-view-card-completed"
+                          className={tournament.status === 0 ? "tournament-view-card-completed" : "tournament-view-card-completed-red"}
                       >
                         <div className="profileHeaderTP">
                           <img src={require("../../../images/profilepic.jpeg").default} alt="profilePic" className="profilePicture"/>

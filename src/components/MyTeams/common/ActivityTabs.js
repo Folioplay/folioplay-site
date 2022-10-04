@@ -125,25 +125,25 @@ export default function ActivityTabs({ teams, tournaments }) {
             </span>
           </div>
           <div>
-            <LinearProgress
-              variant="determinate"
-              style={{ backgroundColor: "var(--dim-white)" }}
-              value={seatsFilled}
-            />
-            <div className="spots-wrapper">
-              <span
-                className="font-size-12 font-weight-500 mt-5"
-                style={{ color: "var(--golden)" }}
-              >
-                {tournament.total_spots - tournament.filled_spots} spots left
-              </span>
-              <span
-                className="font-size-12 font-weight-500 mt-5"
-                style={{ color: "var(--dark-dim-white)" }}
-              >
-                {tournament.total_spots} spots
-              </span>
-            </div>
+            {/*<LinearProgress*/}
+            {/*  variant="determinate"*/}
+            {/*  style={{ backgroundColor: "var(--dim-white)" }}*/}
+            {/*  value={seatsFilled}*/}
+            {/*/>*/}
+            {/*<div className="spots-wrapper">*/}
+            {/*  <span*/}
+            {/*    className="font-size-12 font-weight-500 mt-5"*/}
+            {/*    style={{ color: "var(--golden)" }}*/}
+            {/*  >*/}
+            {/*    {tournament.total_spots - tournament.filled_spots} spots left*/}
+            {/*  </span>*/}
+            {/*  <span*/}
+            {/*    className="font-size-12 font-weight-500 mt-5"*/}
+            {/*    style={{ color: "var(--dark-dim-white)" }}*/}
+            {/*  >*/}
+            {/*    {tournament.total_spots} spots*/}
+            {/*  </span>*/}
+            {/*</div>*/}
           </div>
           <div className="tournament-reward">
             {/* <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span> */}
