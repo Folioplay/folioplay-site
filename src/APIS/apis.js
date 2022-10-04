@@ -12,6 +12,20 @@ export async function getTournamentById({ _id }) {
   }).then((res) => res.json());
 }
 
+export async function getAmountWon({ _id }) {
+  return await fetch(`${SERVER}/tournament/rank/` + _id + `?amount`, {
+    method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("authtoken"),
+    },
+  })
+      .then((res) => res.json())
+      .then(data=> {
+        console.log("amt won", data);
+        return data.total_amount_won;
+      });
+}
+
 export async function getAllCoins() {
   return await fetch(`${SERVER}/coins/`, {
     method: "GET",

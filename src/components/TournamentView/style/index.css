@@ -37,11 +37,11 @@
 .tournament-view-info {
     font-size: 0.9375em;
     line-height: 20px;
-    display: flex;
-    align-items: center;
+    /*display: flex;*/
+    /*align-items: center;*/
     font-weight: 720;
     margin-bottom: 25px;
-    background: #FFCCCB;
+    /*background: #FFCCCB;*/
 }
 
 .profileHeaderTP{
@@ -56,6 +56,26 @@
     font-weight: 800;
 }
 .tournament-view-card {
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*justify-content: flex-start;*/
+    /*align-content: center;*/
+    width: 85%;
+    color: var(--black);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--white);
+    transform: translateY(-75px);
+    border-radius: 8px;
+    height: 7.5em;
+    box-shadow: var(--tournament-card-shadow);
+}
+
+.tournament-view-card-completed{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;

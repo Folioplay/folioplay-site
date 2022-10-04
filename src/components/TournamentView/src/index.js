@@ -1,7 +1,7 @@
 import {
   getTournamentById,
   getAllUserTeams,
-  getRank,
+  getRank, getAmountWon,
 } from "../../../APIS/apis";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -35,6 +35,7 @@ export default function TournamentView() {
     variant: "error",
   });
   const [tournament, setTournament] = useState(undefined);
+  const [amountWon, setAmountWon] = useState(0);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
   const _id = params.tournamentId;
@@ -44,6 +45,10 @@ export default function TournamentView() {
   async function fetchTournament() {
     setTournament(await getTournamentById({ _id: _id }));
   }
+  async function fetchAmountWon() {
+    setAmountWon(await getAmountWon({ _id: _id }));
+  }
+
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
@@ -62,6 +67,7 @@ export default function TournamentView() {
     fetchTournament();
     fetchTeams();
     fetchRank();
+    fetchAmountWon();
   }, []);
 
   if (tournament !== undefined) {
@@ -183,7 +189,7 @@ export default function TournamentView() {
                           initial={{scale: 0}}
                           animate={{scale: 1, y: -90}}
                           transition={{duration: 0.3}}
-                          className="tournament-view-card"
+                          className="tournament-view-card-completed"
                       >
                         <div className="profileHeaderTP">
                           <img src={require("../../../images/profilepic.jpeg").default} alt="profilePic" className="profilePicture"/>
@@ -192,7 +198,7 @@ export default function TournamentView() {
                               {localStorage.getItem("folioUsername")}
                             </div>
                             <div>
-                              You won __ MGT
+                              You won {amountWon} MGT
                             </div>
                           </div>
                         </div>

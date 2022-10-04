@@ -74,14 +74,14 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{entry.rank}</span>
-                      {/* <div className="leaderboard-profile-image"></div> */}
-                      <span className={"leaderboard-username ml-20"}>
-                    {localStorage.getItem("folioUsername")}
-                        {/* {entry.user.walletAddress.substring(0, 6)}****{entry.user.walletAddress.substring(entry.user.walletAddress.length - 4)} */}
-                  </span>
+                  {/*    <span className="mr-10">{"  "}{entry.rank}</span>*/}
+                  {/*    /!* <div className="leaderboard-profile-image"></div> *!/*/}
+                  {/*    <span className={"leaderboard-username ml-20"}>*/}
+                  {/*  {localStorage.getItem("folioUsername")}*/}
+                  {/*      /!* {entry.user.walletAddress.substring(0, 6)}****{entry.user.walletAddress.substring(entry.user.walletAddress.length - 4)} *!/*/}
+                  {/*</span>*/}
                       {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
-                      <span className="ml-auto">{entry.portfolio}</span>
+                      <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
                 );
               })}
