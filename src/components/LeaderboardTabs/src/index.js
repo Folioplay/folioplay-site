@@ -134,7 +134,6 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           {tournamentStatus===0 && personalLeaderBoard.length &&
               personalLeaderBoard.map((entry, index) => {
                 // const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
-                console.log("entry id", entry);
                 return (
                     <motion.div
                         initial={{ x: 400 }}
