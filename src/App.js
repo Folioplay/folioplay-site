@@ -18,6 +18,7 @@ import MyTeams from './components/MyTeams/src';
 import UserProfile from './components/UserProfile/src';
 import TeamPreview from './components/TeamPreview/src';
 import AddMoney from "./components/AddMoney/src";
+import CurrentTeamPreview from "./components/CurrentTeam/src";
 // import React, { useEffect, useState } from "react";
 function App() {
   function AuthenticatedRoute({ children }) {
@@ -117,6 +118,12 @@ function App() {
             <AuthenticatedRoute>
               <AuthContextProvider>
                 <TeamPreview />
+              </AuthContextProvider>
+            </AuthenticatedRoute>} />
+          <Route exact path="/activity/team/currentStatus" element={
+            <AuthenticatedRoute>
+              <AuthContextProvider>
+                <CurrentTeamPreview />
               </AuthContextProvider>
             </AuthenticatedRoute>} />
           <Route exact path="/chart" element={

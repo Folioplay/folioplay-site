@@ -112,14 +112,18 @@ export default function TournamentView() {
                 {tournament.name}
               </span>
             </div>
-            <div className="empty-area">
-              <div>
-                Prize Pool - {tournament.rewards.prize_pool} USDT
-              </div>
-              <div>
-                Spots - {tournament.total_spots}
-              </div>
-            </div>
+                <div className={"empty-area"}>
+                  {tournament.status !== 0 &&
+                      <div>
+                        <div>
+                          Prize Pool - {tournament.rewards.prize_pool} USDT
+                        </div>
+                        <div>
+                        Spots - {tournament.total_spots}
+                        </div>
+                      </div>
+                  }
+                </div>
                 <div className={"tournament-info-container"} >
                   {tournament.status !== 3 ?
                       <motion.div

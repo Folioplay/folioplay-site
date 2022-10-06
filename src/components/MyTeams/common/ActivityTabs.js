@@ -12,6 +12,7 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import { LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import {getAmountWon} from "../../../APIS/apis";
 export default function ActivityTabs({ teams, tournaments }) {
   const monthNames = [
     "Jan",
@@ -41,119 +42,121 @@ export default function ActivityTabs({ teams, tournaments }) {
     if (tournaments) setParticipatedContestsLength(tournaments.length);
   }, []);
   const tournamentsList = tournaments ? (
-    tournaments.map((tournament, index) => {
+    tournaments.map( (tournament, index) => {
+      console.log(tournament);
+      // const getAmountWonAPI = await getAmountWon(tournament._id);
       const seatsFilled =
-        (100 * tournament.filled_spots) / tournament.total_spots;
+          (100 * tournament.filled_spots) / tournament.total_spots;
       const startDate = new Date(tournament.start_time);
       const finishDate = new Date(tournament.end_time);
       const status = {
-        3: { value: "Completed", color: "#ff000096" },
-        1: { value: "Closed", color: "#ff000096" },
-        0: { value: "Open", color: "#00ff00d6" },
-        2: { value: "Running", color: "#00ff00d6" },
+        3: {value: "Completed", color: "#ff000096"},
+        1: {value: "Closed", color: "#ff000096"},
+        0: {value: "Open", color: "#00ff00d6"},
+        2: {value: "Running", color: "#00ff00d6"},
       };
       const currDate = new Date();
       const disabledClass =
-        tournament.status === 3 ? " disable-join-button" : "";
-      const disabledTournament = tournament.status === 3 ? true : false;
+          tournament.status === 3 ? " disable-join-button" : "";
+      const disabledTournament = tournament.status === 3;
       return (
-        <motion.div
-          id={"tournament-" + tournament._id}
-          initial={{ y: "100vh" }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0 + 0.08 * index, duration: 0.35 }}
-          key={"tournament__" + index}
-          className="tournament"
-        >
-          <div className="tournament-info">
-            <span className="tournament-image" style={{ borderRadius: "100%" }}>
+          <motion.div
+              id={"tournament-" + tournament._id}
+              initial={{y: "100vh"}}
+              animate={{y: 0}}
+              transition={{delay: 0 + 0.08 * index, duration: 0.35}}
+              key={"tournament__" + index}
+              className="tournament"
+          >
+            <div className="tournament-info">
+            <span className="tournament-image" style={{borderRadius: "100%"}}>
               {tournament.id === "62c45a6ddfe60c1bada234a8" ? (
-                <img
-                  style={{ borderRadius: "100%" }}
-                  src={require("../../../images/bulls.png").default}
-                  width="50px"
-                  height={"50px"}
-                />
-              ) : (
-                <>
-                  {" "}
-                  {tournament.id === "62c45abedfe60c1bada2355f" ? (
-                    <img
-                      style={{ borderRadius: "100%" }}
-                      src={require("../../../images/justice.png").default}
+                  <img
+                      style={{borderRadius: "100%"}}
+                      src={require("../../../images/bulls.png").default}
                       width="50px"
                       height={"50px"}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </>
+                  />
+              ) : (
+                  <>
+                    {" "}
+                    {tournament.id === "62c45abedfe60c1bada2355f" ? (
+                        <img
+                            style={{borderRadius: "100%"}}
+                            src={require("../../../images/justice.png").default}
+                            width="50px"
+                            height={"50px"}
+                        />
+                    ) : (
+                        <></>
+                    )}
+                  </>
               )}
             </span>
-            <span
-              style={{ textAlign: "left" }}
-              onClick={() => {
-                navigate(`/tournaments/${tournament._id}`);
-              }}
-            >
-              <span style={{ color: "#071F36", fontWeight: "700" }}>
+              <span
+                  style={{textAlign: "left"}}
+                  onClick={() => {
+                    navigate(`/tournaments/${tournament._id}`);
+                  }}
+              >
+              <span style={{color: "#071F36", fontWeight: "700"}}>
                 {tournament.name}
               </span>
-              <br />
+              <br/>
               <span className="tournaments-spots">
                 <span className="font-size-12">
                   {startDate.getDate()} {monthNames[startDate.getMonth()]}'
                   {startDate.getFullYear() % 100},&ensp;
                   {startDate.getHours() / 10 < 1
-                    ? "0" + startDate.getHours()
-                    : startDate.getHours()}{" "}
+                      ? "0" + startDate.getHours()
+                      : startDate.getHours()}{" "}
                   :{" "}
                   {startDate.getMinutes() / 10 < 1
-                    ? "0" + startDate.getMinutes()
-                    : startDate.getMinutes()}{" "}
+                      ? "0" + startDate.getMinutes()
+                      : startDate.getMinutes()}{" "}
                   hrs -{" "}
                   {finishDate.getHours() / 10 < 1
-                    ? "0" + finishDate.getHours()
-                    : finishDate.getHours()}{" "}
+                      ? "0" + finishDate.getHours()
+                      : finishDate.getHours()}{" "}
                   :{" "}
                   {finishDate.getMinutes() / 10 < 1
-                    ? "0" + finishDate.getMinutes()
-                    : finishDate.getMinutes()}{" "}
+                      ? "0" + finishDate.getMinutes()
+                      : finishDate.getMinutes()}{" "}
                   hrs
                 </span>
               </span>
             </span>
-          </div>
-          <div>
-            {/*<LinearProgress*/}
-            {/*  variant="determinate"*/}
-            {/*  style={{ backgroundColor: "var(--dim-white)" }}*/}
-            {/*  value={seatsFilled}*/}
-            {/*/>*/}
-            {/*<div className="spots-wrapper">*/}
-            {/*  <span*/}
-            {/*    className="font-size-12 font-weight-500 mt-5"*/}
-            {/*    style={{ color: "var(--golden)" }}*/}
-            {/*  >*/}
-            {/*    {tournament.total_spots - tournament.filled_spots} spots left*/}
-            {/*  </span>*/}
-            {/*  <span*/}
-            {/*    className="font-size-12 font-weight-500 mt-5"*/}
-            {/*    style={{ color: "var(--dark-dim-white)" }}*/}
-            {/*  >*/}
-            {/*    {tournament.total_spots} spots*/}
-            {/*  </span>*/}
-            {/*</div>*/}
-          </div>
-          <div className="tournament-reward">
-            {/* <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span> */}
-            <span className="font-size-12">
-              <EmojiEventsOutlinedIcon />
-              {/* {tournament.reward} MGT */}
-              <span>1000 MGT</span>
+            </div>
+            <div>
+              {/*<LinearProgress*/}
+              {/*  variant="determinate"*/}
+              {/*  style={{ backgroundColor: "var(--dim-white)" }}*/}
+              {/*  value={seatsFilled}*/}
+              {/*/>*/}
+              {/*<div className="spots-wrapper">*/}
+              {/*  <span*/}
+              {/*    className="font-size-12 font-weight-500 mt-5"*/}
+              {/*    style={{ color: "var(--golden)" }}*/}
+              {/*  >*/}
+              {/*    {tournament.total_spots - tournament.filled_spots} spots left*/}
+              {/*  </span>*/}
+              {/*  <span*/}
+              {/*    className="font-size-12 font-weight-500 mt-5"*/}
+              {/*    style={{ color: "var(--dark-dim-white)" }}*/}
+              {/*  >*/}
+              {/*    {tournament.total_spots} spots*/}
+              {/*  </span>*/}
+              {/*</div>*/}
+            </div>
+            <div className="tournament-reward">
+              {/* <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span> */}
+              <span className="font-size-12">
+              <EmojiEventsOutlinedIcon/>
+                {/* {tournament.reward} MGT */}
+                {/*<span>{getAmountWonAPI} MGT</span>*/}
             </span>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
       );
     })
   ) : (

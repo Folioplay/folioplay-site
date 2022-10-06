@@ -21,6 +21,8 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
   const [leaderBoard, setLeaderBoard] = useState([]);
   const [personalLeaderBoard, setPersonalLeaderBoard] = useState([]);
   const [prizes, setPrizes] = useState([]);
+  let count = 0;
+  let rewardUserCount = 0;
   useEffect(() => {
     async function getLeader() {
       const data = await getLeaderboard(tournamentId);
@@ -67,7 +69,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
           {/*// Show rewards when the Tournament is not completed*/}
           {tournamentStatus!==3 && leaderBoard.length &&
-              [...Array(rewardSize),].map((value, index) => {
+              [...Array(rewardSize>leaderBoard.length ? leaderBoard.length : rewardSize ),].map((value, index) => {
                 // const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
                 console.log("entry", personalLeaderBoard.length);
                 let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
@@ -77,18 +79,8 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         animate={{ x: 0 }}
                         transition={{ duration: 0.1 * index }}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
-                        onClick={()=>{
-                            navigate("/activity/team/" + leaderBoard[index].team.id)
-                        }
-                        }
                     >
                       <span className="mr-10">{"  "}{index+1}</span>
-                      {/* <div className="leaderboard-profile-image"></div> */}
-                  {/*    <span className={"leaderboard-username ml-20"}>*/}
-                  {/*      {leaderBoard.length && leaderBoard[index].user.username}*/}
-                  {/*      /!* {entry.user.walletAddress.substring(0, 6)}****{entry.user.walletAddress.substring(entry.user.walletAddress.length - 4)} *!/*/}
-                  {/*</span>*/}
-                      {/* <span className='leaderboard-teamname ml-auto'>{entry.team_name}</span> */}
                       <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
                 );
@@ -97,9 +89,9 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
           {/*// Show rewards and winners when the Tournament is completed*/}
           {tournamentStatus===3 && leaderBoard.length &&
-              [...Array(rewardSize),].map((value, index) => {
-                // const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
-                console.log("entry make", leaderBoard);
+              [...Array(rewardSize>leaderBoard.length ? leaderBoard.length : rewardSize ),].map((value, index) => {
+                if(leaderBoard[index].user.walletAddress === userWalletAddress) rewardUserCount++;
+                console.log("entry make", leaderBoard[index]);
                 return (
                     <motion.div
                         initial={{ x: 400 }}
@@ -113,7 +105,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                     >
                       <span className="mr-10">{"  "}{index+1}</span>
                       <span className={"leaderboard-username ml-20"}>
-                        {leaderBoard.length && leaderBoard[index].user.username}({leaderBoard.length && leaderBoard[index].team.name})
+                        {leaderBoard.length && leaderBoard[index].user.username}{(!leaderBoard[index].team.length && leaderBoard[index].user.walletAddress === userWalletAddress) && <span>({rewardUserCount})</span>}
                   </span>
                       <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
@@ -131,24 +123,26 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
 
           {/*// Show only user points when tournament is not closed*/}
-          {tournamentStatus===0 && personalLeaderBoard.length &&
-              personalLeaderBoard.map((entry, index) => {
-                // const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
+
+          {tournamentStatus===0 && leaderBoard.length &&
+              leaderBoard.map((entry, index) => {
+                const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
+                if(entry.user.walletAddress === userWalletAddress) count++;
+                console.log("entry id 11", entry.team);
                 return (
                     <motion.div
                         initial={{ x: 400 }}
                         animate={{ x: 0 }}
                         transition={{ duration: 0.1 * index }}
-                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
+                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
                         onClick={()=>{
-                            navigate("/activity/team/" + entry.id)
+                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry.team} } )
                         }
                         }
                     >
-                      <span className="mr-10">{  }{entry.rank}</span>
-                      {/* <div className="leaderboard-profile-image"></div> */}
+                      <span className="mr-10">{"  "}1</span>
                       <span className={"leaderboard-username ml-20"}>
-                        {localStorage.getItem("folioUsername")} ({personalLeaderBoard.length>1 && entry.team.name})
+                        {entry.user.username} {(!entry.team.length && entry.user.walletAddress === userWalletAddress) && <span>({count})</span>}
                   </span>
                       <span className="ml-auto">{entry.portfolio}</span>
                     </motion.div>
@@ -160,7 +154,8 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           {tournamentStatus!==0 && leaderBoard.length &&
             leaderBoard.map((entry, index) => {
               const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
-              console.log("entry id 12", entry);
+              if(entry.user.walletAddress === userWalletAddress) count++;
+              console.log("entry id 12", entry.team);
                 return (
                 <motion.div
                   initial={{ x: 400 }}
@@ -168,13 +163,13 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                   transition={{ duration: 0.1 * index }}
                   className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
                   onClick={()=>{
-                      navigate("/activity/team/" + entry.team.id)
+                      navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry.team} } )
                   }
                   }
                 >
                   <span className="mr-10">{"  "}{index + 1}</span>
                   <span className={"leaderboard-username ml-20"}>
-                    {entry.user.username} ({entry.team.name})
+                    {entry.user.username} {(!entry.team.length && entry.user.walletAddress === userWalletAddress) && <span>({count})</span>}
                   </span>
                   <span className="ml-auto">{entry.portfolio}</span>
                 </motion.div>
