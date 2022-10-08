@@ -94,6 +94,7 @@ export default function TournamentView() {
       tournament && tournament.status === 3 ? true : false;
     disabledTournament = false;
     // let tournament_info_container_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
+    let empty_header = (tournament && tournament.status === 3) ? "empty-area-completed" : "";
     return (
       <div className="fullpage">
         {tournament === undefined || teams === undefined ? (
@@ -112,19 +113,19 @@ export default function TournamentView() {
                 {tournament.name}
               </span>
             </div>
-                <div className={"empty-area"}>
+                <div className={"empty-area-completed "}>
                   {tournament.status !== 0 &&
-                      <div>
+                      <>
                         <div>
-                          Prize Pool - {tournament.rewards.prize_pool} USDT
+                          Prize Pool - <b>{tournament.rewards.prize_pool} USDT</b>
                         </div>
                         <div>
-                        Spots - {tournament.total_spots}
+                          Spots - <b>{tournament.total_spots}</b>
                         </div>
-                      </div>
+                      </>
                   }
                 </div>
-                <div className={"tournament-info-container"} >
+                <div className={"tournament-info-container "} >
                   {tournament.status !== 3 ?
                       <motion.div
                       initial={{scale: 0}}
@@ -216,22 +217,6 @@ export default function TournamentView() {
                         </div>
                       </motion.div>
                     }
-                  {/*{rank !== undefined && rank !== null && rank.length > 0 ? (*/}
-                  {/*  <motion.div*/}
-                  {/*    initial={{ x: -500, y: -70 }}*/}
-                  {/*    animate={{ x: 0 }}*/}
-                  {/*    transition={{ duration: 0.4 }}*/}
-                  {/*    className="user-rank-div"*/}
-                  {/*  >*/}
-                  {/*    <span>*/}
-                  {/*      Your rank is<b>&ensp;#{rank[0].rank}&ensp;</b> with Team*/}
-                  {/*      <b>&ensp;{rank[0].team.name}&ensp;</b> and points{" "}*/}
-                  {/*      <b>&ensp;{rank[0].portfolio}</b>*/}
-                  {/*    </span>*/}
-                  {/*  </motion.div>*/}
-                  {/*) : (*/}
-                  {/*  <></>*/}
-                  {/*)}*/}
 
                   <div className="folioplay-tabs">
                     <LeaderBoardTabs tournamentId={tournament.id} tournamentStatus={tournament.status}

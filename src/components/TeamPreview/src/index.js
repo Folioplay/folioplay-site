@@ -24,7 +24,7 @@ export default function TeamPreview() {
   useEffect(() => {
     fetchTeam();
   }, []);
-  console.log(team);
+  console.log("team",team);
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -35,7 +35,7 @@ export default function TeamPreview() {
             onClick={() => navigate(-1)}
           />
           <span className="ml-20 font-size-20 font-weight-700">
-            {team !== undefined ? <>{team.name}</> : <>Loading</>}
+            {team.name !== undefined ? <>{team.name}</> : <>Loading</>}
           </span>
         </div>
         <br />

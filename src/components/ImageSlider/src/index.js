@@ -14,29 +14,29 @@ export default function ImageSlider({ handlers, setPaused }) {
                     className="image-div image-1 mr-20">
                     <img
                         // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
-                        src={require('../../../images/image2.png').default} width="100%" height={"150px"} />
+                        src={require('../../../images/foliobanner1.jpg').default} width="100%" height={"150px"} />
                 </div>
                 <div
                     // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
                     className="image-div image-2 mr-20">
                     <img
                         // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
-                        src={require('../../../images/image1.png').default} width="100%" height={"150px"} />
+                        src={require('../../../images/foliobanner2.jpg').default} width="100%" height={"150px"} />
                 </div>
                 <div
                     // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
                     className="image-div image-3 mr-20">
                     <img
                         // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
-                        src={require('../../../images/image1.png').default} width="100%" height={"150px"} />
+                        src={require('../../../images/visitfolio.jpg').default} width="100%" height={"150px"} />
                 </div>
-                <div
-                    // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
-                    className="image-div image-4 mr-20">
-                    <img
-                        // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} 
-                        src={require('../../../images/image1.png').default} width="100%" height={"150px"} />
-                </div>
+                {/*<div*/}
+                {/*    // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} */}
+                {/*    className="image-div image-4 mr-20">*/}
+                {/*    <img*/}
+                {/*        // {...handlers} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} */}
+                {/*        src={require('../../../images/image1.png').default} width="100%" height={"150px"} />*/}
+                {/*</div>*/}
             </div>
         </div>
     );

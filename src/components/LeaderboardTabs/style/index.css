@@ -16,12 +16,17 @@
     background-color: var(--dim-white);
 }
 
+.leaderboard-points{
+    margin-left: 1rem;
+}
+
 .leaderboard-username {
     /* max-width: 6.25em;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; */
     transition: 0.2s all ease-in-out;
+    margin-left: 3rem;
 }
 
 .leaderboard-username:hover {
