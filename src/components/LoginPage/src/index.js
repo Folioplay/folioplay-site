@@ -15,10 +15,10 @@ import SplashScreen from "../common/SplashScreen";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
 import googleIcon from "../../../images/google_icon.webp";
 import metaIcon from "../../../images/meta.png";
-import { Magic } from 'magic-sdk';
-import { OAuthExtension } from '@magic-ext/oauth';
-import {useDispatch, useSelector} from "react-redux";
-import {userDetails} from "../../../Redux/AuthSlice/AuthSlice";
+import { Magic } from "magic-sdk";
+import { OAuthExtension } from "@magic-ext/oauth";
+import { useDispatch, useSelector } from "react-redux";
+import { userDetails } from "../../../Redux/AuthSlice/AuthSlice";
 const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
   extensions: [new OAuthExtension()],
 });
@@ -44,14 +44,15 @@ export default function LoginPage() {
     if (isAuthenticated && isInitialized)
       window.location.pathname = "/tournaments";
   }, []);
-  console.log("gg")
+  console.log("gg");
 
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
     event.preventDefault();
-    console.log(event.target.value);
     setEmail(event.target.value);
   };
+
+  // For policy
   const loginWithMail = async () => {
     if (!policiesAccepted) {
       document
@@ -68,7 +69,7 @@ export default function LoginPage() {
       return;
     }
     const emailValue = document.getElementById("email-field").value;
-    console.log(email);
+    console.log(emailValue);
     console.log(magicEmail);
     const user = await authenticate({
       provider: "magicLink",
@@ -77,7 +78,7 @@ export default function LoginPage() {
       network: "mainnet",
     })
       .then(async (user) => {
-        console.log(user)
+        console.log(user);
         await getAuthTokenFunction(user);
         console.log(user);
       })
@@ -228,17 +229,15 @@ export default function LoginPage() {
 
   const googleOAuthLogin = async () => {
     const test = await magic.oauth.loginWithRedirect({
-      provider: 'google',
-      redirectURI: 'https://auth.magic.link/v1/oauth2/lY3H4aMq_4Rt1Tk1f-kSPekWRGNsPoxe9JZUdk7Y9WI=/callback',
+      provider: "google",
+      redirectURI:
+        "https://auth.magic.link/v1/oauth2/lY3H4aMq_4Rt1Tk1f-kSPekWRGNsPoxe9JZUdk7Y9WI=/callback",
     });
     // const result = await magic.oauth.getRedirectResult();
     // console.log(result);
     console.log(test);
-  }
-  const metaOAuthLogin = () => {
-
-  }
-
+  };
+  const metaOAuthLogin = () => {};
 
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
@@ -247,10 +246,14 @@ export default function LoginPage() {
     window.location.pathname = "/";
   };
 
-  const [magicEmail, setMagicEmail] = useState('');
+  const [magicEmail, setMagicEmail] = useState("");
   const setMagicEmailFunc = (e) => {
-    setMagicEmail(e.target.value);
-  }
+    e.preventDefault();
+    console.log("Hello");
+    const emailtest = document.getElementById("email-field").value;
+    console.log(emailtest);
+    setMagicEmail(emailtest);
+  };
 
   // const dispatch = useDispatch();
   // const getUserDetailsGlobal = useSelector(state => state.AuthSlice.user);
@@ -260,8 +263,12 @@ export default function LoginPage() {
     const walletAddress = user.get("ethAddress");
     const walletSignature = user["attributes"].authData.moralisEth.signature;
     try {
-      const fetchUserDetails = await getAuthToken(walletAddress, walletSignature, email);
-      console.log(fetchUserDetails)
+      const fetchUserDetails = await getAuthToken(
+        walletAddress,
+        walletSignature,
+        email
+      );
+      console.log(fetchUserDetails);
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
@@ -271,6 +278,11 @@ export default function LoginPage() {
   setTimeout(() => {
     setIsVisible(false);
   }, 3500);
+
+  const handlePolicyChange = (e) => {
+    e.preventDefault();
+    setPoliciesAccepted(!policiesAccepted);
+  };
   const LeftComponent = () => {
     return (
       <div id="folioplay-login-wrapper">
@@ -287,38 +299,38 @@ export default function LoginPage() {
         </span>
         <div className="folioplay-connect">
           <Button
-              style={{
-                width: "min(320px,100%)",
-                height: "45px",
-              }}
-              className="folioplay-login-google-button"
-              variant="contained"
-              onClick={googleOAuthLogin}
+            style={{
+              width: "min(320px,100%)",
+              height: "45px",
+            }}
+            className="folioplay-login-google-button"
+            variant="contained"
+            onClick={googleOAuthLogin}
           >
             <img
-                className="mr-8"
-                alt="metamask-icon"
-                src={googleIcon}
-                width={"24px"}
-                height={"24px"}
+              className="mr-8"
+              alt="metamask-icon"
+              src={googleIcon}
+              width={"24px"}
+              height={"24px"}
             />{" "}
             Google
           </Button>
           <Button
-              style={{
-                width: "min(320px,100%)",
-                height: "45px",
-              }}
-              className="folioplay-login-google-button"
-              variant="contained"
-              onClick={metaOAuthLogin}
+            style={{
+              width: "min(320px,100%)",
+              height: "45px",
+            }}
+            className="folioplay-login-google-button"
+            variant="contained"
+            onClick={metaOAuthLogin}
           >
             <img
-                className="mr-8"
-                alt="metamask-icon"
-                src={metaIcon}
-                width={"24px"}
-                height={"24px"}
+              className="mr-8"
+              alt="metamask-icon"
+              src={metaIcon}
+              width={"24px"}
+              height={"24px"}
             />{" "}
             Meta
           </Button>
@@ -381,13 +393,14 @@ export default function LoginPage() {
           Email ID
         </label>
         <input
-          key="email-id"
-          type={"email"}
+          type="email"
           placeholder="Mention your Email ID here"
           required
+          autoFocus
+          value={email}
           name="email-field"
           id="email-field"
-          onChange={()=>setMagicEmailFunc}
+          onChange={(e) => handleChange(e)}
         />
         <Button
           id="folioplay-login-mail-button"
@@ -395,7 +408,7 @@ export default function LoginPage() {
           variant="filled"
           size="medium"
         >
-          Continue{" "}
+          Continue
           <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />
         </Button>
         {snackBarChangeWalletComponent()}
@@ -408,16 +421,13 @@ export default function LoginPage() {
             id="privacy-policies"
             style={{ width: "30px" }}
             checked={policiesAccepted}
-            onChange={() => {
-
-              setPoliciesAccepted(!policiesAccepted);
-            }}
+            onChange={handlePolicyChange}
           />
           <label
             className="font-size-15 ml-auto mr-auto"
             htmlFor="privacy-policies"
           >
-            Agree to Folioplay{" "}
+            Agree to Folioplay
             <span
               className="login-privacy-policies"
               onClick={openPrivacyPolicies}
@@ -428,7 +438,6 @@ export default function LoginPage() {
         </span>
         <div className="policies-error">
           <ErrorOutlineOutlinedIcon />
-          {" "}
           <span className="ml-10">Accept Privacy Policies !!</span>
         </div>
 
