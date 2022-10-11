@@ -44,7 +44,7 @@ export default function FolioplayBar({ intervalId }) {
   const [balanceUSDT, setBalanceUSDT] = useState("Loading");
   const [balanceUSDC, setBalanceUSDC] = useState("Loading");
 
-  const walletIntervalId = window.setInterval(async function () {
+  const walletIntervalId = async() => {
     if (user) {
       const USDTABI = [
         {
@@ -81,7 +81,14 @@ export default function FolioplayBar({ intervalId }) {
       const bal = await contract.balanceOf(walletAddress);
       setBalanceUSDC(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
     }
-  }, 10000);
+  };
+
+  useEffect(()=>{
+    walletIntervalId();
+  },[]);
+
+
+
   const {logOutContext} = useContext(AuthContext);
   const lg = () => logOutContext
   const logOut = async () => {
@@ -96,6 +103,7 @@ export default function FolioplayBar({ intervalId }) {
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    walletIntervalId();
   };
   const handleClose = () => {
     setAnchorEl(null);

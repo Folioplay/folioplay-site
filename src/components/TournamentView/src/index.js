@@ -114,7 +114,7 @@ export default function TournamentView() {
               </span>
             </div>
                 <div className={"empty-area-completed "}>
-                  {tournament.status !== 0 &&
+                  {tournament.status === 3 &&
                       <>
                         <div>
                           Prize Pool - <b>{tournament.rewards.prize_pool} USDT</b>

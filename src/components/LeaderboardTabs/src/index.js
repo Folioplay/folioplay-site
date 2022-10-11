@@ -123,6 +123,30 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
           {/*// Show only user points when tournament is not closed*/}
 
+          {tournamentStatus!==0 && personalLeaderBoard.length &&
+              personalLeaderBoard.map((entry, index) => {
+                count++;
+                return (
+                    <motion.div
+                        initial={{ x: 400 }}
+                        animate={{ x: 0 }}
+                        transition={{ duration: 0.1 * index }}
+                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
+                        onClick={()=>{
+                          const teamData = leaderBoard.find(obj => obj.team.name=== entry.team.name)
+                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData.team} } )
+                        }
+                        }
+                    >
+                      <span className="mr-10">{"  "}{entry.rank}</span>
+                      <span className={"leaderboard-username"}>
+                    {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && (count)}
+                  </span>
+                      <span className="ml-auto">{entry.portfolio}</span>
+                    </motion.div>
+                );
+              })}
+
           {tournamentStatus===0 && leaderBoard.length &&
               leaderBoard.map((entry, index) => {
                 const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
@@ -167,7 +191,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                     >
                       <span className="mr-10">{"  "}{entry.rank}</span>
                       <span className={"leaderboard-username"}>
-                    {localStorage.getItem("folioUsername")} ({personalLeaderBoard.length>1 && count})
+                    {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && (count)}
                   </span>
                       <span className="ml-auto">{entry.portfolio}</span>
                     </motion.div>
