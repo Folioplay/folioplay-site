@@ -6,3 +6,57 @@
     transition: all 0.3s ease-in-out;
     color:var(--black);
 }
+
+.coin-card-superstar{
+    border: 2px solid red;
+}
+
+.coin-card-mooning{
+    border: 2px solid green;
+}
+
+.coin-card-rekt{
+    border: 2px solid orange;
+}
+
+.ribbon {
+    height:5rem;
+    position: relative;
+    margin-bottom: 30px;
+    /*background: url(https://html5book.ru/wp-content/uploads/2015/10/snow-road.jpg);*/
+    background-size: cover;
+    text-transform: uppercase;
+    color: white;
+}
+
+.ribbon2 {
+    width: 20px;
+    padding: 10px 0;
+    position: absolute;
+    top: -4px;
+    left: 5rem;
+    text-align: center;
+    border-top-left-radius: 3px;
+    background: #3944bc;
+}
+.ribbon2:before {
+    height: 0;
+    width: 0;
+    right: -5.5px;
+    top: 0.1px;
+    border-bottom: 6px solid #1520a6;
+    border-right: 6px solid transparent;
+}
+.ribbon2:before, .ribbon2:after {
+    content: "";
+    position: absolute;
+}
+.ribbon2:after {
+    height: 0;
+    width: 0;
+    bottom: -6px;
+    left: 0;
+    border-left: 10px solid #3944bc;
+    border-right: 10px solid #3944bc;
+    border-bottom: 10px solid transparent;
+}

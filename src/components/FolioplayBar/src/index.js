@@ -83,9 +83,6 @@ export default function FolioplayBar({ intervalId }) {
     }
   };
 
-  useEffect(()=>{
-    walletIntervalId();
-  },[]);
 
 
 

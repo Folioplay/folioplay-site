@@ -22,11 +22,13 @@ export default function CurrentTeamPreview() {
                         onClick={() => navigate(-1)}
                     />
                     <span className="ml-20 font-size-20 font-weight-700">
-            {leaderBoardData.selectedCoins.current_points !== undefined ? <>{leaderBoardData.name}</> : <>Loading</>}
+            {leaderBoardData.team.selectedCoins.current_points !== undefined ? <>Loading</> : <>{leaderBoardData.team.name}</>}
           </span>
                 </div>
                 <br />
-                <br />
+                <div className="totalPoints">
+                    Total Points:&nbsp;<b>{leaderBoardData.portfolio.toFixed(2)}</b>
+                </div>
                 <div className="team-preview-wrapper mt-20">
                     {leaderBoardData !== undefined ? (
                         <>
@@ -35,38 +37,39 @@ export default function CurrentTeamPreview() {
                                 container
                                 rowSpacing={"1em"}
                             >
-                                {leaderBoardData.selectedCoins.map((coin, index) => {
-
+                                {leaderBoardData.team.selectedCoins.map((coin, index) => {
+                                    const coin_card = coin.category==="Superstar" ? "coin-card-superstar": coin.category==="Defi" ? "coin-card-rekt" :  "coin-card-mooning";
                                     return (
                                         <Grid className="coin-card-wrapper" item xs={6}>
                                             <motion.div
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 transition={{ duration: 0.07 * index }}
-                                                className="coin-card"
+                                                className={"coin-card "+ coin_card }
                                             >
-                        <span className="coin-image-wrapper">
-                          <img
-                              src={
-                                  process.env.REACT_APP_API_SERVER +
-                                  "/media/" +
-                                  coin.symbol +
-                                  ".png"
-                              }
-                              onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
-                              width="40px"
-                              height="40px"
-                          />
-                        </span>
+
+                                            <span className="coin-image-wrapper">
+                                                {
+                                                    coin.rank !== -1 &&
+                                                    <div className="ribbon">
+                                                        <span className="ribbon2">{coin.rank}</span>
+                                                    </div>
+                                                }
+                                              <img
+                                                  src={
+                                                      process.env.REACT_APP_API_SERVER +
+                                                      "/media/" +
+                                                      coin.symbol +
+                                                      ".png"
+                                                  }
+                                                  onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
+                                                  width="40px"
+                                                  height="40px"
+                                              />
+                                            </span>
                                                 <span className="graph font-size-15 font-weight-500 mt-5 mb-10">
-                          {coin.name}
-                        </span>
-                                                <span
-                                                    className="font-size-12"
-                                                    style={{ color: "var(--dark-dim-white)" }}
-                                                >
-                                                  {coin.rank == -1 ? <></> : <>Rank {coin.rank}</>}
-                                                </span>
+                                                {coin.name}
+                                            </span>
                                                     <span
                                                         className="font-size-12"
                                                         style={{ color: "var(--dark-dim-white)" }}
@@ -75,8 +78,9 @@ export default function CurrentTeamPreview() {
                                                 </span>
                                             </motion.div>
                                         </Grid>
-                                    );
-                                })}
+                                        );
+                                    }
+                                )}
                             </Grid>
                         </>
                     ) : (

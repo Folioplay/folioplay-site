@@ -98,7 +98,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
                         onClick={()=>{
                           if(leaderBoard[index].user.walletAddress === userWalletAddress)
-                            navigate("/activity/team/currentStatus",  { state: { leaderBoardData: leaderBoard[index].team} })
+                            navigate("/activity/team/currentStatus",  { state: { leaderBoardData: leaderBoard[index]} })
                         }
                         }
                     >
@@ -134,7 +134,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
                         onClick={()=>{
                           const teamData = leaderBoard.find(obj => obj.team.name=== entry.team.name)
-                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData.team} } )
+                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData} } )
                         }
                         }
                     >
@@ -158,7 +158,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         transition={{ duration: 0.1 * index }}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
                         onClick={()=>{
-                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry.team} } )
+                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
                         }
                         }
                     >
@@ -185,7 +185,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         onClick={()=>{
                           const teamData = leaderBoard.find(obj => obj.team.name=== entry.team.name)
                           console.log("teamdd", teamData);
-                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData.team} } )
+                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData} } )
                         }
                         }
                     >
@@ -201,6 +201,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
           {tournamentStatus!==0 && leaderBoard.length &&
             leaderBoard.map((entry, index) => {
+              console.log("entry", entry.portfolio);
               if(entry.user.walletAddress !== userWalletAddress)
                 return (
                     <motion.div
@@ -209,7 +210,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         transition={{duration: 0.1 * index}}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10"}
                         onClick={() => {
-                          navigate("/activity/team/currentStatus", {state: {leaderBoardData: entry.team}})
+                          navigate("/activity/team/currentStatus", {state: {leaderBoardData: entry}})
                         }
                         }
                     >

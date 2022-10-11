@@ -81,7 +81,7 @@ export default function Tournaments() {
   // }
   const status = {
     3: { value: "Completed", color: "#ff000096" },
-    1: { value: "Closed", color: "#ff000096" },
+    1: { value: "Closed", color: "#ED7014" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#00ff00d6" },
   };
