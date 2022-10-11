@@ -22,7 +22,7 @@ export default function CurrentTeamPreview() {
                         onClick={() => navigate(-1)}
                     />
                     <span className="ml-20 font-size-20 font-weight-700">
-            {leaderBoardData.team.selectedCoins.current_points !== undefined ? <>Loading</> : <>{leaderBoardData.team.name}</>}
+            {leaderBoardData.team !== undefined ? <>{leaderBoardData.team.name}</> : <>Loading</>}
           </span>
                 </div>
                 <br />

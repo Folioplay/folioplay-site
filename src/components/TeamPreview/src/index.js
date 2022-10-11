@@ -51,6 +51,8 @@ export default function TeamPreview() {
                 // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 {team.selectedCoins.map((coin, index) => {
+                    const coin_card = coin.category==="Superstar" ? "coin-card-superstar": coin.category==="Defi" ? "coin-card-rekt" :  "coin-card-mooning";
+
                     let pointNumber;
                     if(coin.rank===1){
                         pointNumber =  20000;
@@ -69,9 +71,21 @@ export default function TeamPreview() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.07 * index }}
-                        className="coin-card"
+                        className={"coin-card "+ coin_card}
                       >
+                          {/*{*/}
+                          {/*    coin.rank !== -1 &&*/}
+                          {/*    <div className="ribbon">*/}
+                          {/*        <span className="ribbon2">{coin.rank}</span>*/}
+                          {/*    </div>*/}
+                          {/*}*/}
                         <span className="coin-image-wrapper">
+                            {
+                              coin.rank !== -1 &&
+                              <div className="ribbon">
+                                  <span className="ribbon2">{coin.rank}</span>
+                              </div>
+                          }
                           <img
                             src={
                               process.env.REACT_APP_API_SERVER +
@@ -86,12 +100,6 @@ export default function TeamPreview() {
                         </span>
                         <span className="graph font-size-15 font-weight-500 mt-5 mb-10">
                           {coin.name}
-                        </span>
-                        <span
-                          className="font-size-12"
-                          style={{ color: "var(--dark-dim-white)" }}
-                        >
-                          {coin.rank == -1 ? <></> : <>Rank {coin.rank}</>}
                         </span>
                           <span
                               className="font-size-12"
