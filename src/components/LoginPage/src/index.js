@@ -48,8 +48,8 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
-    event.preventDefault();
-    setEmail(event.target.value);
+    // event.preventDefault();
+    // setEmail(event.target.value);
   };
 
   // For policy
@@ -397,7 +397,7 @@ export default function LoginPage() {
           placeholder="Mention your Email ID here"
           required
           // autoFocus
-          value={email}
+          // value={email}
           name="email-field"
           id="email-field"
           onChange={(e) => handleChange(e)}
