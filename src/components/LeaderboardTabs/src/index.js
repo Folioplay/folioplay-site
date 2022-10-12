@@ -208,7 +208,8 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         transition={{ duration: 0.1 * index }}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
                         onClick={()=>{
-                          navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
+                          if(entry.user.walletAddress === userWalletAddress)
+                            navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
                         }
                         }
                     >
