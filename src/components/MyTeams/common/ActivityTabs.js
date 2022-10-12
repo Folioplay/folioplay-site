@@ -12,7 +12,6 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import { LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import {getAmountWon} from "../../../APIS/apis";
 export default function ActivityTabs({ teams, tournaments }) {
   const monthNames = [
     "Jan",
@@ -62,7 +61,7 @@ export default function ActivityTabs({ teams, tournaments }) {
       return (
           <motion.div
               id={"tournament-" + tournament._id}
-              initial={{y: "100vh"}}
+              // initial={{y: "100vh"}}
               animate={{y: 0}}
               transition={{delay: 0 + 0.08 * index, duration: 0.35}}
               key={"tournament__" + index}
@@ -103,31 +102,31 @@ export default function ActivityTabs({ teams, tournaments }) {
                 {tournament.name}
               </span>
               <br/>
-              <span className="tournaments-spots">
-                <span className="font-size-12">
-                  {startDate.getDate()} {monthNames[startDate.getMonth()]}'
-                  {startDate.getFullYear() % 100},&ensp;
-                  {startDate.getHours() / 10 < 1
-                      ? "0" + startDate.getHours()
-                      : startDate.getHours()}{" "}
-                  :{" "}
-                  {startDate.getMinutes() / 10 < 1
-                      ? "0" + startDate.getMinutes()
-                      : startDate.getMinutes()}{" "}
-                  hrs -{" "}
-                  {finishDate.getHours() / 10 < 1
-                      ? "0" + finishDate.getHours()
-                      : finishDate.getHours()}{" "}
-                  :{" "}
-                  {finishDate.getMinutes() / 10 < 1
-                      ? "0" + finishDate.getMinutes()
-                      : finishDate.getMinutes()}{" "}
-                  hrs
-                </span>
-              </span>
+              {/*<span className="tournaments-spots">*/}
+                {/*<span className="font-size-12">*/}
+                {/*  {startDate.getDate()} {mo  nthNames[startDate.getMonth()]}'*/}
+                {/*  {startDate.getFullYear() % 100},&ensp;*/}
+                {/*  {startDate.getHours() / 10 < 1*/}
+                {/*      ? "0" + startDate.getHours()*/}
+                {/*      : startDate.getHours()}{" "}*/}
+                {/*  :{" "}*/}
+                {/*  {startDate.getMinutes() / 10 < 1*/}
+                {/*      ? "0" + startDate.getMinutes()*/}
+                {/*      : startDate.getMinutes()}{" "}*/}
+                {/*  hrs -{" "}*/}
+                {/*  {finishDate.getHours() / 10 < 1*/}
+                {/*      ? "0" + finishDate.getHours()*/}
+                {/*      : finishDate.getHours()}{" "}*/}
+                {/*  :{" "}*/}
+                {/*  {finishDate.getMinutes() / 10 < 1*/}
+                {/*      ? "0" + finishDate.getMinutes()*/}
+                {/*      : finishDate.getMinutes()}{" "}*/}
+                {/*  hrs*/}
+                {/*</span>*/}
+              {/*</span>*/}
             </span>
             </div>
-            <div>
+            {/*<div>*/}
               {/*<LinearProgress*/}
               {/*  variant="determinate"*/}
               {/*  style={{ backgroundColor: "var(--dim-white)" }}*/}
@@ -147,15 +146,15 @@ export default function ActivityTabs({ teams, tournaments }) {
               {/*    {tournament.total_spots} spots*/}
               {/*  </span>*/}
               {/*</div>*/}
-            </div>
-            <div className="tournament-reward">
-              {/* <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span> */}
-              <span className="font-size-12">
-              <EmojiEventsOutlinedIcon/>
-                {/* {tournament.reward} MGT */}
-                {/*<span>{getAmountWonAPI} MGT</span>*/}
-            </span>
-            </div>
+            {/*</div>*/}
+            {/*<div className="tournament-reward">*/}
+            {/*  /!* <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span> *!/*/}
+            {/*  <span className="font-size-12">*/}
+            {/*  /!*<EmojiEventsOutlinedIcon/>*!/*/}
+            {/*    /!* {tournament.reward} MGT *!/*/}
+            {/*    /!*<span>{getAmountWonAPI} MGT</span>*!/*/}
+            {/*</span>*/}
+            {/*</div>*/}
           </motion.div>
       );
     })

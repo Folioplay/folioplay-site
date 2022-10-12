@@ -176,28 +176,12 @@ export default function Tournaments() {
         >
           <div className="tournament-info">
             <span className="tournament-image" style={{ borderRadius: "100%" }}>
-              {tournament.id === "62c45a6ddfe60c1bada234a8" ? (
-                <img
+              <img
                   style={{ borderRadius: "100%" }}
-                  src={require("../../../images/bulls.png").default}
+                  src={tournament.imageURL}
                   width="50px"
                   height={"50px"}
-                />
-              ) : (
-                <>
-                  {" "}
-                  {tournament.id === "62c45abedfe60c1bada2355f" ? (
-                    <img
-                      style={{ borderRadius: "100%" }}
-                      src={require("../../../images/justice.png").default}
-                      width="50px"
-                      height={"50px"}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </>
-              )}
+               />
             </span>
             <span
               style={{ textAlign: "left" }}
