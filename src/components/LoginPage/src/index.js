@@ -396,7 +396,7 @@ export default function LoginPage() {
           type="email"
           placeholder="Mention your Email ID here"
           required
-          autoFocus
+          // autoFocus
           value={email}
           name="email-field"
           id="email-field"
