@@ -81,7 +81,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         transition={{ duration: 0.1 * index }}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
                     >
-                      <span className="leaderboard-points">{"  "}{index+1}</span>
+                      <span className="leaderboard-points">{"  "}{index && index+1}</span>
                       <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
                 );
@@ -128,7 +128,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{index+1}</span>
+                      <span className="mr-10">{"  "}{index && index+1}</span>
                       <span className={"leaderboard-username"}>
                         {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && <span>({rewardUserCount  })</span>}
                       </span>
@@ -238,7 +238,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{entry.rank}</span>
+                      <span className="mr-10">{"  "}{entry.rank!==0 && entry.rank}</span>
                       <span className={"leaderboard-username"}>
                         {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && <span>({count})</span>}
                       </span>
@@ -262,7 +262,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{index + 1}</span>
+                      <span className="mr-10">{"  "}{index!==0 && index + 1}</span>
                         <span className={"leaderboard-username"}>
                         {entry.user.username}
                         </span>
