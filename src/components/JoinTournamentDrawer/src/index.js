@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import joinTournament from "../common/joinTournament";
 import selectTeam from "../common/selectTeam";
+import "../style/index.css";
 import {
   chooseTeamClose,
   chooseTeamOpen,
@@ -57,6 +58,7 @@ export default function JoinTournamentDrawer({
           <div style={{ padding: "0" }}>
             {teams.map((team, index) => {
               var clickedId = "team-" + index;
+              console.log("view team", team)
               return (
                 <div
                   id={"team-" + index}
@@ -116,8 +118,15 @@ export default function JoinTournamentDrawer({
                     className="display-none team-coins"
                   >
                     {team.selectedCoins.map((coin, index) => {
+                      let selected_coin_css = coin.category==="Superstar" ? "team-view-coin-card-superstar": coin.category==="Mooning" ? "team-view-coin-card-mooning" : "team-view-coin-card-rekt"
                       return (
-                        <div className="teamview-coin-card mr-10 ">
+                        <div className={"teamview-coin-card mr-10 "+ selected_coin_css}>
+                          {
+                              coin.rank !== -1 &&
+                              <div className="ribbon-team-view">
+                                <span className="ribbon2-team-view">{coin.rank}</span>
+                              </div>
+                          }
                           <img
                             src={
                               require("../../../images/coinLogos/" +
@@ -142,7 +151,7 @@ export default function JoinTournamentDrawer({
             })}
           </div>
         </div>
-        <div className="mt-10" id="create-new-button-div">
+        <div className="mt-10" id="create-new-button-div-drawer">
           <Button
             variant="filled"
             id="jointournament-button"
@@ -166,7 +175,7 @@ export default function JoinTournamentDrawer({
               )
             }
           >
-            Continue TF
+            Continue
           </Button>
           <Button
             variant="filled"

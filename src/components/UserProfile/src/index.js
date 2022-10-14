@@ -13,12 +13,14 @@ import {changeUserName, checkAvailableUsername} from "../../../APIS/apis";
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
 import {AuthContext} from "../../../Context/AuthContext";
+import Snackbar from "../../../Common/Snackbar";
 export default function UserProfile() {
 
   const { user } = useMoralis();
   const walletAdd = user.attributes.ethAddress;
   function copytoClipboard() {
     navigator.clipboard.writeText(walletAdd);
+    handleClick();
   }
   const [disabledNameField, setDisabledNameField] = useState(true);
   const [errorNameField, setErrorNameField] = useState(false);
@@ -52,6 +54,19 @@ export default function UserProfile() {
           }
       }
   }
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
   const changeDisabledButton = () => {
       setDisabledNameField(!disabledNameField);
@@ -114,10 +129,11 @@ export default function UserProfile() {
                         Wallet Address
                     </div>
                     <div className="sectionDetails">
-                        {localStorage.getItem("folioWalletAddress").substring(0,8)}XXXXXX{localStorage.getItem("folioWalletAddress").slice(-8)}
+                        {/*{localStorage.getItem("folioWalletAddress").substring(0,8)}XXXXXX{localStorage.getItem("folioWalletAddress").slice(-8)}*/}
+                        {localStorage.getItem("folioWalletAddress")}
                         <ContentCopyIcon
                           id="copy-to-clipboard"
-                          className="ml-20"
+                          className=""
                           fontSize="medium"
                           style={{ color: "var(--black)" }}
                           onClick={copytoClipboard}
@@ -126,6 +142,7 @@ export default function UserProfile() {
                 </div>
             </div>
         </div>
+          <Snackbar open={open} handleClose={handleClose} message="Wallet Address Copied" severityType="success"/>
         {/*<div className="copied">*/}
         {/*  /!*<DoneIcon /> <span className="ml-10">Copied to clipboard</span>*!/*/}
         {/*</div>*/}

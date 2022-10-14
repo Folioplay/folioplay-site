@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import {useMoralis} from "react-moralis";
+import SnackbarComponent from "../Common/Snackbar";
 
 export const AuthContext = createContext({});
 const SERVER = process.env.REACT_APP_API_SERVER;

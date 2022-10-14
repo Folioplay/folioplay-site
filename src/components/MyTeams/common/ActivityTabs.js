@@ -60,101 +60,39 @@ export default function ActivityTabs({ teams, tournaments }) {
       const disabledTournament = tournament.status === 3;
       return (
           <motion.div
-              id={"tournament-" + tournament._id}
+              // id={"tournament-" + tournament._id}
               // initial={{y: "100vh"}}
               animate={{y: 0}}
               transition={{delay: 0 + 0.08 * index, duration: 0.35}}
               key={"tournament__" + index}
-              className="tournament"
+              className="activity-tournament"
+              onClick={() => {
+                  navigate(`/tournaments/${tournament.tournament._id}`);
+              }}
           >
             <div className="tournament-info">
             <span className="tournament-image" style={{borderRadius: "100%"}}>
-              {tournament.id === "62c45a6ddfe60c1bada234a8" ? (
-                  <img
-                      style={{borderRadius: "100%"}}
-                      src={require("../../../images/bulls.png").default}
-                      width="50px"
-                      height={"50px"}
-                  />
-              ) : (
-                  <>
-                    {" "}
-                    {tournament.id === "62c45abedfe60c1bada2355f" ? (
-                        <img
-                            style={{borderRadius: "100%"}}
-                            src={require("../../../images/justice.png").default}
-                            width="50px"
-                            height={"50px"}
-                        />
-                    ) : (
-                        <></>
-                    )}
-                  </>
-              )}
+                <img
+                    style={{ borderRadius: "100%" }}
+                    src={tournament.tournament.imageURL}
+                    width="50px"
+                    height={"50px"}
+                />
             </span>
               <span
                   style={{textAlign: "left"}}
-                  onClick={() => {
-                    navigate(`/tournaments/${tournament._id}`);
-                  }}
+                  className="activity_tournament_content"
               >
               <span style={{color: "#071F36", fontWeight: "700"}}>
-                {tournament.name}
+                {tournament.tournament.name}
               </span>
               <br/>
-              {/*<span className="tournaments-spots">*/}
-                {/*<span className="font-size-12">*/}
-                {/*  {startDate.getDate()} {mo  nthNames[startDate.getMonth()]}'*/}
-                {/*  {startDate.getFullYear() % 100},&ensp;*/}
-                {/*  {startDate.getHours() / 10 < 1*/}
-                {/*      ? "0" + startDate.getHours()*/}
-                {/*      : startDate.getHours()}{" "}*/}
-                {/*  :{" "}*/}
-                {/*  {startDate.getMinutes() / 10 < 1*/}
-                {/*      ? "0" + startDate.getMinutes()*/}
-                {/*      : startDate.getMinutes()}{" "}*/}
-                {/*  hrs -{" "}*/}
-                {/*  {finishDate.getHours() / 10 < 1*/}
-                {/*      ? "0" + finishDate.getHours()*/}
-                {/*      : finishDate.getHours()}{" "}*/}
-                {/*  :{" "}*/}
-                {/*  {finishDate.getMinutes() / 10 < 1*/}
-                {/*      ? "0" + finishDate.getMinutes()*/}
-                {/*      : finishDate.getMinutes()}{" "}*/}
-                {/*  hrs*/}
-                {/*</span>*/}
-              {/*</span>*/}
+              <span className="tournaments-spots">
+                <EmojiEventsOutlinedIcon/>
+                  <span className="reward_amount">{tournament.amount_won} MGT</span>
+              </span>
             </span>
             </div>
-            {/*<div>*/}
-              {/*<LinearProgress*/}
-              {/*  variant="determinate"*/}
-              {/*  style={{ backgroundColor: "var(--dim-white)" }}*/}
-              {/*  value={seatsFilled}*/}
-              {/*/>*/}
-              {/*<div className="spots-wrapper">*/}
-              {/*  <span*/}
-              {/*    className="font-size-12 font-weight-500 mt-5"*/}
-              {/*    style={{ color: "var(--golden)" }}*/}
-              {/*  >*/}
-              {/*    {tournament.total_spots - tournament.filled_spots} spots left*/}
-              {/*  </span>*/}
-              {/*  <span*/}
-              {/*    className="font-size-12 font-weight-500 mt-5"*/}
-              {/*    style={{ color: "var(--dark-dim-white)" }}*/}
-              {/*  >*/}
-              {/*    {tournament.total_spots} spots*/}
-              {/*  </span>*/}
-              {/*</div>*/}
-            {/*</div>*/}
-            {/*<div className="tournament-reward">*/}
-            {/*  /!* <span className="font-size-12" style={{ color: status[tournament.status].color, padding: "0 10px", border: "1px solid " + status[tournament.status].color, borderRadius: "30px" }}>{status[tournament.status].value}</span> *!/*/}
-            {/*  <span className="font-size-12">*/}
-            {/*  /!*<EmojiEventsOutlinedIcon/>*!/*/}
-            {/*    /!* {tournament.reward} MGT *!/*/}
-            {/*    /!*<span>{getAmountWonAPI} MGT</span>*!/*/}
-            {/*</span>*/}
-            {/*</div>*/}
           </motion.div>
       );
     })

@@ -11,8 +11,30 @@
     font-family: "poppins";
 }
 
+.activity-tournament{
+    width: 85%;
+    min-height: 4em;
+    box-shadow: var(--tournament-card-shadow);
+    border-radius: 8px;
+    background-color: var(--white);
+    margin-bottom: 20px;
+    color: var(--black);
+    padding-top: 1.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.reward_amount{
+    margin-left: 0.3rem;
+}
+
+.activity_tournament_content{
+    margin-left: 1rem;
+}
+
+
 .tournament-info{
-    height: 1rem;
+    /*height: 4rem;*/
 }
 .activity-content-wrapper{
     width: 100%;

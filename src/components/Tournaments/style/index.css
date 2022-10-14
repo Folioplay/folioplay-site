@@ -84,6 +84,8 @@
     align-items: center;
 }
 .tournaments-spots {
+    display: flex;
+    align-items: center;
     width: 100%;
     font-weight: 500;
     color: var(--grey-shade);

@@ -81,7 +81,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         transition={{ duration: 0.1 * index }}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
                     >
-                      <span className="leaderboard-points">{"  "}{index+1}</span>
+                      <span className="leaderboard-points">{"  "}{leaderBoard[index].rank}</span>
                       <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
                 );
@@ -128,11 +128,11 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{index+1}</span>
+                      <span className="mr-10">{"  "}{entry.rank}</span>
                       <span className={"leaderboard-username"}>
                         {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && <span>({rewardUserCount  })</span>}
                       </span>
-                      <span className="ml-auto">{entry.portfolio}</span>
+                      <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
                 )}
               })}
@@ -152,14 +152,19 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                           }
                           }
                       >
-                        <span className="mr-10">{"  "}{index + 1}</span>
+                        <span className="mr-10">{"  "}{entry.rank}</span>
                         <span className={"leaderboard-username"}>
                         {entry.user.username}
                         </span>
-                        <span className="ml-auto">{entry.portfolio}</span>
+                        <span className="ml-auto">{tournamentPrizes[index]}</span>
                       </motion.div>
                   );
               })}
+
+
+
+
+          {/*Leaderboard Section*/}
 
         </TabPanel>
         <TabPanel value="1">
@@ -197,7 +202,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           {/*      );*/}
           {/*    })}*/}
 
-          {tournamentStatus===0 && leaderBoard.length &&
+          {tournamentStatus===0 && leaderBoard.length!==0 &&
               leaderBoard.map((entry, index) => {
                 const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
                 if(entry.user.walletAddress === userWalletAddress) count++;
@@ -223,7 +228,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
               })}
 
           {/*Show personal points when tournament is ended*/}
-          {tournamentStatus!==0 && personalLeaderBoard.length &&
+          {tournamentStatus!==0 && personalLeaderBoard.length!==0 &&
               personalLeaderBoard.map((entry, index) => {
                 count++;
                 return (
@@ -234,12 +239,11 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
                         onClick={()=>{
                           const teamData = leaderBoard.find(obj => obj.team.name=== entry.team.name)
-                          console.log("teamdd", teamData);
                           navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData} } )
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{entry.rank!==0 && entry.rank}</span>
+                      <span className="mr-10">{"  "}{entry.rank}</span>
                       <span className={"leaderboard-username"}>
                         {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && <span>({count})</span>}
                       </span>
@@ -249,7 +253,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
               })}
 
           {/*// Show all points when tournament is closed*/}
-          {tournamentStatus!==0 && leaderBoard.length &&
+          {tournamentStatus!==0 && leaderBoard.length!==0 &&
             leaderBoard.map((entry, index) => {
               if(entry.user.walletAddress !== userWalletAddress)
                 return (
@@ -263,7 +267,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         }
                         }
                     >
-                      <span className="mr-10">{"  "}{index!==0 && index + 1}</span>
+                      <span className="mr-10">{"  "}{ entry.rank }</span>
                         <span className={"leaderboard-username"}>
                         {entry.user.username}
                         </span>

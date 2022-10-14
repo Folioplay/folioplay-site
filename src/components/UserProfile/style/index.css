@@ -13,7 +13,7 @@
     background-color: var(--white);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    padding: 2rem;
+    padding: 1.6rem;
     color: black;
     /*display: flex;*/
     /*flex-wrap: wrap;*/
@@ -32,7 +32,7 @@
     padding-left: 0.8rem;
     border: 1px solid #B2C6DB;
     border-radius: 0.5rem;
-    width: 23rem;
+    width: 23.4rem;
 }
 
 .sectionHeading{
@@ -44,7 +44,8 @@
 .sectionDetails{
     display: flex;
     align-items: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    /*flex-wrap: wrap;*/
 }
 
 .editIcon{

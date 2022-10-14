@@ -463,7 +463,7 @@ export default function Tournaments() {
                         );
                       }}
                     >
-                      Continue T
+                      Continue
                     </Button>
                     <Button
                       variant="filled"

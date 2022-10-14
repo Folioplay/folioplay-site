@@ -1,0 +1,81 @@
+.team-view-coin-card-superstar{
+    border: 2px solid orange;
+}
+.team-view-coin-card-mooning{
+    border: 2px solid green;
+}
+.team-view-coin-card-rekt{
+    border: 2px solid red;
+}
+
+.ribbon-team-view {
+    /*height:1rem;*/
+    position: relative;
+    /*margin-bottom: 10px;*/
+    background-size: cover;
+    text-transform: uppercase;
+    color: white;
+}
+
+#choose-team-div {
+    position: fixed;
+    margin-top: auto;
+    /* top: calc(100vh-500px); */
+    width: 450px;
+    max-height: 600px;
+    bottom: 0px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    background-color: white;
+    box-shadow: 0px -6px 12px rgba(65, 55, 240, 0.1);
+    z-index: 20;
+    /* padding: 10px; */
+}
+
+
+.choose-team-div-team-view{
+    position: fixed;
+    margin-top: auto;
+    /* top: calc(100vh-500px); */
+    width: 450px;
+    max-height: 600px;
+    bottom: 0px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    background-color: white;
+    box-shadow: 0px -6px 12px rgba(65, 55, 240, 0.1);
+    z-index: 20;
+    /* padding: 10px; */
+}
+
+.ribbon2-team-view {
+    width: 20px;
+    padding: 5px 0;
+    position: absolute;
+    top: -1.7rem;
+    left: 2.3rem;
+    text-align: center;
+    border-top-left-radius: 3px;
+    background: #3944bc;
+}
+.ribbon2-team-view:before {
+    height: 0;
+    width: 0;
+    right: -5.5px;
+    top: 0.1px;
+    border-bottom: 6px solid #1520a6;
+    border-right: 6px solid transparent;
+}
+.ribbon2-team-view:before, .ribbon2-team-view:after {
+    content: "";
+    position: absolute;
+}
+.ribbon2-team-view:after {
+    height: 0;
+    width: 0;
+    bottom: -6px;
+    left: 0;
+    border-left: 10px solid #3944bc;
+    border-right: 10px solid #3944bc;
+    border-bottom: 10px solid transparent;
+}
