@@ -81,9 +81,9 @@ export default function Tournaments() {
   // }
   const status = {
     3: { value: "Completed", color: "#ff000096" },
-    1: { value: "Closed", color: "#ED7014" },
+    1: { value: "Closed", color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
-    2: { value: "Running", color: "#00ff00d6" },
+    2: { value: "Running", color: "#FFCC00" },
   };
   const [tournaments, setTournaments] = useState(undefined);
   const [teams, setTeams] = useState(undefined);
@@ -163,8 +163,8 @@ export default function Tournaments() {
       const finishDate = new Date(tournament.end_time);
       const currDate = new Date();
       const disabledClass =
-        tournament.status === 3 ? " disable-join-button" : "";
-      const disabledTournament = tournament.status === 3 ? true : false;
+        tournament.status !== 0 ? " disable-join-button" : "";
+      const disabledTournament = tournament.status !== 0 ? true : false;
       return (
         <motion.div
           id={"tournament-" + tournament._id}

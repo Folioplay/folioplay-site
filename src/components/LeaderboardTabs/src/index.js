@@ -69,7 +69,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
 
           {/*// Show rewards when the Tournament is not completed*/}
-          {tournamentStatus!==3 && leaderBoard.length &&
+          {tournamentStatus!==3 && leaderBoard.length!==0 &&
               [...Array(rewardSize>=leaderBoard.length ? leaderBoard.length : rewardSize ),].map((value, index) => {
                 let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
                 return (
@@ -79,7 +79,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         transition={{ duration: 0.1 * index }}
                         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
                     >
-                      <span className="leaderboard-points">{"  "}{leaderBoard[index].rank}</span>
+                      <span className="leaderboard-points">{"  "}{index+1}</span>
                       <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
                 );

@@ -89,11 +89,10 @@ export default function TournamentView() {
   };
   const LeftComponent = () => {
     var disabledClass =
-      tournament && tournament.status === 3 ? " disable-join-button" : "";
-    var disabledTournament =
-      tournament && tournament.status === 3 ? true : false;
-    disabledTournament = false;
-    // let tournament_info_container_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
+      tournament && tournament.status !== 0 ? " disable-join-button" : "";
+    var disabledTournament = tournament && tournament.status !== 0 ? true : false;
+    // disabledTournament = false;
+    // let tournament_info_contain  er_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
     let empty_header = (tournament && tournament.status === 3) ? "empty-area-completed" : "";
     return (
       <div className="fullpage">
