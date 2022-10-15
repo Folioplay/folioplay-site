@@ -21,7 +21,6 @@ export async function getAmountWon({ _id }) {
   })
       .then((res) => res.json())
       .then(data=> {
-        console.log("amt won", data);
         return data.total_amount_won;
       });
 }

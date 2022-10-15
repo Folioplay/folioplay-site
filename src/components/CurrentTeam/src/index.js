@@ -45,8 +45,11 @@ export default function CurrentTeamPreview() {
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 transition={{ duration: 0.07 * index }}
-                                                className={"coin-card "+ coin_card }
+                                                className={"coin-card-current-team "+ coin_card }
                                             >
+                                            <div className="coinCategory">
+                                                {coin.category}
+                                            </div>
 
                                             <span className="coin-image-wrapper">
                                                 {

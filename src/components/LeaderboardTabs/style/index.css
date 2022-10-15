@@ -20,6 +20,13 @@
     margin-left: 1rem;
 }
 
+.teamCount{
+    background-color: lightgrey;
+    padding: 2px;
+    margin-left: 5px;
+    font-size: 0.8rem;
+}
+
 .totalPoints{
     display: flex;
     justify-content: center;

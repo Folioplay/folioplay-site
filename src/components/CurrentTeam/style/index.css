@@ -7,6 +7,33 @@
     color:var(--black);
 }
 
+.coin-card-current-team {
+    border-radius: 12px;
+    /* min-width: 10em; */
+    width:85%;
+    height: 10em;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /*align-content: flex-start;*/
+    align-items: center;
+    box-shadow: var(--coin-card-shadow);
+    transition: 0.2s ease-in-out;
+}
+
+.coinCategory{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 0.9rem;
+    font-size: 0.8rem;
+    height: 1.6rem;
+    color:#869EB6;
+}
+
 .coin-card-superstar{
     border: 2px solid orange;
 }

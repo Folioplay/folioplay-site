@@ -36,7 +36,7 @@ export default function TournamentView() {
   });
   const [tournament, setTournament] = useState(undefined);
   console.log("tournament log", tournament);
-  const [amountWon, setAmountWon] = useState(0);
+  const [amountWon, setAmountWon] = useState(-1);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
   const _id = params.tournamentId;
@@ -210,8 +210,8 @@ export default function TournamentView() {
                             <div className="userNameTP">
                               {localStorage.getItem("folioUsername")}
                             </div>
-                            <div>
-                              You won {amountWon} MGT
+                            <div className="tview__rewardDisplay">
+                              {amountWon!==-1? <span>You won {amountWon} MGT</span>: <span> You haven't participated in tournament</span>}
                             </div>
                           </div>
                         </div>

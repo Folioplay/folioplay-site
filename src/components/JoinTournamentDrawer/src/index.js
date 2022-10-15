@@ -58,7 +58,6 @@ export default function JoinTournamentDrawer({
           <div style={{ padding: "0" }}>
             {teams.map((team, index) => {
               var clickedId = "team-" + index;
-              console.log("view team", team)
               return (
                 <div
                   id={"team-" + index}

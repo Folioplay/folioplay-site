@@ -13,7 +13,6 @@ import { useMoralis } from "react-moralis";
 import {useNavigate} from "react-router-dom";
 
 export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tournamentPrizes, rewardSize }) {
-  console.log( "rsize", rewardSize);
   const navigate = useNavigate();
   const [value, setValue] = React.useState("1");
   const { user } = useMoralis();
@@ -24,7 +23,6 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
   const [prizes, setPrizes] = useState([]);
   let count = 0;
   let rewardUserCount = 0;
-  console.log("perso al llea", personalLeaderBoard)
   useEffect(() => {
     async function getLeader() {
       const data = await getLeaderboard(tournamentId);
@@ -130,7 +128,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                     >
                       <span className="mr-10">{"  "}{entry.rank}</span>
                       <span className={"leaderboard-username"}>
-                        {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && <span>({rewardUserCount  })</span>}
+                        {localStorage.getItem("folioUsername")}  <span className={"teamCount"}>T{entry.user_team_count}</span>
                       </span>
                       <span className="ml-auto">{tournamentPrizes[index]}</span>
                     </motion.div>
@@ -154,7 +152,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                       >
                         <span className="mr-10">{"  "}{entry.rank}</span>
                         <span className={"leaderboard-username"}>
-                        {entry.user.username}
+                        {entry.user.username} <span className={"teamCount"}>T{entry.user_team_count}</span>
                         </span>
                         <span className="ml-auto">{tournamentPrizes[index]}</span>
                       </motion.div>
@@ -205,7 +203,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           {tournamentStatus===0 && leaderBoard.length!==0 &&
               leaderBoard.map((entry, index) => {
                 const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
-                if(entry.user.walletAddress === userWalletAddress) count++;
+                if(entry.user.walletAddress === userWalletAddress)
                 return (
                     <motion.div
                         initial={{ x: 400 }}
@@ -220,17 +218,41 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                     >
                       <span className="leaderboard-points">{"  "}1</span>
                       <span className={"leaderboard-username"}>
-                        {entry.user.username} {(!entry.team.length && entry.user.walletAddress === userWalletAddress) && <span>({count})</span>}
+                        {entry.user.username} <span className={"teamCount"}>T{entry.user_team_count}</span>
                   </span>
                       <span className="ml-auto">{entry.portfolio}</span>
                     </motion.div>
                 );
               })}
 
+          {tournamentStatus===0 && leaderBoard.length!==0 &&
+              leaderBoard.map((entry, index) => {
+                const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
+                if(entry.user.walletAddress !== userWalletAddress)
+                  return (
+                      <motion.div
+                          initial={{ x: 400 }}
+                          animate={{ x: 0 }}
+                          transition={{ duration: 0.1 * index }}
+                          className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
+                          onClick={()=>{
+                            if(entry.user.walletAddress === userWalletAddress)
+                              navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
+                          }
+                          }
+                      >
+                        <span className="leaderboard-points">{"  "}1</span>
+                        <span className={"leaderboard-username"}>
+                        {entry.user.username} <span className={"teamCount"}>T{entry.user_team_count}</span>
+                  </span>
+                        <span className="ml-auto">{entry.portfolio}</span>
+                      </motion.div>
+                  );
+              })}
+
           {/*Show personal points when tournament is ended*/}
           {tournamentStatus!==0 && personalLeaderBoard.length!==0 &&
               personalLeaderBoard.map((entry, index) => {
-                count++;
                 return (
                     <motion.div
                         initial={{ x: 400 }}
@@ -245,7 +267,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                     >
                       <span className="mr-10">{"  "}{entry.rank}</span>
                       <span className={"leaderboard-username"}>
-                        {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && <span>({count})</span>}
+                        {localStorage.getItem("folioUsername")} <span className={"teamCount"}>T{entry.user_team_count}</span>
                       </span>
                       <span className="ml-auto">{entry.portfolio}</span>
                     </motion.div>
@@ -269,7 +291,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                     >
                       <span className="mr-10">{"  "}{ entry.rank }</span>
                         <span className={"leaderboard-username"}>
-                        {entry.user.username}
+                        {entry.user.username} <span className={"teamCount"}>T{entry.user_team_count}</span>
                         </span>
                       <span className="ml-auto">{entry.portfolio}</span>
                     </motion.div>

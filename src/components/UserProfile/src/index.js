@@ -26,7 +26,7 @@ export default function UserProfile() {
   const [errorNameField, setErrorNameField] = useState(false);
   const [helperTextNameField, setHelperTextNameField] = useState("");
   // const [nameField, setNameField] = useState(localStorage.getItem("folioUsername"));
-  const [tickDisabled, setTickDisabled]= useState();
+  const [tapToOpenDisabled, setTapToOpenDisabled]= useState(true);
     // console.log(nameField);
 
   // const setValueName = (event) => {
@@ -129,8 +129,8 @@ export default function UserProfile() {
                         Wallet Address
                     </div>
                     <div className="sectionDetails">
-                        {/*{localStorage.getItem("folioWalletAddress").substring(0,8)}XXXXXX{localStorage.getItem("folioWalletAddress").slice(-8)}*/}
-                        {localStorage.getItem("folioWalletAddress")}
+                        {tapToOpenDisabled ? <span>{localStorage.getItem("folioWalletAddress").substring(0,8)}XXXXXX{localStorage.getItem("folioWalletAddress").slice(-8)}</span>
+                            :<span>{localStorage.getItem("folioWalletAddress")}</span>}
                         <ContentCopyIcon
                           id="copy-to-clipboard"
                           className=""
@@ -138,6 +138,14 @@ export default function UserProfile() {
                           style={{ color: "var(--black)" }}
                           onClick={copytoClipboard}
                         />
+                    </div>
+                    <div className="tapToOpenButton">
+                        {tapToOpenDisabled ?
+                            <Button onClick={() => setTapToOpenDisabled(!tapToOpenDisabled)}>Tap to see full Wallet
+                                Address</Button>
+                            :
+                            <Button onClick={() => setTapToOpenDisabled(!tapToOpenDisabled)}>Tap to shorten Wallet Address</Button>
+                        }
                     </div>
                 </div>
             </div>
