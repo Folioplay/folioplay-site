@@ -76,19 +76,12 @@ export function AssignRole() {
             <div className="upper-half">
               <input
                 id="team-name"
-                className="mb-5 pl-5 pr-5"
+                // className="mb-5 pl-5 pr-5"
                 placeholder="Enter Team Name"
                 required
                 maxlength="15"
-                defaultValue={
-                  "Team" +
-                  user.attributes.ethAddress.substr(
-                    user.attributes.ethAddress.length - 4
-                  ) +
-                  "-" +
-                  (teams.length + 1)
-                }
-              ></input>
+                defaultValue={"Team" + "-" + (teams.length + 1)}
+              />
               <div id="save-team-button">
                 <Button
                   variant="contained"

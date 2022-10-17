@@ -18,14 +18,14 @@ export default function TeamPreview() {
   const navigate = useNavigate();
   console.log(teamId);
   const [team, setTeam] = useState(undefined);
-    console.log("team on team page", team);
+  console.log("team on team page", team);
   async function fetchTeam() {
     setTeam(await getTeamByid({ teamId }));
   }
   useEffect(() => {
     fetchTeam();
   }, []);
-  console.log("team",team);
+  console.log("team", team);
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -51,19 +51,24 @@ export default function TeamPreview() {
                 // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 {team.selectedCoins.map((coin, index) => {
-                    const coin_card = coin.category==="Superstar" ? "coin-card-superstar": coin.category==="Defi" ? "coin-card-rekt" :  "coin-card-mooning";
+                  const coin_card =
+                    coin.category === "Superstar"
+                      ? "coin-card-superstar"
+                      : coin.category === "Defi"
+                      ? "coin-card-rekt"
+                      : "coin-card-mooning";
 
-                    let pointNumber;
-                    if(coin.rank===1){
-                        pointNumber =  20000;
-                    }
-                    if(coin.rank===2){
-                        pointNumber = 17500;
-                    }
-                    if(coin.rank ===3 ){
-                        pointNumber = 15000;
-                    }
-                    console.log("points table", pointNumber);
+                  let pointNumber;
+                  if (coin.rank === 1) {
+                    pointNumber = 20000;
+                  }
+                  if (coin.rank === 2) {
+                    pointNumber = 17500;
+                  }
+                  if (coin.rank === 3) {
+                    pointNumber = 15000;
+                  }
+                  console.log("points table", pointNumber);
 
                   return (
                     <Grid className="coin-card-wrapper" item xs={6}>
@@ -71,21 +76,20 @@ export default function TeamPreview() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.07 * index }}
-                        className={"coin-card "+ coin_card}
+                        className={"coin-card " + coin_card}
                       >
-                          {/*{*/}
-                          {/*    coin.rank !== -1 &&*/}
-                          {/*    <div className="ribbon">*/}
-                          {/*        <span className="ribbon2">{coin.rank}</span>*/}
-                          {/*    </div>*/}
-                          {/*}*/}
+                        {/*{*/}
+                        {/*    coin.rank !== -1 &&*/}
+                        {/*    <div className="ribbon">*/}
+                        {/*        <span className="ribbon2">{coin.rank}</span>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
                         <span className="coin-image-wrapper">
-                            {
-                              coin.rank !== -1 &&
-                              <div className="ribbon">
-                                  <span className="ribbon2">{coin.rank}</span>
-                              </div>
-                          }
+                          {coin.rank !== -1 && (
+                            <div className="ribbon">
+                              <span className="ribbon2">{coin.rank}</span>
+                            </div>
+                          )}
                           <img
                             src={
                               process.env.REACT_APP_API_SERVER +
@@ -101,11 +105,12 @@ export default function TeamPreview() {
                         <span className="graph font-size-15 font-weight-500 mt-5 mb-10">
                           {coin.name}
                         </span>
-                          <span
-                              className="font-size-12"
-                              style={{ color: "var(--dark-dim-white)" }}
-                          >
-                          Points {coin.rank==-1? <>10000</>: <>{pointNumber}</>}
+                        <span
+                          className="font-size-12"
+                          style={{ color: "var(--dark-dim-white)" }}
+                        >
+                          Points{" "}
+                          {coin.rank == -1 ? <>10000</> : <>{pointNumber}</>}
                         </span>
                       </motion.div>
                     </Grid>
