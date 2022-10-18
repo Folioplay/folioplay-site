@@ -19,6 +19,7 @@ import { Magic } from "magic-sdk";
 import { OAuthExtension } from "@magic-ext/oauth";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetails } from "../../../Redux/AuthSlice/AuthSlice";
+import {useNavigate} from "react-router-dom";
 const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
   extensions: [new OAuthExtension()],
 });
@@ -27,6 +28,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const {
     authenticate,
     authError,
@@ -42,9 +44,8 @@ export default function LoginPage() {
   useEffect(() => {
     console.log("isauth", isAuthenticated, isInitialized);
     if (isAuthenticated && isInitialized)
-      window.location.pathname = "/tournaments";
+      navigate("tournaments");
   }, []);
-  console.log("gg");
 
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
@@ -84,7 +85,7 @@ export default function LoginPage() {
       })
       .then(function () {
         localStorage.setItem("walletType", "magicLink");
-        window.location.pathname = "/tournaments";
+        navigate("tournaments");
       });
   };
 
@@ -112,7 +113,7 @@ export default function LoginPage() {
         })
         .then(function () {
           localStorage.setItem("walletType", "walletConnect");
-          window.location.pathname = "/tournaments";
+          navigate("tournaments");
         })
         .catch(function (error) {
           console.log(error);
@@ -170,7 +171,7 @@ export default function LoginPage() {
           })
           .then((user) => {
             localStorage.setItem("walletType", "metamask");
-            window.location.pathname = "/tournaments";
+            navigate("tournaments");
           })
           .catch(function (error) {
             console.log(error);
@@ -249,9 +250,7 @@ export default function LoginPage() {
   const [magicEmail, setMagicEmail] = useState("");
   const setMagicEmailFunc = (e) => {
     e.preventDefault();
-    console.log("Hello");
     const emailtest = document.getElementById("email-field").value;
-    console.log(emailtest);
     setMagicEmail(emailtest);
   };
 

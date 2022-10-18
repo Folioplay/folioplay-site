@@ -86,6 +86,17 @@ export async function getLeaderboard(tournament_id) {
   }).then((res) => res.json());
 }
 
+export async function getWinRateAPI() {
+  return await fetch(`${SERVER}/user/activity?win-rate`, {
+    method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("authtoken"),
+    },
+  }).then((res) => {
+    return res.json()
+  });
+}
+
 export async function getPersonalLeaderboard(tournament_id) {
   console.log(tournament_id);
   return await fetch(`${SERVER}/tournament/rank/${tournament_id}`, {

@@ -102,14 +102,14 @@ export default function Tournaments() {
   const [l, setL] = useState(0);
 
   const [intervalId, setIntervalId] = useState(undefined);
-  useEffect(() => {
-    async function authTokenGet() {
-      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
-        await getAuthToken(user);
-      }
-    }
-    authTokenGet();
-  }, []);
+  // useEffect(() => {
+  //   async function authTokenGet() {
+  //     if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+  //       await getAuthToken(user);
+  //     }
+  //   }
+  //   authTokenGet();
+  // }, []);
   useEffect(() => {
     document
       .getElementsByClassName("overlay-div")[0]

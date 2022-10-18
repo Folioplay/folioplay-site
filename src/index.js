@@ -14,9 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
       <MoralisProvider serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL} appId={process.env.REACT_APP_MORALIS_APP_ID}>
-          <ReduxProvider store={store} >
-              <App />
-          </ReduxProvider>
+          <AuthContextProvider>
+              <ReduxProvider store={store} >
+                  <App />
+              </ReduxProvider>
+          </AuthContextProvider>
       </MoralisProvider>
   // </React.StrictMode>
 );

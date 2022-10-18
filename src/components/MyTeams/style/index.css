@@ -32,6 +32,70 @@
     margin-left: 1rem;
 }
 
+.activityTabs__tournamentNameDiv{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.activityPage__contentWrapper{
+
+    width: 100%;
+}
+
+.activityTab__tournamentName{
+    /*margin-bottom: 0.5rem;*/
+    /*margin-top: 0.7rem;*/
+    /*margin-left: 0.5rem;*/
+}
+
+.activityTab__tournamentStatus{
+    width: max-content;
+}
+
+.tournaments-spots{
+    display: flex;
+    justify-content: space-between;
+}
+
+.activityTab__Amount{
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activityTabs__teamLength{
+    border: 1px solid darkred;
+    border-radius: 1rem;
+    padding: 0px 10px;
+    color: darkred;
+    font-size: 0.8rem;
+}
+
+.reward_amount{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.activityPage__tournamentWrapper{
+    width: 100%;
+}
+
+.activityPage__chipComponent{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
 
 .tournament-info{
     /*height: 4rem;*/

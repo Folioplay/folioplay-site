@@ -8,8 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from "@mui/icons-material/Done";
 import { useMoralis } from "react-moralis";
 import InlineEdit from "../common/InlineEditComponent";
-import {TextField} from "@mui/material";
-import {changeUserName, checkAvailableUsername} from "../../../APIS/apis";
+import {LinearProgress, TextField} from "@mui/material";
+import {changeUserName, checkAvailableUsername, getWinRateAPI} from "../../../APIS/apis";
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
 import {AuthContext} from "../../../Context/AuthContext";
@@ -25,15 +25,21 @@ export default function UserProfile() {
   const [disabledNameField, setDisabledNameField] = useState(true);
   const [errorNameField, setErrorNameField] = useState(false);
   const [helperTextNameField, setHelperTextNameField] = useState("");
-  // const [nameField, setNameField] = useState(localStorage.getItem("folioUsername"));
   const [tapToOpenDisabled, setTapToOpenDisabled]= useState(true);
-    // console.log(nameField);
+  const [winRate, setWinRate] = useState(0);
+  const [contestPlayed, setContestPlayed] = useState(0);
+    console.log("winrate",winRate);
 
-  // const setValueName = (event) => {
-  //     console.log(nameField);
-  //     // event.preventDefault();
-  //     setNameField(event.target.value);
-  // }
+  const setProgressBarValueAPI = async() => {
+      const winRateLocal = await getWinRateAPI();
+      console.log("winrate",winRateLocal);
+      setWinRate(Math.round((winRateLocal["winRate"])*100));
+      setContestPlayed(winRateLocal["tournamentsPlayed"]);
+  }
+
+  useEffect(()=>{
+      setProgressBarValueAPI();
+  },[])
 
   const setValueNameField = async () => {
       const nameField = document.getElementById("nameField").value;
@@ -43,9 +49,7 @@ export default function UserProfile() {
           setHelperTextNameField("Username already taken");
       }
       else{
-          console.log(nameField)
           const response = await changeUserName(nameField);
-          console.log("response",response);
           if(!response){
               setHelperTextNameField("Input must be a non-empty string");
           }
@@ -105,6 +109,36 @@ export default function UserProfile() {
           {/*</span>*/}
         </div>
         <div className="profile-info-wrapper">
+            <div className="headingPersonalInfo">
+                Journey Stats
+            </div>
+            <div className="personalDetails">
+                <div className="section__journeyStats">
+                    <div className="journeyStats__winRate">
+                        <div className="journeyStats__heading">
+                            Win Rate
+                        </div>
+                        <div className="journeyStats__data">
+                            <span><b>{winRate}%</b></span>
+                            <span className={"journeyStats__linearProgress"}>
+                                <LinearProgress
+                                    variant="determinate"
+                                    style={{backgroundColor: "var(--dim-white)"}}
+                                    value={winRate}
+                                />
+                            </span>
+                        </div>
+                    </div>
+                    <div className="journeyStats__Contests">
+                        <div className="journeyStats__heading">
+                            Contests
+                        </div>
+                        <div className="journeyStats__data">
+                            <b>{contestPlayed}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="headingPersonalInfo">
                 Personal Information
             </div>

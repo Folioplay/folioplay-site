@@ -1,5 +1,5 @@
 import LoginPage from "./components/LoginPage/src";
-import React from "react";
+import React, {useContext} from "react";
 import Tournaments from "./components/Tournaments/src";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TournamentView from "./components/TournamentView/src";
@@ -25,25 +25,29 @@ function App() {
   function AuthenticatedRoute({ children }) {
     const { isAuthenticated, isWeb3Enabled, user, isInitialized } =
       useMoralis();
-    console.log(
-      "authenticated route ",
-      isAuthenticated,
-      isWeb3Enabled,
-      user,
-      isInitialized
-    );
-    if (!isAuthenticated && isInitialized) {
-      return <Navigate to="/" />;
-    }
+    const {isLoading} = useContext(AuthContext);
+      console.log("isAuth", "isInit", "isLoad", isAuthenticated, isInitialized, isLoading);
+    // const { isLoading } = useContext(AuthContext);
+    // console.log(
+    //   "authenticated route ",
+    //   isAuthenticated,
+    //   isWeb3Enabled,
+    //   user,
+    //   isInitialized
+    // );
+    // if (!isAuthenticated && isInitialized && !isLoading) {
+    //   return <Navigate to="/" />;
+    // }
     return children;
   }
 
   function LoginRoute({ children }) {
     const { isAuthenticated, isInitialized } = useMoralis();
-    console.log("login route ", isAuthenticated);
-    if (isAuthenticated && isInitialized) {
-      return <Navigate to="/tournaments" />;
-    }
+    const {isLoading} = useContext(AuthContext);
+    console.log("login route ", isAuthenticated, isInitialized, isLoading);
+    // if (isAuthenticated && isInitialized) {
+    //   return <Navigate to="/tournaments" />;
+    // }
     return children;
   }
   const steps = [
@@ -66,22 +70,6 @@ function App() {
   ];
   return (
     <div className="App">
-      {/* <Joyride
-        run={true}
-        steps={steps}
-        showProgress={true}
-        styles={{
-          options: {
-            arrowColor: 'var(--dim-white)',
-            backgroundColor: 'var(--dim-white)',
-            overlayColor: 'rgba(0, 0, 0, 0.7)',
-            primaryColor: '#000',
-            textColor: 'var(--dark-grey)',
-            width: 300,
-            zIndex: 1000,
-          }
-        }}
-      /> */}
       <BrowserRouter>
         <Routes>
           <Route

@@ -1,11 +1,15 @@
 import React, { createContext, useState, useEffect } from "react";
 import {useMoralis} from "react-moralis";
 import SnackbarComponent from "../Common/Snackbar";
+// import {useNavigate} from "react-router";
+
 
 export const AuthContext = createContext({});
 const SERVER = process.env.REACT_APP_API_SERVER;
 
 export const AuthContextProvider = ({ children }) => {
+    // const navigate = useNavigate();
+
     const [validToken, setValidToken] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUserDetails] = useState(null);
@@ -21,12 +25,10 @@ export const AuthContextProvider = ({ children }) => {
                 .then((res) => {
                     if (!res.ok) {
                         localStorage.clear();
-
-                        window.location.pathname = "/";
+                        // <Navigate to="/" />
                     }
                 })
                 .catch((err) => err)
-                .finally(() => setIsLoading(false));
 
             if(!user){
                 fetch(`${SERVER}/user/`, {
@@ -42,6 +44,7 @@ export const AuthContextProvider = ({ children }) => {
                         setUserDetails(data);
                     })
                     .catch((err) => err)
+                    .finally(() => setIsLoading(false));
             }
     },[])
 
@@ -79,7 +82,7 @@ export const AuthContextProvider = ({ children }) => {
 
         return (
         <AuthContext.Provider
-            value={{validToken, logOutContext, user}}>
+            value={{isLoading, validToken, logOutContext, user}}>
             {!isLoading && children}
         </AuthContext.Provider>
     );

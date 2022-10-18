@@ -10,23 +10,9 @@ import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
-import { LinearProgress } from "@mui/material";
+import {Chip, LinearProgress} from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 export default function ActivityTabs({ teams, tournaments }) {
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
   const navigate = useNavigate();
   const [value, setValue] = React.useState("1");
   const [teamsLength, setTeamsLength] = useState(0);
@@ -35,70 +21,88 @@ export default function ActivityTabs({ teams, tournaments }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+    const handleClick = () => {
+        console.info('You clicked the Chip.');
+    };
   useEffect(() => {
     console.log(teams, "in useEffect");
     if (teams) setTeamsLength(teams.length);
     if (tournaments) setParticipatedContestsLength(tournaments.length);
   }, []);
-  const tournamentsList = tournaments ? (
-    tournaments.map( (tournament, index) => {
-      console.log(tournament);
-      // const getAmountWonAPI = await getAmountWon(tournament._id);
-      const seatsFilled =
-          (100 * tournament.filled_spots) / tournament.total_spots;
-      const startDate = new Date(tournament.start_time);
-      const finishDate = new Date(tournament.end_time);
-      const status = {
-        3: {value: "Completed", color: "#ff000096"},
-        1: {value: "Closed", color: "#ff000096"},
-        0: {value: "Open", color: "#00ff00d6"},
-        2: {value: "Running", color: "#00ff00d6"},
-      };
-      const currDate = new Date();
-      const disabledClass =
-          tournament.status === 3 ? " disable-join-button" : "";
-      const disabledTournament = tournament.status === 3;
-      return (
-          <motion.div
-              // id={"tournament-" + tournament._id}
-              // initial={{y: "100vh"}}
-              animate={{y: 0}}
-              transition={{delay: 0 + 0.08 * index, duration: 0.35}}
-              key={"tournament__" + index}
-              className="activity-tournament"
-              onClick={() => {
-                  navigate(`/tournaments/${tournament.tournament._id}`);
-              }}
-          >
-            <div className="tournament-info">
-            <span className="tournament-image" style={{borderRadius: "100%"}}>
-                <img
-                    style={{ borderRadius: "100%" }}
-                    src={tournament.tournament.imageURL}
-                    width="50px"
-                    height={"50px"}
-                />
-            </span>
-              <span
-                  style={{textAlign: "left"}}
-                  className="activity_tournament_content"
-              >
-              <span style={{color: "#071F36", fontWeight: "700"}}>
-                {tournament.tournament.name}
-              </span>
-              <br/>
-              <span className="tournaments-spots">
-                <EmojiEventsOutlinedIcon/>
-                  <span className="reward_amount">{tournament.amount_won} MGT</span>
-              </span>
-            </span>
-            </div>
-          </motion.div>
-      );
-    })
-  ) : (
-    <></>
-  );
+
+
+  const tournamentsList = tournaments ? <div className={"activityPage__tournamentWrapper"}>
+      return(
+      <div>
+          {/*<div className="activityPage__chipComponent">*/}
+          {/*</div>*/}
+          {tournaments.map( (tournament, index) => {
+          const disabledTournament = tournament.status === 3;
+            const status = {
+                3: { value: "Completed", color: "#ff000096" },
+                1: { value: "Closed", color: "#FFCC00" },
+                0: { value: "Open", color: "#00ff00d6" },
+                2: { value: "Running", color: "#FFCC00" },
+            };
+
+            return (
+              <div>
+                  <motion.div
+                      // id={"tournament-" + tournament._id}
+                      // initial={{y: "100vh"}}
+                      animate={{y: 0}}
+                      transition={{delay: 0 + 0.08 * index, duration: 0.35}}
+                      key={"tournament__" + index}
+                      className="activity-tournament"
+                      onClick={() => {
+                          navigate(`/tournaments/${tournament.tournament._id}`);
+                      }}
+                  >
+                    <div className="tournament-info">
+                    <span className="tournament-image" style={{borderRadius: "100%"}}>
+                        <img
+                            style={{ borderRadius: "100%" }}
+                            src={tournament.tournament.imageURL}
+                            width="60px"
+                            height={"60px"}
+                        />
+                    </span>
+                        <div className="activityPage__contentWrapper">
+                            <div className={"activityTabs__tournamentNameDiv"}>
+                              <span className="activityTab__tournamentName" style={{color: "#071F36", fontWeight: "700"}}>
+                                {tournament.tournament.name}
+                              </span>
+                                <span className="reward_amount"><EmojiEventsOutlinedIcon/>{tournament.amount_won} MGT</span>
+                            </div>
+
+                            <div className="tournaments-spots">
+                              <span className="activityTab__Amount">
+                                <span className={"activityTabs__teamLength"}>{tournament.teams.length} Teams</span>
+                                  <span
+                                      className="activityTab__tournamentStatus font-size-12"
+                                      style={{
+                                          color: status[tournament.tournament.status].color,
+                                          padding: "0 10px",
+                                          border: "1px solid " + status[tournament.tournament.status].color,
+                                          borderRadius: "30px",
+                                      }}
+                                  >
+                                {status[tournament.tournament.status].value}
+                            </span>
+                              </span>
+                        </div>
+                        </div>
+                    </div>
+                  </motion.div>
+              </div>
+          );
+        })}
+      </div>
+      )
+      </div>:
+    (
+    <div></div>
+  ) ;
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext value={value}>

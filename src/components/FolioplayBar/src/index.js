@@ -141,7 +141,7 @@ export default function FolioplayBar({ intervalId }) {
           <ListItemIcon>
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policies"}
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policy"}
           />
         </ListItem>
         <div>
