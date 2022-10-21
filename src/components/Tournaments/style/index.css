@@ -85,10 +85,16 @@
 }
 .tournaments-spots {
     display: flex;
+    flex-direction: row;
     align-items: center;
     width: 100%;
     font-weight: 500;
+    font-size: 0.8rem;
     color: var(--grey-shade);
+}
+
+.tournamentPage__startTime{
+    margin-right: 1rem;
 }
 
 #tournament-page-image {

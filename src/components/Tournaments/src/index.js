@@ -56,6 +56,7 @@ export default function Tournaments() {
     await logout();
   };
 
+
   // if (window.ethereum) {
   //   const { ethereum } = window;
   //   if (ethereum && ethereum.isMetaMask) {
@@ -102,14 +103,21 @@ export default function Tournaments() {
   const [l, setL] = useState(0);
 
   const [intervalId, setIntervalId] = useState(undefined);
-  // useEffect(() => {
-  //   async function authTokenGet() {
-  //     if (isAuthenticated && localStorage.getItem("authtoken") == null) {
-  //       await getAuthToken(user);
-  //     }
-  //   }
-  //   authTokenGet();
-  // }, []);
+
+
+
+  setTimeout(()=>{
+    let date = new Date();
+  },[1000])
+
+  useEffect(() => {
+    async function authTokenGet() {
+      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+        await getAuthToken(user);
+      }
+    }
+    authTokenGet();
+  }, []);
   useEffect(() => {
     document
       .getElementsByClassName("overlay-div")[0]
@@ -157,6 +165,7 @@ export default function Tournaments() {
   }
   const tournamentsList = tournaments ? (
     tournaments.map((tournament, index) => {
+      console.log("tournament Page", tournament);
       const seatsFilled =
         (100 * tournament.filled_spots) / tournament.total_spots;
       const startDate = new Date(tournament.start_time);
@@ -196,26 +205,41 @@ export default function Tournaments() {
               </span>
               <br />
               <span className="tournaments-spots">
-                <span className="font-size-12">
-                  {startDate.getDate()} {monthNames[startDate.getMonth()]}'
-                  {startDate.getFullYear() % 100},&ensp;
-                  {startDate.getHours() / 10 < 1
-                    ? "0" + startDate.getHours()
-                    : startDate.getHours()}{" "}
-                  :{" "}
-                  {startDate.getMinutes() / 10 < 1
-                    ? "0" + startDate.getMinutes()
-                    : startDate.getMinutes()}{" "}
-                  hrs -{" "}
-                  {finishDate.getHours() / 10 < 1
-                    ? "0" + finishDate.getHours()
-                    : finishDate.getHours()}{" "}
-                  :{" "}
-                  {finishDate.getMinutes() / 10 < 1
-                    ? "0" + finishDate.getMinutes()
-                    : finishDate.getMinutes()}{" "}
-                  hrs
+                <div className="tournamentPage__startTime">
+                  Start Time
+                  <div>
+                    <span className="font-size-12">
+                    {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                      {startDate.getFullYear() % 100},
+                      {startDate.getHours() / 10 < 1
+                          ? "0" + startDate.getHours()
+                          : startDate.getHours()}
+                      :
+                      {startDate.getMinutes() / 10 < 1
+                          ? "0" + startDate.getMinutes()
+                          : startDate.getMinutes()}
+                      hrs
                 </span>
+                  </div>
+                </div>
+                <div>
+                  End Time
+                  <div>
+                    <span className="font-size-12">
+                      {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                      {startDate.getFullYear() % 100},
+                      {finishDate.getHours() / 10 < 1
+                          ? "0" + finishDate.getHours()
+                          : finishDate.getHours()}
+                      :
+                      {finishDate.getMinutes() / 10 < 1
+                          ? "0" + finishDate.getMinutes()
+                          : finishDate.getMinutes()}
+                      hrs
+                </span>
+                  </div>
+                </div>
+
               </span>
             </span>
             <Button
@@ -247,7 +271,7 @@ export default function Tournaments() {
                 className="font-size-12 font-weight-500 mt-5"
                 style={{ color: "var(--golden)" }}
               >
-                {tournament.total_spots - tournament.filled_spots} spots left
+                {tournament.available_spots} spots left
               </span>
               <span
                 className="font-size-12 font-weight-500 mt-5"
@@ -272,7 +296,7 @@ export default function Tournaments() {
             <span className="font-size-12">
               <EmojiEventsOutlinedIcon />
               {/* {tournament.reward} MGT */}
-              <span>1000 MGT</span>
+              <span>{tournament.rewards.prize_pool} MGT</span>
             </span>
           </div>
         </motion.div>

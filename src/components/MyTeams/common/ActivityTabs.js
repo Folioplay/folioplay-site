@@ -12,6 +12,8 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import {Chip, LinearProgress} from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import LabTabs from "../../../Common/TabComponent";
+// import LabTabs from "../../../Common/TabComponent";
 export default function ActivityTabs({ teams, tournaments }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState("1");
@@ -30,76 +32,20 @@ export default function ActivityTabs({ teams, tournaments }) {
     if (tournaments) setParticipatedContestsLength(tournaments.length);
   }, []);
 
+  console.log("activity tourametn", tournaments);
 
-  const tournamentsList = tournaments ? <div className={"activityPage__tournamentWrapper"}>
-      return(
-      <div>
-          {/*<div className="activityPage__chipComponent">*/}
-          {/*</div>*/}
-          {tournaments.map( (tournament, index) => {
-          const disabledTournament = tournament.status === 3;
-            const status = {
-                3: { value: "Completed", color: "#ff000096" },
-                1: { value: "Closed", color: "#FFCC00" },
-                0: { value: "Open", color: "#00ff00d6" },
-                2: { value: "Running", color: "#FFCC00" },
-            };
+  const tournamentUpdatedOpen = tournaments && tournaments.filter((item)=> item.tournament.status===0)
+  const tournamentUpdatedRunning = tournaments && tournaments.filter((item)=> item.tournament.status===2)
+  const tournamentUpdatedCompleted = tournaments && tournaments.filter((item)=> item.tournament.status===3)
 
-            return (
-              <div>
-                  <motion.div
-                      // id={"tournament-" + tournament._id}
-                      // initial={{y: "100vh"}}
-                      animate={{y: 0}}
-                      transition={{delay: 0 + 0.08 * index, duration: 0.35}}
-                      key={"tournament__" + index}
-                      className="activity-tournament"
-                      onClick={() => {
-                          navigate(`/tournaments/${tournament.tournament._id}`);
-                      }}
-                  >
-                    <div className="tournament-info">
-                    <span className="tournament-image" style={{borderRadius: "100%"}}>
-                        <img
-                            style={{ borderRadius: "100%" }}
-                            src={tournament.tournament.imageURL}
-                            width="60px"
-                            height={"60px"}
-                        />
-                    </span>
-                        <div className="activityPage__contentWrapper">
-                            <div className={"activityTabs__tournamentNameDiv"}>
-                              <span className="activityTab__tournamentName" style={{color: "#071F36", fontWeight: "700"}}>
-                                {tournament.tournament.name}
-                              </span>
-                                <span className="reward_amount"><EmojiEventsOutlinedIcon/>{tournament.amount_won} MGT</span>
-                            </div>
+  // const tournamentListFinal = [];
+  // tournamentListFinal.push(tournamentUpdatedListOpen);
+  // tournamentListFinal.push(tournamentUpdatedRunning);
+  // tournamentListFinal.push(tournamentUpdatedCompleted);
 
-                            <div className="tournaments-spots">
-                              <span className="activityTab__Amount">
-                                <span className={"activityTabs__teamLength"}>{tournament.teams.length} Teams</span>
-                                  <span
-                                      className="activityTab__tournamentStatus font-size-12"
-                                      style={{
-                                          color: status[tournament.tournament.status].color,
-                                          padding: "0 10px",
-                                          border: "1px solid " + status[tournament.tournament.status].color,
-                                          borderRadius: "30px",
-                                      }}
-                                  >
-                                {status[tournament.tournament.status].value}
-                            </span>
-                              </span>
-                        </div>
-                        </div>
-                    </div>
-                  </motion.div>
-              </div>
-          );
-        })}
-      </div>
-      )
-      </div>:
+  const tournamentsList = tournaments ?
+        <LabTabs tournamentUpdatedOpen={tournamentUpdatedOpen} tournamentUpdatedRunning={tournamentUpdatedRunning} tournamentUpdatedCompleted={tournamentUpdatedCompleted}/>
+      :
     (
     <div></div>
   ) ;

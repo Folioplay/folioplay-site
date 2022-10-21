@@ -1,5 +1,5 @@
 
-export default async function joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournaments) {
+  export default async function joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournaments) {
   document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
   var teamId = "";
   for (var i = 0; i < teams.length; i++) {

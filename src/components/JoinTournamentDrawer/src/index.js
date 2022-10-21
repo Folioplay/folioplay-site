@@ -5,7 +5,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
-import joinTournament from "../common/joinTournament";
+// import joinTournament from "../common/joinTournament";
+import joinTournament from "../../Tournaments/common/joinTournament";
 import selectTeam from "../common/selectTeam";
 import "../style/index.css";
 import {
@@ -160,18 +161,26 @@ export default function JoinTournamentDrawer({
               fontSize: "17px",
             }}
             onClick={() =>
-              joinTournament(
-                user,
-                tournamentId,
-                teams,
-                joinTournamentAPI,
-                setErrorMessage,
-                setErrorMessageSnackOpen,
-                tournament,
-                tournaments,
-                changeTournament,
-                account
-              )
+              // joinTournament(
+              //   user,
+              //   tournamentId,
+              //   teams,
+              //   joinTournamentAPI,
+              //   setErrorMessage,
+              //   setErrorMessageSnackOpen,
+              //   tournament,
+              //   tournaments,
+              //   changeTournament,
+              //   account
+              // )
+                joinTournament(
+                    teams,
+                    tournamentId,
+                    joinTournamentAPI,
+                    setErrorMessage,
+                    setErrorMessageSnackOpen,
+                    tournaments
+                )
             }
           >
             Continue
