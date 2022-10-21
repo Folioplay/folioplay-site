@@ -1,5 +1,5 @@
 import LoginPage from "./components/LoginPage/src";
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import Tournaments from "./components/Tournaments/src";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TournamentView from "./components/TournamentView/src";
@@ -20,13 +20,21 @@ import UserProfile from "./components/UserProfile/src";
 import TeamPreview from "./components/TeamPreview/src";
 import AddMoney from "./components/AddMoney/src";
 import CurrentTeamPreview from "./components/CurrentTeam/src";
+import CurrentTeamTable from "./components/CurrentTeamTable/src";
 // import React, { useEffect, useState } from "react";
 function App() {
   function AuthenticatedRoute({ children }) {
     const { isAuthenticated, isWeb3Enabled, user, isInitialized } =
       useMoralis();
-    const {isLoading} = useContext(AuthContext);
-      console.log("isAuth", "isInit", "isLoad", isAuthenticated, isInitialized, isLoading);
+    const { isLoading } = useContext(AuthContext);
+    console.log(
+      "isAuth",
+      "isInit",
+      "isLoad",
+      isAuthenticated,
+      isInitialized,
+      isLoading
+    );
     // const { isLoading } = useContext(AuthContext);
     // console.log(
     //   "authenticated route ",
@@ -43,7 +51,7 @@ function App() {
 
   function LoginRoute({ children }) {
     const { isAuthenticated, isInitialized } = useMoralis();
-    const {isLoading} = useContext(AuthContext);
+    const { isLoading } = useContext(AuthContext);
     console.log("login route ", isAuthenticated, isInitialized, isLoading);
     // if (isAuthenticated && isInitialized) {
     //   return <Navigate to="/tournaments" />;
@@ -165,6 +173,17 @@ function App() {
               <AuthenticatedRoute>
                 <AuthContextProvider>
                   <CurrentTeamPreview />
+                </AuthContextProvider>
+              </AuthenticatedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/activity/team/currentStatus/currentCoinTable"
+            element={
+              <AuthenticatedRoute>
+                <AuthContextProvider>
+                  <CurrentTeamTable />
                 </AuthContextProvider>
               </AuthenticatedRoute>
             }

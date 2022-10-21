@@ -1,0 +1,9 @@
+.team-preview-wrapper1 {
+  width: 100%;
+  height: 100vh;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: var(--white);
+  transition: all 0.3s ease-in-out;
+  color: var(--black);
+}
