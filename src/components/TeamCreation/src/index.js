@@ -56,8 +56,9 @@ export function TeamCreation() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const handleOpen = (event) => {
-    setGraphCoin(event.target.innerText.toLowerCase());
+  const handleOpen = (coin_name) => {
+    // setGraphCoin(event.target.innerText.toLowerCase());
+    setGraphCoin(coin_name.toLowerCase());
     setSnackOpen(false);
     setOpen(true);
   };
@@ -156,10 +157,12 @@ export function TeamCreation() {
                     onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
                     width="40px"
                     height="40px"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleOpen(coin.name)}
                   />
                 </span>
                 <span
-                  onClick={handleOpen}
+                  onClick={() => handleOpen(coin.name)}
                   className="graph font-size-15 font-weight-500 mt-5 mb-10"
                 >
                   {coin.name}
@@ -218,12 +221,15 @@ export function TeamCreation() {
                     src={
                       process.env.REACT_APP_API_SERVER + coin.imageUrl
                     }
+                    alt='coin_image'
                     width="40px"
                     height="40px"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleOpen(coin.name)}
                   />
                 </span>
                 <span
-                  onClick={handleOpen}
+                  onClick={() => handleOpen(coin.name)}
                   className="graph font-size-15 font-weight-500 mt-5 mb-10"
                 >
                   {coin.name}
@@ -282,12 +288,15 @@ export function TeamCreation() {
                     src={
                       process.env.REACT_APP_API_SERVER + coin.imageUrl
                     }
+                    alt='coin_image'
                     width="40px"
+                    style={{ cursor: "pointer" }}
                     height="40px"
+                    onClick={() => handleOpen(coin.name)}
                   />
                 </span>
                 <span
-                  onClick={handleOpen}
+                  onClick={() => handleOpen(coin.name)}
                   className="graph font-size-15 font-weight-500 mt-5 mb-10"
                 >
                   {coin.name}
