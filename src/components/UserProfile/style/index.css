@@ -1,202 +1,249 @@
-.wallet-add-space{
-    width: 100%;
-    height: 150px;
-    color: var(--dim-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+.wallet-add-space {
+  width: 100%;
+  height: 150px;
+  color: var(--dim-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
-.profile-info-wrapper{
-    width: 100%;
-    min-height: calc(100vh - 150px);
-    background-color: var(--white);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    padding: 1.6rem;
-    color: black;
-    /*display: flex;*/
-    /*flex-wrap: wrap;*/
-}
-
-.headingPersonalInfo{
-    font-size: 1.3rem;
-    font-weight: 700;
-
+.profile-info-wrapper {
+  width: 100%;
+  min-height: calc(100vh - 150px);
+  background-color: var(--white);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 1.6rem;
+  color: black;
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
 }
 
-.personalDetails{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.5rem;
-    padding-left: 0.8rem;
-    border: 1px solid #B2C6DB;
-    border-radius: 0.5rem;
-    width: 23.4rem;
+.headingPersonalInfo {
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
-.sectionHeading{
-    color: #4C6781;
-    font-size: 1rem;
-    margin-top: 1rem;
+.personalDetails {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  padding-left: 0.8rem;
+  border: 1px solid #b2c6db;
+  border-radius: 0.5rem;
+  width: 23.4rem;
 }
 
-.sectionDetails{
-    display: flex;
-    align-items: center;
-    font-size: 0.85rem;
-    /*flex-wrap: wrap;*/
+.sectionHeading {
+  color: #4c6781;
+  font-size: 1rem;
+  margin-top: 1rem;
 }
 
-.editIcon{
-    margin-left: 0.7rem;
-    cursor: pointer;
+.sectionDetails {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  /*flex-wrap: wrap;*/
 }
 
-.inputField{
-    background-color: transparent;
-    border: 0;
-    padding: 8px;
+.editIcon {
+  margin-left: 0.7rem;
+  cursor: pointer;
 }
 
-.add_money_details{
-    color: #4C6781;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    padding-top: 1rem;
+.inputField {
+  background-color: transparent;
+  border: 0;
+  padding: 8px;
 }
 
-.wallet-info{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border: 1px solid var(--dim-white);
-    background-color: #869EB638;
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-}
-#copy-to-clipboard{
-    transition: all 0.1s ease-in-out;
-}
-#copy-to-clipboard:hover{
-    color: var(--dark-dim-white);
-    transform: scale(1.1);
-    transition: all 0.1s ease-in-out;
-    cursor: pointer;
-}
-.copied{
-    width: 20.5em;
-    height: 3.5em;
-    padding-left: 10px;
-    padding-right:10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 14px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    background-color: #1f8029;
-    position: fixed;
-    bottom:1.5em;
-    left: 1.5em;
-    visibility: hidden;
-    color: white;
-    border-radius: 3px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-}
-.show{
-    visibility: visible;
-    animation: fadein 0.5s,fadeout 0.5s 1.5s;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+.add_money_details {
+  color: #4c6781;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  padding-top: 1rem;
 }
 
-.profileHeader{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 90%;
-    width: 90%;
-    flex-wrap: wrap;
+.wallet-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid var(--dim-white);
+  background-color: #869eb638;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+#copy-to-clipboard {
+  transition: all 0.1s ease-in-out;
+}
+#copy-to-clipboard:hover {
+  color: var(--dark-dim-white);
+  transform: scale(1.1);
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
+.copied {
+  width: 20.5em;
+  height: 3.5em;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: #1f8029;
+  position: fixed;
+  bottom: 1.5em;
+  left: 1.5em;
+  visibility: hidden;
+  color: white;
+  border-radius: 3px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 1.5s;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
 }
 
-.profilePicture{
-    height: 4rem;
-    width: 4rem;
-    border-radius: 100%;
-    margin-right: 2rem;
-    border: 2px solid aliceblue;
+.profileHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 90%;
+  width: 90%;
+  flex-wrap: wrap;
 }
 
-.userDetails{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
+.profilePicture {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 100%;
+  margin-right: 2rem;
+  overflow: hidden;
+  background-color: #111;
+  position: relative;
+  border: 2px solid aliceblue;
+}
+/* Profile Pic */
+.profilePicture:hover .profilepic__content {
+  opacity: 1;
 }
 
-.userName{
-    font-size: 1.8rem;
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    align-content: center;
+.profilePicture:hover .profilepic__image {
+  opacity: 0.5;
 }
 
-.userWalletAddress{
-    font-size: 1rem;
-    font-weight: 300;
-    display: flex;
-    justify-content: center;
-    align-content: center;
+.profilepic__image {
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
 }
 
-.inlineText{
-    display: flex;
-    flex-wrap: wrap;
+.profilepic__content {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
 }
 
-.nameTextField{
-    margin-right: 10px;
-    height: 2.5rem;
-    width: 18rem;
-    padding-left: 0.5rem;
-    font-size: 1rem;
-    border: 0;
-
+.profilepic__icon {
+  color: white;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.profilepic__text {
+  text-transform: uppercase;
+  font-size: 5px;
+  width: 50%;
+  text-align: center;
+}
+/* profile pic */
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
 }
 
-.section__journeyStats{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.userName {
+  font-size: 1.8rem;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
-.journeyStats__data{
-    display: flex;
-    flex-direction: row;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
-    align-items: center;
+.userWalletAddress {
+  font-size: 1rem;
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
-.journeyStats__linearProgress{
-    margin-left: 0.5rem;
-    width: 10rem;
+.inlineText {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.journeyStats__winRate{
-    flex: 6;
-    display: flex;
-    flex-direction: column;
-    /*padding: 0.5rem;*/
+.nameTextField {
+  margin-right: 10px;
+  height: 2.5rem;
+  width: 18rem;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  border: 0;
 }
 
-.journeyStats__Contests{
-    flex: 4;
+.section__journeyStats {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.journeyStats__data {
+  display: flex;
+  flex-direction: row;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  align-items: center;
+}
+
+.journeyStats__linearProgress {
+  margin-left: 0.5rem;
+  width: 10rem;
+}
+
+.journeyStats__winRate {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  /*padding: 0.5rem;*/
+}
+
+.journeyStats__Contests {
+  flex: 4;
 }

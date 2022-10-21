@@ -1,4 +1,4 @@
-const SERVER = process.env.REACT_APP_API_SERVER;
+export const SERVER = process.env.REACT_APP_API_SERVER;
 
 export async function getAllTournaments() {
   return await fetch(`${SERVER}/tournament/`, {
@@ -257,4 +257,14 @@ export async function getCoinsTableData(tournamentId, teamId) {
       },
     }
   ).then((res) => res.json());
+}
+export async function changeProfilePicture(data) {
+  const authToken = localStorage.getItem("authtoken");
+  return await fetch(`${SERVER}/user/profile`, {
+    method: "PUT",
+    headers: {
+      "x-access-token": authToken,
+    },
+    body: data,
+  }).then((res) => res.json());
 }
