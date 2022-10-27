@@ -367,7 +367,7 @@ const LeftComponent = () => {
 
                                 <div className="all-teams">
                                     <div style={{ padding: "0" }}>
-                                        {teams.map((team, index) => {
+                                        {teams &&   teams.map((team, index) => {
                                             var clickedId = "team-" + index;
                                             return (
                                                 <div
@@ -431,37 +431,37 @@ const LeftComponent = () => {
                                 />
                                                             {/* <div className="moved-coin-image-3" style={{ borderRadius: "100%", color: "black" }} >+ {team.selectedCoins.length - 3}</div> */}
                               </span>
-                                                    </div>
-                                                    <div
-                                                        id={"team-coins-" + index}
-                                                        className="team-coins display-none"
-                                                    >
-                                                        {team.selectedCoins.map((coin, index) => {
-                                                            return (
-                                                                <div className="teamview-coin-card mr-10 ">
-                                                                    <img
-                                                                        src={
-                                                                            require("../../../images/coinLogos/" +
-                                                                                coin.symbol.toLowerCase() +
-                                                                                ".png").default
-                                                                        }
-                                                                        width="40"
-                                                                        height="40"
-                                                                    />
-                                                                    <span className="font-size-12 font-weight-500">
-                                      {coin.name}
-                                    </span>
-                                                                    <span className="font-size-12 font-weight-500">
-                                      {coin.category}
-                                    </span>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
                                     </div>
+                                        <div
+                                            id={"team-coins-" + index}
+                                            className="team-coins display-none"
+                                        >
+                                            {team.selectedCoins.map((coin, index) => {
+                                                return (
+                                                    <div className="teamview-coin-card mr-10 ">
+                                                        <img
+                                                            src={
+                                                                require("../../../images/coinLogos/" +
+                                                                    coin.symbol.toLowerCase() +
+                                                                    ".png").default
+                                                            }
+                                                            width="40"
+                                                            height="40"
+                                                        />
+                                                        <span className="font-size-12 font-weight-500">
+                                                          {coin.name}
+                                                        </span>
+                                                        <span className="font-size-12 font-weight-500">
+                                                          {coin.category}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                        );
+                                    })}
+                                </div>
                                 </div>
                                 <div className="mt-10" id="create-new-button-div">
                                     <Button

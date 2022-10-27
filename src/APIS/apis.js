@@ -286,5 +286,5 @@ export async function referralCodePost(referralCode) {
     }),
   })
       .then((res) => res.json())
-      .catch((err) => err);
+      .catch((err) => err.json());
 }

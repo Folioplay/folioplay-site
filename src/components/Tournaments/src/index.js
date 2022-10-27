@@ -50,7 +50,7 @@ const style = {
 };
 
 export default function Tournaments() {
-  // const { user, isAuthenticated, logout } = useMoralis();
+  const { user, isAuthenticated, logout } = useMoralis();
   // const [loaded, setLoaded] = useState(false);
   // const monthNames = [
   //   "Jan",
@@ -134,14 +134,14 @@ export default function Tournaments() {
   // //   let date = new Date();
   // // },[1000])
   //
-  // useEffect(() => {
-  //   async function authTokenGet() {
-  //     if (isAuthenticated && localStorage.getItem("authtoken") == null) {
-  //       await getAuthToken(user);
-  //     }
-  //   }
-  //   authTokenGet();
-  // }, []);
+  useEffect(() => {
+    async function authTokenGet() {
+      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+        await getAuthToken(user);
+      }
+    }
+    authTokenGet();
+  }, []);
   // useEffect(() => {
   //   document
   //     .getElementsByClassName("overlay-div")[0]
