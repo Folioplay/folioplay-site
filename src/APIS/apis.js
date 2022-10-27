@@ -41,6 +41,7 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
     body: JSON.stringify({
       walletAddress: walletAddress,
       signature: walletSignature,
+      email: email
     }),
   })
     .then((res) => {
@@ -50,7 +51,10 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
     .then((data) => {
       localStorage.removeItem("authtoken");
       localStorage.setItem("authtoken", data.accessToken);
-      return data.user;
+      return {
+        "userdata": data.user,
+        "new_user": data.newUser
+      };
     });
 }
 export async function getAllUserTeams() {
@@ -258,6 +262,7 @@ export async function getCoinsTableData(tournamentId, teamId) {
     }
   ).then((res) => res.json());
 }
+
 export async function changeProfilePicture(data) {
   const authToken = localStorage.getItem("authtoken");
   return await fetch(`${SERVER}/user/profile`, {
@@ -267,4 +272,19 @@ export async function changeProfilePicture(data) {
     },
     body: data,
   }).then((res) => res.json());
+}
+
+export async function referralCodePost(referralCode) {
+  return await fetch(`${SERVER}/referral/`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      "x-access-token": localStorage.getItem("authtoken"),
+    },
+    body: JSON.stringify({
+      referralCode: referralCode
+    }),
+  })
+      .then((res) => res.json())
+      .catch((err) => err);
 }

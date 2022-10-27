@@ -52,10 +52,14 @@
   cursor: pointer;
 }
 
-.inputField {
-  background-color: transparent;
-  border: 0;
-  padding: 8px;
+.profilePage__referralCode{
+    color: royalblue;
+}
+
+.inputField{
+    background-color: transparent;
+    border: 0;
+    padding: 8px;
 }
 
 .add_money_details {

@@ -4,7 +4,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import { SettingsApplicationsRounded } from "@mui/icons-material";
 
 export default function ImageSlider({ handlers, setPaused }) {
-    console.log("handlers",handlers)
+        console.log("handlers",handlers)
     return (
         <div className="mt-20 mb-20" style={{ display: "flex", justifyContent: "center", overflow: "hidden" }}>
             <div id="image-slider-wrapper">

@@ -111,7 +111,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           {/*      );*/}
           {/*    })}*/}
 
-          {tournamentStatus===3 && rewardsList.length &&
+          {tournamentStatus===3 && rewardsList.length!==0 &&
               rewardsList.map((entry, index) => {
                 if(entry.user.walletAddress === userWalletAddress){
                   rewardUserCount++;
@@ -136,7 +136,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
               })}
 
           {/*// Show all points when tournament is closed*/}
-          {tournamentStatus===3 && rewardsList.length &&
+          {tournamentStatus===3 && rewardsList.length!==0 &&
               rewardsList.map((entry, index) => {
                 if(entry.user.walletAddress !== userWalletAddress)
                   return (

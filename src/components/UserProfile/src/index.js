@@ -24,10 +24,18 @@ import Snackbar from "../../../Common/Snackbar";
 export default function UserProfile() {
   const { user } = useMoralis();
   const walletAdd = user.attributes.ethAddress;
+  const [snackMessage, setSnackMessage] = useState("");
+  const referralCode = localStorage.getItem("folioReferralCode")
   function copytoClipboard() {
     navigator.clipboard.writeText(walletAdd);
+      setSnackMessage("Wallet Address Copied!")
     handleClick();
   }
+    function copytoClipboardReferral() {
+        navigator.clipboard.writeText(referralCode);
+        setSnackMessage("Referral Code Copied!!")
+        handleClick();
+    }
   const [disabledNameField, setDisabledNameField] = useState(true);
   const [errorNameField, setErrorNameField] = useState(false);
   const [helperTextNameField, setHelperTextNameField] = useState("");
@@ -273,13 +281,28 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
+            <div className="headingPersonalInfo">
+                Referral Information
+            </div>
+            <div className="personalDetails">
+                <div className="section">
+                    <div className="sectionHeading">
+                        Referral Code
+                    </div>
+                    <div className="sectionDetails">
+                        Your referral code is &nbsp;<span className="profilePage__referralCode">{localStorage.getItem("folioReferralCode")}</span> &nbsp;
+                        <ContentCopyIcon
+                            id="copy-to-clipboard"
+                            className=""
+                            fontSize="medium"
+                            style={{ color: "var(--black)" }}
+                            onClick={copytoClipboardReferral}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
-        <Snackbar
-          open={open}
-          handleClose={handleClose}
-          message="Wallet Address Copied"
-          severityType="success"
-        />
+          <Snackbar open={open} handleClose={handleClose} message={snackMessage} severityType="success"/>
         {/*<div className="copied">*/}
         {/*  /!*<DoneIcon /> <span className="ml-10">Copied to clipboard</span>*!/*/}
         {/*</div>*/}

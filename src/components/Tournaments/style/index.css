@@ -113,3 +113,34 @@
     display: flex;
     justify-content: space-between;
 }
+
+.referralHeader{
+    margin-bottom: 2rem;
+}
+
+.referralModal__inputBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 19rem;
+}
+
+.referralModal__modalHeading{
+    margin-bottom: 1rem;
+}
+.referralModal__content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /*padding: 0.5rem;*/
+}
+
+.referralModal__modalButton{
+    margin-left: 0.5rem;
+}
+
+.referralModal__modalText{
+    width: 10rem;
+    /*padding-right: 1rem;*/
+}

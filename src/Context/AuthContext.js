@@ -41,6 +41,7 @@ export const AuthContextProvider = ({ children }) => {
                     .then((data)=> {
                         localStorage.setItem("folioUsername", data.username);
                         localStorage.setItem("folioWalletAddress", data.walletAddress);
+                        localStorage.setItem("folioReferralCode", data.referralCode);
                         setUserDetails(data);
                     })
                     .catch((err) => err)

@@ -79,8 +79,8 @@ export default function LoginPage() {
       network: "mainnet",
     })
       .then(async (user) => {
-        console.log(user);
-        await getAuthTokenFunction(user);
+        console.log("user", user);
+        await getAuthTokenFunctionEmail(user, emailValue);
         console.log(user);
       })
       .then(function () {
@@ -244,7 +244,7 @@ export default function LoginPage() {
     localStorage.setItem("authtoken", null);
     localStorage.removeItem("walletconnect");
     await logout();
-    window.location.pathname = "/";
+    navigate("/");
   };
 
   const [magicEmail, setMagicEmail] = useState("");
@@ -268,11 +268,30 @@ export default function LoginPage() {
         email
       );
       console.log(fetchUserDetails);
+      localStorage.setItem("folioplay_new_user", fetchUserDetails.new_user);
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
     }
   };
+
+  const getAuthTokenFunctionEmail = async (user, emailVal) => {
+    const walletAddress = user.get("ethAddress");
+    const walletSignature = user["attributes"].authData.moralisEth.signature;
+    try {
+      const fetchUserDetails = await getAuthToken(
+          walletAddress,
+          walletSignature,
+          emailVal
+      );
+      console.log(fetchUserDetails);
+      localStorage.setItem("folioplay_new_user", fetchUserDetails.new_user);
+      // dispatch(userDetails(fetchUserDetails));
+    } catch (e) {
+      await logOut();
+    }
+  };
+
   const [isVisible, setIsVisible] = useState(true);
   setTimeout(() => {
     setIsVisible(false);
