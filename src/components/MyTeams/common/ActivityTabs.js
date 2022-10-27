@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
-import {Chip, LinearProgress} from "@mui/material";
+import { Chip, LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LabTabs from "../../../Common/TabComponent";
 // import LabTabs from "../../../Common/TabComponent";
@@ -23,32 +23,52 @@ export default function ActivityTabs({ teams, tournaments }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-    const handleClick = () => {
-        console.info('You clicked the Chip.');
-    };
+  const handleClick = () => {
+    console.info("You clicked the Chip.");
+  };
   useEffect(() => {
     console.log(teams, "in useEffect");
     if (teams) setTeamsLength(teams.length);
-    if (tournaments) setParticipatedContestsLength(tournaments.length);
+    if (tournaments) {
+      const actualTournaments = tournaments.filter(
+        (item) => item.tournament !== null
+      );
+      setParticipatedContestsLength(actualTournaments.length);
+    }
   }, []);
 
   console.log("activity tourametn", tournaments);
 
-  const tournamentUpdatedOpen = tournaments && tournaments.filter((item)=> item.tournament.status===0)
-  const tournamentUpdatedRunning = tournaments && tournaments.filter((item)=> item.tournament.status===2)
-  const tournamentUpdatedCompleted = tournaments && tournaments.filter((item)=> item.tournament.status===3)
+  const tournamentUpdatedOpen =
+    tournaments &&
+    tournaments.filter(
+      (item) => item.tournament !== null && item.tournament.status === 0
+    );
+  const tournamentUpdatedRunning =
+    tournaments &&
+    tournaments.filter(
+      (item) => item.tournament !== null && item.tournament.status === 2
+    );
+  const tournamentUpdatedCompleted =
+    tournaments &&
+    tournaments.filter(
+      (item) => item.tournament !== null && item.tournament.status === 3
+    );
 
   // const tournamentListFinal = [];
   // tournamentListFinal.push(tournamentUpdatedListOpen);
   // tournamentListFinal.push(tournamentUpdatedRunning);
   // tournamentListFinal.push(tournamentUpdatedCompleted);
 
-  const tournamentsList = tournaments ?
-        <LabTabs tournamentUpdatedOpen={tournamentUpdatedOpen} tournamentUpdatedRunning={tournamentUpdatedRunning} tournamentUpdatedCompleted={tournamentUpdatedCompleted}/>
-      :
-    (
+  const tournamentsList = tournaments ? (
+    <LabTabs
+      tournamentUpdatedOpen={tournamentUpdatedOpen}
+      tournamentUpdatedRunning={tournamentUpdatedRunning}
+      tournamentUpdatedCompleted={tournamentUpdatedCompleted}
+    />
+  ) : (
     <div></div>
-  ) ;
+  );
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext value={value}>
