@@ -9,7 +9,7 @@
 }
 .profile-info-wrapper {
   width: 100%;
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 239px);
   background-color: var(--white);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -52,14 +52,14 @@
   cursor: pointer;
 }
 
-.profilePage__referralCode{
-    color: royalblue;
+.profilePage__referralCode {
+  color: royalblue;
 }
 
-.inputField{
-    background-color: transparent;
-    border: 0;
-    padding: 8px;
+.inputField {
+  background-color: transparent;
+  border: 0;
+  padding: 8px;
 }
 
 .add_money_details {

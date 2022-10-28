@@ -1,41 +1,41 @@
 .folioplay-left-view {
-    width: 28.125em;
-    flex: 0 0 28.125em;
-    background-color: var(--violet-blue);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 28.125em;
+  flex: 0 0 28.125em;
+  background-color: var(--violet-blue);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .folioplay-right-view {
-    /* background-image: url(/home/FreeLancing/Folioplay/WebFolioplay/folioplay/src/images/home.png); */
-    /* width: 100%; */
-    /* height: auto; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background-repeat: no-repeat; */
-    /* background-position: center; */
-    /* background-size: cover; */
-    flex: 1;
+  /* background-image: url(/home/FreeLancing/Folioplay/WebFolioplay/folioplay/src/images/home.png); */
+  /* width: 100%; */
+  /* height: auto; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-repeat: no-repeat; */
+  /* background-position: center; */
+  /* background-size: cover; */
+  flex: 1;
 }
 
 .wrapper {
-    display: flex;
-    transition: all 0.3s ease-in-out;
+  display: flex;
+  transition: all 0.3s ease-in-out;
 }
 
-@media only screen and (max-width:600px) {
-    .folioplay-right-view {
-        display: none;
-    }
+@media only screen and (max-width: 600px) {
+  .folioplay-right-view {
+    display: none;
+  }
 
-    .folioplay-left-view {
-        flex: 0 0 100%;
-    }
+  .folioplay-left-view {
+    flex: 0 0 100%;
+  }
 }
-.overlay-div{
-    transition: all 0.3s ease-in-out;
+.overlay-div {
+  transition: all 0.3s ease-in-out;
 }
