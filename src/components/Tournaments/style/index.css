@@ -144,3 +144,11 @@
     width: 10rem;
     /*padding-right: 1rem;*/
 }
+
+.tournamentPage__transactionHash{
+    cursor: pointer;
+}
+
+.tournamentPage__transactionHashLink{
+    color: #453df1;
+}

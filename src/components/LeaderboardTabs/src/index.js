@@ -49,7 +49,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
     setValue(newValue);
   };
   console.log(leaderBoard);
-  console.log("rewardList", rewardsList);
+  console.log("rewardList", tournamentPrizes, rewardSize);
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>
@@ -69,9 +69,10 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
 
           {/*// Show rewards when the Tournament is not completed*/}
-          {tournamentStatus!==3 && leaderBoard.length!==0 &&
+          {tournamentStatus!==3  &&
               [...Array(rewardSize>=leaderBoard.length ? leaderBoard.length : rewardSize ),].map((value, index) => {
                 let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
+                console.log("tournanemnt prizes", tournamentPrizes);
                 return (
                     <motion.div
                         initial={{ x: 400 }}

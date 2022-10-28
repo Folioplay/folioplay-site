@@ -129,7 +129,7 @@ export default function FolioplayBar({ intervalId }) {
       style={{ fontFamily: "poppins" }}
     >
       <List style={{ fontFamily: "poppins" }}>
-        {[{ name: "Home", link: "/tournaments" }, { name: "Tournaments", link: "/tournaments" }, { name: "Activity", link: "/activity" }, { name: "Profile", link: "/user/profile" }].map((text, index) => (
+        {[{ name: "Home", link: "/tournaments" }, { name: "Activity", link: "/activity" }, { name: "Profile", link: "/user/profile" }].map((text, index) => (
           <ListItem button key={text.name} onClick={() => { clearInterval(intervalId); navigate(text.link) }}>
             <ListItemIcon>
               {icons[index]}
@@ -142,6 +142,20 @@ export default function FolioplayBar({ intervalId }) {
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policy"}
+          />
+        </ListItem>
+        <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
+          <ListItemIcon>
+            <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Disclaimer"}
+          />
+        </ListItem>
+        <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
+          <ListItemIcon>
+            <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"How to Play"}
           />
         </ListItem>
         <div>

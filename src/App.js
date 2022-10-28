@@ -36,16 +36,10 @@ function App() {
       isLoading
     );
     // const { isLoading } = useContext(AuthContext);
-    // console.log(
-    //   "authenticated route ",
-    //   isAuthenticated,
-    //   isWeb3Enabled,
-    //   user,
-    //   isInitialized
-    // );
-    // if (!isAuthenticated && isInitialized && !isLoading) {
-    //   return <Navigate to="/" />;
-    // }
+    console.log("isLoading logout",isLoading);
+    if (!isAuthenticated && isInitialized) {
+      return window.location.pathname="/";
+    }
     return children;
   }
 
@@ -53,9 +47,10 @@ function App() {
     const { isAuthenticated, isInitialized } = useMoralis();
     const { isLoading } = useContext(AuthContext);
     console.log("login route ", isAuthenticated, isInitialized, isLoading);
-    // if (isAuthenticated && isInitialized) {
-    //   return <Navigate to="/tournaments" />;
-    // }
+    console.log("isLoading login",isLoading);
+    if (isAuthenticated && isInitialized && isLoading) {
+      return window.location.pathname="/tournament";
+    }
     return children;
   }
   const steps = [

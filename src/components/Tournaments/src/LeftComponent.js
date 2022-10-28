@@ -263,37 +263,46 @@ const LeftComponent = () => {
                             value={seatsFilled}
                         />
                         <div className="spots-wrapper">
-              <span
-                  className="font-size-12 font-weight-500 mt-5"
-                  style={{ color: "var(--golden)" }}
-              >
-                {tournament.available_spots} spots left
-              </span>
+                          <span
+                              className="font-size-12 font-weight-500 mt-5"
+                              style={{ color: "var(--golden)" }}
+                          >
+                            {tournament.available_spots} spots left
+                          </span>
                             <span
                                 className="font-size-12 font-weight-500 mt-5"
                                 style={{ color: "var(--dark-dim-white)" }}
                             >
-                {tournament.total_spots} spots
-              </span>
+                            {tournament.total_spots} spots
+                          </span>
+                        </div>
+                        <div className="tournamentPage__transactionHash">
+                            { tournament.transaction_hash!==undefined &&
+                                <span className="font-size-12 tournamentPage__transactionHashLink" onClick={() => {
+                                    window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;
+                                }}>
+                            Transaction Hash(Polygon): {tournament.transaction_hash.substring(0, 10)}XXXX{tournament.transaction_hash.slice(-10)}
+                            {/*Transaction Hash: {tournament.transaction_hash}*/}
+                            </span>
+                            }
                         </div>
                     </div>
                     <div className="tournament-reward">
-            <span
-                className="font-size-12"
-                style={{
-                    color: status[tournament.status].color,
-                    padding: "0 10px",
-                    border: "1px solid " + status[tournament.status].color,
-                    borderRadius: "30px",
-                }}
-            >
-              {status[tournament.status].value}
-            </span>
+                        <span
+                            className="font-size-12"
+                            style={{
+                                color: status[tournament.status].color,
+                                padding: "0 10px",
+                                border: "1px solid " + status[tournament.status].color,
+                                borderRadius: "30px",
+                            }}
+                        >
+                          {status[tournament.status].value}
+                        </span>
                         <span className="font-size-12">
-              <EmojiEventsOutlinedIcon />
-                            {/* {tournament.reward} MGT */}
+                                <EmojiEventsOutlinedIcon />
                             <span>{tournament.rewards.prize_pool} MGT</span>
-            </span>
+                        </span>
                     </div>
                 </motion.div>
             );
