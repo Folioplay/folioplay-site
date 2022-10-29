@@ -37,7 +37,7 @@ function App() {
     );
     // const { isLoading } = useContext(AuthContext);
     console.log("isLoading logout",isLoading);
-    if (!isAuthenticated && isInitialized) {
+    if (!isAuthenticated && isInitialized && isLoading) {
       return window.location.pathname="/";
     }
     return children;

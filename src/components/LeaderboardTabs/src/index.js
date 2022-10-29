@@ -69,8 +69,8 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
 
           {/*// Show rewards when the Tournament is not completed*/}
-          {tournamentStatus!==3  &&
-              [...Array(rewardSize>=leaderBoard.length ? leaderBoard.length : rewardSize ),].map((value, index) => {
+          {tournamentStatus!==3 &&
+              [...Array(tournamentPrizes.length),].map((value, index) => {
                 let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
                 console.log("tournanemnt prizes", tournamentPrizes);
                 return (
