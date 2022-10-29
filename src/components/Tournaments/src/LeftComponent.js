@@ -234,7 +234,11 @@ const LeftComponent = () => {
               onClick={() => {
                 console.log("intervalId is here", intervalId);
                 clearInterval(intervalId);
-                navigate(`/tournaments/${tournament._id}`);
+                navigate(`/tournaments/${tournament._id}`, {
+                  state: {
+                    transactionId: tournament.transaction_hash,
+                  },
+                });
               }}
             >
               <span style={{ color: "#071F36", fontWeight: "700" }}>

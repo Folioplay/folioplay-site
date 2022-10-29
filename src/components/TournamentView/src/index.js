@@ -1,10 +1,11 @@
 import {
   getTournamentById,
   getAllUserTeams,
-  getRank, getAmountWon,
+  getRank,
+  getAmountWon,
 } from "../../../APIS/apis";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { Button, LinearProgress } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -26,6 +27,7 @@ export default function TournamentView() {
   });
   var navigate = useNavigate();
   const { user } = useMoralis();
+  const { state } = useLocation();
   let account = user.get("ethAddress");
   const [balance, setBalance] = useState("");
   const [balanceSnackOpen, setBalanceSnackOpen] = useState(false);
@@ -58,6 +60,7 @@ export default function TournamentView() {
     console.log(data);
     setRank(data);
   }
+  console.log("STATE", state);
 
   useEffect(() => {
     if ("superstars" in window.localStorage)
@@ -90,10 +93,12 @@ export default function TournamentView() {
   const LeftComponent = () => {
     var disabledClass =
       tournament && tournament.status !== 0 ? " disable-join-button" : "";
-    var disabledTournament = tournament && tournament.status !== 0 ? true : false;
+    var disabledTournament =
+      tournament && tournament.status !== 0 ? true : false;
     // disabledTournament = false;
     // let tournament_info_contain  er_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
-    let empty_header = (tournament && tournament.status === 3) ? "empty-area-completed" : "";
+    let empty_header =
+      tournament && tournament.status === 3 ? "empty-area-completed" : "";
     return (
       <div className="fullpage">
         {tournament === undefined || teams === undefined ? (
@@ -112,130 +117,182 @@ export default function TournamentView() {
                 {tournament.name}
               </span>
             </div>
-                <div className={"empty-area-completed "}>
-                  {tournament.status === 3 &&
-                      <>
-                        <div>
-                          Prize Pool - <b>{tournament.rewards.prize_pool} USDT</b>
-                        </div>
-                        <div>
-                          Spots - <b>{tournament.total_spots}</b>
-                        </div>
-                      </>
-                  }
-                </div>
-                <div className={"tournament-info-container "} >
-                  {tournament.status !== 3 ?
-                      <motion.div
-                      initial={{scale: 0}}
-                      animate={{scale: 1, y: -90}}
-                      transition={{duration: 0.3}}
-                      className="tournament-view-card"
+            <div className={"empty-area-completed "}>
+              {tournament.status === 3 ? (
+                <>
+                  <div
+                  // style={{
+                  //   alignItems: "center",
+                  //   display: "flex",
+                  //   flexDirection: "column",
+                  //   justifyContent: "center",
+                  // }}
+                  >
+                    Prize Pool - <b>{tournament.rewards.prize_pool} USDT</b>
+                    <br />
+                    <span
+                      className="ml-20"
+                      style={{
+                        fontSize: "12px",
+                        marginLeft: "100px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        window.open(
+                          `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                        );
+                      }}
                     >
-                      <div className="tournament-view-info">
-                    <span style={{textAlign: "left"}}>
+                      <u>Click here to view on Polygon.</u>
+                    </span>
+                  </div>
+                  <div>
+                    Spots - <b>{tournament.total_spots}</b>
+                  </div>
+                </>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "15px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    window.open(
+                      `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                    );
+                  }}
+                >
+                  <u>Click here to view on Polygon.</u>
+                </span>
+              )}
+            </div>
+
+            <div className={"tournament-info-container "}>
+              {tournament.status !== 3 ? (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1, y: -90 }}
+                  transition={{ duration: 0.3 }}
+                  className="tournament-view-card"
+                >
+                  <div className="tournament-view-info">
+                    <span style={{ textAlign: "left" }}>
                       <span
-                          className="font-size-12 font-weight-500"
-                          style={{color: "var(--grey-shade)"}}
+                        className="font-size-12 font-weight-500"
+                        style={{ color: "var(--grey-shade)" }}
                       >
                         Prize Pool
                       </span>
-                      <br/>
+                      <br />
                       <span className="font-size-20 font-weight-500">
                         {/* {tournament.total_reward} MGT */}
                         {tournament.rewards.prize_pool} MGT
                       </span>
                     </span>
-                        <span className="ml-auto" style={{textAlign: "right"}}>
+                    <span className="ml-auto" style={{ textAlign: "right" }}>
                       <span
-                          className="font-size-12 font-weight-500"
-                          style={{color: "var(--grey-shade)"}}
+                        className="font-size-12 font-weight-500"
+                        style={{ color: "var(--grey-shade)" }}
                       >
                         Entry Fee
                       </span>
-                      <br/>
+                      <br />
                       <Button
-                          className={disabledClass + " tournament-fee"}
-                          size="small"
-                          style={
-                            disabledTournament
-                                ? {}
-                                : {backgroundColor: "var(--golden)"}
-                          }
-                          onClick={() => {
-                            chooseTeamOpen();
-                          }}
-                          disabled={disabledTournament}
+                        className={disabledClass + " tournament-fee"}
+                        size="small"
+                        style={
+                          disabledTournament
+                            ? {}
+                            : { backgroundColor: "var(--golden)" }
+                        }
+                        onClick={() => {
+                          chooseTeamOpen();
+                        }}
+                        disabled={disabledTournament}
                       >
                         {tournament.entryFee} MGT
                       </Button>
                     </span>
-                      </div>
-                      <div>
-                        <LinearProgress
-                            variant="determinate"
-                            style={{backgroundColor: "var(--dim-white)"}}
-                            value={seatsFilled}
-                        />
-                        <div className="spots-wrapper">
+                  </div>
+                  <div>
+                    <LinearProgress
+                      variant="determinate"
+                      style={{ backgroundColor: "var(--dim-white)" }}
+                      value={seatsFilled}
+                    />
+                    <div className="spots-wrapper">
                       <span
-                          className="font-size-12 font-weight-500 mt-5"
-                          style={{color: "var(--golden)"}}
+                        className="font-size-12 font-weight-500 mt-5"
+                        style={{ color: "var(--golden)" }}
                       >
                         <span id={tournament.id + "-left-spots"}>
                           {tournament.total_spots - tournament.filled_spots}
                         </span>{" "}
                         spots left
                       </span>
-                          <span
-                              className="font-size-12 font-weight-500 mt-5"
-                              style={{color: "var(--dark-dim-white)"}}
-                          >
+                      <span
+                        className="font-size-12 font-weight-500 mt-5"
+                        style={{ color: "var(--dark-dim-white)" }}
+                      >
                         {tournament.total_spots} spots
                       </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                    :
-                      <motion.div
-                          initial={{scale: 0}}
-                          animate={{scale: 1, y: -90}}
-                          transition={{duration: 0.3}}
-                          className={tournament.status === 0 ? "tournament-view-card-completed" : "tournament-view-card-completed-red"}
-                      >
-                        <div className="profileHeaderTP">
-                          <img src={require("../../../images/profilepic.jpeg").default} alt="profilePic" className="profilePicture"/>
-                          <div className="userDetails">
-                            <div className="userNameTP">
-                              {localStorage.getItem("folioUsername")}
-                            </div>
-                            <div className="tview__rewardDisplay">
-                              {amountWon!==-1? <span>You won {amountWon} MGT</span>: <span> You haven't participated in tournament</span>}
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    }
-
-                  <div className="folioplay-tabs">
-                    <LeaderBoardTabs tournamentId={tournament.id} tournamentStatus={tournament.status}
-                                     tournamentPrizes={tournament.rewards.distribution}
-                                     rewardSize={tournament.rewards.places_paid}/>
+                    </div>
                   </div>
-                  <JoinTournamentDrawer
-                      teams={teams}
-                      tournamentId={tournament.id}
-                      tournament={tournament}
-                      tournaments={[]}
-                      user={user}
-                      setErrorMessage={setErrorMessage}
-                      setErrorMessageSnackOpen={setErrorMessageSnackOpen}
-                      navigate={navigate}
-                      changeTournament={true}
-                      account={account}
-                  />
-                </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1, y: -90 }}
+                  transition={{ duration: 0.3 }}
+                  className={
+                    tournament.status === 0
+                      ? "tournament-view-card-completed"
+                      : "tournament-view-card-completed-red"
+                  }
+                >
+                  <div className="profileHeaderTP">
+                    <img
+                      src={require("../../../images/profilepic.jpeg").default}
+                      alt="profilePic"
+                      className="profilePicture"
+                    />
+                    <div className="userDetails">
+                      <div className="userNameTP">
+                        {localStorage.getItem("folioUsername")}
+                      </div>
+                      <div className="tview__rewardDisplay">
+                        {amountWon !== -1 ? (
+                          <span>You won {amountWon} MGT</span>
+                        ) : (
+                          <span> You haven't participated in tournament</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
 
+              <div className="folioplay-tabs">
+                <LeaderBoardTabs
+                  tournamentId={tournament.id}
+                  tournamentStatus={tournament.status}
+                  tournamentPrizes={tournament.rewards.distribution}
+                  rewardSize={tournament.rewards.places_paid}
+                />
+              </div>
+              <JoinTournamentDrawer
+                teams={teams}
+                tournamentId={tournament.id}
+                tournament={tournament}
+                tournaments={[]}
+                user={user}
+                setErrorMessage={setErrorMessage}
+                setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+                navigate={navigate}
+                changeTournament={true}
+                account={account}
+              />
+            </div>
           </>
         )}
         <Snackbar
