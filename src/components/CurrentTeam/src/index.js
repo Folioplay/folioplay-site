@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import { getTeamByid } from "../../../APIS/apis";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router";
+import { TableRowsOutlined } from "@mui/icons-material";
 export default function CurrentTeamPreview() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -30,15 +31,16 @@ export default function CurrentTeamPreview() {
           </span>
         </div>
         <br />
-        <div
-          className="totalPoints"
-          onClick={() =>
-            navigate("/activity/team/currentStatus/currentCoinTable", {
-              state: { leaderBoardData: leaderBoardData },
-            })
-          }
-        >
+        <div className="totalPoints">
           Total Points:&nbsp;<b>{leaderBoardData.portfolio.toFixed(2)}</b>
+          <TableRowsOutlined
+            style={{ cursor: "pointer", marginLeft: "10px" }}
+            onClick={() =>
+              navigate("/activity/team/currentStatus/currentCoinTable", {
+                state: { leaderBoardData: leaderBoardData },
+              })
+            }
+          />
         </div>
         <div className="team-preview-wrapper mt-20">
           {leaderBoardData !== undefined ? (
