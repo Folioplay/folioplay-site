@@ -41,47 +41,47 @@ export default function FolioplayBar({ intervalId }) {
   // const provider = new ethers.providers.JsonRpcProvider(
   //   `https://polygon-rpc.com/`
   // );
-  const [balanceUSDT, setBalanceUSDT] = useState("Loading");
-  const [balanceUSDC, setBalanceUSDC] = useState("Loading");
-
-  const walletIntervalId = async() => {
-    if (user) {
-      const USDTABI = [
-        {
-          constant: true,
-          inputs: [{ name: "_owner", type: "address" }],
-          name: "balanceOf",
-          outputs: [{ name: "balance", type: "uint256" }],
-          type: "function",
-        },
-      ];
-      const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
-      const walletAddress = user.attributes.ethAddress;
-      const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
-      const contract = new ethers.Contract(contractAddress, USDTABI, provider);
-
-      const bal = await contract.balanceOf(walletAddress);
-      setBalanceUSDT(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
-    }
-    if (user) {
-      const USDCABI = [
-        {
-          constant: true,
-          inputs: [{ name: "_owner", type: "address" }],
-          name: "balanceOf",
-          outputs: [{ name: "balance", type: "uint256" }],
-          type: "function",
-        },
-      ];
-      const contractAddress = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
-      const walletAddress = user.attributes.ethAddress;
-      const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
-      const contract = new ethers.Contract(contractAddress, USDCABI, provider);
-
-      const bal = await contract.balanceOf(walletAddress);
-      setBalanceUSDC(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
-    }
-  };
+  // const [balanceUSDT, setBalanceUSDT] = useState("Loading");
+  // const [balanceUSDC, setBalanceUSDC] = useState("Loading");
+  //
+  // const walletIntervalId = async() => {
+  //   if (user) {
+  //     const USDTABI = [
+  //       {
+  //         constant: true,
+  //         inputs: [{ name: "_owner", type: "address" }],
+  //         name: "balanceOf",
+  //         outputs: [{ name: "balance", type: "uint256" }],
+  //         type: "function",
+  //       },
+  //     ];
+  //     const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
+  //     const walletAddress = user.attributes.ethAddress;
+  //     const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
+  //     const contract = new ethers.Contract(contractAddress, USDTABI, provider);
+  //
+  //     const bal = await contract.balanceOf(walletAddress);
+  //     setBalanceUSDT(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
+  //   }
+  //   if (user) {
+  //     const USDCABI = [
+  //       {
+  //         constant: true,
+  //         inputs: [{ name: "_owner", type: "address" }],
+  //         name: "balanceOf",
+  //         outputs: [{ name: "balance", type: "uint256" }],
+  //         type: "function",
+  //       },
+  //     ];
+  //     const contractAddress = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
+  //     const walletAddress = user.attributes.ethAddress;
+  //     const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com/");
+  //     const contract = new ethers.Contract(contractAddress, USDCABI, provider);
+  //
+  //     const bal = await contract.balanceOf(walletAddress);
+  //     setBalanceUSDC(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
+  //   }
+  // };
 
 
 
@@ -100,7 +100,7 @@ export default function FolioplayBar({ intervalId }) {
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    walletIntervalId();
+    // walletIntervalId();
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -245,9 +245,13 @@ export default function FolioplayBar({ intervalId }) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>
+              {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
+              <MenuItem>Folioplay Points: </MenuItem>
               <Divider />
-              <MenuItem onClick={()=> window.location.pathname="add_money"}>
+              <MenuItem onClick={()=>
+                  navigate("/coming_soon")
+                  // window.location.pathname="add_money"
+              }>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>

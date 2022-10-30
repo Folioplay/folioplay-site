@@ -26,7 +26,7 @@ export default function PrivacyPolicies() {
         scrollbarWidth: "none",
         zIndex: "10",
         padding: "1rem",
-        ['@media (max-width:600px)']: {
+        ['@media (maxWidth:600px)']: {
             left: "8%",
             width: "70%"
         }

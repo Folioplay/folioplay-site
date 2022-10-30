@@ -363,3 +363,11 @@
     color: #4C6781;
     font-size: 10px;
 }
+
+.comingSoon__text{
+    display: flex;
+    color: white;
+    padding: 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+}

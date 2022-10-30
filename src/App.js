@@ -21,6 +21,7 @@ import TeamPreview from "./components/TeamPreview/src";
 import AddMoney from "./components/AddMoney/src";
 import CurrentTeamPreview from "./components/CurrentTeam/src";
 import CurrentTeamTable from "./components/CurrentTeamTable/src";
+import ComingSoon from "./components/AddMoney/src/ComingSoon";
 // import React, { useEffect, useState } from "react";
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
@@ -226,6 +227,17 @@ function App() {
                 </AuthContextProvider>
               </AuthenticatedRoute>
             }
+          />
+          <Route
+              exact
+              path="/coming_soon"
+              element={
+                <AuthenticatedRoute>
+                  <AuthContextProvider>
+                    <ComingSoon />
+                  </AuthContextProvider>
+                </AuthenticatedRoute>
+              }
           />
         </Routes>
       </BrowserRouter>

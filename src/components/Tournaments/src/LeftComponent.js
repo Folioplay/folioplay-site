@@ -163,7 +163,7 @@ const LeftComponent = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
       <span>
-        Time Remaining: {days} days {hours} hours {minutes} minutes {seconds}{" "}
+        Tournament starts in {days} days {hours} hours {minutes} minutes {seconds}{" "}
         seconds
       </span>
     );

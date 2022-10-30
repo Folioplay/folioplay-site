@@ -128,7 +128,7 @@ export default function TournamentView() {
                   //   justifyContent: "center",
                   // }}
                   >
-                    Prize Pool - <b>{tournament.rewards.prize_pool} USDT</b>
+                    Prize Pool - <b>{tournament.rewards.prize_pool} Folioplay Points</b>
                     <br />
                     <span
                       className="ml-20"
