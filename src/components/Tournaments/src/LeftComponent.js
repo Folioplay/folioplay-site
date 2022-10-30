@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import FolioplayBar from "../../FolioplayBar/src";
 import ImageSlider from "../../ImageSlider/src";
 import ReactLoading from "react-loading";
@@ -27,6 +27,11 @@ import {
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { motion } from "framer-motion/dist/framer-motion";
 import Countdown from "react-countdown";
+import { ShepherdTour, ShepherdTourContext } from "react-shepherd";
+import "shepherd.js/dist/css/shepherd.css";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
@@ -132,6 +137,245 @@ const LeftComponent = () => {
       currImage = 1;
     }
   }
+
+
+
+  const tourOptions = {
+    defaultStepOptions: {
+      cancelIcon: {
+        enabled: true,
+      },
+    },
+    useModalOverlay: true,
+  };
+
+  const tourModalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  function TourModal() {
+    const [open, setOpen] = useState(true);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const tour = useContext(ShepherdTourContext);
+    const handleClick = () => {
+      setOpen(false);
+    };
+    return (
+        <div>
+          <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+          >
+            <Box sx={tourModalStyle}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Welcome to Folioplay!
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Here is a short tour to the game.
+              </Typography>
+              <button className="button dark" onClick={tour.start}>
+                <button onClick={handleClick}>Start Tour</button>
+              </button>
+            </Box>
+          </Modal>
+        </div>
+    );
+  }
+  const newsteps = [
+    {
+      id: "intro",
+      attachTo: { element: ".tournament-info", on: "bottom" },
+      beforeShowPromise: function () {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            window.scrollTo(0, 0);
+            resolve();
+          }, 500);
+        });
+      },
+      buttons: [
+        {
+          classes: "shepherd-button-secondary",
+          text: "Exit",
+          type: "cancel",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Back",
+          type: "back",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Next",
+          type: "next",
+        },
+      ],
+      classes: "custom-class-name-1 custom-class-name-2",
+      highlightClass: "highlight",
+      scrollTo: false,
+      cancelIcon: {
+        enabled: true,
+      },
+      title: "Welcome to FolioPlay!",
+      text: ["Here you can view the tournament info"],
+      when: {
+        show: () => {
+          console.log("show step");
+        },
+        hide: () => {
+          console.log("hide step");
+        },
+      },
+    },
+    {
+      id: "intro-1",
+      attachTo: { element: "#tournament-play", on: "bottom" },
+      beforeShowPromise: function () {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            window.scrollTo(0, 0);
+            resolve();
+          }, 500);
+        });
+      },
+      buttons: [
+        {
+          classes: "shepherd-button-secondary",
+          text: "Exit",
+          type: "cancel",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Back",
+          type: "back",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Next",
+          type: "next",
+        },
+      ],
+      classes: "custom-class-name-1 custom-class-name-2",
+      highlightClass: "highlight",
+      scrollTo: false,
+      cancelIcon: {
+        enabled: true,
+      },
+      title: "Welcome to FolioPlay!",
+      text: ["By Clicking on this you can play the game"],
+      when: {
+        show: () => {
+          console.log("show step");
+        },
+        hide: () => {
+          console.log("hide step");
+        },
+      },
+    },
+    {
+      id: "intro-2",
+      attachTo: { element: ".tournament-reward", on: "bottom" },
+      beforeShowPromise: function () {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            window.scrollTo(0, 0);
+            resolve();
+          }, 500);
+        });
+      },
+      buttons: [
+        {
+          classes: "shepherd-button-secondary",
+          text: "Exit",
+          type: "cancel",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Back",
+          type: "back",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Next",
+          type: "next",
+        },
+      ],
+      classes: "custom-class-name-1 custom-class-name-2",
+      highlightClass: "highlight",
+      scrollTo: false,
+      cancelIcon: {
+        enabled: true,
+      },
+      title: "Welcome to FolioPlay!",
+      text: ["Here you can see the reward of the tournament"],
+      when: {
+        show: () => {
+          console.log("show step");
+        },
+        hide: () => {
+          console.log("hide step");
+        },
+      },
+    },
+    {
+      id: "intro-3",
+      attachTo: { element: "#folioplay-hamburger", on: "bottom" },
+      beforeShowPromise: function () {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            window.scrollTo(0, 0);
+            resolve();
+          }, 500);
+        });
+      },
+      buttons: [
+        {
+          classes: "shepherd-button-secondary",
+          text: "Exit",
+          type: "cancel",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Back",
+          type: "back",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Next",
+          type: "next",
+        },
+      ],
+      classes: "custom-class-name-1 custom-class-name-2",
+      highlightClass: "highlight",
+      scrollTo: false,
+      cancelIcon: {
+        enabled: true,
+      },
+      title: "Welcome to FolioPlay!",
+      text: ["Here you can access the sidebar"],
+      when: {
+        show: () => {
+          console.log("show step");
+        },
+        hide: () => {
+          console.log("hide step");
+        },
+      },
+    },
+    // ...
+  ];
+
 
   const calculateTimeLeft = (difference) => {
     let timeLeft = {};
@@ -388,60 +632,63 @@ const LeftComponent = () => {
   ];
 
   return (
-    <div className="fullpage">
-      <FolioplayBar intervalId={intervalId} />
-      {/* <PrivacyPolicies /> */}
-      <ImageSlider setPaused={setPaused} />
-      <div className="tournaments-wrapper">
-        <span
-          className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
-          style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
-        >
-          Trending
-        </span>
-        {tournaments === undefined ||
-        tournaments.length === 0 ||
-        teams === undefined ? (
-          <div className="loading-component">
-            <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
+      <ShepherdTour tourOptions={tourOptions} steps={newsteps}>
+        <TourModal />
+        <div className="fullpage">
+          <FolioplayBar intervalId={intervalId} />
+          {/* <PrivacyPolicies /> */}
+          <ImageSlider setPaused={setPaused} />
+          <div className="tournaments-wrapper">
+            <span
+              className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
+              style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
+            >
+              Trending
+            </span>
+            {tournaments === undefined ||
+            tournaments.length === 0 ||
+            teams === undefined ? (
+              <div className="loading-component">
+                <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
+              </div>
+            ) : (
+              <>
+                {tournamentsList}
+                <JoinTournamentDrawer
+                  teams={teams}
+                  tournamentId={tournamentId}
+                  joinTournamentAPI={joinTournamentAPI}
+                  setErrorMessage={setErrorMessage}
+                  setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+                  tournaments={tournaments}
+                  changeTournament={true}
+                  navigate={navigate}
+                  intervalId={intervalId}
+                />
+              </>
+            )}
           </div>
-        ) : (
-          <>
-            {tournamentsList}
-            <JoinTournamentDrawer
-              teams={teams}
-              tournamentId={tournamentId}
-              joinTournamentAPI={joinTournamentAPI}
-              setErrorMessage={setErrorMessage}
-              setErrorMessageSnackOpen={setErrorMessageSnackOpen}
-              tournaments={tournaments}
-              changeTournament={true}
-              navigate={navigate}
-              intervalId={intervalId}
-            />
-          </>
-        )}
-      </div>
-      <Snackbar
-        open={errorMessageSnackOpen}
-        autoHideDuration={3000}
-        onClose={handleErrorMessageSnackClose}
-      >
-        <motion.div
-          initial={{ y: 200 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Alert
+          <Snackbar
+            open={errorMessageSnackOpen}
+            autoHideDuration={3000}
             onClose={handleErrorMessageSnackClose}
-            severity={errorMessage.variant}
-            sx={{ width: "100%", fontFamily: "poppins" }}
           >
-            {errorMessage.message}
-          </Alert>
-        </motion.div>
-      </Snackbar>
-    </div>
+            <motion.div
+              initial={{ y: 200 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Alert
+                onClose={handleErrorMessageSnackClose}
+                severity={errorMessage.variant}
+                sx={{ width: "100%", fontFamily: "poppins" }}
+              >
+                {errorMessage.message}
+              </Alert>
+            </motion.div>
+          </Snackbar>
+        </div>
+      </ShepherdTour>
   );
 };
 

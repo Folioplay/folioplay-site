@@ -33,7 +33,9 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.3",
+    "react-shepherd": "^4.1.0",
     "redux": "^4.2.0",
+    "shepherd.js": "^10.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
