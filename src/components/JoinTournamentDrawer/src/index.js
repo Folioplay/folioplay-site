@@ -20,7 +20,7 @@ export default function JoinTournamentDrawer({
   setErrorMessageSnackOpen,
   navigate,
   tournaments,
-  changeTournament,
+  intervalId=null,
 }) {
   useEffect(() => {
     document
@@ -215,7 +215,11 @@ export default function JoinTournamentDrawer({
               variant="contained"
               id="new-team-type1"
               style={{}}
-              onClick={() => navigate("/teams/createteam")}
+              onClick={() => {
+                if(intervalId)
+                  clearInterval(intervalId);
+                navigate("/teams/createteam");
+              }}
             >
               Create New Team
             </Button>
@@ -228,7 +232,11 @@ export default function JoinTournamentDrawer({
                 fontSize: "15px",
                 textTransform: "capitalize",
               }}
-              onClick={() => navigate("/teams/createteam")}
+              onClick={() => {
+                if(intervalId)
+                  clearInterval(intervalId);
+                navigate("/teams/createteam");
+              }}
             >
               Create New Team
             </Button>

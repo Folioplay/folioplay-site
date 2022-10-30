@@ -417,6 +417,7 @@ const LeftComponent = () => {
               tournaments={tournaments}
               changeTournament={true}
               navigate={navigate}
+              intervalId={intervalId}
             />
           </>
         )}
