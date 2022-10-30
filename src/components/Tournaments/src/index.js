@@ -11,6 +11,17 @@ import {
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
 import { useMoralis } from "react-moralis";
+import {
+  chooseTeamClose,
+  chooseTeamOpen,
+} from "../common/chooseTeamAnimations";
+import ImageSlider from "../../ImageSlider/src";
+import Joyride from "react-joyride";
+import CommonModal from "../../../Common/Modal/Modal";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import ContentModal from "../../../Common/ContentModal";
 import LeftComponent from "./LeftComponent";
 import RightComponent from "./RightComponent";
 
