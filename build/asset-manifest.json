@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.dde31479.chunk.css",
-    "main.js": "/static/js/main.359706be.chunk.js",
-    "main.js.map": "/static/js/main.359706be.chunk.js.map",
+    "main.css": "/static/css/main.215ac510.chunk.css",
+    "main.js": "/static/js/main.4f27f469.chunk.js",
+    "main.js.map": "/static/js/main.4f27f469.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b51d17fa.js",
     "runtime-main.js.map": "/static/js/runtime-main.b51d17fa.js.map",
     "static/css/2.3eb07a12.chunk.css": "/static/css/2.3eb07a12.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.0065ca85.chunk.js.map": "/static/js/3.0065ca85.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.3eb07a12.chunk.css.map": "/static/css/2.3eb07a12.chunk.css.map",
-    "static/css/main.dde31479.chunk.css.map": "/static/css/main.dde31479.chunk.css.map",
+    "static/css/main.215ac510.chunk.css.map": "/static/css/main.215ac510.chunk.css.map",
     "static/js/2.e729cdbf.chunk.js.LICENSE.txt": "/static/js/2.e729cdbf.chunk.js.LICENSE.txt",
     "static/media/FolioPlaySmall.svg": "/static/media/FolioPlaySmall.546f1cc8.svg",
     "static/media/aave.png": "/static/media/aave.e148933d.png",
@@ -60,7 +60,7 @@
     "static/js/runtime-main.b51d17fa.js",
     "static/css/2.3eb07a12.chunk.css",
     "static/js/2.e729cdbf.chunk.js",
-    "static/css/main.dde31479.chunk.css",
-    "static/js/main.359706be.chunk.js"
+    "static/css/main.215ac510.chunk.css",
+    "static/js/main.4f27f469.chunk.js"
   ]
 }
