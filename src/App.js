@@ -23,9 +23,31 @@ import CurrentTeamPreview from "./components/CurrentTeam/src";
 import CurrentTeamTable from "./components/CurrentTeamTable/src";
 // import React, { useEffect, useState } from "react";
 function App() {
+  const SERVER = process.env.REACT_APP_API_SERVER;
   function AuthenticatedRoute({ children }) {
-    const { isAuthenticated, isWeb3Enabled, user, isInitialized } =
+
+    const { isAuthenticated, isWeb3Enabled, user, isInitialized, logout } =
       useMoralis();
+
+
+    fetch(`${SERVER}/user/is-valid`, {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("authtoken"),
+      },
+    })
+        .then((res) => {
+          if (!res.ok) {
+            console.log("reserr", res.body)
+            if (res.status === 403)
+              throw new Error();
+
+          }
+        })
+        .catch(err=>{
+          localStorage.clear();
+          window.location.pathname="/";
+        })
     const { isLoading } = useContext(AuthContext);
     console.log(
       "isAuth",

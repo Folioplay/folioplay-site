@@ -16,20 +16,6 @@ export const AuthContextProvider = ({ children }) => {
 
     useEffect(()=>{
 
-            fetch(`${SERVER}/user/is-valid`, {
-                method: "GET",
-                headers: {
-                    "x-access-token": localStorage.getItem("authtoken"),
-                },
-            })
-                .then((res) => {
-                    if (!res.ok) {
-                        localStorage.clear();
-                        // <Navigate to="/" />
-                    }
-                })
-                .catch((err) => err)
-
             if(!user){
                 fetch(`${SERVER}/user/`, {
                     method: "GET",

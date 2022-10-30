@@ -180,7 +180,7 @@ export async function validUser() {
       if (!res.ok) throw "Invalid user";
       else return res.json();
     })
-    .catch((err) => err);
+    .catch((err) => err.json());
 }
 export async function getRank({ tournamentId }) {
   const authtoken = localStorage.getItem("authtoken");
