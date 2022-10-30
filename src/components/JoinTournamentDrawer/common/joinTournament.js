@@ -1,6 +1,5 @@
 import checkNFTHolder from "../../TournamentView/common/checkNFTHolder";
 import paymentTournament from "../../TournamentView/common/paymentTournament";
-import {joinValidTournamentAPI, validUser} from "../../../APIS/apis";
 import { chooseTeamClose } from "./chooseTeamAnimations";
 export default async function joinTournament(teams,tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen,tournaments) {
   console.log("in drawer join function ",tournamentId);

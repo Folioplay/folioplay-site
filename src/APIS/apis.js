@@ -153,21 +153,7 @@ export async function deleteTeam({ teamId, teamIndex }) {
     document.getElementById("jointournament-button").style.display = "none";
   });
 }
-export async function joinValidTournamentAPI(tournamentId, teamId) {
-  return await fetch(`${SERVER}/tournament/join/is_valid`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-      "x-access-token": localStorage.getItem("authtoken"),
-    },
-    body: JSON.stringify({
-      tournamentId: tournamentId,
-      teamId: teamId,
-    }),
-  })
-    .then((res) => res.json())
-    .catch((err) => err);
-}
+
 
 export async function validUser() {
   return await fetch(`${SERVER}/user/is-valid`, {
@@ -276,6 +262,6 @@ export async function referralCodePost(referralCode) {
       referralCode: referralCode
     }),
   })
-      .then((res) => res.json())
-      .catch((err) => err.json());
+    .then((res) => res.json())
+    .catch((err) => err.json());
 }
