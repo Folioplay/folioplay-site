@@ -27,6 +27,7 @@ import SecurityIcon from '@mui/icons-material/Security';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
+import Person2Icon from '@mui/icons-material/Person2';
 
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
@@ -200,65 +201,73 @@ export default function FolioplayBar({ intervalId }) {
           </Drawer>
           {/* <span className="font-weight-700 font-size-25">FolioPlay</span> */}
           <img src={require('../../../images/FolioPlaySmall.svg').default} />
-          <React.Fragment>
-            <img
-              id="folioplay-wallet"
-              className="ml-auto"
-              src={walletIcon}
-              alt="wallet-icon"
-              width={"20"}
-              height={"18"}
-              style={{ marginRight: "3.75%" }}
-              onClick={handleClick}
-            />
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
+          {/*<Person2Icon />*/}
+          <span className={"ml-auto folioplayBar__headerIconsSpan"}>
+            <span className={"folioplayBar__headerIcons"} onClick={()=> navigate("/user/profile")}>
+              <Person2Icon />
+            </span>
+            <span className={"folioplayBar__headerIcons"}>
+              <React.Fragment>
+                <img
+                id="folioplay-wallet"
+                className="ml-auto"
+                src={walletIcon}
+                alt="wallet-icon"
+                width={"20"}
+                height={"18"}
+                style={{ marginRight: "3.75%" }}
+                onClick={handleClick}
+              />
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
                   },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
-              {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
-              <MenuItem>Folioplay Points: </MenuItem>
-              <Divider />
-              <MenuItem onClick={()=>
-                  navigate("/coming_soon")
-                  // window.location.pathname="add_money"
-              }>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Add Money
-              </MenuItem>
-            </Menu>
-          </React.Fragment>
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
+                <MenuItem>Folioplay Points: </MenuItem>
+                <Divider />
+                <MenuItem onClick={()=>
+                    navigate("/coming_soon")
+                    // window.location.pathname="add_money"
+                }>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Add Money
+                </MenuItem>
+              </Menu>
+            </React.Fragment>
+            </span>
+          </span>
           {/*{getUSDTBalance}*/}
         </div>
         :

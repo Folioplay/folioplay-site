@@ -16,3 +16,15 @@
 .css-yb0lig, .css-10hburv-MuiTypography-root {
     font-family: "poppins" !important;
 }
+
+.folioplayBar__headerIconsSpan{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.folioplayBar__headerIcons{
+    margin-right: 1rem;
+    cursor: pointer;
+}
