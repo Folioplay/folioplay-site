@@ -294,7 +294,7 @@ function LoginLeft() {
   const [isVisible, setIsVisible] = useState(true);
   setTimeout(() => {
     setIsVisible(false);
-  }, 3500);
+  }, 2500);
 
   const handlePolicyChange = (e) => {
     // e.preventDefault();
