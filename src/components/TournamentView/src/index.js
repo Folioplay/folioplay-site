@@ -283,14 +283,11 @@ export default function TournamentView() {
               <JoinTournamentDrawer
                 teams={teams}
                 tournamentId={tournament.id}
-                tournament={tournament}
                 tournaments={[]}
-                user={user}
                 setErrorMessage={setErrorMessage}
                 setErrorMessageSnackOpen={setErrorMessageSnackOpen}
                 navigate={navigate}
                 changeTournament={true}
-                account={account}
               />
             </div>
           </>

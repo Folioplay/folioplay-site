@@ -5,8 +5,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
-// import joinTournament from "../common/joinTournament";
-import joinTournament from "../../Tournaments/common/joinTournament";
+import joinTournament from "../common/joinTournament";
+// import joinTournament from "../../Tournaments/common/joinTournament";
 import selectTeam from "../common/selectTeam";
 import "../style/index.css";
 import {
@@ -16,14 +16,11 @@ import {
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
-  tournament,
-  user,
   setErrorMessage,
   setErrorMessageSnackOpen,
   navigate,
   tournaments,
   changeTournament,
-  account,
 }) {
   useEffect(() => {
     document

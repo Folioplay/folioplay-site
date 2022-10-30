@@ -1,6 +1,7 @@
 
   export default async function joinTournament(teams, tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen, tournaments) {
   document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
+  console.log("in common of tournaments ... ");
   var teamId = "";
   for (var i = 0; i < teams.length; i++) {
     if (
@@ -23,11 +24,11 @@
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "error" }));
         setErrorMessageSnackOpen(true);
       } else {
-        for (var i = 0; i < tournaments.length; i++) {
-          if (tournaments[i].id === tournamentId) {
-            tournaments[i].filled_spots++;
-          }
-        }
+        // for (var i = 0; i < tournaments.length; i++) {
+        //   if (tournaments[i].id === tournamentId) {
+        //     tournaments[i].filled_spots++;
+        //   }
+        // }
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "success" }));
         setErrorMessageSnackOpen(true);
       }
