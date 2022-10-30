@@ -152,3 +152,8 @@
 .tournamentPage__transactionHashLink{
     color: #453df1;
 }
+
+.tournamentCard__countdownTimer{
+    color: red;
+    font-weight: 400;
+}

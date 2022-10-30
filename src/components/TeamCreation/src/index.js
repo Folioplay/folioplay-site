@@ -133,18 +133,6 @@ export function TeamCreation() {
     }
   }, [wasActiveTab, graphCoin, snackOpen]);
 
-  const [totalCoinsSelected, setTotalCoinsSelected] = useState(0);
-
-  console.log("totalCoin",totalCoinsSelected);
-
-  const addTotalCoinsSelected = () => {
-    setTotalCoinsSelected(totalCoinsSelected+1);
-  }
-
-  const removeTotalCoinsSelected = () => {
-    setTotalCoinsSelected(totalCoinsSelected-1);
-  }
-
   const Superstars = () => {
     return (
       <Grid
@@ -186,7 +174,6 @@ export function TeamCreation() {
                     variant="outlined"
                     size="small"
                     onClick={(event) => {
-                      removeTotalCoinsSelected();
                       addCoin(event, wasActiveTab, superstars, mooning, rekt)
                     }
                     }
@@ -200,7 +187,6 @@ export function TeamCreation() {
                     variant="outlined"
                     size="small"
                     onClick={(event) =>{
-                      addTotalCoinsSelected();
                       addCoin(event, wasActiveTab, superstars, mooning, rekt)
                       }
                     }

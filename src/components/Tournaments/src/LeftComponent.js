@@ -406,7 +406,7 @@ const LeftComponent = () => {
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
-      <span>
+      <span className={"tournamentCard__countdownTimer"}>
         Tournament starts in {days} days {hours} hours {minutes} minutes {seconds}{" "}
         seconds
       </span>
