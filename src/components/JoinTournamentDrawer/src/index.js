@@ -123,9 +123,9 @@ export default function JoinTournamentDrawer({
                         <div className={"teamview-coin-card mr-10 "+ selected_coin_css}>
                           {
                               coin.rank !== -1 &&
-                              <div className="ribbon-team-view">
+                              <span className="ribbon-team-view">
                                 <span className="ribbon2-team-view">{coin.rank}</span>
-                              </div>
+                              </span>
                           }
                           <img
                             src={

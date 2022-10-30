@@ -123,15 +123,6 @@ export async function getRewardDetailsAPI(tournament_id) {
   }).then((res) => res.json());
 }
 
-// export async function getRewardsDetails(tournament_id) {
-//   console.log(tournament_id);
-//   return await fetch(`${SERVER}/tournament/rank/${tournament_id}`, {
-//     method: "GET",
-//     headers: {
-//       "x-access-token": localStorage.getItem("authtoken"),
-//     },
-//   }).then((res) => res.json());
-// }
 
 export async function createTeam({ selectedCoins, name }) {
   const authtoken = localStorage.getItem("authtoken");

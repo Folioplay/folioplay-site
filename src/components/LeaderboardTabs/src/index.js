@@ -86,32 +86,6 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                 );
               })}
 
-
-          {/*// Show rewards and winners when the Tournament is completed*/}
-          {/*{tournamentStatus===3 && leaderBoard.length &&*/}
-          {/*    [...Array(rewardSize>=leaderBoard.length ? leaderBoard.length : rewardSize ),].map((value, index) => {*/}
-          {/*      if(leaderBoard[index].user.walletAddress === userWalletAddress) rewardUserCount++;*/}
-          {/*      return (*/}
-          {/*          <motion.div*/}
-          {/*              initial={{ x: 400 }}*/}
-          {/*              animate={{ x: 0 }}*/}
-          {/*              transition={{ duration: 0.1 * index }}*/}
-          {/*              className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}*/}
-          {/*              onClick={()=>{*/}
-          {/*                if(leaderBoard[index].user.walletAddress === userWalletAddress)*/}
-          {/*                  navigate("/activity/team/currentStatus",  { state: { leaderBoardData: leaderBoard[index]} })*/}
-          {/*              }*/}
-          {/*              }*/}
-          {/*          >*/}
-          {/*            <span className="leaderboard-points">{"  "}{index+1}</span>*/}
-          {/*            <span className={"leaderboard-username"}>*/}
-          {/*              {leaderBoard.length && leaderBoard[index].user.username}{(!leaderBoard[index].team.length && leaderBoard[index].user.walletAddress === userWalletAddress) && <span>({rewardUserCount})</span>}*/}
-          {/*            </span>*/}
-          {/*            <span className="ml-auto">{tournamentPrizes[index]}</span>*/}
-          {/*          </motion.div>*/}
-          {/*      );*/}
-          {/*    })}*/}
-
           {tournamentStatus===3 && rewardsList.length!==0 &&
               rewardsList.map((entry, index) => {
                 if(entry.user.walletAddress === userWalletAddress){
@@ -121,7 +95,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         initial={{ x: 400 }}
                         animate={{ x: 0 }}
                         transition={{ duration: 0.1 * index }}
-                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
+                        className={"leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10 font-weight-700"}
                         onClick={()=>{
                           navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
                         }
@@ -145,7 +119,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                           initial={{x: 400}}
                           animate={{x: 0}}
                           transition={{duration: 0.1 * index}}
-                          className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10"}
+                          className={"leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10"}
                           onClick={() => {
                             navigate("/activity/team/currentStatus", {state: {leaderBoardData: entry}})
                           }
@@ -175,42 +149,15 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           </div>
 
 
-          {/*// Show only user points when tournament is not closed*/}
-
-          {/*{tournamentStatus!==0 && personalLeaderBoard.length &&*/}
-          {/*    personalLeaderBoard.map((entry, index) => {*/}
-          {/*      count++;*/}
-          {/*      return (*/}
-          {/*          <motion.div*/}
-          {/*              initial={{ x: 400 }}*/}
-          {/*              animate={{ x: 0 }}*/}
-          {/*              transition={{ duration: 0.1 * index }}*/}
-          {/*              className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}*/}
-          {/*              onClick={()=>{*/}
-          {/*                const teamData = leaderBoard.find(obj => obj.team.name=== entry.team.name)*/}
-          {/*                navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData} } )*/}
-          {/*              }*/}
-          {/*              }*/}
-          {/*          >*/}
-          {/*            <span className="mr-10">{"  "}{entry.rank}</span>*/}
-          {/*            <span className={"leaderboard-username"}>*/}
-          {/*          {localStorage.getItem("folioUsername")} {personalLeaderBoard.length>1 && (count)}*/}
-          {/*        </span>*/}
-          {/*            <span className="ml-auto">{entry.portfolio}</span>*/}
-          {/*          </motion.div>*/}
-          {/*      );*/}
-          {/*    })}*/}
-
           {tournamentStatus===0 && leaderBoard.length!==0 &&
               leaderBoard.map((entry, index) => {
-                const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
                 if(entry.user.walletAddress === userWalletAddress)
                 return (
                     <motion.div
                         initial={{ x: 400 }}
                         animate={{ x: 0 }}
                         transition={{ duration: 0.1 * index }}
-                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
+                        className={"leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10 font-weight-700"}
                         onClick={()=>{
                           if(entry.user.walletAddress === userWalletAddress)
                             navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
@@ -228,24 +175,18 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
 
           {tournamentStatus===0 && leaderBoard.length!==0 &&
               leaderBoard.map((entry, index) => {
-                const userEntry = (entry.user.walletAddress === userWalletAddress) ? " font-weight-700" : "";
                 if(entry.user.walletAddress !== userWalletAddress)
                   return (
                       <motion.div
                           initial={{ x: 400 }}
                           animate={{ x: 0 }}
                           transition={{ duration: 0.1 * index }}
-                          className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10" + userEntry}
-                          onClick={()=>{
-                            if(entry.user.walletAddress === userWalletAddress)
-                              navigate("/activity/team/currentStatus", { state: { leaderBoardData: entry} } )
-                          }
-                          }
+                          className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10"}
                       >
                         <span className="leaderboard-points">{"  "}1</span>
                         <span className={"leaderboard-username"}>
-                        {entry.user.username} <span className={"teamCount"}>T{entry.user_team_count}</span>
-                  </span>
+                          {entry.user.username} <span className={"teamCount"}>T{entry.user_team_count}</span>
+                        </span>
                         <span className="ml-auto">{entry.portfolio}</span>
                       </motion.div>
                   );
@@ -259,7 +200,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         initial={{ x: 400 }}
                         animate={{ x: 0 }}
                         transition={{ duration: 0.1 * index }}
-                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700"}
+                        className={"leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10 font-weight-700"}
                         onClick={()=>{
                           const teamData = leaderBoard.find(obj => obj.team.name=== entry.team.name)
                           navigate("/activity/team/currentStatus", { state: { leaderBoardData: teamData} } )
@@ -284,7 +225,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
                         initial={{x: 400}}
                         animate={{x: 0}}
                         transition={{duration: 0.1 * index}}
-                        className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10"}
+                        className={"leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10"}
                         onClick={() => {
                           navigate("/activity/team/currentStatus", {state: {leaderBoardData: entry}})
                         }

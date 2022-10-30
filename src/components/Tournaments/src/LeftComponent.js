@@ -323,21 +323,21 @@ const LeftComponent = () => {
                 {tournament.total_spots} spots
               </span>
             </div>
-            <div className="tournamentPage__transactionHash">
-              {tournament.transaction_hash !== undefined && (
-                <span
-                  className="font-size-12 tournamentPage__transactionHashLink"
-                  onClick={() => {
-                    window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;
-                  }}
-                >
-                  Transaction Hash(Polygon):{" "}
-                  {tournament.transaction_hash.substring(0, 10)}XXXX
-                  {tournament.transaction_hash.slice(-10)}
-                </span>
-              )}
-            </div>
-            <div className="tournamentPage__transactionHash">
+            {/*<div className="tournamentPage__transactionHash">*/}
+            {/*  {tournament.transaction_hash !== undefined && (*/}
+            {/*    <span*/}
+            {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+            {/*      onClick={() => {*/}
+            {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      Transaction Hash(Polygon):{" "}*/}
+            {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+            {/*      {tournament.transaction_hash.slice(-10)}*/}
+            {/*    </span>*/}
+            {/*  )}*/}
+            {/*</div>*/}
+            <div className="tournamentPage__countdown">
               <span id="timeRemaining" className="font-size-12">
                 {startDate > Date.now() ? (
                   <Countdown date={startDate - 300000} renderer={renderer} />

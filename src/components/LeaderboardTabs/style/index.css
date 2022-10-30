@@ -6,6 +6,10 @@
     justify-content: start;
     align-items: center;
     box-shadow: inset 0px -1px 0px #DBE4EF;
+    /*cursor: pointer;*/
+}
+
+.pointer-available{
     cursor: pointer;
 }
 
@@ -43,7 +47,7 @@
 }
 
 .leaderboard-username:hover {
-    cursor: pointer;
+    /*cursor: pointer;*/
     transition: 0.2s all ease-in-out;
 }
 
