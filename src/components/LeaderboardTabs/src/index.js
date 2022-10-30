@@ -55,11 +55,11 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Prizes" value="2" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
-            <Tab label="Leader Board" value="1" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
+            <Tab label="Prizes" value="1" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
+            <Tab label="Leader Board" value="2" style={{ textTransform: "capitalize", fontFamily: "poppins" }} />
           </TabList>
         </Box>
-        <TabPanel value="2">
+        <TabPanel value="1">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
             <span className="mr-10">Rank</span>
             {tournamentStatus===3 && leaderBoard.length && <span className="ml-20">User</span>}
@@ -140,7 +140,7 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
           {/*Leaderboard Section*/}
 
         </TabPanel>
-        <TabPanel value="1">
+        <TabPanel value="2">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
             <span className="mr-10">Rank</span>
             <span className="ml-20">User</span>

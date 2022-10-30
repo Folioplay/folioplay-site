@@ -9,31 +9,8 @@ import {
   getAuthToken, referralCodePost,
 } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
-import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
-import { useNavigate } from "react-router-dom";
 import "../style/index.css";
-import { motion } from "framer-motion/dist/framer-motion";
-import { getAllTournaments } from "../../../APIS/apis";
-import PreviewIcon from "@mui/icons-material/Preview";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import joinTournament from "../common/joinTournament";
-import deleteClickedTeam from "../common/deleteClickedTeam";
-import selectTeam from "../common/selectTeam";
-import { Snackbar } from "@mui/material";
-import MuiAlert from "@mui/material/Alert";
 import { useMoralis } from "react-moralis";
-import {
-  chooseTeamClose,
-  chooseTeamOpen,
-} from "../common/chooseTeamAnimations";
-import ImageSlider from "../../ImageSlider/src";
-import Joyride from "react-joyride";
-import CommonModal from "../../../Common/Modal/Modal";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import ContentModal from "../../../Common/ContentModal";
 import LeftComponent from "./LeftComponent";
 import RightComponent from "./RightComponent";
 
