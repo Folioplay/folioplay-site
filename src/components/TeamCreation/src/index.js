@@ -153,7 +153,7 @@ export function TeamCreation() {
               >
                 <span className="coin-image-wrapper" >
                   <img
-                    src={process.env.REACT_APP_API_SERVER + coin.imageUrl}
+                    src={coin.imageUrl}
                     alt='coin_image'
                     onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
                     width="40px"
@@ -222,7 +222,7 @@ export function TeamCreation() {
                 <span className="coin-image-wrapper">
                   <img
                     src={
-                      process.env.REACT_APP_API_SERVER + coin.imageUrl
+                      coin.imageUrl
                     }
                     alt='coin_image'
                     width="40px"
@@ -289,7 +289,7 @@ export function TeamCreation() {
                 <span className="coin-image-wrapper">
                   <img
                     src={
-                      process.env.REACT_APP_API_SERVER + coin.imageUrl
+                      coin.imageUrl
                     }
                     alt='coin_image'
                     width="40px"
