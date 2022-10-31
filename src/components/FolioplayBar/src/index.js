@@ -203,7 +203,7 @@ export default function FolioplayBar({ intervalId }) {
           <img src={require('../../../images/FolioPlaySmall.svg').default} />
           {/*<Person2Icon />*/}
           <span className={"ml-auto folioplayBar__headerIconsSpan"}>
-            <span className={"folioplayBar__headerIcons"} onClick={()=> navigate("/user/profile")}>
+            <span className={"folioplayBar__headerIcons"} onClick={()=> {clearInterval(intervalId);navigate("/user/profile")}}>
               <Person2Icon />
             </span>
             <span className={"folioplayBar__headerIcons"}>
@@ -255,8 +255,10 @@ export default function FolioplayBar({ intervalId }) {
                 {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
                 <MenuItem>Folioplay Points: </MenuItem>
                 <Divider />
-                <MenuItem onClick={()=>
+                <MenuItem onClick={()=>{
+                  clearInterval(intervalId);
                     navigate("/coming_soon")
+                  }
                     // window.location.pathname="add_money"
                 }>
                   <ListItemIcon>
