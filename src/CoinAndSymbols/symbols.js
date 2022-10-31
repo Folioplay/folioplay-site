@@ -1,6 +1,6 @@
 export const coinTosymbol = {
     aave: "aave",
-    "binance coin": "BNB",
+    "binance": "BNB",
     bitcoin: "btc",
     "bitcoin cash": "bch",
     cardano: "ada",
@@ -28,6 +28,6 @@ export const coinTosymbol = {
     xrp: "xrp",
     "yearn.finance": "yfi",
     zcash: "zec",
-    ziliqa: "zil",
+    zilliqa: "zil",
     '1inch': "1inch"
 }

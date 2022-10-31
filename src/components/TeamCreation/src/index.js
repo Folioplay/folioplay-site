@@ -120,7 +120,8 @@ export function TeamCreation() {
     preservedView(wasActiveTab, superstars, mooning, rekt);
     var coinsLimit = wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;
     var allButtons = document.querySelectorAll("#" + wasActiveTab + " .coin-add-button");
-    if (document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length >= coinsLimit) {
+    var totalAddedCoins = document.getElementsByClassName("coin-added-button").length;
+    if (document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length >= coinsLimit || totalAddedCoins === 11) {
       for (var i = 0; i < allButtons.length; i++) {
         if (allButtons[i].innerText === "ADD") {
           allButtons[i].classList.add("disabled-button");

@@ -25,8 +25,8 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
             coinImage.src = require("../../../images/coinLogos/" +
               coinTosymbol[superstars[j].name.toLowerCase()].toLowerCase() +
               ".png").default;
-            coinImage.width = "80";
-            coinImage.height = "80";
+            coinImage.width = "75";
+            coinImage.height = "75";
             coinImage.id = superstars[j].name + "-preview";
             bucketPreview[i].appendChild(coinImage);
             emptySpot = true;
@@ -60,8 +60,8 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
             coinImage.src = require("../../../images/coinLogos/" +
               coinTosymbol[mooning[j].name.toLowerCase()].toLowerCase() +
               ".png").default;
-            coinImage.width = "80";
-            coinImage.height = "80";
+            coinImage.width = "75";
+            coinImage.height = "75";
             coinImage.id = mooning[j].name + "-preview";
             bucketPreview[i].appendChild(coinImage);
             emptySpot = true;
@@ -94,8 +94,8 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
             coinImage.src = require("../../../images/coinLogos/" +
               coinTosymbol[rekt[j].name.toLowerCase()].toLowerCase() +
               ".png").default;
-            coinImage.width = "80";
-            coinImage.height = "80";
+            coinImage.width = "75";
+            coinImage.height = "75";
             coinImage.id = rekt[j].name + "-preview";
             bucketPreview[i].appendChild(coinImage);
             emptySpot = true;

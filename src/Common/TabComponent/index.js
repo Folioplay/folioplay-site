@@ -21,14 +21,17 @@ export default function ContestTabs({tournamentUpdatedOpen, tournamentUpdatedRun
 
     return (
         // <div className="activityPage__content">
-        <Box sx={{ width: '100%', typography: 'body1',fontFamily:"poppins" }}>
+        <Box sx={{ width: '100%', typography: 'body1',fontFamily:"poppins",fontSize:"25px" }}>
 
         <TabContext value={valueContest}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChangeContest} aria-label="lab API tabs example">
-                    <Tab label="Open" value="1"  style={{ textTransform: "capitalize", fontFamily: "poppins" }}/>
-                    <Tab label="Running" value="2"  style={{ textTransform: "capitalize", fontFamily: "poppins" }}/>
-                    <Tab label="Completed" value="3"  style={{ textTransform: "capitalize", fontFamily: "poppins" }}/>
+                    <Tab label="Open" value="1"  style={{ textTransform: "capitalize", fontFamily: "poppins",fontSize:"12px" }} tabItemContainerStyle={{width: '100px'}}
+/>
+                    <Tab label="Running" value="2"  style={{ textTransform: "capitalize", fontFamily: "poppins",fontSize:"12px" }} tabItemContainerStyle={{width: '100px'}}
+/>
+                    <Tab label="Completed" value="3"  style={{ textTransform: "capitalize", fontFamily: "poppins",fontSize:"12px" }} tabItemContainerStyle={{width: '100px'}}
+/>
                 </TabList>
             </Box>
             <TabPanel className="contestTab__valueItem" value="1">

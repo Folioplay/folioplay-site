@@ -18,11 +18,15 @@ export default function addCoin(
   const clickedCoin = event.target.previousSibling.innerText;
   const updateCoin = prevVal === "ADD" ? true : false;
   var allButtons = document.getElementsByClassName("coin-add-button");
+  var totalAddedCoins = document.getElementsByClassName('coin-added-button').length;
   var maxSelected = 0;
   for (var i = 0; i < checkArray.length; i++) {
     if (checkArray[i].selected) maxSelected++;
   }
-  if (maxSelected >= coinsLimit && updateCoin) {
+  totalAddedCoins = updateCoin ? totalAddedCoins + 1 :totalAddedCoins-1;
+  
+  // else{
+  if ((maxSelected >= coinsLimit || totalAddedCoins > 11) && updateCoin) {
     document
       .getElementsByClassName("error-cannot-add-coin")[0]
       .classList.remove("show");
@@ -51,20 +55,32 @@ export default function addCoin(
       }
       if (checkArray[i].selected) maxSelected++;
     }
-    if (maxSelected === coinsLimit) {
+    console.log("total added buttons are ",totalAddedCoins);
+    if(totalAddedCoins == 11){
       for (var i = 0; i < allButtons.length; i++) {
         if (allButtons[i].innerText === "ADD") {
           allButtons[i].classList.add("disabled-button");
         }
       }
-    }
-    if (maxSelected == coinsLimit - 1) {
-      for (var i = 0; i < allButtons.length; i++) {
-        if (allButtons[i].innerText === "ADD") {
-          allButtons[i].classList.remove("disabled-button");
+    }else{
+      if (maxSelected === coinsLimit) {
+        for (var i = 0; i < allButtons.length; i++) {
+          if (allButtons[i].innerText === "ADD") {
+            allButtons[i].classList.add("disabled-button");
+          }
+        }
+      }else{
+        if (maxSelected == coinsLimit - 1 || totalAddedCoins < 11) {
+          for (var i = 0; i < allButtons.length; i++) {
+            if (allButtons[i].innerText === "ADD") {
+              allButtons[i].classList.remove("disabled-button");
+            }
+          }
         }
       }
     }
+    
+    
     if (updateCoin === true) {
       var bucketPreview = document.getElementsByClassName(
         wasActiveTab + "-preview"
@@ -135,4 +151,5 @@ export default function addCoin(
     window.localStorage.setItem(wasActiveTab, JSON.stringify(checkArray));
     event.target.innerText = prevVal === "ADD" ? "ADDED" : "ADD";
   }
+// }
 }
