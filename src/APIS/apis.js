@@ -1,4 +1,5 @@
 export const SERVER = process.env.REACT_APP_API_SERVER;
+export const S3_URL = process.env.REACT_APP_S3_URL
 
 export async function getAllTournaments() {
   return await fetch(`${SERVER}/tournament/`, {
