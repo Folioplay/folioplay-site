@@ -35,7 +35,7 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
         }
         if (!emptySpot) {
           var newSpot = document.createElement("div");
-          var buckets = document.getElementsByClassName("bucket-preview");
+          var buckets = document.getElementsByClassName("superstars-cover");
           newSpot.classList.add("superstars-preview", "coin-preview", "ml-20");
           var coinImage = document.createElement("img");
           coinImage.src = require("../../../images/coinLogos/" +
@@ -45,7 +45,7 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
           coinImage.height = "75";
           coinImage.id = superstars[j].name + "-preview";
           newSpot.appendChild(coinImage);
-          newSpot.classList.add("mt-10");
+          newSpot.classList.add("mt-20");
           buckets[0].appendChild(newSpot);
         }
       }
@@ -70,7 +70,7 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
         }
         if (!emptySpot) {
           var newSpot = document.createElement("div");
-          var buckets = document.getElementsByClassName("bucket-preview");
+          var buckets = document.getElementsByClassName("mooning-cover");
           newSpot.classList.add("mooning-preview", "coin-preview", "ml-20");
           var coinImage = document.createElement("img");
           coinImage.src = require("../../../images/coinLogos/" +
@@ -80,7 +80,8 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
           coinImage.height = "75";
           coinImage.id = mooning[j].name + "-preview";
           newSpot.appendChild(coinImage);
-          buckets[1].appendChild(newSpot);
+          newSpot.classList.add("mt-20");
+          buckets[0].appendChild(newSpot);
         }
       }
     }
@@ -104,7 +105,7 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
         }
         if (!emptySpot) {
           var newSpot = document.createElement("div");
-          var buckets = document.getElementsByClassName("bucket-preview");
+          var buckets = document.getElementsByClassName("rekt-cover");
           newSpot.classList.add("rekt-preview", "coin-preview", "ml-20");
           var coinImage = document.createElement("img");
           coinImage.src = require("../../../images/coinLogos/" +
@@ -114,7 +115,8 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
           coinImage.height = "75";
           coinImage.id = rekt[j].name + "-preview";
           newSpot.appendChild(coinImage);
-          buckets[2].appendChild(newSpot);
+          newSpot.classList.add("mt-20");
+          buckets[0].appendChild(newSpot);
         }
       }
     }

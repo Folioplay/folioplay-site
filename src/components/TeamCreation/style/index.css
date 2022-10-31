@@ -153,16 +153,19 @@
     color: var(--grey-shade);
 }
 .bucket-preview{
-    height: 100px;
+    /* height: 100px; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: start;
     align-items: center;
+    min-width: 500px;   
 }
-
+.bucket-cover{
+    display:flex;
+}
 .coin-preview{
-    width: 80px;
-    height: 80px;
+    min-width: 80px;
+    min-height: 80px;
     padding: 10px;
     box-shadow: inset 0px 2px 44px rgba(0, 0, 0, 0.45);
     border-radius: 100%;

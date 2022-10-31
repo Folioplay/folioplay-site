@@ -86,6 +86,7 @@ export default function addCoin(
         wasActiveTab + "-preview"
       );
       var emptySpot = false;
+      console.log(bucketPreview);
       for (var i = 0; i < bucketPreview.length; i++) {
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement("img");
@@ -102,7 +103,7 @@ export default function addCoin(
       }
       if (!emptySpot) {
         var newSpot = document.createElement("div");
-        var buckets = document.getElementsByClassName("bucket-preview");
+        var buckets = document.getElementsByClassName(wasActiveTab + "-cover");
         newSpot.classList.add(
           wasActiveTab + "-preview",
           "coin-preview",
@@ -116,16 +117,18 @@ export default function addCoin(
         coinImage.height = "75";
         coinImage.id = clickedCoin + "-preview";
         newSpot.appendChild(coinImage);
-        if (wasActiveTab === "superstars") {
-          newSpot.classList.add("mt-10");
-          buckets[0].appendChild(newSpot);
-        }
-        if (wasActiveTab === "mooning") {
-          buckets[1].appendChild(newSpot);
-        }
-        if (wasActiveTab === "rekt") {
-          buckets[2].appendChild(newSpot);
-        }
+        newSpot.classList.add("mt-20");
+        buckets[0].appendChild(newSpot);
+        // if (wasActiveTab === "superstars") {
+        //   newSpot.classList.add("mt-10");
+        //   buckets[0].appendChild(newSpot);
+        // }
+        // if (wasActiveTab === "mooning") {
+        //   buckets[1].appendChild(newSpot);
+        // }
+        // if (wasActiveTab === "rekt") {
+        //   buckets[2].appendChild(newSpot);
+        // }
       }
     } else {
       var bucketPreview = document.getElementsByClassName(
