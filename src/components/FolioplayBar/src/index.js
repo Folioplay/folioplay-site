@@ -28,6 +28,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
 import Person2Icon from '@mui/icons-material/Person2';
+import {getWalletBalance} from "../../../APIS/apis";
 
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
@@ -110,6 +111,19 @@ export default function FolioplayBar({ intervalId }) {
   const [state, setState] = React.useState({
     left: false,
   });
+
+
+  const [folioplayWalletBalance, setFolioplayWalletBalance] = useState(0);
+
+  useEffect(()=>{
+    async function setWalletBalance() {
+      const bal = await getWalletBalance();
+      setFolioplayWalletBalance(bal.balance);
+    }
+    setWalletBalance();
+  },[]);
+
+  console.log("folioplayWalletBalance", folioplayWalletBalance)
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -253,7 +267,7 @@ export default function FolioplayBar({ intervalId }) {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
-                <MenuItem>Folioplay Points: </MenuItem>
+                <MenuItem>Folioplay Points: {folioplayWalletBalance} </MenuItem>
                 <Divider />
                 <MenuItem onClick={()=>{
                   clearInterval(intervalId);

@@ -50,6 +50,32 @@ export default function LeaderBoardTabs({ tournamentId, tournamentStatus, tourna
   };
   console.log(leaderBoard);
   console.log("rewardList", tournamentPrizes, rewardSize);
+
+  // const [initialPrize, setInitialPrize] = useState([
+  //   {
+  //     "startRange": 1,
+  //     "endRange": 1,
+  //     "prize": 0
+  //   }
+  // ]);
+  //
+  // const parsePrizes = () => {
+  //   let previousValue = tournamentPrizes[0];
+  //   let rangeStarts = 1;
+  //   let rangeEnds = 1;
+  //   for(let i=1; i<tournamentPrizes.length; i++){
+  //     if(tournamentPrizes[i]!==previousValue){
+  //       setInitialPrize([...initialPrize, {
+  //         "startRange": rangeStarts,
+  //         "endRange": rangeEnds,
+  //         "prize": previousValue
+  //       }])
+  //       rangeStarts = i;
+  //       rangeEnds = i;
+  //     }
+  //   }
+  // }
+
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>

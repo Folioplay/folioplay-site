@@ -390,19 +390,6 @@ const LeftComponent = () => {
     return timeLeft;
   };
 
-  //   const [difference, setDifference] = useState(null);
-  //   const currDate = new Date();
-  //   const [timeLeft, setTimeLeft] = useState({});
-  //   useEffect(() => {
-  //     if (difference <= 0) {
-  //       return;
-  //     }
-
-  //     setTimeout(() => {
-  //       // setTimeLeft(calculateTimeLeft(difference));
-  //       console.log("hello");
-  //     }, 1000);
-  //   }, []);
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
@@ -423,38 +410,6 @@ const LeftComponent = () => {
       const disabledClass =
         tournament.status !== 0 ? " disable-join-button" : "";
       const disabledTournament = tournament.status !== 0;
-
-      //   // new Date(tournament.start_time) - new Date();
-      //   let currentDate = new Date();
-      //
-      //   const timer = setTimeout(() => {
-      //     const difference = startDate - currentDate;
-      //
-      //     let timeLeft = {};
-      //
-      //     if (difference > 0) {
-      //       timeLeft = {
-      //         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      //         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      //         minutes: Math.floor((difference / 1000 / 60) % 60),
-      //         seconds: Math.floor((difference / 1000) % 60)
-      //       };
-      //     }}, 1000);
-      //
-      //   const timerComponents = [];
-      //
-      //   Object.keys(timeLeft).forEach((interval) => {
-      //     if (!timeLeft[interval]) {
-      //       return;
-      //     }
-      //
-      //     timerComponents.push(
-      //         <span>
-      //   {timeLeft[interval]} {interval}{" "}
-      // </span>
-      //     );
-      //   });
-      //
 
       return (
         <motion.div

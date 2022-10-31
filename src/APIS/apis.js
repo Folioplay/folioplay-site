@@ -266,3 +266,16 @@ export async function referralCodePost(referralCode) {
     .then((res) => res.json())
     .catch((err) => err.json());
 }
+
+export async function getWalletBalance() {
+  const authToken = localStorage.getItem("authtoken");
+  return await fetch(
+      `${SERVER}/wallet`,
+      {
+        method: "GET",
+        headers: {
+          "x-access-token": authToken,
+        },
+      }
+  ).then((res) => res.json());
+}
