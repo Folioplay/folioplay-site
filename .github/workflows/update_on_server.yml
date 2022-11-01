@@ -1,15 +1,17 @@
 name: push-to-server
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
-  write-to-console:
+  update_on_server:
     runs-on: ubuntu-latest
     steps:
-    - name: update on server
+    - name: Git pull
       uses: D3rHase/ssh-command-action@v0.2.1
       with:
-        HOST:  15.206.211.52
+        HOST: 15.206.211.52
         PORT: 22
         USER: ec2-user
-        # private ssh key registered on the server
         PRIVATE_SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
-        COMMAND: cd /usr/share/nginx/folioplay ; ls
+        COMMAND: cd /usr/share/nginx/folioplay ; git pull
