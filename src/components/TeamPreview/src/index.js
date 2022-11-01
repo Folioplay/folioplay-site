@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import { getTeamByid } from "../../../APIS/apis";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router";
+import { S3_URL } from "../../../APIS/apis";
 export default function TeamPreview() {
   const teamId = useParams().teamId;
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function TeamPreview() {
             onClick={() => navigate(-1)}
           />
           <span className="ml-20 font-size-20 font-weight-700">
-            {team !== undefined ? <>{team.name}</> : <>Loading</>}
+            {team !== undefined ? <>{team.name}</> : <>Loading ...</>}
           </span>
         </div>
         <br />
@@ -92,8 +93,7 @@ export default function TeamPreview() {
                           )}
                           <img
                             src={
-                              process.env.REACT_APP_API_SERVER +
-                              "/media/" +
+                              S3_URL +
                               coin.symbol +
                               ".png"
                             }

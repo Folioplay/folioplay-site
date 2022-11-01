@@ -8,6 +8,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
+import TimerIcon from '@mui/icons-material/Timer';
 import {
   deleteTeam,
   getAllTournaments,
@@ -176,6 +177,7 @@ const LeftComponent = () => {
               onClose={handleClose}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
+              disableAutoFocus
           >
             <Box sx={tourModalStyle}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -184,8 +186,10 @@ const LeftComponent = () => {
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 Here is a short tour to the game.
               </Typography>
-              <button className="button dark" onClick={tour.start}>
-                <button onClick={handleClick}>Start Tour</button>
+              <button className="button dark" onClick={() =>{setOpen(false);tour.start();}}>
+                {/* <button onClick={handleClick}> */}
+                  Start Tour
+                  {/* </button> */}
               </button>
             </Box>
           </Modal>
@@ -240,7 +244,7 @@ const LeftComponent = () => {
     },
     {
       id: "intro-1",
-      attachTo: { element: "#tournament-play", on: "bottom" },
+      attachTo: { element: ".tournament-fee", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -373,6 +377,51 @@ const LeftComponent = () => {
         },
       },
     },
+    {
+      id: "intro-4",
+      attachTo: { element: "#profile-icon", on: "bottom" },
+      beforeShowPromise: function () {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            window.scrollTo(0, 0);
+            resolve();
+          }, 500);
+        });
+      },
+      buttons: [
+        {
+          classes: "shepherd-button-secondary",
+          text: "Exit",
+          type: "cancel",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Back",
+          type: "back",
+        },
+        {
+          classes: "shepherd-button-primary",
+          text: "Next",
+          type: "next",
+        },
+      ],
+      classes: "custom-class-name-1 custom-class-name-2",
+      highlightClass: "highlight",
+      scrollTo: false,
+      cancelIcon: {
+        enabled: true,
+      },
+      title: "Welcome to FolioPlay!",
+      text: ["Here you can see the reward of the tournament"],
+      when: {
+        show: () => {
+          console.log("show step");
+        },
+        hide: () => {
+          console.log("hide step");
+        },
+      },
+    },
     // ...
   ];
 
@@ -393,10 +442,13 @@ const LeftComponent = () => {
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
+      <>
+      <TimerIcon style={{color:"var(--golden)"}}/>
       <span className={"tournamentCard__countdownTimer"}>
-        Tournament starts in {days} days {hours} hours {minutes} minutes {seconds}{" "}
-        seconds
+         {days} : {hours} : {minutes} : {seconds}
       </span>
+      </>
+      
     );
   };
   const tournamentsList = tournaments ? (
@@ -537,13 +589,7 @@ const LeftComponent = () => {
             {/*    </span>*/}
             {/*  )}*/}
             {/*</div>*/}
-            <div className="tournamentPage__countdown">
-              <span id="timeRemaining" className="font-size-12">
-                {startDate > Date.now() ? (
-                  <Countdown date={startDate - 300000} renderer={renderer} />
-                ) : null}
-              </span>
-            </div>
+            
           </div>
           <div className="tournament-reward">
             <span
@@ -557,6 +603,13 @@ const LeftComponent = () => {
             >
               {status[tournament.status].value}
             </span>
+            <div className="tournamentPage__countdown">
+              <span id="timeRemaining" className="font-size-12">
+                {startDate > Date.now() ? (
+                  <Countdown date={startDate - 300000} renderer={renderer} />
+                ) : null}
+              </span>
+            </div>
             <span className="font-size-12">
               <EmojiEventsOutlinedIcon />
               <span>{tournament.rewards.prize_pool} MGT</span>

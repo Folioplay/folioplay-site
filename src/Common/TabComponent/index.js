@@ -140,69 +140,124 @@ export default function ContestTabs({
               };
 
               return (
-                <div>
-                  <motion.div
-                    // id={"tournament-" + tournament._id}
-                    // initial={{y: "100vh"}}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0 + 0.08 * index, duration: 0.35 }}
-                    key={"tournament__" + index}
-                    className="activity-tournament"
-                    onClick={() => {
-                      navigate(`/tournaments/${tournament.tournament._id}`);
-                    }}
-                  >
-                    <div className="tournament-info">
-                      <span
-                        className="tournament-image"
+                <motion.div
+                  id={"tournament-" + tournament._id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 * (index + 1) }}
+                  key={"tournament__" + index}
+                  className="tournament"
+                  style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                >
+                  <div className="tournament-info">
+                    <span
+                      className="tournament-image"
+                      style={{ borderRadius: "100%" }}
+                    >
+                      <img
                         style={{ borderRadius: "100%" }}
-                      >
-                        <img
-                          style={{ borderRadius: "100%" }}
-                          src={tournament.tournament.imageURL}
-                          width="60px"
-                          height={"60px"}
-                        />
+                        src={tournament.tournament.imageURL}
+                        width="60px"
+                        height={"60px"}
+                      />
+                    </span>
+                    <span
+                      style={{ textAlign: "left" }}
+                      onClick={() => {
+                        navigate(`/tournaments/${tournament.tournament._id}`, {
+                          state: {
+                            transactionId: tournament.transaction_hash,
+                          },
+                        });
+                      }}
+                    >
+                      <span style={{ color: "#071F36", fontWeight: "700" }}>
+                        {tournament.tournament.name}
                       </span>
-                      <div className="activityPage__contentWrapper">
-                        <div className={"activityTabs__tournamentNameDiv"}>
-                          <span
-                            className="activityTab__tournamentName"
-                            style={{ color: "#071F36", fontWeight: "700" }}
-                          >
-                            {tournament.tournament.name}
-                          </span>
-                          <span className="reward_amount">
-                            <EmojiEventsOutlinedIcon />
-                            {tournament.amount_won} MGT
-                          </span>
-                        </div>
-
-                        <div className="tournaments-spots">
-                          <span className="activityTab__Amount">
-                            <span className={"activityTabs__teamLength"}>
-                              {tournament.teams.length} Teams
-                            </span>
-                            <span
-                              className="activityTab__tournamentStatus font-size-12"
-                              style={{
-                                color:
-                                  status[tournament.tournament.status].color,
-                                padding: "0 10px",
-                                border:
-                                  "1px solid " +
-                                  status[tournament.tournament.status].color,
-                                borderRadius: "30px",
-                              }}
-                            >
-                              {status[tournament.tournament.status].value}
-                            </span>
+                      {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
+                      {/*  {tournament.name}*/}
+                      {/*</span>*/}
+                      <br />
+                      <span className="tournaments-spots">
+                        {/* <div className="tournamentPage__startTime">
+                        Start Time
+                        <div>
+                          <span className="font-size-12">
+                            {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                            {startDate.getFullYear() % 100},
+                            {startDate.getHours() / 10 < 1
+                              ? "0" + startDate.getHours()
+                              : startDate.getHours()}
+                            :
+                            {startDate.getMinutes() / 10 < 1
+                              ? "0" + startDate.getMinutes()
+                              : startDate.getMinutes()}
+                            hrs
                           </span>
                         </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
+                      </div> */}
+                        {/* <div>
+                        End Time
+                        <div>
+                          <span className="font-size-12">
+                            {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                            {startDate.getFullYear() % 100},
+                            {finishDate.getHours() / 10 < 1
+                              ? "0" + finishDate.getHours()
+                              : finishDate.getHours()}
+                            :
+                            {finishDate.getMinutes() / 10 < 1
+                              ? "0" + finishDate.getMinutes()
+                              : finishDate.getMinutes()}
+                            hrs
+                          </span>
+                        </div>
+                      </div> */}
+                      </span>
+                    </span>
+                  </div>
+                  <div>
+                    {/*<div className="tournamentPage__transactionHash">*/}
+                    {/*  {tournament.transaction_hash !== undefined && (*/}
+                    {/*    <span*/}
+                    {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+                    {/*      onClick={() => {*/}
+                    {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+                    {/*      }}*/}
+                    {/*    >*/}
+                    {/*      Transaction Hash(Polygon):{" "}*/}
+                    {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+                    {/*      {tournament.transaction_hash.slice(-10)}*/}
+                    {/*    </span>*/}
+                    {/*  )}*/}
+                    {/*</div>*/}
+                  </div>
+                  <div
+                    className="tournament-reward"
+                    style={{ marginTop: "10px" }}
+                  >
+                    <span
+                      className="font-size-12"
+                      style={{
+                        color: status[tournament.tournament.status].color,
+                        padding: "0 10px",
+                        border:
+                          "1px solid " +
+                          status[tournament.tournament.status].color,
+                        borderRadius: "30px",
+                      }}
+                    >
+                      {status[tournament.tournament.status].value}
+                    </span>
+                    <span className={"activityTabs__teamLength"}>
+                      {tournament.teams.length} Teams
+                    </span>
+                    <span className="font-size-12">
+                      <EmojiEventsOutlinedIcon />
+                      <span>{tournament.amount_won} MGT</span>
+                    </span>
+                  </div>
+                </motion.div>
               );
             })}
           </>
@@ -223,69 +278,124 @@ export default function ContestTabs({
               };
 
               return (
-                <div>
-                  <motion.div
-                    // id={"tournament-" + tournament._id}
-                    // initial={{y: "100vh"}}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0 + 0.08 * index, duration: 0.35 }}
-                    key={"tournament__" + index}
-                    className="activity-tournament"
+                <motion.div
+                id={"tournament-" + tournament._id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 * (index + 1) }}
+                key={"tournament__" + index}
+                className="tournament"
+                style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+              >
+                <div className="tournament-info">
+                  <span
+                    className="tournament-image"
+                    style={{ borderRadius: "100%" }}
+                  >
+                    <img
+                      style={{ borderRadius: "100%" }}
+                      src={tournament.tournament.imageURL}
+                      width="60px"
+                      height={"60px"}
+                    />
+                  </span>
+                  <span
+                    style={{ textAlign: "left" }}
                     onClick={() => {
-                      navigate(`/tournaments/${tournament.tournament._id}`);
+                      navigate(`/tournaments/${tournament.tournament._id}`, {
+                        state: {
+                          transactionId: tournament.transaction_hash,
+                        },
+                      });
                     }}
                   >
-                    <div className="tournament-info">
-                      <span
-                        className="tournament-image"
-                        style={{ borderRadius: "100%" }}
-                      >
-                        <img
-                          style={{ borderRadius: "100%" }}
-                          src={tournament.tournament.imageURL}
-                          width="60px"
-                          height={"60px"}
-                        />
-                      </span>
-                      <div className="activityPage__contentWrapper">
-                        <div className={"activityTabs__tournamentNameDiv"}>
-                          <span
-                            className="activityTab__tournamentName"
-                            style={{ color: "#071F36", fontWeight: "700" }}
-                          >
-                            {tournament.tournament.name}
-                          </span>
-                          <span className="reward_amount">
-                            <EmojiEventsOutlinedIcon />
-                            {tournament.amount_won} MGT
-                          </span>
-                        </div>
-
-                        <div className="tournaments-spots">
-                          <span className="activityTab__Amount">
-                            <span className={"activityTabs__teamLength"}>
-                              {tournament.teams.length} Teams
-                            </span>
-                            <span
-                              className="activityTab__tournamentStatus font-size-12"
-                              style={{
-                                color:
-                                  status[tournament.tournament.status].color,
-                                padding: "0 10px",
-                                border:
-                                  "1px solid " +
-                                  status[tournament.tournament.status].color,
-                                borderRadius: "30px",
-                              }}
-                            >
-                              {status[tournament.tournament.status].value}
-                            </span>
-                          </span>
-                        </div>
+                    <span style={{ color: "#071F36", fontWeight: "700" }}>
+                      {tournament.tournament.name}
+                    </span>
+                    {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
+                    {/*  {tournament.name}*/}
+                    {/*</span>*/}
+                    <br />
+                    <span className="tournaments-spots">
+                      {/* <div className="tournamentPage__startTime">
+                      Start Time
+                      <div>
+                        <span className="font-size-12">
+                          {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                          {startDate.getFullYear() % 100},
+                          {startDate.getHours() / 10 < 1
+                            ? "0" + startDate.getHours()
+                            : startDate.getHours()}
+                          :
+                          {startDate.getMinutes() / 10 < 1
+                            ? "0" + startDate.getMinutes()
+                            : startDate.getMinutes()}
+                          hrs
+                        </span>
                       </div>
-                    </div>
-                  </motion.div>
+                    </div> */}
+                      {/* <div>
+                      End Time
+                      <div>
+                        <span className="font-size-12">
+                          {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                          {startDate.getFullYear() % 100},
+                          {finishDate.getHours() / 10 < 1
+                            ? "0" + finishDate.getHours()
+                            : finishDate.getHours()}
+                          :
+                          {finishDate.getMinutes() / 10 < 1
+                            ? "0" + finishDate.getMinutes()
+                            : finishDate.getMinutes()}
+                          hrs
+                        </span>
+                      </div>
+                    </div> */}
+                    </span>
+                  </span>
                 </div>
+                <div>
+                  {/*<div className="tournamentPage__transactionHash">*/}
+                  {/*  {tournament.transaction_hash !== undefined && (*/}
+                  {/*    <span*/}
+                  {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+                  {/*      onClick={() => {*/}
+                  {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+                  {/*      }}*/}
+                  {/*    >*/}
+                  {/*      Transaction Hash(Polygon):{" "}*/}
+                  {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+                  {/*      {tournament.transaction_hash.slice(-10)}*/}
+                  {/*    </span>*/}
+                  {/*  )}*/}
+                  {/*</div>*/}
+                </div>
+                <div
+                  className="tournament-reward"
+                  style={{ marginTop: "10px" }}
+                >
+                  <span
+                    className="font-size-12"
+                    style={{
+                      color: status[tournament.tournament.status].color,
+                      padding: "0 10px",
+                      border:
+                        "1px solid " +
+                        status[tournament.tournament.status].color,
+                      borderRadius: "30px",
+                    }}
+                  >
+                    {status[tournament.tournament.status].value}
+                  </span>
+                  <span className={"activityTabs__teamLength"}>
+                    {tournament.teams.length} Teams
+                  </span>
+                  <span className="font-size-12">
+                    <EmojiEventsOutlinedIcon />
+                    <span>{tournament.amount_won} MGT</span>
+                  </span>
+                </div>
+              </motion.div>
               );
             })}
           </>

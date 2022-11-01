@@ -154,6 +154,14 @@
 }
 
 .tournamentCard__countdownTimer{
-    color: red;
-    font-weight: 400;
+    color: var(--golden);
+    /* background-color: rgb(182, 182, 182); */
+    font-weight: 500;
+    /* border: 1px solid red; */
+    padding: 0px 5px;
+    border-radius: 30px;
+}
+
+.custom-class-name-1{
+    border-radius: 30px;
 }

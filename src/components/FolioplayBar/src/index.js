@@ -218,7 +218,7 @@ export default function FolioplayBar({ intervalId }) {
           {/*<Person2Icon />*/}
           <span className={"ml-auto folioplayBar__headerIconsSpan"}>
             <span className={"folioplayBar__headerIcons"} onClick={()=> {clearInterval(intervalId);navigate("/user/profile")}}>
-              <Person2Icon />
+              <Person2Icon id="profile-icon"/>
             </span>
             <span className={"folioplayBar__headerIcons"}>
               <React.Fragment>

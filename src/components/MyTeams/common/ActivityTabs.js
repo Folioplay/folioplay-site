@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Chip, LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LabTabs from "../../../Common/TabComponent";
+import { S3_URL } from "../../../APIS/apis";
 // import LabTabs from "../../../Common/TabComponent";
 export default function ActivityTabs({ teams, tournaments }) {
   const navigate = useNavigate();
@@ -127,8 +128,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                           <img
                             className="activity-team-coin-image image-1"
                             src={
-                              process.env.REACT_APP_API_SERVER +
-                              "/media/" +
+                              S3_URL +
                               team.selectedCoins[1].symbol +
                               ".png"
                             }
@@ -140,9 +140,8 @@ export default function ActivityTabs({ teams, tournaments }) {
                           <img
                             className="activity-team-coin-image image-2"
                             src={
-                              process.env.REACT_APP_API_SERVER +
-                              "/media/" +
-                              team.selectedCoins[5].symbol +
+                              S3_URL +
+                              team.selectedCoins[4].symbol +
                               ".png"
                             }
                             width="45px"
@@ -153,8 +152,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                           <img
                             className="activity-team-coin-image image-3"
                             src={
-                              process.env.REACT_APP_API_SERVER +
-                              "/media/" +
+                              S3_URL +
                               team.selectedCoins[8].symbol +
                               ".png"
                             }
