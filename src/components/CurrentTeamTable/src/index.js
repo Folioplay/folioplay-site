@@ -57,7 +57,7 @@ function CurrentTeamTable() {
       id: rows.length + 1,
       coinName: element.coin_name,
       initialAllocation: element.coin_allocation,
-      priceStart: 0,
+      priceStart: element.coin_price_start,
       allocatedCoins: element.coin_start_allocation.toFixed(2),
       price: element.coin_price.toFixed(2),
       points: element.coin_current_points.toFixed(2),
@@ -67,9 +67,9 @@ function CurrentTeamTable() {
   coinsFlattendedData?.forEach((element) => {
     console.log(element.coin_current_price);
     var parser = {
-      id: rows.length + 1,
+      id: runningRows.length + 1,
       coinName: element.coin_name,
-      allotedCoins: element.coin_allocation,
+      allocatedCoins: element.coin_allocation,
     };
     runningRows.push(parser);
   });
@@ -125,7 +125,7 @@ function CurrentTeamTable() {
     {
       field: "allocatedCoins",
       headerName: "Allocated Coins",
-      width: 100,
+      width: 150,
       headerAlign: "center",
     },
   ];
@@ -157,7 +157,11 @@ function CurrentTeamTable() {
           {tournamentDetails.status === 3 ? (
             <DataGrid rows={rows} columns={columns} pageSize={12} />
           ) : (
-            <DataGrid rows={runningRows} columns={runningColumns} pageSize={12} />
+            <DataGrid
+              rows={runningRows}
+              columns={runningColumns}
+              pageSize={12}
+            />
           )}
         </div>
       </div>
