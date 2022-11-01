@@ -1,0 +1,7 @@
+name: push-to-server
+on: [push]
+jobs:
+  write-to-console:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'hello'
