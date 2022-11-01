@@ -2,7 +2,7 @@ name: push-to-server
 on:
   push:
     branches:
-      - main
+      - prod
 jobs:
   update_on_server:
     runs-on: ubuntu-latest
