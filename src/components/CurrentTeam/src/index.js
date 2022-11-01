@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import { getTeamByid } from "../../../APIS/apis";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router";
+import { S3_URL } from "../../../APIS/apis";
 import { TableRowsOutlined } from "@mui/icons-material";
 export default function CurrentTeamPreview() {
   const navigate = useNavigate();
@@ -78,8 +79,7 @@ export default function CurrentTeamPreview() {
                           )}
                           <img
                             src={
-                              process.env.REACT_APP_API_SERVER +
-                              "/media/" +
+                              S3_URL+
                               coin.symbol +
                               ".png"
                             }

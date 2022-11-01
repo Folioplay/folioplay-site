@@ -14,7 +14,8 @@ import {
   getRewardDetailsAPI,
 } from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import { SubscriptionsOutlined } from "@mui/icons-material";
 
 export default function LeaderBoardTabs({
   tournamentId,
@@ -61,6 +62,77 @@ export default function LeaderBoardTabs({
   };
   console.log(leaderBoard);
 
+  console.log("rewardList", tournamentPrizes, rewardSize);
+  var updatedPrizes = {};
+  var amounts = [];
+  var reversePrizes = {};
+  var left = 0,right=0;
+  while(right < tournamentPrizes.length){
+    while(right < tournamentPrizes.length && tournamentPrizes[left] == tournamentPrizes[right]){
+      right++;
+    }
+    amounts.push(tournamentPrizes[left]);
+    if(right - left > 1){
+      left++;
+      reversePrizes[tournamentPrizes[left-1]] = left+'-'+right;
+      left--;
+    }else{
+      left++;
+      reversePrizes[tournamentPrizes[left-1]] = left;
+      left--;
+    }
+    left = right;
+  }
+  console.log(reversePrizes)
+  // for(var i=0;i<tournamentPrizes.length;i++){
+  //   if(tournamentPrizes[i] != tournamentPrizes[i+1]){
+  //     var l = i+1;
+  //     updatedPrizes[l+''] = tournamentPrizes[i];
+  //     amounts.push(tournamentPrizes[i]);
+  //     reversePrizes[tournamentPrizes[i]] = l+'';
+  //   }else{
+  //     var left = i;
+  //     while(i<tournamentPrizes.length-1 && tournamentPrizes[left] == tournamentPrizes[i]){
+  //       i++;
+  //     }
+  //     left=left+1;
+  //     var right = i;
+  //     updatedPrizes[left+'-'+right] = tournamentPrizes[left-1];
+  //     amounts.push(tournamentPrizes[left-1]);
+  //     reversePrizes[tournamentPrizes[left-1]] = left+'-'+right;
+  //     i--;
+  //   }
+  // }
+  // console.log(amounts);
+  amounts = amounts.sort(function(a, b) {
+    return b-a;
+  });
+  console.log(amounts,reversePrizes,updatedPrizes);
+  // const [initialPrize, setInitialPrize] = useState([
+  //   {
+  //     "startRange": 1,
+  //     "endRange": 1,
+  //     "prize": 0
+  //   }
+  // ]);
+  //
+  // const parsePrizes = () => {
+  //   let previousValue = tournamentPrizes[0];
+  //   let rangeStarts = 1;
+  //   let rangeEnds = 1;
+  //   for(let i=1; i<tournamentPrizes.length; i++){
+  //     if(tournamentPrizes[i]!==previousValue){
+  //       setInitialPrize([...initialPrize, {
+  //         "startRange": rangeStarts,
+  //         "endRange": rangeEnds,
+  //         "prize": previousValue
+  //       }])
+  //       rangeStarts = i;
+  //       rangeEnds = i;
+  //     }
+  //   }
+  // }
+
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>
@@ -89,29 +161,51 @@ export default function LeaderBoardTabs({
           </div>
 
           {/*// Show rewards when the Tournament is not completed*/}
-          {tournamentStatus !== 3 &&
-            [...Array(tournamentPrizes.length)].map((value, index) => {
-              let leaderboardActive =
-                tournamentStatus !== 0 ? "leaderboard-active" : "";
-              console.log("tournanemnt prizes", tournamentPrizes);
-              return (
-                <motion.div
+          {tournamentStatus!==3 &&
+              amounts.map((value, index) => {
+                let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
+                // console.log("tournanemnt prizes", tournamentPrizes);
+                // if(tournamentPrizes[index] != tournamentPrizes[index+1]){
+                //   return(
+                //     <motion.div
+                //         initial={{ opacity: 0 }}
+                //         animate={{ opacity: 1 }}
+                //         transition={{ duration: 0.3 }}
+                //         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
+                //     >
+                //       <span className="leaderboard-points">{"  "}{index+1}</span>
+                //       <span className="ml-auto">{tournamentPrizes[index]}</span>
+                //     </motion.div>
+                //   );
+                // }else{
+                //   var left = index;
+                //   while(index < tournamentPrizes.length-1 && tournamentPrizes[index] != tournamentPrizes[index+1]){
+                //     index++;
+                //   }
+                //   return (
+                //     <motion.div
+                //         initial={{ opacity: 0 }}
+                //         animate={{ opacity: 1 }}
+                //         transition={{ duration: 0.3 }}
+                //         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
+                //     >
+                //       <span className="leaderboard-points">{left+1}{"-"}{index+1}</span>
+                //       <span className="ml-auto">{tournamentPrizes[index]}</span>
+                //     </motion.div>
+                //   );
+                // }
+                return (
+                  <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                  className={
-                    "leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " +
-                    leaderboardActive
-                  }
-                >
-                  <span className="leaderboard-points">
-                    {"  "}
-                    {index + 1}
-                  </span>
-                  <span className="ml-auto">{tournamentPrizes[index]}</span>
-                </motion.div>
-              );
-            })}
+                  className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
+              >
+                <span className="leaderboard-points">{"  "}{reversePrizes[value]}</span>
+                <span className="ml-auto">{value}</span>
+              </motion.div>
+                );
+              })}
 
           {tournamentStatus === 3 &&
             rewardsList.length !== 0 &&
