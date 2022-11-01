@@ -4,4 +4,12 @@ jobs:
   write-to-console:
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'hello'
+    - name: update on server
+      uses: D3rHase/ssh-command-action@v0.2.1
+      with:
+        HOST:  15.206.211.52
+        PORT: 22
+        USER: ec2-user
+        # private ssh key registered on the server
+        PRIVATE_SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
+        COMMAND: cd /usr/share/nginx/folioplay && ls
