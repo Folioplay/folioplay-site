@@ -4,7 +4,11 @@ import { Button, Grid } from "@mui/material";
 import { motion } from "framer-motion/dist/framer-motion";
 import "../css/index.css";
 import { useLocation, useNavigate } from "react-router";
-import { getCoinsTableData, getTeamByid } from "../../../APIS/apis";
+import {
+  getCoinsTableData,
+  getTeamByid,
+  getTournamentById,
+} from "../../../APIS/apis";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useParams } from "react-router";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
@@ -13,48 +17,116 @@ function CurrentTeamTable() {
   const { state } = useLocation();
   const { leaderBoardData } = state;
   console.log("team Data", leaderBoardData);
-  const tournamentId = leaderBoardData.tournamentId;
+  const tournamentId = state.tournament_id;
   const teamId = leaderBoardData.team.id;
 
   console.log(tournamentId, teamId);
 
   const [coinsData, setCoinsData] = useState({});
+  const [tournamentDetails, setTournamentDetails] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await getCoinsTableData(tournamentId, teamId).then(
-        (response) => setCoinsData(response)
+        (response) => {
+          console.log("Response", response);
+          setCoinsData(response);
+        }
       );
     };
+    const fetchTournament = async () => {
+      const responseTournament = await getTournamentById({
+        _id: tournamentId,
+      }).then((response) => {
+        setTournamentDetails(response);
+      });
+    };
     fetchData();
+    fetchTournament();
   }, []);
 
   const coinsFlattendedData = coinsData.coins_data;
 
   console.log(coinsFlattendedData);
+  console.log("Tournmanent", tournamentDetails);
   // DATA TABLE IMPLEMENTATION
   const rows = [];
-
+  const runningRows = [];
+  coinsFlattendedData?.forEach((element) => {
+    console.log(element.coin_current_price);
+    var parser = {
+      id: rows.length + 1,
+      coinName: element.coin_name,
+      initialAllocation: element.coin_allocation,
+      priceStart: 0,
+      allocatedCoins: element.coin_start_allocation.toFixed(2),
+      price: element.coin_price.toFixed(2),
+      points: element.coin_current_points.toFixed(2),
+    };
+    rows.push(parser);
+  });
   coinsFlattendedData?.forEach((element) => {
     console.log(element.coin_current_price);
     var parser = {
       id: rows.length + 1,
       coinName: element.coin_name,
       allotedCoins: element.coin_allocation,
-      price: element.coin_price.toFixed(2),
-      points: element.coin_current_points.toFixed(2),
     };
-    rows.push(parser);
+    runningRows.push(parser);
   });
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "Id", width: 50 },
-    { field: "coinName", headerName: "Coin Name", width: 100 },
-    { field: "allotedCoins", headerName: "Alloted Coins", width: 100 },
-    { field: "price", headerName: "Price", width: 100 },
+    { field: "id", headerName: "Id", width: 50, headerAlign: "center" },
+    {
+      field: "coinName",
+      headerName: "Coin Name",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "initialAllocation",
+      headerName: "Initial Allocation",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "priceStart",
+      headerName: "Price at start",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "allocatedCoins",
+      headerName: "Allocated Coins",
+      width: 100,
+      headerAlign: "center",
+    },
+    { field: "price", headerName: "Price", width: 100, headerAlign: "center" },
     {
       field: "points",
       headerName: "Points",
       width: 100,
+      headerAlign: "center",
+    },
+  ];
+
+  const runningColumns: GridColDef[] = [
+    {
+      field: "id",
+      headerName: "Id",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "coinName",
+      headerName: "Coin Name",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "allocatedCoins",
+      headerName: "Allocated Coins",
+      width: 100,
+      headerAlign: "center",
     },
   ];
 
@@ -82,7 +154,11 @@ function CurrentTeamTable() {
           Total Points:&nbsp;<b>{leaderBoardData.portfolio.toFixed(2)}</b>
         </div>
         <div className="team-preview-wrapper1 mt-20">
-          <DataGrid rows={rows} columns={columns} pageSize={12} />
+          {tournamentDetails.status === 3 ? (
+            <DataGrid rows={rows} columns={columns} pageSize={12} />
+          ) : (
+            <DataGrid rows={runningRows} columns={runningColumns} pageSize={12} />
+          )}
         </div>
       </div>
     );

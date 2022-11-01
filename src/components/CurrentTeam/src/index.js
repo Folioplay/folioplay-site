@@ -12,7 +12,7 @@ export default function CurrentTeamPreview() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { leaderBoardData } = state;
-  console.log("team Data", leaderBoardData);
+  console.log("team Data", leaderBoardData, state.tournament_id);
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -37,7 +37,10 @@ export default function CurrentTeamPreview() {
             style={{ cursor: "pointer", marginLeft: "10px" }}
             onClick={() =>
               navigate("/activity/team/currentStatus/currentCoinTable", {
-                state: { leaderBoardData: leaderBoardData },
+                state: {
+                  leaderBoardData: leaderBoardData,
+                  tournament_id: state.tournament_id,
+                },
               })
             }
           />
