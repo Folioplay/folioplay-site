@@ -425,8 +425,8 @@ const LeftComponent = () => {
               <img
                 style={{ borderRadius: "100%" }}
                 src={tournament.imageURL}
-                width="50px"
-                height={"50px"}
+                width="60px"
+                height={"60px"}
               />
             </span>
             <span

@@ -13,7 +13,7 @@
 
 .activity-tournament{
     /* width: 85%; */
-    min-height: 6em;
+    min-height: 5em;
     box-shadow: var(--tournament-card-shadow);
     border-radius: 8px;
     background-color: var(--white);
@@ -72,10 +72,10 @@
 }
 
 .activityTabs__teamLength{
-    border: 1px solid darkred;
+    border: 1px solid rgb(72, 228, 0);
     border-radius: 1rem;
     padding: 0px 10px;
-    color: darkred;
+    color: rgba(72, 228, 0,1);
     font-size: 0.8rem;
 }
 

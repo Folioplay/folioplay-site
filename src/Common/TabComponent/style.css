@@ -2,3 +2,8 @@
     color: black;
     font-size: 1rem;
 }
+.active-chip{
+    color: #4137F0 !important;
+    background: #EFEFFF !important;
+    border: 1px solid #D1D0FF !important;
+}
