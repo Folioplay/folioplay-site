@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FolioplayBar from "../../FolioplayBar/src";
 import ImageSlider from "../../ImageSlider/src";
 import ReactLoading from "react-loading";
@@ -8,7 +8,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
-import TimerIcon from '@mui/icons-material/Timer';
+import TimerIcon from "@mui/icons-material/Timer";
 import {
   deleteTeam,
   getAllTournaments,
@@ -75,7 +75,7 @@ const LeftComponent = () => {
   const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
   const pad = (num) => ("0" + num).slice(-2);
   const navigate = new useNavigate();
-  const [tournamentId,setTournamentId] = useState(null);
+  const [tournamentId, setTournamentId] = useState(null);
   var currImage = 1;
   var allImages;
   var len;
@@ -139,8 +139,6 @@ const LeftComponent = () => {
     }
   }
 
-
-
   const tourOptions = {
     defaultStepOptions: {
       cancelIcon: {
@@ -163,37 +161,44 @@ const LeftComponent = () => {
   };
 
   function TourModal() {
-    const [open, setOpen] = useState(true);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [open1, setOpen1] = useState(
+      localStorage.getItem("folioplay_new_user") === "true"
+    );
+    const handleClose = () => setOpen1(false);
     const tour = useContext(ShepherdTourContext);
     const handleClick = () => {
-      setOpen(false);
+      setOpen1(false);
     };
     return (
-        <div>
-          <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-              disableAutoFocus
-          >
-            <Box sx={tourModalStyle}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Welcome to Folioplay!
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Here is a short tour to the game.
-              </Typography>
-              <button className="button dark" onClick={() =>{setOpen(false);tour.start();}}>
-                {/* <button onClick={handleClick}> */}
-                  Start Tour
-                  {/* </button> */}
-              </button>
-            </Box>
-          </Modal>
-        </div>
+      <div>
+        <Modal
+          open={open1}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          disableAutoFocus
+        >
+          <Box sx={tourModalStyle}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Welcome to Folioplay!
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Here is a short tour to the game.
+            </Typography>
+            <button
+              className="button dark"
+              onClick={() => {
+                setOpen1(false);
+                tour.start();
+              }}
+            >
+              {/* <button onClick={handleClick}> */}
+              Start Tour
+              {/* </button> */}
+            </button>
+          </Box>
+        </Modal>
+      </div>
     );
   }
   const newsteps = [
@@ -425,7 +430,6 @@ const LeftComponent = () => {
     // ...
   ];
 
-
   const calculateTimeLeft = (difference) => {
     let timeLeft = {};
     if (difference > 0) {
@@ -443,12 +447,11 @@ const LeftComponent = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
       <>
-      <TimerIcon style={{color:"var(--golden)"}}/>
-      <span className={"tournamentCard__countdownTimer"}>
-         {days} : {hours} : {minutes} : {seconds}
-      </span>
+        <TimerIcon style={{ color: "var(--golden)" }} />
+        <span className={"tournamentCard__countdownTimer"}>
+          {days} : {hours} : {minutes} : {seconds}
+        </span>
       </>
-      
     );
   };
   const tournamentsList = tournaments ? (
@@ -547,7 +550,7 @@ const LeftComponent = () => {
                 var tmp = event.target.parentNode.parentNode.getAttribute("id");
                 setTournamentId(tmp.split("-")[1]);
                 // tournamentId = tournamentId.split("-")[1];
-                console.log(tournamentId);  
+                console.log(tournamentId);
                 chooseTeamOpen();
               }}
               disabled={disabledTournament}
@@ -589,7 +592,6 @@ const LeftComponent = () => {
             {/*    </span>*/}
             {/*  )}*/}
             {/*</div>*/}
-            
           </div>
           <div className="tournament-reward">
             <span
@@ -640,63 +642,63 @@ const LeftComponent = () => {
   ];
 
   return (
-      <ShepherdTour tourOptions={tourOptions} steps={newsteps}>
-        <TourModal />
-        <div className="fullpage">
-          <FolioplayBar intervalId={intervalId} />
-          {/* <PrivacyPolicies /> */}
-          <ImageSlider setPaused={setPaused} />
-          <div className="tournaments-wrapper">
-            <span
-              className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
-              style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
-            >
-              Trending
-            </span>
-            {tournaments === undefined ||
-            tournaments.length === 0 ||
-            teams === undefined ? (
-              <div className="loading-component">
-                <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
-              </div>
-            ) : (
-              <>
-                {tournamentsList}
-                <JoinTournamentDrawer
-                  teams={teams}
-                  tournamentId={tournamentId}
-                  joinTournamentAPI={joinTournamentAPI}
-                  setErrorMessage={setErrorMessage}
-                  setErrorMessageSnackOpen={setErrorMessageSnackOpen}
-                  tournaments={tournaments}
-                  changeTournament={true}
-                  navigate={navigate}
-                  intervalId={intervalId}
-                />
-              </>
-            )}
-          </div>
-          <Snackbar
-            open={errorMessageSnackOpen}
-            autoHideDuration={3000}
-            onClose={handleErrorMessageSnackClose}
+    <ShepherdTour tourOptions={tourOptions} steps={newsteps}>
+      <TourModal />
+      <div className="fullpage">
+        <FolioplayBar intervalId={intervalId} />
+        {/* <PrivacyPolicies /> */}
+        <ImageSlider setPaused={setPaused} />
+        <div className="tournaments-wrapper">
+          <span
+            className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
+            style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
-            <motion.div
-              initial={{ y: 200 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Alert
-                onClose={handleErrorMessageSnackClose}
-                severity={errorMessage.variant}
-                sx={{ width: "100%", fontFamily: "poppins" }}
-              >
-                {errorMessage.message}
-              </Alert>
-            </motion.div>
-          </Snackbar>
+            Trending
+          </span>
+          {tournaments === undefined ||
+          tournaments.length === 0 ||
+          teams === undefined ? (
+            <div className="loading-component">
+              <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
+            </div>
+          ) : (
+            <>
+              {tournamentsList}
+              <JoinTournamentDrawer
+                teams={teams}
+                tournamentId={tournamentId}
+                joinTournamentAPI={joinTournamentAPI}
+                setErrorMessage={setErrorMessage}
+                setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+                tournaments={tournaments}
+                changeTournament={true}
+                navigate={navigate}
+                intervalId={intervalId}
+              />
+            </>
+          )}
         </div>
-      </ShepherdTour>
+        <Snackbar
+          open={errorMessageSnackOpen}
+          autoHideDuration={3000}
+          onClose={handleErrorMessageSnackClose}
+        >
+          <motion.div
+            initial={{ y: 200 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Alert
+              onClose={handleErrorMessageSnackClose}
+              severity={errorMessage.variant}
+              sx={{ width: "100%", fontFamily: "poppins" }}
+            >
+              {errorMessage.message}
+            </Alert>
+          </motion.div>
+        </Snackbar>
+      </div>
+    </ShepherdTour>
   );
 };
 
