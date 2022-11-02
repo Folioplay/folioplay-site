@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Button from "@mui/material/Button";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
@@ -6,7 +6,7 @@ import metamaskIcon from "../../../images/metamask.png";
 import walletconnectIcon from "../../../images/walletconnect.png";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useMoralis } from "react-moralis";
-import { getAuthToken } from "../../../APIS/apis";
+import {getAuthToken, referralCodePost} from "../../../APIS/apis";
 import Snackbar from "@mui/material/Snackbar";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import MuiAlert from "@mui/material/Alert";
@@ -20,6 +20,9 @@ import { OAuthExtension } from "@magic-ext/oauth";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetails } from "../../../Redux/AuthSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import {AuthContext} from "../../../Context/AuthContext";
+
 
 function LoginLeft() {
   const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
@@ -39,12 +42,27 @@ function LoginLeft() {
     logout,
     isInitialized,
   } = useMoralis();
+  const search = useLocation().search;
   console.log(isAuthenticated, isAuthenticating, user, account);
+  const {setLoadingTrue, setLoadingFalse} = useContext(AuthContext);
+
+
   const [policiesAccepted, setPoliciesAccepted] = useState(false);
-  useEffect(() => {
-    console.log("isauth", isAuthenticated, isInitialized);
-    if (isAuthenticated && isInitialized) navigate("tournaments");
+  // useEffect(() => {
+  //   console.log("isauth", isAuthenticated, isInitialized);
+  //   if (isAuthenticated && isInitialized)
+  //     navigate("tournaments");
+  // }, []);
+
+  const [referralParam, setReferralParam] = useState("");
+
+  useEffect(()=>{
+    const code =new URLSearchParams(search).get('code')
+    setReferralParam(code);
   }, []);
+
+  // const name = new URLSearchParams(search).get('code');
+
 
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
@@ -69,8 +87,6 @@ function LoginLeft() {
       return;
     }
     const emailValue = document.getElementById("email-field").value;
-    console.log(emailValue);
-    console.log(magicEmail);
     const user = await authenticate({
       provider: "magicLink",
       email: emailValue,
@@ -78,12 +94,14 @@ function LoginLeft() {
       network: "mainnet",
     })
       .then(async (user) => {
+        setLoadingTrue();
         console.log("user", user);
         await getAuthTokenFunctionEmail(user, emailValue);
         console.log(user);
       })
       .then(function () {
         localStorage.setItem("walletType", "magicLink");
+        setLoadingFalse();
         navigate("tournaments");
       });
   };
@@ -110,9 +128,22 @@ function LoginLeft() {
           await getAuthTokenFunction(user);
           console.log(user);
         })
-        .then(function () {
+        .then(async function () {
           localStorage.setItem("walletType", "walletConnect");
-          navigate("tournaments");
+          let message = "";
+          if (referralParam!=="") {
+            const returnedMessage = await referralCodePost(referralParam);
+            // const referralResponse = await referralCodePost(referral);
+            if(returnedMessage.statusCode===200){
+              message = "Referral applied successfully";
+            }
+            else{
+              if(returnedMessage.statusCode===400){
+                message = returnedMessage.message;
+              }
+            }
+          }
+          navigate("tournaments", { state: { referralCodeMessage: message} });
         })
         .catch(function (error) {
           console.log(error);
@@ -166,10 +197,24 @@ function LoginLeft() {
       ) {
         await authenticate()
           .then(async (user) => {
+            // debugger
             await getAuthTokenFunction(user);
           })
-          .then((user) => {
+          .then(async (user) => {
             localStorage.setItem("walletType", "metamask");
+            // let message = "";
+            // if (referralParam !== "") {
+            //   const returnedMessage = await referralCodePost(referralParam);
+            //   // const referralResponse = await referralCodePost(referral);
+            //   if (returnedMessage.statusCode === 200) {
+            //     message = "Referral applied successfully";
+            //   } else {
+            //     if (returnedMessage.statusCode === 400) {
+            //       message = returnedMessage.message;
+            //     }
+            //   }
+            // }
+            // navigate("tournaments", {state: {referralCodeMessage: message}});
             navigate("tournaments");
           })
           .catch(function (error) {

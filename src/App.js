@@ -10,9 +10,9 @@ import OpenChart from "./components/Charts/src";
 import { useMoralis } from "react-moralis";
 import { Navigate, useLocation } from "react-router";
 import TickerWidget from "./components/TickerWidget/src";
-import { validUser } from "./APIS/apis";
+import {getAuthToken, SERVER, validUser} from "./APIS/apis";
 import { useState, useEffect } from "react";
-import { AuthContext, AuthContextProvider } from "./Context/AuthContext";
+import { AuthContext} from "./Context/AuthContext";
 import { tournaments } from "./components/Tournaments/common/demoTournaments";
 import Joyride from "react-joyride";
 import MyTeams from "./components/MyTeams/src";
@@ -22,48 +22,108 @@ import AddMoney from "./components/AddMoney/src";
 import CurrentTeamPreview from "./components/CurrentTeam/src";
 import CurrentTeamTable from "./components/CurrentTeamTable/src";
 import ComingSoon from "./components/AddMoney/src/ComingSoon";
+import {CircularProgress} from "@mui/material";
 // import React, { useEffect, useState } from "react";
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
-  function AuthenticatedRoute({ children }) {
 
-    const { isAuthenticated, isWeb3Enabled, user, isInitialized, logout } =
-      useMoralis();
+  const [isLoading, setIsLoading] = useState(true);
 
+  function AuthenticatedRoute({children}) {
 
-    fetch(`${SERVER}/user/is-valid`, {
-      method: "GET",
-      headers: {
-        "x-access-token": localStorage.getItem("authtoken"),
-      },
-    })
-        .then((res) => {
-          if (!res.ok) {
-            console.log("reserr", res.body)
-            if (res.status === 403)
-              throw new Error();
-
+      const callLogin = async() => {
+          if(localStorage.getItem("authtoken")===null ||localStorage.getItem("authtoken")===undefined || localStorage.getItem("authtoken")===""){
+              setTimeout(callLogin, 2000);
           }
-        })
-        .catch(err=>{
-          localStorage.clear();
-          window.location.pathname="/";
-        })
-    const { isLoading } = useContext(AuthContext);
-    console.log(
-      "isAuth",
-      "isInit",
-      "isLoad",
-      isAuthenticated,
-      isInitialized,
-      isLoading
-    );
-    // const { isLoading } = useContext(AuthContext);
-    console.log("isLoading logout",isLoading);
-    if (!isAuthenticated && isInitialized && isLoading) {
-      return window.location.pathname="/";
-    }
-    return children;
+          else{
+              fetch(`${SERVER}/user/is-valid`, {
+                  method: "GET",
+                  headers: {
+                      "x-access-token": localStorage.getItem("authtoken"),
+                  },
+              })
+                  .then((res) => {
+                      if (!res.ok) {
+                          console.log("reserr", res.body)
+                          if (res.status === 403)
+                              throw new Error();
+
+                      }
+                      else{
+                          setIsLoading(false);
+                      }
+                  })
+                  .catch(err => {
+                      // debugger
+                      localStorage.clear();
+                      window.location.pathname = "/";
+                  })
+              setIsLoading(false);
+              // clearTimeout(id);
+          }
+
+      }
+
+      const {isAuthenticated, isWeb3Enabled, user, isInitialized, isAuthenticating, logout} =
+          useMoralis();
+
+      if(isAuthenticated){
+
+          fetch(`${SERVER}/user/login`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  walletAddress: user.attributes.ethAddress,
+                  signature: user.attributes.authData.moralisEth.signature,
+                  // email: user.email
+              }),
+          })
+              .then((res) => {
+                  if (!res.ok) throw "Invalid user";
+                  else return res.json();
+              })
+              .then((data) => {
+                  localStorage.removeItem("authtoken");
+                  localStorage.setItem("authtoken", data.accessToken);
+                  return {
+                      "userdata": data.user,
+                      "new_user": data.newUser
+                  };
+              });
+
+          if(localStorage.getItem("authtoken")===null ||localStorage.getItem("authtoken")===undefined || localStorage.getItem("authtoken")===""){
+              callLogin();
+          }
+          else{
+              fetch(`${SERVER}/user/is-valid`, {
+                  method: "GET",
+                  headers: {
+                      "x-access-token": localStorage.getItem("authtoken"),
+                  },
+              })
+                  .then((res) => {
+                      if (!res.ok) {
+                          console.log("reserr", res.body)
+                          if (res.status === 403)
+                              throw new Error();
+
+                      }
+                      else{
+                          setIsLoading(false);
+                      }
+                  })
+                  .catch(err => {
+                      localStorage.clear();
+                      window.location.pathname = "/";
+                  })
+          }
+      }
+      if (!isAuthenticated && isInitialized) {
+          return window.location.pathname = "/";
+      }
+      return isLoading ? <CircularProgress /> : children;
   }
 
   function LoginRoute({ children }) {
@@ -71,8 +131,9 @@ function App() {
     const { isLoading } = useContext(AuthContext);
     console.log("login route ", isAuthenticated, isInitialized, isLoading);
     console.log("isLoading login",isLoading);
-    if (isAuthenticated && isInitialized && isLoading) {
-      return window.location.pathname="/tournament";
+
+    if ((isAuthenticated && isInitialized)) {
+        return window.location.pathname  = "/tournaments";
     }
     return children;
   }
@@ -112,9 +173,9 @@ function App() {
             path="/tournaments"
             element={
               <AuthenticatedRoute>
-                {/* <AuthContextProvider> */}
+                {/* */}
                 <Tournaments />
-                {/* </AuthContextProvider> */}
+                {/*  */}
               </AuthenticatedRoute>
             }
           />
@@ -123,9 +184,8 @@ function App() {
             path="/tournaments/:tournamentId"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <TournamentView />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -134,9 +194,8 @@ function App() {
             path="/teams/createteam"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <TeamCreation />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -145,9 +204,8 @@ function App() {
             path="/teams/createteam/assignrole"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <AssignRole />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -156,9 +214,8 @@ function App() {
             path="/activity"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <MyTeams />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -167,9 +224,8 @@ function App() {
             path="/user/profile"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <UserProfile />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -178,9 +234,8 @@ function App() {
             path="/activity/team/:teamId"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <TeamPreview />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -189,9 +244,8 @@ function App() {
             path="/activity/team/currentStatus"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <CurrentTeamPreview />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -200,9 +254,8 @@ function App() {
             path="/activity/team/currentStatus/currentCoinTable"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <CurrentTeamTable />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -211,9 +264,8 @@ function App() {
             path="/chart"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <OpenChart />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -222,9 +274,8 @@ function App() {
             path="/add_money"
             element={
               <AuthenticatedRoute>
-                <AuthContextProvider>
                   <AddMoney />
-                </AuthContextProvider>
+
               </AuthenticatedRoute>
             }
           />
@@ -233,9 +284,8 @@ function App() {
               path="/coming_soon"
               element={
                 <AuthenticatedRoute>
-                  <AuthContextProvider>
                     <ComingSoon />
-                  </AuthContextProvider>
+
                 </AuthenticatedRoute>
               }
           />

@@ -135,7 +135,8 @@ const LeftTournamentView = () => {
                                             );
                                         }}
                                     >
-                      <u>Click here to view on Polygon.</u>
+                      {/*<u>Click here to view on Polygon.</u>*/}
+                      <u>Tournament ID: XXXX{tournament.transaction_hash.slice(-6)}</u>
                     </span>
                                 </div>
                                 <div>
@@ -154,7 +155,8 @@ const LeftTournamentView = () => {
                                     );
                                 }}
                             >
-                  <u>Click here to view on Polygon.</u>
+                  {/*<u>Click here to view on Polygon.</u>*/}
+                  <u>Tournament ID: XXXX{tournament.transaction_hash.slice(-6)}</u>
                 </span>
                         )}
                     </div>

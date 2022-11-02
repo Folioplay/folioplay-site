@@ -92,7 +92,7 @@ export default function FolioplayBar({ intervalId }) {
   const lg = () => logOutContext
   const logOut = async () => {
     lg();
-    localStorage.setItem("authtoken", null);
+    localStorage.removeItem("authtoken", null);
     localStorage.removeItem("walletconnect");
     await logout();
     window.location.pathname = "/";

@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import FolioplayBar from "../../FolioplayBar/src";
-import { Button, LinearProgress, TextField } from "@mui/material";
-import ReactLoading from "react-loading";
-import { getAuthToken, referralCodePost } from "../../../APIS/apis";
+import {
+  getAuthToken, referralCodePost,
+} from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
 import { useMoralis } from "react-moralis";
