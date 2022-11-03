@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Button, TextField } from "@mui/material";
 import { referralCodePost } from "../../../APIS/apis";
 import SnackbarComponent from "../../../Common/Snackbar";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -32,15 +33,22 @@ const RightComponent = () => {
   const [snackSeverityType, setSnackSeverityType] = useState("");
 
   const [open, setOpen] = useState(
-    localStorage.getItem("folioplay_new_user") === "true"
+    localStorage.getItem("user_referral") === "null"
   );
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => setOpen(true);
+  const referralExists = localStorage.getItem("user_referral");
+  console.log(referralExists);
 
   const ReferralModal = () => {
     const [referral, setReferral] = useState("");
+    useEffect(() => {
+      if (referralExists !== "null") {
+        setReferral(localStorage.getItem("user_referral"));
+      }
+    });
 
     return (
       <ContentModal
@@ -98,7 +106,7 @@ const RightComponent = () => {
 
   return (
     <div id="tournament-page-image">
-      {ReferralModal()}
+      {referralExists !== "null" ? null : <ReferralModal />}
       <SnackbarComponent
         open={snackOpen}
         handleClose={snackHandleClose}

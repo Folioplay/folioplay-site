@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  getAuthToken, referralCodePost,
-} from "../../../APIS/apis";
+import { getAuthToken, referralCodePost } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
 import { useMoralis } from "react-moralis";
@@ -30,7 +28,9 @@ export default function Tournaments() {
       }
     }
     authTokenGet();
+    localStorage.removeItem("user_referral");
   }, []);
+
   return (
     <FolioPlayLayout
       LeftComponent={LeftComponent}

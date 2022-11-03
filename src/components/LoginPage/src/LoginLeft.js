@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
@@ -6,7 +6,7 @@ import metamaskIcon from "../../../images/metamask.png";
 import walletconnectIcon from "../../../images/walletconnect.png";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useMoralis } from "react-moralis";
-import {getAuthToken, referralCodePost} from "../../../APIS/apis";
+import { getAuthToken, referralCodePost } from "../../../APIS/apis";
 import Snackbar from "@mui/material/Snackbar";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import MuiAlert from "@mui/material/Alert";
@@ -20,9 +20,8 @@ import { OAuthExtension } from "@magic-ext/oauth";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetails } from "../../../Redux/AuthSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
-import {useLocation} from "react-router-dom";
-import {AuthContext} from "../../../Context/AuthContext";
-
+import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../../Context/AuthContext";
 
 function LoginLeft() {
   const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
@@ -44,8 +43,7 @@ function LoginLeft() {
   } = useMoralis();
   const search = useLocation().search;
   console.log(isAuthenticated, isAuthenticating, user, account);
-  const {setLoadingTrue, setLoadingFalse} = useContext(AuthContext);
-
+  const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
 
   const [policiesAccepted, setPoliciesAccepted] = useState(false);
   // useEffect(() => {
@@ -56,13 +54,13 @@ function LoginLeft() {
 
   const [referralParam, setReferralParam] = useState("");
 
-  useEffect(()=>{
-    const code =new URLSearchParams(search).get('code')
+  useEffect(() => {
+    const code = new URLSearchParams(search).get("code");
     setReferralParam(code);
+    localStorage.setItem("user_referral", code);
   }, []);
 
   // const name = new URLSearchParams(search).get('code');
-
 
   const [email, setEmail] = useState("");
   const handleChange = (event) => {
@@ -131,19 +129,18 @@ function LoginLeft() {
         .then(async function () {
           localStorage.setItem("walletType", "walletConnect");
           let message = "";
-          if (referralParam!=="") {
+          if (referralParam !== "") {
             const returnedMessage = await referralCodePost(referralParam);
             // const referralResponse = await referralCodePost(referral);
-            if(returnedMessage.statusCode===200){
+            if (returnedMessage.statusCode === 200) {
               message = "Referral applied successfully";
-            }
-            else{
-              if(returnedMessage.statusCode===400){
+            } else {
+              if (returnedMessage.statusCode === 400) {
                 message = returnedMessage.message;
               }
             }
           }
-          navigate("tournaments", { state: { referralCodeMessage: message} });
+          navigate("tournaments", { state: { referralCodeMessage: message } });
         })
         .catch(function (error) {
           console.log(error);
