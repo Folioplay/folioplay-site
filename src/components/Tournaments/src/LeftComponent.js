@@ -106,13 +106,14 @@ const LeftComponent = () => {
     fetchTournaments();
     fetchTeams();
   }, []);
-  useEffect(() => {
-    // allImages = document.getElementsByClassName("image-div");
-    // len = allImages.length;
-    // setIntervalId(setInterval(nextImage, 2000));
-    // console.log(allImages);
-    // setL(len);
-  }, []);
+
+  // useEffect(() => {
+  //   // allImages = document.getElementsByClassName("image-div");
+  //   // len = allImages.length;
+  //   // setIntervalId(setInterval(nextImage, 2000));
+  //   // console.log(allImages);
+  //   // setL(len);
+  // }, []);
   async function fetchTournaments() {
     setTournaments(await getAllTournaments());
   }

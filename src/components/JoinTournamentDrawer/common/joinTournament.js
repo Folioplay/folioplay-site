@@ -1,7 +1,7 @@
 import checkNFTHolder from "../../TournamentView/common/checkNFTHolder";
 import paymentTournament from "../../TournamentView/common/paymentTournament";
 import { chooseTeamClose } from "./chooseTeamAnimations";
-export default async function joinTournament(teams,tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen,tournaments) {
+export default async function  joinTournament(teams,tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen,tournaments) {
   console.log("in drawer join function ",tournamentId);
   document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
   console.log("in common of tournaments ... ");

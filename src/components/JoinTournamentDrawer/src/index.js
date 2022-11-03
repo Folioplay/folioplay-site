@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { joinTournamentAPI, deleteTeam } from "../../../APIS/apis";
 import { Button, LinearProgress } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -157,7 +157,7 @@ export default function JoinTournamentDrawer({
               fontWeight: "600",
               fontSize: "17px",
             }}
-            onClick={() =>
+            onClick={() => {
               // joinTournament(
               //   user,
               //   tournamentId,
@@ -170,14 +170,16 @@ export default function JoinTournamentDrawer({
               //   changeTournament,
               //   account
               // )
-                joinTournament(
-                    teams,
-                    tournamentId,
-                    joinTournamentAPI,
-                    setErrorMessage,
-                    setErrorMessageSnackOpen,
-                    tournaments
-                )
+              joinTournament(
+                  teams,
+                  tournamentId,
+                  joinTournamentAPI,
+                  setErrorMessage,
+                  setErrorMessageSnackOpen,
+                  tournaments
+              )
+              // setTeamJoined(!teamJoined);
+            }
             }
           >
             Continue

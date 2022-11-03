@@ -50,6 +50,20 @@ function App() {
 
                       }
                       else{
+                          fetch(`${SERVER}/user/`, {
+                              method: "GET",
+                              headers: {
+                                  "x-access-token": localStorage.getItem("authtoken"),
+                              },
+                          })
+                              .then((res) => res.json())
+                              .then((data)=> {
+                                  localStorage.setItem("folioUsername", data.username);
+                                  localStorage.setItem("folioWalletAddress", data.walletAddress);
+                                  localStorage.setItem("folioReferralCode", data.referralCode);
+                              })
+                              .catch((err) => err)
+                              .finally(() => setIsLoading(false));
                           setIsLoading(false);
                       }
                   })
