@@ -105,9 +105,9 @@ export default function ActivityTabs({ teams, tournaments }) {
                       onClick={(event) => {
                         navigate("/activity/team/" + team.id);
                       }}
-                      initial={{ y: "100vh" }}
-                      animate={{ y: 0 }}
-                      transition={{ delay: 0 + 0.08 * index, duration: 0.35 }}
+                      initial={{ opacity:0 }}
+                      animate={{ opacity:1 }}
+                      transition={{ duration: 0.35 }}
                       className="activity-team-card mb-15"
                     >
                       <span className="activity-team-info">

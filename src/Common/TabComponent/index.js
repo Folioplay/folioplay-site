@@ -132,6 +132,8 @@ export default function ContestTabs({
           <>
             {tournamentUpdatedOpen.map((tournament, index) => {
               const disabledTournament = tournament.status === 3;
+              const startDate = new Date(tournament.tournament.start_time);
+              const finishDate = new Date(tournament.tournament.end_time);
               const status = {
                 3: { value: "Completed", color: "#ff000096" },
                 1: { value: "Closed", color: "#FFCC00" },
@@ -171,7 +173,7 @@ export default function ContestTabs({
                         });
                       }}
                     >
-                      <span style={{ color: "#071F36", fontWeight: "700" }}>
+                      <span className="font-size-20" style={{ color: "#071F36", fontWeight: "700" }}>
                         {tournament.tournament.name}
                       </span>
                       {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
@@ -179,7 +181,7 @@ export default function ContestTabs({
                       {/*</span>*/}
                       <br />
                       <span className="tournaments-spots">
-                        {/* <div className="tournamentPage__startTime">
+                        <div className="tournamentPage__startTime">
                         Start Time
                         <div>
                           <span className="font-size-12">
@@ -195,8 +197,8 @@ export default function ContestTabs({
                             hrs
                           </span>
                         </div>
-                      </div> */}
-                        {/* <div>
+                      </div>
+                        <div>
                         End Time
                         <div>
                           <span className="font-size-12">
@@ -212,7 +214,7 @@ export default function ContestTabs({
                             hrs
                           </span>
                         </div>
-                      </div> */}
+                      </div>
                       </span>
                     </span>
                   </div>
@@ -270,6 +272,8 @@ export default function ContestTabs({
           <>
             {tournamentUpdatedRunning.map((tournament, index) => {
               const disabledTournament = tournament.status === 3;
+              const startDate = new Date(tournament.tournament.start_time);
+              const finishDate = new Date(tournament.tournament.end_time);
               const status = {
                 3: { value: "Completed", color: "#ff000096" },
                 1: { value: "Closed", color: "#FFCC00" },
@@ -309,7 +313,7 @@ export default function ContestTabs({
                       });
                     }}
                   >
-                    <span style={{ color: "#071F36", fontWeight: "700" }}>
+                    <span className="font-size-20" style={{ color: "#071F36", fontWeight: "700" }}>
                       {tournament.tournament.name}
                     </span>
                     {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
@@ -317,7 +321,7 @@ export default function ContestTabs({
                     {/*</span>*/}
                     <br />
                     <span className="tournaments-spots">
-                      {/* <div className="tournamentPage__startTime">
+                      <div className="tournamentPage__startTime">
                       Start Time
                       <div>
                         <span className="font-size-12">
@@ -333,8 +337,8 @@ export default function ContestTabs({
                           hrs
                         </span>
                       </div>
-                    </div> */}
-                      {/* <div>
+                    </div>
+                      <div>
                       End Time
                       <div>
                         <span className="font-size-12">
@@ -350,7 +354,7 @@ export default function ContestTabs({
                           hrs
                         </span>
                       </div>
-                    </div> */}
+                    </div>
                     </span>
                   </span>
                 </div>
@@ -407,8 +411,8 @@ export default function ContestTabs({
         {tournamentUpdatedCompleted.length ? (
           <>
             {tournamentUpdatedCompleted.map((tournament, index) => {
-              const startDate = new Date(tournament.start_time);
-              const finishDate = new Date(tournament.end_time);
+              const startDate = new Date(tournament.tournament.start_time);
+              const finishDate = new Date(tournament.tournament.end_time);
               const disabledTournament = tournament.status === 3;
               const status = {
                 3: { value: "Completed", color: "#ff000096" },
@@ -448,7 +452,7 @@ export default function ContestTabs({
                         });
                       }}
                     >
-                      <span style={{ color: "#071F36", fontWeight: "700" }}>
+                      <span className="font-size-20" style={{ color: "#071F36", fontWeight: "700" }}>
                         {tournament.tournament.name}
                       </span>
                       {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
@@ -456,7 +460,7 @@ export default function ContestTabs({
                       {/*</span>*/}
                       <br />
                       <span className="tournaments-spots">
-                        {/* <div className="tournamentPage__startTime">
+                        <div className="tournamentPage__startTime">
                         Start Time
                         <div>
                           <span className="font-size-12">
@@ -472,8 +476,8 @@ export default function ContestTabs({
                             hrs
                           </span>
                         </div>
-                      </div> */}
-                        {/* <div>
+                      </div>
+                        <div>
                         End Time
                         <div>
                           <span className="font-size-12">
@@ -489,7 +493,7 @@ export default function ContestTabs({
                             hrs
                           </span>
                         </div>
-                      </div> */}
+                      </div>
                       </span>
                     </span>
                   </div>
