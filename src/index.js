@@ -15,9 +15,9 @@ root.render(
   // <React.StrictMode>
       <MoralisProvider serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL} appId={process.env.REACT_APP_MORALIS_APP_ID}>
           {/*<AuthContextProvider>*/}
-          {/*    <ReduxProvider store={store} >*/}
+              <ReduxProvider store={store} >
                   <App />
-              {/*</ReduxProvider>*/}
+              </ReduxProvider>
           {/*</AuthContextProvider>*/}
       </MoralisProvider>
   // </React.StrictMode>

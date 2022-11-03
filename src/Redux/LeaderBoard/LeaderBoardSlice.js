@@ -2,8 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 export const getLeaderboardAsync = createAsyncThunk(
     'leaderboard/past',
-    async()=>{
-        const authtoken=localStorage.getItem("authtoken");
+    async(tournament_id)=>{
         return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/leaderboard/${tournament_id}`, {
             method: "GET",
             headers: {
@@ -24,9 +23,10 @@ export const getLeaderboardSlice = createSlice({
     },
     extraReducers: {
         [getLeaderboardAsync.fulfilled]: (leaderBoardList, action) => {
-            leaderBoardList.interviews=action.payload;
+            leaderBoardList.leaderBoard=action.payload;
+            console.log(leaderBoardList.leaderBoard);
         },
     }
 });
 
-export default pastIntSlice.reducer;
+export default getLeaderboardSlice.reducer;

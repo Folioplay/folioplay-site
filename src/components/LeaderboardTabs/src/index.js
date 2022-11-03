@@ -16,6 +16,8 @@ import {
 import { useMoralis } from "react-moralis";
 import {useNavigate} from "react-router-dom";
 import { SubscriptionsOutlined } from "@mui/icons-material";
+import {useDispatch, useSelector} from "react-redux";
+import LeaderBoardSlice, {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 
 export default function LeaderBoardTabs({
   tournamentId,
@@ -23,6 +25,7 @@ export default function LeaderBoardTabs({
   tournamentPrizes,
   rewardSize,
 }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [value, setValue] = React.useState("1");
   const { user } = useMoralis();
@@ -35,6 +38,14 @@ export default function LeaderBoardTabs({
   const [prizes, setPrizes] = useState([]);
   let count = 0;
   let rewardUserCount = 0;
+
+
+  const getLeaderBoardRedux=useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
+  console.log(getLeaderBoardRedux);
+
+  useEffect(()=>{
+    dispatch(getLeaderboardAsync());
+  },[])
   useEffect(() => {
     async function getLeader() {
       const data = await getLeaderboard(tournamentId);
