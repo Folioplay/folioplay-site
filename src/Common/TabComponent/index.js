@@ -150,6 +150,13 @@ export default function ContestTabs({
                   key={"tournament__" + index}
                   className="tournament"
                   style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                  onClick={() => {
+                    navigate(`/tournaments/${tournament.tournament._id}`, {
+                      state: {
+                        transactionId: tournament.transaction_hash,
+                      },
+                    });
+                  }}
                 >
                   <div className="tournament-info">
                     <span
@@ -165,13 +172,7 @@ export default function ContestTabs({
                     </span>
                     <span
                       style={{ textAlign: "left" }}
-                      onClick={() => {
-                        navigate(`/tournaments/${tournament.tournament._id}`, {
-                          state: {
-                            transactionId: tournament.transaction_hash,
-                          },
-                        });
-                      }}
+                      
                     >
                       <span className="font-size-20" style={{ color: "#071F36", fontWeight: "700" }}>
                         {tournament.tournament.name}
@@ -290,6 +291,13 @@ export default function ContestTabs({
                 key={"tournament__" + index}
                 className="tournament"
                 style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                onClick={() => {
+                  navigate(`/tournaments/${tournament.tournament._id}`, {
+                    state: {
+                      transactionId: tournament.transaction_hash,
+                    },
+                  });
+                }}
               >
                 <div className="tournament-info">
                   <span
@@ -305,13 +313,7 @@ export default function ContestTabs({
                   </span>
                   <span
                     style={{ textAlign: "left" }}
-                    onClick={() => {
-                      navigate(`/tournaments/${tournament.tournament._id}`, {
-                        state: {
-                          transactionId: tournament.transaction_hash,
-                        },
-                      });
-                    }}
+                   
                   >
                     <span className="font-size-20" style={{ color: "#071F36", fontWeight: "700" }}>
                       {tournament.tournament.name}
@@ -429,6 +431,13 @@ export default function ContestTabs({
                   key={"tournament__" + index}
                   className="tournament"
                   style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                  onClick={() => {
+                    navigate(`/tournaments/${tournament.tournament._id}`, {
+                      state: {
+                        transactionId: tournament.transaction_hash,
+                      },
+                    });
+                  }}
                 >
                   <div className="tournament-info">
                     <span
@@ -444,13 +453,7 @@ export default function ContestTabs({
                     </span>
                     <span
                       style={{ textAlign: "left" }}
-                      onClick={() => {
-                        navigate(`/tournaments/${tournament.tournament._id}`, {
-                          state: {
-                            transactionId: tournament.transaction_hash,
-                          },
-                        });
-                      }}
+                      
                     >
                       <span className="font-size-20" style={{ color: "#071F36", fontWeight: "700" }}>
                         {tournament.tournament.name}
