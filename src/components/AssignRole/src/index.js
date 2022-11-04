@@ -109,7 +109,7 @@ export function AssignRole() {
                 id="crown"
                 src={require("../../../images/crown1.png").default}
               />
-              <div>
+              <div className="ranks-img-wrapper">
                 <img
                   id="coin-rank-2"
                   src={require("../../../images/default.png").default}
@@ -135,12 +135,14 @@ export function AssignRole() {
                 width="280px"
                 height="220.58px"
               />
+              
             </div>
-            <div id="ramp-wrapper">
+            {/* <div id="ramp-wrapper">
               <div id="ramp"></div>
-            </div>
+            </div> */}
 
             <div className="lower-half pt-20">
+            
               <span
                 id="rank-info"
                 className="pl-10 pt-20 pr-10 pb-20 mb-5 mt-5 font-weight-500"

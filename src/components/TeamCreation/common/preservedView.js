@@ -3,6 +3,7 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
   var allButtons = document.getElementsByClassName("coin-add-button");
   var maxSelected = 0;
   var coinsLimit = 2;
+  console.log(wasActiveTab,superstars);
   document.getElementById("superstars" + "-selected-number").innerText =
     document.querySelectorAll(
       "#" + "superstars" + " .coin-added-button"
@@ -12,10 +13,12 @@ export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
   document.getElementById("rekt" + "-selected-number").innerText =
     document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
   if (wasActiveTab !== undefined && wasActiveTab.length > 0) {
+    console.log("in if condition ................")
     // console.log("here baby", document.getElementsByClassName('coin-class-selected'));
     var allClasses = document.getElementsByClassName("coinClass");
     console.log("tab switch and retreving selected coins .......");
     for (var j = 0; j < superstars.length; j++) {
+      console.log(superstars[j].name);
       var bucketPreview = document.getElementsByClassName("superstars-preview");
       if (superstars[j].selected) {
         var emptySpot = false;

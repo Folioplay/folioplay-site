@@ -35,6 +35,8 @@
     padding-top: 1.25em;
     padding-left: 1em;
     padding-right: 1em;
+}.tournament:hover{
+    cursor: pointer;
 }
 
 .tournament-info span:nth-child(2):hover {

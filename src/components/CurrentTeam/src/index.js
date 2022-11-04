@@ -69,7 +69,7 @@ export default function CurrentTeamPreview() {
                         transition={{ duration: 0.07 * index }}
                         className={"coin-card-current-team " + coin_card}
                       >
-                        <div className="coinCategory">{coin.category}</div>
+                        <div className="coinCategory">{coin.category === 'Defi' ? "Rekt" : coin.category }</div>
 
                         <span className="coin-image-wrapper">
                           {coin.rank !== -1 && (

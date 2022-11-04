@@ -475,6 +475,15 @@ const LeftComponent = () => {
           transition={{ duration: 0.3 * (index + 1) }}
           key={"tournament__" + index}
           className="tournament"
+          onClick={() => {
+            console.log("intervalId is here", intervalId);
+            clearInterval(intervalId);
+            navigate(`/tournaments/${tournament._id}`, {
+              state: {
+                transactionId: tournament.transaction_hash,
+              },
+            });
+          }}
         >
           <div className="tournament-info">
             <span className="tournament-image" style={{ borderRadius: "100%" }}>
@@ -487,15 +496,7 @@ const LeftComponent = () => {
             </span>
             <span
               style={{ textAlign: "left" }}
-              onClick={() => {
-                console.log("intervalId is here", intervalId);
-                clearInterval(intervalId);
-                navigate(`/tournaments/${tournament._id}`, {
-                  state: {
-                    transactionId: tournament.transaction_hash,
-                  },
-                });
-              }}
+              
             >
               <span style={{ color: "#071F36", fontWeight: "700" }}>
                 {tournament.name}
@@ -548,6 +549,8 @@ const LeftComponent = () => {
                 disabledTournament ? {} : { backgroundColor: "var(--golden)" }
               }
               onClick={(event) => {
+                event.cancelBubble = true;
+                if(event.stopPropagation) event.stopPropagation();
                 var tmp = event.target.parentNode.parentNode.getAttribute("id");
                 setTournamentId(tmp.split("-")[1]);
                 // tournamentId = tournamentId.split("-")[1];

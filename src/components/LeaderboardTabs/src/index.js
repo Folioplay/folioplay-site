@@ -326,7 +326,7 @@ export default function LeaderBoardTabs({
                         });
                     }}
                   >
-                    <span className="leaderboard-points">{"  "}1</span>
+                    <span className="leaderboard-points">{"  "}-</span>
                     <span className={"leaderboard-username"}>
                       {entry.user.username}{" "}
                       <span className={"teamCount"}>

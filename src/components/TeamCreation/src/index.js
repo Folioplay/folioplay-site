@@ -10,10 +10,10 @@ import OpenChart from "../../Charts/src";
 import { motion } from "framer-motion/dist/framer-motion";
 import Snackbar from "@mui/material/Snackbar";
 import { getAllCoins } from "../../../APIS/apis";
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from "@material-ui/core/styles";
 import MuiAlert from "@mui/material/Alert";
 import preservedView from "../common/preservedView";
 import assignRoles from "../common/assignRole";
@@ -42,9 +42,9 @@ export function TeamCreation() {
     boxShadow: 24,
     borderRadius: "12px",
     p: 1,
-    ['@media (max-width:1200px)']: {
+    ["@media (max-width:1200px)"]: {
       transform: "translate(-50%, -50%)",
-    }
+    },
   };
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -74,9 +74,13 @@ export function TeamCreation() {
     setCoins(await getAllCoins());
   }
   useEffect(() => {
-    localStorage.removeItem("superstars");
-    localStorage.removeItem("mooning");
-    localStorage.removeItem("rekt");
+    // localStorage.removeItem("superstars");
+    // localStorage.removeItem("mooning");
+    // localStorage.removeItem("rekt");
+    if(localStorage.getItem("superstars") || localStorage.getItem("mooning") || localStorage.getItem("rekt")){
+      console.log(wasActiveTab);
+      preservedView(wasActiveTab,localSuperstars,localMooning,localRekt);
+    }
     fetchCoins();
   }, []);
 
@@ -117,20 +121,36 @@ export function TeamCreation() {
   }
 
   useEffect(() => {
+    console.log("second use effect now ");
     preservedView(wasActiveTab, superstars, mooning, rekt);
-    var coinsLimit = wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;
-    var allButtons = document.querySelectorAll("#" + wasActiveTab + " .coin-add-button");
-    var totalAddedCoins = document.getElementsByClassName("coin-added-button").length;
-    if (document.querySelectorAll("#" + wasActiveTab + " .coin-added-button").length >= coinsLimit || totalAddedCoins === 11) {
+    var coinsLimit =
+      wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;
+    var allButtons = document.querySelectorAll(
+      "#" + wasActiveTab + " .coin-add-button"
+    );
+    var totalAddedCoins =
+      document.getElementsByClassName("coin-added-button").length;
+    if (
+      document.querySelectorAll("#" + wasActiveTab + " .coin-added-button")
+        .length >= coinsLimit ||
+      totalAddedCoins === 11
+    ) {
       for (var i = 0; i < allButtons.length; i++) {
         if (allButtons[i].innerText === "ADD") {
           allButtons[i].classList.add("disabled-button");
         }
       }
     } else {
-      document.getElementById('superstars' + '-selected-number').innerText = document.querySelectorAll("#" + 'superstars' + " .coin-added-button").length;
-      document.getElementById('mooning' + '-selected-number').innerText = document.querySelectorAll("#" + 'mooning' + " .coin-added-button").length;
-      document.getElementById('rekt' + '-selected-number').innerText = document.querySelectorAll("#" + 'rekt' + " .coin-added-button").length;
+      document.getElementById("superstars" + "-selected-number").innerText =
+        document.querySelectorAll(
+          "#" + "superstars" + " .coin-added-button"
+        ).length;
+      document.getElementById("mooning" + "-selected-number").innerText =
+        document.querySelectorAll(
+          "#" + "mooning" + " .coin-added-button"
+        ).length;
+      document.getElementById("rekt" + "-selected-number").innerText =
+        document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
     }
   }, [wasActiveTab, graphCoin, snackOpen]);
 
@@ -140,7 +160,7 @@ export function TeamCreation() {
         style={{ color: "var(--black)" }}
         container
         rowSpacing={"1em"}
-      // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {superstars.map((coin, index) => {
           return (
@@ -151,10 +171,10 @@ export function TeamCreation() {
                 transition={{ duration: 0.07 * index }}
                 className="coin-card"
               >
-                <span className="coin-image-wrapper" >
+                <span className="coin-image-wrapper">
                   <img
                     src={coin.imageUrl}
-                    alt='coin_image'
+                    alt="coin_image"
                     onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
                     width="40px"
                     height="40px"
@@ -175,9 +195,8 @@ export function TeamCreation() {
                     variant="outlined"
                     size="small"
                     onClick={(event) => {
-                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
-                    }
-                    }
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt);
+                    }}
                   >
                     Added
                   </Button>
@@ -187,10 +206,9 @@ export function TeamCreation() {
                     style={{ borderRadius: "12px" }}
                     variant="outlined"
                     size="small"
-                    onClick={(event) =>{
-                      addCoin(event, wasActiveTab, superstars, mooning, rekt)
-                      }
-                    }
+                    onClick={(event) => {
+                      addCoin(event, wasActiveTab, superstars, mooning, rekt);
+                    }}
                   >
                     Add
                   </Button>
@@ -208,7 +226,7 @@ export function TeamCreation() {
         style={{ color: "var(--black)" }}
         container
         rowSpacing={"1em"}
-      // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {mooning.map((coin, index) => {
           return (
@@ -221,10 +239,8 @@ export function TeamCreation() {
               >
                 <span className="coin-image-wrapper">
                   <img
-                    src={
-                      coin.imageUrl
-                    }
-                    alt='coin_image'
+                    src={coin.imageUrl}
+                    alt="coin_image"
                     width="40px"
                     height="40px"
                     style={{ cursor: "pointer" }}
@@ -275,7 +291,7 @@ export function TeamCreation() {
         style={{ color: "var(--black)" }}
         container
         rowSpacing={"1em"}
-      // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {rekt.map((coin, index) => {
           return (
@@ -288,10 +304,8 @@ export function TeamCreation() {
               >
                 <span className="coin-image-wrapper">
                   <img
-                    src={
-                      coin.imageUrl
-                    }
-                    alt='coin_image'
+                    src={coin.imageUrl}
+                    alt="coin_image"
                     width="40px"
                     style={{ cursor: "pointer" }}
                     height="40px"
@@ -343,39 +357,52 @@ export function TeamCreation() {
   const LeftComponent = () => {
     return (
       <div className="fullpage">
-        <div className="teamcreate-bar pl-20 pt-10 mb-20">
-          <ArrowBackIosIcon
-            fontSize="medium"
-            className="go-back-button"
-            onClick={() => navigate(-1)}
-          />
-          <span className="ml-20 font-size-20 font-weight-700">
-            Choose Coins
-          </span>
+        <div className="sticky-top">
+          <div className="teamcreate-bar pl-20 pt-10 mb-20">
+            <ArrowBackIosIcon
+              fontSize="medium"
+              className="go-back-button"
+              onClick={() => navigate(-1)}
+            />
+            <span className="ml-20 font-size-20 font-weight-700">
+              Choose Coins
+            </span>
+          </div>
+          <br />
+          <div className="coin-classes mb-10">
+            <span
+              id="superstars-tab"
+              className="coinClass coin-class-selected ml-20"
+              onClick={changeTabs}
+            >
+              SuperStars
+            </span>
+            <span id="superstars-selected-number" className="font-size-12">
+              0
+            </span>
+            <span
+              id="mooning-tab"
+              className="coinClass ml-20"
+              onClick={changeTabs}
+            >
+              Mooning
+            </span>
+            <span id="mooning-selected-number" className="font-size-12">
+              0
+            </span>
+            <span
+              id="rekt-tab"
+              className="coinClass ml-20"
+              onClick={changeTabs}
+            >
+              Rekt
+            </span>
+            <span id="rekt-selected-number" className="font-size-12">
+              0
+            </span>
+          </div>
         </div>
-        <br />
-        <div className="coin-classes mb-10">
-          <span
-            id="superstars-tab"
-            className="coinClass coin-class-selected ml-20"
-            onClick={changeTabs}
-          >
-            SuperStars
-          </span>
-          <span id="superstars-selected-number" className="font-size-12">0</span>
-          <span
-            id="mooning-tab"
-            className="coinClass ml-20"
-            onClick={changeTabs}
-          >
-            Mooning
-          </span>
-          <span id="mooning-selected-number" className="font-size-12">0</span>
-          <span id="rekt-tab" className="coinClass ml-20" onClick={changeTabs}>
-            Rekt
-          </span>
-          <span id="rekt-selected-number" className="font-size-12">0</span>
-        </div>
+
         <div className="coins">
           <div className="tip-div">
             <WbSunnyOutlinedIcon />
@@ -419,7 +446,10 @@ export function TeamCreation() {
             </Button>
           </div>
           <div className="error-cannot-add-coin">
-            <ErrorOutlineOutlinedIcon />  <span className="ml-10">Cannot add more coin to this basket !!</span>
+            <ErrorOutlineOutlinedIcon />{" "}
+            <span className="ml-10">
+              Cannot add more coin to this basket !!
+            </span>
           </div>
           <Snackbar
             open={snackOpen}
@@ -474,7 +504,9 @@ export function TeamCreation() {
           </motion.div>
         </Modal>
         <div>
-          <span className="font-size-36 font-weight-700 mb-20 mt-20">Here is your team preview!</span>
+          <span className="font-size-36 font-weight-700 mb-20 mt-20">
+            Here is your team preview!
+          </span>
           {/* <h3>Doesn't these big winnings look WOW? Ofcourse they do!</h3> */}
         </div>
         <TeamPreview superstars={superstars} mooning={mooning} rekt={rekt} />
