@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-export const getLeaderboardAsync = createAsyncThunk(
+export const  getLeaderboardAsync = createAsyncThunk(
     'leaderboard/past',
     async(tournament_id)=>{
         return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/leaderboard/${tournament_id}`, {

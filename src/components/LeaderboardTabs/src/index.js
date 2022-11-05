@@ -44,7 +44,7 @@ export default function LeaderBoardTabs({
   console.log(getLeaderBoardRedux);
 
   useEffect(()=>{
-    dispatch(getLeaderboardAsync());
+    dispatch(getLeaderboardAsync(tournamentId));
   },[])
   useEffect(() => {
     async function getLeader() {
@@ -305,8 +305,8 @@ export default function LeaderBoardTabs({
           </div>
 
           {tournamentStatus === 0 &&
-            leaderBoard.length !== 0 &&
-            leaderBoard.map((entry, index) => {
+              getLeaderBoardRedux.length !== 0 &&
+              getLeaderBoardRedux.map((entry, index) => {
               if (entry.user.walletAddress === userWalletAddress)
                 return (
                   <motion.div
@@ -339,8 +339,8 @@ export default function LeaderBoardTabs({
             })}
 
           {tournamentStatus === 0 &&
-            leaderBoard.length !== 0 &&
-            leaderBoard.map((entry, index) => {
+              getLeaderBoardRedux.length !== 0 &&
+              getLeaderBoardRedux.map((entry, index) => {
               if (entry.user.walletAddress !== userWalletAddress)
                 return (
                   <motion.div
@@ -402,8 +402,8 @@ export default function LeaderBoardTabs({
 
           {/*// Show all points when tournament is closed*/}
           {tournamentStatus !== 0 &&
-            leaderBoard.length !== 0 &&
-            leaderBoard.map((entry, index) => {
+              getLeaderBoardRedux.length !== 0 &&
+              getLeaderBoardRedux.map((entry, index) => {
               if (entry.user.walletAddress !== userWalletAddress)
                 return (
                   <motion.div
