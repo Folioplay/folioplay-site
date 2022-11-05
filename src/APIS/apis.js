@@ -4,6 +4,9 @@ export const S3_URL = process.env.REACT_APP_S3_URL
 export async function getAllTournaments() {
   return await fetch(`${SERVER}/tournament/`, {
     method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("authtoken"),
+    }
   }).then((res) => res.json());
 }
 
