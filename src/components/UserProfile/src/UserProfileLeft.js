@@ -221,8 +221,8 @@ function UserProfileLeft() {
       <div className="profile-info-wrapper">
         <div className="headingPersonalInfo">Journey Stats</div>
         <div className="personalDetails" >
-          {/* <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",}}>
-            <div style={{width:"200px",height:"130px"}}>
+          <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",}}>
+            <div style={{width:"200px",height:"111px"}}>
               <ReactSpeedometer
                   ringWidth={20}
                   needleHeightRatio={0.6}
@@ -233,21 +233,21 @@ function UserProfileLeft() {
                   minValue={"0"}
                   maxValue={"100"}
                   needleColor={"#453df1"}
-                  value={56}
+                  value={winRate}
                   maxSegmentLabels={5}
                   segments={1000}
                   // height={"180px"}
               />
           </div>
-            <span>Win Rate %</span>
-          </div> */}
+            <span>Win Rate {winRate} %</span>
+          </div>
 
-          <div className="journeyStats__Contests">
+          {/* <div className="journeyStats__Contests">
               <div className="journeyStats__heading">Contests</div>
               <div className="journeyStats__data">
                 <b>{contestPlayed}</b>
               </div>
-            </div>
+            </div> */}
         </div>
         <div className="headingPersonalInfo">Personal Information</div>
         <div className="personalDetails">

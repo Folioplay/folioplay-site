@@ -9,11 +9,16 @@
 }
 .profile-info-wrapper {
   width: 100%;
-  min-height: calc(100vh - 239px);
+  min-height: calc(100% - 190px);
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  /* align-items: center;   */
+  flex-direction: column;
   background-color: var(--white);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding: 1.6rem;
+  /* padding: 1.6rem; */
   color: black;
   /*display: flex;*/
   /*flex-wrap: wrap;*/
@@ -26,16 +31,16 @@
 
 .personalDetails {
   display: flex;
-  flex-wrap: wrap;
-  padding: 0.5rem;
+  /* flex-wrap: wrap; */
+  /* padding: 0.5rem; */
   /*flex-direction: column;*/
   justify-content: center;
   align-items: center;
   align-content: center;
-  padding-left: 0.8rem;
+  /* padding-left: 0.8rem; */
   border: 1px solid #b2c6db;
   border-radius: 0.5rem;
-  width: 23.4rem;
+  width: 90%;
 }
 
 .sectionHeading {
@@ -211,7 +216,9 @@
   justify-content: center;
   align-content: center;
 }
-
+.section{
+  width:90%;
+}
 .inlineText {
   display: flex;
   flex-wrap: wrap;
@@ -220,7 +227,7 @@
 .nameTextField {
   margin-right: 10px;
   height: 2.5rem;
-  width: 18rem;
+  width: 80%;
   padding-left: 0.5rem;
   font-size: 1rem;
   border: 0;
