@@ -37,7 +37,7 @@ export default async function  joinTournament(teams,tournamentId, joinTournament
         //     tournaments[i].filled_spots++;
         //   }
         // }
-        chooseTeamClose(); 
+        chooseTeamClose();
         setErrorMessage((errorMessage) => ({ ...errorMessage, message: res.message, variant: "success" }));
         setErrorMessageSnackOpen(true);
         

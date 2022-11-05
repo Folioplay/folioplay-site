@@ -14,6 +14,8 @@ import {
   chooseTeamOpen,
 } from "../common/chooseTeamAnimations";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
+import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import {useDispatch} from "react-redux";
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
@@ -23,6 +25,8 @@ export default function JoinTournamentDrawer({
   tournaments,
   intervalId=null,
 }) {
+  const [joined, setJoined] = useState(false);
+
   useEffect(() => {
     document
       .getElementsByClassName("overlay-div")[0]
@@ -33,7 +37,8 @@ export default function JoinTournamentDrawer({
           return;
         }
       });
-  }, []);
+    // dispatch(getLeaderboardAsync(tournamentId));
+  }, [joined]);
   return (
     <div key={"enter-tournament"} id="choose-team-div" className="display-none">
       <div className="choose-team-bar"></div>
@@ -179,6 +184,8 @@ export default function JoinTournamentDrawer({
                   setErrorMessageSnackOpen,
                   tournaments
               )
+              setJoined(!joined);
+              // dispatch(getLeaderboardAsync(tournamentId));
               // setTeamJoined(!teamJoined);
             }
             }

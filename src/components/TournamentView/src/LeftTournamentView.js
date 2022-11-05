@@ -17,10 +17,13 @@ import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import Snackbar from "@mui/material/Snackbar";
 import { motion } from "framer-motion/dist/framer-motion";
 import { SERVER } from "../../../APIS/apis";
+import {useDispatch, useSelector} from "react-redux";
+import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+  const dispatch = useDispatch();
   var navigate = useNavigate();
   const { user } = useMoralis();
   const { state } = useLocation();
@@ -33,6 +36,7 @@ const LeftTournamentView = () => {
     variant: "error",
   });
   const [tournament, setTournament] = useState(undefined);
+  // const tournament = useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
   console.log("tournament log", tournament);
   const [amountWon, setAmountWon] = useState(-1);
   const [rank, setRank] = useState(undefined);
@@ -77,6 +81,8 @@ const LeftTournamentView = () => {
     if ("mooning" in window.localStorage)
       window.localStorage.removeItem("mooning");
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
+    console.log("refresh leaderboard tabs page")
+    dispatch(getLeaderboardAsync(_id))
     fetchTournament();
     fetchTeams();
     fetchRank();
@@ -153,7 +159,8 @@ const LeftTournamentView = () => {
                       );
                     }}
                   >
-                    <u>Click here to view on Polygon.</u>
+                    {/*<u>Click here to view on Polygon.</u>*/}
+                    <u>Tournament ID: XXXXX{tournament.transaction_hash.slice(-5)}</u>
                   </span>
                 </div>
                 <div>
@@ -172,7 +179,8 @@ const LeftTournamentView = () => {
                   );
                 }}
               >
-                <u>Click here to view on Polygon.</u>
+                {/*<u>Click here to view on Polygon.</u>*/}
+                <u>Tournament ID: XXXXX{tournament.transaction_hash.slice(-5)}</u>
               </span>
             )}
           </div>

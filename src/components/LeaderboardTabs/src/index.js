@@ -175,36 +175,6 @@ export default function LeaderBoardTabs({
           {tournamentStatus!==3 &&
               amounts.map((value, index) => {
                 let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
-                // console.log("tournanemnt prizes", tournamentPrizes);
-                // if(tournamentPrizes[index] != tournamentPrizes[index+1]){
-                //   return(
-                //     <motion.div
-                //         initial={{ opacity: 0 }}
-                //         animate={{ opacity: 1 }}
-                //         transition={{ duration: 0.3 }}
-                //         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
-                //     >
-                //       <span className="leaderboard-points">{"  "}{index+1}</span>
-                //       <span className="ml-auto">{tournamentPrizes[index]}</span>
-                //     </motion.div>
-                //   );
-                // }else{
-                //   var left = index;
-                //   while(index < tournamentPrizes.length-1 && tournamentPrizes[index] != tournamentPrizes[index+1]){
-                //     index++;
-                //   }
-                //   return (
-                //     <motion.div
-                //         initial={{ opacity: 0 }}
-                //         animate={{ opacity: 1 }}
-                //         transition={{ duration: 0.3 }}
-                //         className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
-                //     >
-                //       <span className="leaderboard-points">{left+1}{"-"}{index+1}</span>
-                //       <span className="ml-auto">{tournamentPrizes[index]}</span>
-                //     </motion.div>
-                //   );
-                // }
                 return (
                   <motion.div
                   initial={{ opacity: 0 }}
@@ -349,7 +319,7 @@ export default function LeaderBoardTabs({
                     transition={{ duration: 0.3 }}
                     className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10"}
                   >
-                    <span className="leaderboard-points">{"  "}1</span>
+                    <span className="leaderboard-points">{"  "}-</span>
                     <span className={"leaderboard-username"}>
                       {entry.user.username}{" "}
                       <span className={"teamCount"}>
