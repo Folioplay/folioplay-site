@@ -8,7 +8,7 @@
   align-content: center;
 }
 .profile-info-wrapper {
-  /*width: 100%;*/
+  width: min(100%,450px);
   min-height: calc(100vh - 239px);
   background-color: var(--white);
   border-top-left-radius: 20px;
