@@ -166,6 +166,7 @@ function UserProfileLeft() {
   };
   const defaultImage = require("../../../images/profilepic.jpeg").default;
   const [presentProfileImage, setPresentProfileImage] = useState(null);
+ 
   return (
     <div className="fullpage">
       <FolioplayBar />
@@ -220,30 +221,7 @@ function UserProfileLeft() {
       <div className="profile-info-wrapper">
         <div className="headingPersonalInfo">Journey Stats</div>
         <div className="personalDetails" >
-          {/* <div className="section__journeyStats">
-            <div className="journeyStats__winRate">
-              <div className="journeyStats__heading">Win Rate</div>
-              <div className="journeyStats__data">
-                <span>
-                  <b>{winRate}%</b>
-                </span>
-                <span className={"journeyStats__linearProgress"}>
-                  <LinearProgress
-                    variant="determinate"
-                    style={{ backgroundColor: "var(--dim-white)" }}
-                    value={winRate}
-                  />
-                </span>
-              </div>
-            </div>
-            <div className="journeyStats__Contests">
-              <div className="journeyStats__heading">Contests</div>
-              <div className="journeyStats__data">
-                <b>{contestPlayed}</b>
-              </div>
-            </div>
-          </div> */}
-          <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",}}>
+          {/* <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",}}>
             <div style={{width:"200px",height:"130px"}}>
               <ReactSpeedometer
                   ringWidth={20}
@@ -262,7 +240,7 @@ function UserProfileLeft() {
               />
           </div>
             <span>Win Rate %</span>
-          </div>
+          </div> */}
 
           <div className="journeyStats__Contests">
               <div className="journeyStats__heading">Contests</div>
