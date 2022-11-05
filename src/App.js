@@ -83,29 +83,29 @@ function App() {
 
       if(isAuthenticated){
 
-          fetch(`${SERVER}/user/login`, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  walletAddress: user.attributes.ethAddress,
-                  signature: user.attributes.authData.moralisEth.signature,
-                  // email: user.email
-              }),
-          })
-              .then((res) => {
-                  if (!res.ok) throw "Invalid user";
-                  else return res.json();
-              })
-              .then((data) => {
-                  localStorage.removeItem("authtoken");
-                  localStorage.setItem("authtoken", data.accessToken);
-                  return {
-                      "userdata": data.user,
-                      "new_user": data.newUser
-                  };
-              });
+          // fetch(`${SERVER}/user/login`, {
+          //     method: "POST",
+          //     headers: {
+          //         "Content-Type": "application/json",
+          //     },
+          //     body: JSON.stringify({
+          //         walletAddress: user.attributes.ethAddress,
+          //         signature: user.attributes.authData.moralisEth.signature,
+          //         // email: user.email
+          //     }),
+          // })
+          //     .then((res) => {
+          //         if (!res.ok) throw "Invalid user";
+          //         else return res.json();
+          //     })
+          //     .then((data) => {
+          //         localStorage.removeItem("authtoken");
+          //         localStorage.setItem("authtoken", data.accessToken);
+          //         return {
+          //             "userdata": data.user,
+          //             "new_user": data.newUser
+          //         };
+          //     });
 
           if(localStorage.getItem("authtoken")===null ||localStorage.getItem("authtoken")===undefined || localStorage.getItem("authtoken")===""){
               callLogin();

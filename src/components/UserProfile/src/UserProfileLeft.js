@@ -243,19 +243,27 @@ function UserProfileLeft() {
               </div>
             </div>
           </div> */}
-          <ReactSpeedometer
-          ringWidth={30}
-          needleTransition="easeQuadInOut"
-          // width={"300px"}
-          // height={"300px"}
-          minValue={"0"}
-          maxValue={"100"}
-          needleColor={"#453df1"}
-            value={56}
-            maxSegmentLabels={5}
-            segments={1000}
-            // height={"180px"}
-          />
+          <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",}}>
+            <div style={{width:"200px",height:"130px"}}>
+              <ReactSpeedometer
+                  ringWidth={20}
+                  needleHeightRatio={0.6}
+                  needleTransition="easeQuadInOut"
+                  // width={"100px"}
+                  // height={""}
+                  fluidWidth={true}
+                  minValue={"0"}
+                  maxValue={"100"}
+                  needleColor={"#453df1"}
+                  value={56}
+                  maxSegmentLabels={5}
+                  segments={1000}
+                  // height={"180px"}
+              />
+          </div>
+            <span>Win Rate %</span>
+          </div>
+
           <div className="journeyStats__Contests">
               <div className="journeyStats__heading">Contests</div>
               <div className="journeyStats__data">
