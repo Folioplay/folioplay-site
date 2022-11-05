@@ -13,6 +13,7 @@ import {
   chooseTeamClose,
   chooseTeamOpen,
 } from "../common/chooseTeamAnimations";
+import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
@@ -220,6 +221,7 @@ export default function JoinTournamentDrawer({
               onClick={() => {
                 if(intervalId)
                   clearInterval(intervalId);
+                  removeCoinsFromLocalStorage();
                 navigate("/teams/createteam");
               }}
             >
@@ -237,6 +239,7 @@ export default function JoinTournamentDrawer({
               onClick={() => {
                 if(intervalId)
                   clearInterval(intervalId);
+                  removeCoinsFromLocalStorage();
                 navigate("/teams/createteam");
               }}
             >

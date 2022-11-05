@@ -28,6 +28,10 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   padding-left: 0.8rem;
   border: 1px solid #b2c6db;
   border-radius: 0.5rem;

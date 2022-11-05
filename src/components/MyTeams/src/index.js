@@ -10,6 +10,7 @@ import {
   getAllUserTeams,
   getPreviousUserTournaments,
 } from "../../../APIS/apis";
+import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 export default function MyTeams() {
   const navigate = useNavigate();
   const [teams, setTeams] = useState(undefined);
@@ -37,11 +38,12 @@ export default function MyTeams() {
         <br />
         <br />
         <div className="activity-content-wrapper mt-20">
-          <div className="activity-add-team-buttton">
+        <div className="activity-add-team-buttton">
             <AddCircleIcon
               className="mr-10"
               id="circle-add-team-button"
               onClick={() => {
+                removeCoinsFromLocalStorage();
                 navigate("/teams/createteam/");
               }}
             />

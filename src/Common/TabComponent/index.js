@@ -149,7 +149,7 @@ export default function ContestTabs({
                   transition={{ duration: 0.3 * (index + 1) }}
                   key={"tournament__" + index}
                   className="tournament"
-                  style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                  style={{ minHeight: "100px", padding: "20px 20px 0px 20px",width:"90%" }}
                   onClick={() => {
                     navigate(`/tournaments/${tournament.tournament._id}`, {
                       state: {
@@ -290,7 +290,7 @@ export default function ContestTabs({
                 transition={{ duration: 0.3 * (index + 1) }}
                 key={"tournament__" + index}
                 className="tournament"
-                style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                style={{ minHeight: "100px", padding: "20px 20px 0px 20px",width:"90%" }}
                 onClick={() => {
                   navigate(`/tournaments/${tournament.tournament._id}`, {
                     state: {
@@ -430,7 +430,7 @@ export default function ContestTabs({
                   transition={{ duration: 0.3 * (index + 1) }}
                   key={"tournament__" + index}
                   className="tournament"
-                  style={{ minHeight: "100px", padding: "20px 20px 0px 20px" }}
+                  style={{ minHeight: "100px", padding: "20px 20px 0px 20px",width:"90%" }}
                   onClick={() => {
                     navigate(`/tournaments/${tournament.tournament._id}`, {
                       state: {

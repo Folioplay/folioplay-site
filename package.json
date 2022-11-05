@@ -25,6 +25,7 @@
     "moralis-v1": "^1.11.0",
     "react": "^18.1.0",
     "react-countdown": "^2.3.3",
+    "react-d3-speedometer": "^1.1.0",
     "react-dom": "^18.1.0",
     "react-joyride": "^2.5.0",
     "react-loading": "^2.0.3",

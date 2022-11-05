@@ -96,6 +96,7 @@ export default function ActivityTabs({ teams, tournaments }) {
         </TabPanel>
         <TabPanel value="1">
           <div className="activity-space">
+            
             {teams !== undefined && tournaments !== undefined ? (
               <>
                 {teams.map((team, index) => {
@@ -110,6 +111,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                       transition={{ duration: 0.35 }}
                       className="activity-team-card mb-15"
                     >
+                      
                       <span className="activity-team-info">
                         <span className="activity-team-name font-size-20 font-weight-600">
                           {team.name}

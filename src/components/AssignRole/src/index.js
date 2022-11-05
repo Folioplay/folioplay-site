@@ -12,6 +12,8 @@ import TeamPreview from "../../TeamCreation/common/TeamPreview";
 import teamPreview from "../common/teamPreview";
 import { getAllUserTeams } from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";
+import { ArrowBackIosNewSharp } from "@mui/icons-material";
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import "../style/index.css";
 export function AssignRole() {
   const navigate = new useNavigate();
@@ -74,6 +76,13 @@ export function AssignRole() {
         ) : (
           <>
             <div className="upper-half">
+              <div style={{position:"fixed",left:"20px",top:"20px",color:"black"}}>
+              <ArrowBackIos
+              fontSize="medium"
+              className="go-back-button"
+              onClick={() => navigate(-1)}
+            />
+              </div>
               <input
                 id="team-name"
                 // className="mb-5 pl-5 pr-5"

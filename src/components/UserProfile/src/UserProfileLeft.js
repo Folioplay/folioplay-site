@@ -10,6 +10,7 @@ import { useMoralis } from "react-moralis";
 import InlineEdit from "../common/InlineEditComponent";
 import { LinearProgress, TextField } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import ReactSpeedometer from "react-d3-speedometer";
 import {
   changeProfilePicture,
   changeUserName,
@@ -218,8 +219,8 @@ function UserProfileLeft() {
       </div>
       <div className="profile-info-wrapper">
         <div className="headingPersonalInfo">Journey Stats</div>
-        <div className="personalDetails">
-          <div className="section__journeyStats">
+        <div className="personalDetails" >
+          {/* <div className="section__journeyStats">
             <div className="journeyStats__winRate">
               <div className="journeyStats__heading">Win Rate</div>
               <div className="journeyStats__data">
@@ -241,7 +242,26 @@ function UserProfileLeft() {
                 <b>{contestPlayed}</b>
               </div>
             </div>
-          </div>
+          </div> */}
+          <ReactSpeedometer
+          ringWidth={30}
+          needleTransition="easeQuadInOut"
+          // width={"300px"}
+          // height={"300px"}
+          minValue={"0"}
+          maxValue={"100"}
+          needleColor={"#453df1"}
+            value={56}
+            maxSegmentLabels={5}
+            segments={1000}
+            // height={"180px"}
+          />
+          <div className="journeyStats__Contests">
+              <div className="journeyStats__heading">Contests</div>
+              <div className="journeyStats__data">
+                <b>{contestPlayed}</b>
+              </div>
+            </div>
         </div>
         <div className="headingPersonalInfo">Personal Information</div>
         <div className="personalDetails">

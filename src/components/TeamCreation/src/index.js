@@ -46,15 +46,16 @@ export function TeamCreation() {
       transform: "translate(-50%, -50%)",
     },
   };
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSnackOpen(false);
   };
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+  
 
   const handleOpen = (coin_name) => {
     // setGraphCoin(event.target.innerText.toLowerCase());
@@ -77,13 +78,43 @@ export function TeamCreation() {
     // localStorage.removeItem("superstars");
     // localStorage.removeItem("mooning");
     // localStorage.removeItem("rekt");
-    if(localStorage.getItem("superstars") || localStorage.getItem("mooning") || localStorage.getItem("rekt")){
-      console.log(wasActiveTab);
-      preservedView(wasActiveTab,localSuperstars,localMooning,localRekt);
-    }
     fetchCoins();
   }, []);
-
+  useEffect(() => {
+    if(localSuperstars || localMooning || localRekt){
+      console.log(wasActiveTab);
+      preservedView(wasActiveTab,localSuperstars,localMooning,localRekt);
+      var coinsLimit =
+      wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;
+    var allButtons = document.querySelectorAll(
+      "#" + wasActiveTab + " .coin-add-button"
+    );
+    var totalAddedCoins =
+      document.getElementsByClassName("coin-added-button").length;
+    if (
+      document.querySelectorAll("#" + wasActiveTab + " .coin-added-button")
+        .length >= coinsLimit ||
+      totalAddedCoins === 11
+    ) {
+      for (var i = 0; i < allButtons.length; i++) {
+        if (allButtons[i].innerText === "ADD") {
+          allButtons[i].classList.add("disabled-button");
+        }
+      }
+    } else {
+      document.getElementById("superstars" + "-selected-number").innerText =
+        document.querySelectorAll(
+          "#" + "superstars" + " .coin-added-button"
+        ).length;
+      document.getElementById("mooning" + "-selected-number").innerText =
+        document.querySelectorAll(
+          "#" + "mooning" + " .coin-added-button"
+        ).length;
+      document.getElementById("rekt" + "-selected-number").innerText =
+        document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
+    }
+    }
+  },[coins])
   for (var i = 0; i < coins.length; i++) {
     if (
       window.localStorage.getItem("superstars") === null &&
