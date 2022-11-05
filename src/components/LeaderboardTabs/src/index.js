@@ -32,7 +32,7 @@ export default function LeaderBoardTabs({
   const userWalletAddress = user.attributes.ethAddress
     ? user.attributes.ethAddress
     : "";
-  const [leaderBoard, setLeaderBoard] = useState([]);
+  // const [leaderBoard, setLeaderBoard] = useState([]);
   const [personalLeaderBoard, setPersonalLeaderBoard] = useState([]);
   const [rewardsList, setRewardsList] = useState([]);
   const [prizes, setPrizes] = useState([]);
@@ -41,16 +41,14 @@ export default function LeaderBoardTabs({
 
 
   const getLeaderBoardRedux=useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
-  console.log(getLeaderBoardRedux);
+  console.log("getLeaderBoardRedux",getLeaderBoardRedux);
 
-  useEffect(()=>{
-    dispatch(getLeaderboardAsync(tournamentId));
-  },[])
   useEffect(() => {
-    async function getLeader() {
-      const data = await getLeaderboard(tournamentId);
-      setLeaderBoard(data);
-    }
+    dispatch(getLeaderboardAsync(tournamentId));
+    // async function getLeader() {
+    //   const data = await getLeaderboard(tournamentId);
+    //   setLeaderBoard(data);
+    // }
     async function getPersonalLeader() {
       const data = await getPersonalLeaderboard(tournamentId);
       setPersonalLeaderBoard(data);
@@ -59,7 +57,9 @@ export default function LeaderBoardTabs({
       const data = await getRewardDetailsAPI(tournamentId);
       setRewardsList(data);
     }
-    getLeader();
+
+    console.log("refresh leaderboaard tabs")
+    // getLeader();
     getPersonalLeader();
     getRewardsDetails();
     // async function getPrizes() {
@@ -71,9 +71,9 @@ export default function LeaderBoardTabs({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(leaderBoard);
+  // console.log(leaderBoard);
 
-  console.log("rewardList", tournamentPrizes, rewardSize);
+  // console.log("rewardList", tournamentPrizes, rewardSize);
   var updatedPrizes = {};
   var amounts = [];
   var reversePrizes = {};
@@ -164,7 +164,7 @@ export default function LeaderBoardTabs({
         <TabPanel value="1">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
             <span className="mr-10">Rank</span>
-            {tournamentStatus === 3 && leaderBoard.length && (
+            {tournamentStatus === 3 && getLeaderBoardRedux.length && (
               <span className="ml-20">User</span>
             )}
             {/*<span className='ml-auto'>Team</span> */}
@@ -264,6 +264,8 @@ export default function LeaderBoardTabs({
                 );
             })}
 
+
+
           {/*Leaderboard Section*/}
         </TabPanel>
         <TabPanel value="2">
@@ -344,7 +346,7 @@ export default function LeaderBoardTabs({
                     "leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10 font-weight-700"
                   }
                   onClick={() => {
-                    const teamData = leaderBoard.find(
+                    const teamData = getLeaderBoardRedux.find(
                       (obj) => obj.team.name === entry.team.name
                     );
                     navigate("/activity/team/currentStatus", {

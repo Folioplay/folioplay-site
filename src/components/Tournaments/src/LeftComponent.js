@@ -107,13 +107,13 @@ const LeftComponent = () => {
     fetchTeams();
   }, []);
 
-  // useEffect(() => {
-  //   // allImages = document.getElementsByClassName("image-div");
-  //   // len = allImages.length;
-  //   // setIntervalId(setInterval(nextImage, 2000));
-  //   // console.log(allImages);
-  //   // setL(len);
-  // }, []);
+  useEffect(() => {
+    allImages = document.getElementsByClassName("image-div");
+    len = allImages.length;
+    setIntervalId(setInterval(nextImage, 2000));
+    console.log(allImages);
+    setL(len);
+  }, []);
   async function fetchTournaments() {
     setTournaments(await getAllTournaments());
   }
@@ -128,17 +128,17 @@ const LeftComponent = () => {
     setErrorMessageSnackOpen(false);
   };
 
-  // function nextImage() {
-  //   var leftMargin = -1 * currImage * 100;
-  //   var buffer = -1 * currImage * 20;
-  //   if (currImage !== len) {
-  //     allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
-  //     if (!paused) currImage++;
-  //   } else {
-  //     allImages[0].style = `margin-left:0px`;
-  //     currImage = 1;
-  //   }
-  // }
+  function nextImage() {
+    var leftMargin = -1 * currImage * 100;
+    var buffer = -1 * currImage * 20;
+    if (currImage !== len) {
+      allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
+      if (!paused) currImage++;
+    } else {
+      allImages[0].style = `margin-left:0px`;
+      currImage = 1;
+    }
+  }
 
   const tourOptions = {
     defaultStepOptions: {

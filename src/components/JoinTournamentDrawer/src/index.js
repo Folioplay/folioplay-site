@@ -25,8 +25,8 @@ export default function JoinTournamentDrawer({
   tournaments,
   intervalId=null,
 }) {
-  const [joined, setJoined] = useState(false);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     document
       .getElementsByClassName("overlay-div")[0]
@@ -37,8 +37,9 @@ export default function JoinTournamentDrawer({
           return;
         }
       });
+    // console.log("dispatch tid", tournamentId);
     // dispatch(getLeaderboardAsync(tournamentId));
-  }, [joined]);
+  }, []);
   return (
     <div key={"enter-tournament"} id="choose-team-div" className="display-none">
       <div className="choose-team-bar"></div>
@@ -163,7 +164,7 @@ export default function JoinTournamentDrawer({
               fontWeight: "600",
               fontSize: "17px",
             }}
-            onClick={() => {
+            onClick={async () => {
               // joinTournament(
               //   user,
               //   tournamentId,
@@ -176,7 +177,7 @@ export default function JoinTournamentDrawer({
               //   changeTournament,
               //   account
               // )
-              joinTournament(
+              await joinTournament(
                   teams,
                   tournamentId,
                   joinTournamentAPI,
@@ -184,9 +185,7 @@ export default function JoinTournamentDrawer({
                   setErrorMessageSnackOpen,
                   tournaments
               )
-              setJoined(!joined);
-              // dispatch(getLeaderboardAsync(tournamentId));
-              // setTeamJoined(!teamJoined);
+              dispatch(getLeaderboardAsync(tournamentId));
             }
             }
           >
