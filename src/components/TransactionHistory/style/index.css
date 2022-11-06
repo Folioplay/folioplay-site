@@ -1,0 +1,65 @@
+.transactionHistory__fullPage{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background-color: white;
+}
+.transactionHistory__fullPage::-webkit-scrollbar{
+    display:none;
+}
+
+.transactionHistory__header{
+    padding-left: 3.75%;
+    padding-top: 1em;
+    display: flex;
+    padding-bottom: 1em;
+    /* justify-content: center; */
+    align-items: center;
+    background-color: #453df1;
+}
+
+.transactionHistory__body{
+    background-color: white;
+    color: black;
+    padding: 1rem;
+    height: 100%;
+}
+
+.transactionHistory__dateBlock{
+    /*border: #4C6781 solid 1px;*/
+    /*padding: 1rem;*/
+    /*border-radius: 1rem;*/
+}
+
+.dateBlock__date{
+    color: #869EB6;
+    margin-bottom: 1rem;
+}
+
+.dateBlock__accordionList{
+    margin-bottom: 0.5rem;
+}
+
+.dateBlock__accordionList__summaryTab{
+    display: flex;
+    /*flex: 1 2;*/
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.summaryTab__helperText{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.summaryTab__dataHeading{
+    font-size: 10px;
+    color: #869EB6;
+}
+
+.summaryTab__dataBody{
+    margin-bottom: 0.5rem;
+}

@@ -282,3 +282,17 @@ export async function getWalletBalance() {
       }
   ).then((res) => res.json());
 }
+
+export async function getTransactionHistory() {
+  const authToken = localStorage.getItem("authtoken");
+  return await fetch(
+      `${SERVER}/wallet/history`,
+      {
+        method: "GET",
+        headers: {
+          "x-access-token": authToken,
+        },
+      }
+  ).then((res) => res.json());
+}
+

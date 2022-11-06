@@ -23,6 +23,8 @@ import CurrentTeamPreview from "./components/CurrentTeam/src";
 import CurrentTeamTable from "./components/CurrentTeamTable/src";
 import ComingSoon from "./components/AddMoney/src/ComingSoon";
 import {CircularProgress} from "@mui/material";
+import AccordionComponent from "./Common/Accordion";
+import TransactionHistory from "./components/TransactionHistory/src";
 // import React, { useEffect, useState } from "react";
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
@@ -302,6 +304,15 @@ function App() {
                 </AuthenticatedRoute>
               }
           />
+            <Route
+                exact
+                path="/transaction_history"
+                element={
+                    <AuthenticatedRoute>
+                        <TransactionHistory />
+                    </AuthenticatedRoute>
+                }
+            />
         </Routes>
       </BrowserRouter>
     </div>

@@ -271,9 +271,18 @@ export default function FolioplayBar({ intervalId }) {
                 <Divider />
                 <MenuItem onClick={()=>{
                   clearInterval(intervalId);
+                  navigate("/transaction_history")
+                }
+                }>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  View Transaction History
+                </MenuItem>
+                <MenuItem onClick={()=>{
+                  clearInterval(intervalId);
                     navigate("/coming_soon")
                   }
-                    // window.location.pathname="add_money"
                 }>
                   <ListItemIcon>
                     <Logout fontSize="small" />
