@@ -485,6 +485,16 @@ const LeftComponent = () => {
             });
           }}
         >
+          {tournament.user_joined ? 
+          <div style={{position:"relative"}}>
+            <div className="ribbon1 ribbon1-top-left">
+              <span>Joined</span>
+            </div>
+          </div>
+          : null}
+          {/* <div className="ribbon1">  
+              <span className="ribbon12">Joined</span>
+            </div> */}
           <div className="tournament-info">
             <span className="tournament-image" style={{ borderRadius: "100%" }}>
               <img
@@ -620,6 +630,9 @@ const LeftComponent = () => {
               <EmojiEventsOutlinedIcon />
               <span>{tournament.rewards.prize_pool} MGT</span>
             </span>
+            {/* {tournament.user_joined ?  */}
+            
+             {/* : null} */}
           </div>
         </motion.div>
       );
