@@ -228,7 +228,7 @@ export default function JoinTournamentDrawer({
                 if(intervalId)
                   clearInterval(intervalId);
                   removeCoinsFromLocalStorage();
-                navigate("/teams/createteam");
+                navigate("/teams/createteam",{state:{comingFrom:window.location.pathname,tournamentId:tournamentId}});
               }}
             >
               Create New Team
@@ -246,7 +246,7 @@ export default function JoinTournamentDrawer({
                 if(intervalId)
                   clearInterval(intervalId);
                   removeCoinsFromLocalStorage();
-                navigate("/teams/createteam");
+                navigate("/teams/createteam",{state:{comingFrom:window.location.pathname,tournamentId:tournamentId}});
               }}
             >
               Create New Team

@@ -1,4 +1,4 @@
-export default function assignRoles(superstars, mooning, rekt, setSnackOpen, navigate) {
+export default function assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state) {
   var selectedSuperstars = [];
   var selectedMooning = [];
   var selectedRekt = [];
@@ -29,5 +29,5 @@ export default function assignRoles(superstars, mooning, rekt, setSnackOpen, nav
     return;
   }
 
-  navigate("/teams/createteam/assignrole");
+  navigate("/teams/createteam/assignrole",{state:state});
 }

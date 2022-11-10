@@ -183,7 +183,7 @@ export default function LeaderBoardTabs({
                   className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
               >
                 <span className="leaderboard-points">{"  "}{reversePrizes[value]}</span>
-                <span className="ml-auto">{value} FPC</span>
+                <span className="ml-auto">{value}</span>
               </motion.div>
                 );
               })}

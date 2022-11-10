@@ -73,9 +73,19 @@ const LeftTournamentView = () => {
     console.log(data);
     setRank(data);
   }
-  console.log("STATE", state);
-
+  console.log("STATE in tournament view ..............", state);
   useEffect(() => {
+    console.log("tournament fetched .............");
+    if(document.getElementById('choose-team-div')){
+      if(state && state.openDrawer){
+        console.log("opening drawer in view ............")
+        chooseTeamOpen();
+        window.history.replaceState(null, '')
+      }
+    }
+  },[tournament,teams])
+  useEffect(() => {
+    
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
     if ("mooning" in window.localStorage)
@@ -126,7 +136,7 @@ const LeftTournamentView = () => {
             <ArrowBackIosIcon
               fontSize="medium"
               className="go-back-button"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/tournaments',{})}
             />
             <span className="ml-20 font-size-20 font-weight-700">
               {tournament.name}

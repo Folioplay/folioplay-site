@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -28,6 +28,8 @@ export function TeamCreation() {
   const [open, setOpen] = useState(false);
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
+  const {state} = useLocation();
+  console.log("state on teams page ",state);
   var superstars = [];
   var mooning = [];
   var rekt = [];
@@ -470,7 +472,7 @@ export function TeamCreation() {
               variant="contained"
               className="role-button ml-auto"
               onClick={() =>
-                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate)
+                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
               }
             >
               Assign Roles

@@ -1,4 +1,4 @@
-export default function saveTeam(event,coins,finalRanks,setError,setNameSnackOpen,setSuccessSnackOpen,createTeam,navigate) {
+export default function saveTeam(event,coins,finalRanks,setError,setNameSnackOpen,setSuccessSnackOpen,createTeam,navigate,state) {
   event.preventDefault();
   var rankAssigned = 0;
   var selectedCoins = [];
@@ -34,7 +34,17 @@ export default function saveTeam(event,coins,finalRanks,setError,setNameSnackOpe
       if ("mooning" in window.localStorage)
         window.localStorage.removeItem("mooning");
       if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
-      navigate(-2);
+      if(state && state.comingFrom == "/tournaments"){
+        navigate('/tournaments' , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
+      }else{
+        if(state && state.comingFrom == "/tournaments/" + state.tournamentId){
+          navigate(`/tournaments/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
+        }else{
+          navigate(-2);
+        }
+        
+      }
+     
     }, 2000);
   } else {
     setError("Team name can't be empty.");

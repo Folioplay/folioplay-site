@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { motion } from "framer-motion/dist/framer-motion";
 import Snackbar from "@mui/material/Snackbar";
@@ -22,6 +22,7 @@ export function AssignRole() {
   const [error, setError] = useState("");
   const [teams, setTeams] = useState([]);
   const { user } = useMoralis();
+  const {state} = useLocation();
   var superstars = [];
   var mooning = [];
   var rekt = [];
@@ -107,7 +108,7 @@ export function AssignRole() {
                       setNameSnackOpen,
                       setSuccessSnackOpen,
                       createTeam,
-                      navigate
+                      navigate,state
                     );
                   }}
                 >

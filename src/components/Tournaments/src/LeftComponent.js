@@ -20,7 +20,7 @@ import { Button, LinearProgress, Snackbar } from "@mui/material";
 import joinTournament from "../common/joinTournament";
 import { useMoralis } from "react-moralis";
 import MuiAlert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   chooseTeamClose,
   chooseTeamOpen,
@@ -36,6 +36,8 @@ import Modal from "@mui/material/Modal";
 
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
+  const {state} = useLocation();
+  console.log("state at /tournaments" ,state);
   const [loaded, setLoaded] = useState(false);
   const monthNames = [
     "Jan",
@@ -84,7 +86,6 @@ const LeftComponent = () => {
 
   const [intervalId, setIntervalId] = useState(undefined);
   const [referral, setReferral] = useState("");
-
   useEffect(() => {
     async function authTokenGet() {
       if (isAuthenticated && localStorage.getItem("authtoken") == null) {
@@ -94,6 +95,24 @@ const LeftComponent = () => {
     authTokenGet();
   }, []);
   useEffect(() => {
+    if(state && state.openDrawer){
+      setTournamentId(state.tournamentId);
+    }
+  },[])
+  
+  useEffect(() => {
+    console.log("id changed now trying to open drawer");
+    if(document.getElementById('choose-team-div')){
+      if(state && state.openDrawer){
+        console.log("opening drawer ............")
+        chooseTeamOpen();
+        window.history.replaceState(null, '')
+      }
+    }
+  },[tournaments,tournamentId,teams])
+  useEffect(() => {
+    allImages = document.getElementsByClassName("image-div");
+    len = allImages.length;
     document
       .getElementsByClassName("overlay-div")[0]
       .addEventListener("mouseup", function (event) {
@@ -105,14 +124,9 @@ const LeftComponent = () => {
       });
     fetchTournaments();
     fetchTeams();
-  }, []);
-
-  useEffect(() => {
-    allImages = document.getElementsByClassName("image-div");
-    len = allImages.length;
     setIntervalId(setInterval(nextImage, 2000));
-    console.log(allImages);
     setL(len);
+    // chooseTeamOpen();
   }, []);
   async function fetchTournaments() {
     setTournaments(await getAllTournaments());
@@ -640,24 +654,6 @@ const LeftComponent = () => {
   ) : (
     <></>
   );
-  const steps = [
-    {
-      target: "#folioplay-hamburger",
-      disableBeacon: true,
-      content: "Explore here",
-    },
-    {
-      target: "#folioplay-wallet",
-      disableBeacon: true,
-      content: "World step",
-    },
-    {
-      target: "#image-slider-wrapper",
-      disableBeacon: true,
-      content: "Hello step 1",
-    },
-  ];
-
   return (
     <ShepherdTour tourOptions={tourOptions} steps={newsteps}>
       <TourModal />
