@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.aa82eec3.chunk.css",
-    "main.js": "/static/js/main.1830baf1.chunk.js",
-    "main.js.map": "/static/js/main.1830baf1.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.d58ef434.js",
-    "runtime-main.js.map": "/static/js/runtime-main.d58ef434.js.map",
+    "main.css": "/static/css/main.848a6c22.chunk.css",
+    "main.js": "/static/js/main.4b982765.chunk.js",
+    "main.js.map": "/static/js/main.4b982765.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.45ca6736.js",
+    "runtime-main.js.map": "/static/js/runtime-main.45ca6736.js.map",
     "static/css/2.3eb07a12.chunk.css": "/static/css/2.3eb07a12.chunk.css",
-    "static/js/2.ece6a484.chunk.js": "/static/js/2.ece6a484.chunk.js",
-    "static/js/2.ece6a484.chunk.js.map": "/static/js/2.ece6a484.chunk.js.map",
-    "static/js/3.b5ee37b9.chunk.js": "/static/js/3.b5ee37b9.chunk.js",
-    "static/js/3.b5ee37b9.chunk.js.map": "/static/js/3.b5ee37b9.chunk.js.map",
+    "static/js/2.417f845e.chunk.js": "/static/js/2.417f845e.chunk.js",
+    "static/js/2.417f845e.chunk.js.map": "/static/js/2.417f845e.chunk.js.map",
+    "static/js/3.9df0c878.chunk.js": "/static/js/3.9df0c878.chunk.js",
+    "static/js/3.9df0c878.chunk.js.map": "/static/js/3.9df0c878.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.3eb07a12.chunk.css.map": "/static/css/2.3eb07a12.chunk.css.map",
-    "static/css/main.aa82eec3.chunk.css.map": "/static/css/main.aa82eec3.chunk.css.map",
-    "static/js/2.ece6a484.chunk.js.LICENSE.txt": "/static/js/2.ece6a484.chunk.js.LICENSE.txt",
+    "static/css/main.848a6c22.chunk.css.map": "/static/css/main.848a6c22.chunk.css.map",
+    "static/js/2.417f845e.chunk.js.LICENSE.txt": "/static/js/2.417f845e.chunk.js.LICENSE.txt",
     "static/media/FolioPlaySmall.svg": "/static/media/FolioPlaySmall.546f1cc8.svg",
     "static/media/aave.png": "/static/media/aave.e148933d.png",
     "static/media/ada.png": "/static/media/ada.d9b90224.png",
@@ -58,10 +58,10 @@
     "static/media/zil.png": "/static/media/zil.3b2293fc.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.d58ef434.js",
+    "static/js/runtime-main.45ca6736.js",
     "static/css/2.3eb07a12.chunk.css",
-    "static/js/2.ece6a484.chunk.js",
-    "static/css/main.aa82eec3.chunk.css",
-    "static/js/main.1830baf1.chunk.js"
+    "static/js/2.417f845e.chunk.js",
+    "static/css/main.848a6c22.chunk.css",
+    "static/js/main.4b982765.chunk.js"
   ]
 }

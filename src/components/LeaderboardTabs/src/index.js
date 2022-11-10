@@ -183,7 +183,7 @@ export default function LeaderBoardTabs({
                   className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
               >
                 <span className="leaderboard-points">{"  "}{reversePrizes[value]}</span>
-                <span className="ml-auto">{value}</span>
+                <span className="ml-auto">{value} FPC</span>
               </motion.div>
                 );
               })}
@@ -221,7 +221,7 @@ export default function LeaderBoardTabs({
                         T{entry.user_team_count}
                       </span>
                     </span>
-                    <span className="ml-auto">{entry.amount_won}</span>
+                    <span className="ml-auto">{entry.amount_won} FPC</span>
                   </motion.div>
                 );
               }
@@ -259,7 +259,7 @@ export default function LeaderBoardTabs({
                         T{entry.user_team_count}
                       </span>
                     </span>
-                    <span className="ml-auto">{entry.amount_won}</span>
+                    <span className="ml-auto">{entry.amount_won} FPC</span>
                   </motion.div>
                 );
             })}
