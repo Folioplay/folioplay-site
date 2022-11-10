@@ -23,10 +23,10 @@ const LeftTransactionHistoryComponent = () => {
             {...props}
         />
     ))(({ theme }) => ({
-        backgroundColor:
-            theme.palette.mode === 'dark'
-                ? 'rgba(255, 255, 255, .05)'
-                : 'rgba(0, 0, 0, .03)',
+        // backgroundColor:
+        //     theme.palette.mode === 'dark'
+        //         ? 'rgba(255, 255, 255, .05)'
+        //         : 'rgba(0, 0, 0, .03)',
     }));
 
     const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({

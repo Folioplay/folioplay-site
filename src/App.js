@@ -25,6 +25,7 @@ import ComingSoon from "./components/AddMoney/src/ComingSoon";
 import {CircularProgress} from "@mui/material";
 import AccordionComponent from "./Common/Accordion";
 import TransactionHistory from "./components/TransactionHistory/src";
+import LoginGif from "./components/LoginPage/common/LoginGif";
 // import React, { useEffect, useState } from "react";
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
@@ -136,9 +137,9 @@ function App() {
           }
       }
       if (!isAuthenticated && isInitialized) {
-          return window.location.pathname = "/";
+          window.location.pathname = "/";
       }
-      return isLoading ? <CircularProgress /> : children;
+      return isLoading ? <LoginGif /> : children;
   }
 
   function LoginRoute({ children }) {
@@ -148,7 +149,7 @@ function App() {
     console.log("isLoading login",isLoading);
 
     if ((isAuthenticated && isInitialized)) {
-        return window.location.pathname  = "/tournaments";
+        window.location.pathname  = "/tournaments";
     }
     return children;
   }
@@ -210,7 +211,6 @@ function App() {
             element={
               <AuthenticatedRoute>
                   <TeamCreation />
-
               </AuthenticatedRoute>
             }
           />
