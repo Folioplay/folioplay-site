@@ -185,13 +185,16 @@ const LeftComponent = () => {
 
   function TourModal() {
     const [open1, setOpen1] = useState(
-      // localStorage.getItem("folioplay_new_user") === "true"
-      true
+      localStorage.getItem("folioplay_new_user") === "true"
     );
-    const handleClose = () => setOpen1(false);
+    const handleClose = () => {
+      setOpen1(false);
+      localStorage.setItem("folioplay_new_user", false);
+    }
     const tour = useContext(ShepherdTourContext);
     const handleClick = () => {
       setOpen1(false);
+      localStorage.setItem("folioplay_new_user", false);
     };
     return (
       <div>
@@ -216,6 +219,7 @@ const LeftComponent = () => {
               className="button dark tour-button"
               onClick={() => {
                 setOpen1(false);
+                localStorage.setItem("folioplay_new_user", false);
                 tour.start();
               }}
             >

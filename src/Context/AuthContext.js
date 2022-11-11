@@ -38,7 +38,6 @@ export const AuthContextProvider = ({ children }) => {
             setTimeout(callLogin, 2000);
         }
         else{
-            debugger
             fetch(`${SERVER}/user/is-valid`, {
                 method: "GET",
                 headers: {
@@ -57,7 +56,6 @@ export const AuthContextProvider = ({ children }) => {
                     }
                 })
                 .catch(err => {
-                    debugger
                     localStorage.clear();
                     window.location.pathname = "/";
                 })
@@ -76,8 +74,6 @@ export const AuthContextProvider = ({ children }) => {
         console.log("context isauthenticated", isAuthenticated)
 
         if(isAuthenticated){
-            debugger
-
             setIsLoading(true);
 
             fetch(`${SERVER}/user/login`, {

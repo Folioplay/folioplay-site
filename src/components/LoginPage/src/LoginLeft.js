@@ -310,8 +310,7 @@ function LoginLeft() {
         walletSignature,
         email
       );
-      console.log(fetchUserDetails);
-      localStorage.setItem("folioplay_new_user", fetchUserDetails.new_user);
+      localStorage.setItem("folioplay_new_user", fetchUserDetails.newUser==="true");
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
@@ -328,7 +327,7 @@ function LoginLeft() {
         emailVal
       );
       console.log(fetchUserDetails);
-      localStorage.setItem("folioplay_new_user", fetchUserDetails.new_user);
+      localStorage.setItem("folioplay_new_user", fetchUserDetails.newUser==="true");
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
@@ -431,7 +430,6 @@ function LoginLeft() {
       {/*  <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />*/}
       {/*</Button>*/}
       <div className="folioplay-connect">
-
         <Button
             style={{
               width: "min(320px,100%)",

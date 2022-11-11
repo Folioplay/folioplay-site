@@ -53,8 +53,6 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
       else return res.json();
     })
     .then((data) => {
-      debugger
-      console.log("++++++++++++++++++++++++++++---------------------------")
       localStorage.removeItem("authtoken");
       localStorage.setItem("authtoken", data.accessToken);
       return {

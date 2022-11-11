@@ -103,6 +103,8 @@ function App() {
                       else return res.json();
                   })
                   .then((data) => {
+                      console.log("data", data);
+                      localStorage.setItem("folioplay_new_user", data.newUser==="true");
                       localStorage.removeItem("authtoken");
                       localStorage.setItem("authtoken", data.accessToken);
                       return {

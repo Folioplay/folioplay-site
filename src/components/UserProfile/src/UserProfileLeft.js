@@ -27,6 +27,7 @@ function UserProfileLeft() {
   const walletAdd = user.attributes.ethAddress;
   const [snackMessage, setSnackMessage] = useState("");
   const referralCode = localStorage.getItem("folioReferralCode");
+  const referralCodeLink = `https://www.foliocase.xyz/${localStorage.getItem("folioReferralCode")}`;
   function copytoClipboard() {
     navigator.clipboard.writeText(walletAdd);
     setSnackMessage("Wallet Address Copied!");
@@ -35,6 +36,11 @@ function UserProfileLeft() {
   function copytoClipboardReferral() {
     navigator.clipboard.writeText(referralCode);
     setSnackMessage("Referral Code Copied!!");
+    handleClick();
+  }
+  function copytoClipboardReferralLink() {
+    navigator.clipboard.writeText(referralCodeLink);
+    setSnackMessage("Referral Link Code Copied!!");
     handleClick();
   }
   const [disabledNameField, setDisabledNameField] = useState(true);
@@ -330,6 +336,20 @@ function UserProfileLeft() {
                 onClick={copytoClipboardReferral}
               />
             </div>
+          <div className="sectionDetails">
+            Share this referral code and earn rewards &nbsp;
+            <span className="profilePage__referralCode">
+                https://www.foliocase.xyz/{localStorage.getItem("folioReferralCode")}
+              </span>{" "}
+            &nbsp;
+            <ContentCopyIcon
+                id="copy-to-clipboard"
+                className="ml-10"
+                fontSize="medium"
+                style={{ color: "var(--black)" }}
+                onClick={copytoClipboardReferralLink}
+            />
+          </div>
           </div>
         </div>
       </div>
