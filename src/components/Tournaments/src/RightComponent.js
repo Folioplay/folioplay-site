@@ -48,7 +48,7 @@ const RightComponent = () => {
       if (referralExists !== "null") {
         setReferral(localStorage.getItem("user_referral"));
       }
-    });
+    },[]);
 
     return (
       <ContentModal
@@ -106,7 +106,7 @@ const RightComponent = () => {
 
   return (
     <div id="tournament-page-image">
-      {referralExists !== "null" ? null : <ReferralModal />}
+      {/* {referralExists !== "null" ? null : <ReferralModal />} */}
       <SnackbarComponent
         open={snackOpen}
         handleClose={snackHandleClose}

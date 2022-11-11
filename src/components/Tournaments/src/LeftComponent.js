@@ -169,15 +169,24 @@ const LeftComponent = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
+    height:"520px",
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: "2px solid grey",
     boxShadow: 24,
-    p: 4,
+    borderRadius:"12px",
+    minHeight:"510px",
+    padding:"20px",
+    ["@media (max-width:600px)"]: {
+      width:300,
+      height:420,
+      minHeight:420
+    },
   };
 
   function TourModal() {
     const [open1, setOpen1] = useState(
-      localStorage.getItem("folioplay_new_user") === "true"
+      // localStorage.getItem("folioplay_new_user") === "true"
+      true
     );
     const handleClose = () => setOpen1(false);
     const tour = useContext(ShepherdTourContext);
@@ -194,14 +203,17 @@ const LeftComponent = () => {
           disableAutoFocus
         >
           <Box sx={tourModalStyle}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <img src={require('../../../images/howtoplay.jpg').default} width="100%" style={{borderRadius:"12px"}}/>
+            <Typography id="modal-modal-title" variant="h6" component="h1" style={{fontFamily:"poppins"}}>
               Welcome to Folioplay!
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Here is a short tour to the game.
+            <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{fontFamily:"poppins"}}>
+              Click start tour to get a short tour to the game.
+              Good Luck !!
             </Typography>
+            <div style={{widows:"100%",display:"flex",justifyContent:"center",marginTop:"5px"}}>
             <button
-              className="button dark"
+              className="button dark tour-button"
               onClick={() => {
                 setOpen1(false);
                 tour.start();
@@ -211,15 +223,17 @@ const LeftComponent = () => {
               Start Tour
               {/* </button> */}
             </button>
+            </div>
+            
           </Box>
         </Modal>
       </div>
     );
   }
-  const newsteps = [
+  const newsteps = [ 
     {
       id: "intro",
-      attachTo: { element: ".tournament-info", on: "bottom" },
+      attachTo: { element: ".tournament-info", on : "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -235,12 +249,12 @@ const LeftComponent = () => {
           type: "cancel",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Back",
           type: "back",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Next",
           type: "next",
         },
@@ -264,7 +278,7 @@ const LeftComponent = () => {
     },
     {
       id: "intro-1",
-      attachTo: { element: ".tournament-fee", on: "bottom" },
+      attachTo: { element: ".tournament-fee", on : "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -280,12 +294,12 @@ const LeftComponent = () => {
           type: "cancel",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Back",
           type: "back",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Next",
           type: "next",
         },
@@ -309,7 +323,7 @@ const LeftComponent = () => {
     },
     {
       id: "intro-2",
-      attachTo: { element: ".tournament-reward", on: "bottom" },
+      attachTo: { element: ".tournament-reward", on : "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -325,12 +339,12 @@ const LeftComponent = () => {
           type: "cancel",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Back",
           type: "back",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Next",
           type: "next",
         },
@@ -354,7 +368,7 @@ const LeftComponent = () => {
     },
     {
       id: "intro-3",
-      attachTo: { element: "#folioplay-hamburger", on: "bottom" },
+      attachTo: { element: "#folioplay-hamburger", on : "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -370,12 +384,12 @@ const LeftComponent = () => {
           type: "cancel",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Back",
           type: "back",
         },
         {
-          classes: "shepherd-button-primary",
+          classes: "shepherd-button-secondary",
           text: "Next",
           type: "next",
         },
@@ -399,7 +413,7 @@ const LeftComponent = () => {
     },
     {
       id: "intro-4",
-      attachTo: { element: "#profile-icon", on: "bottom" },
+      attachTo: { element: "#profile-icon", on : "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -411,19 +425,9 @@ const LeftComponent = () => {
       buttons: [
         {
           classes: "shepherd-button-secondary",
-          text: "Exit",
+          text: "Finish",
           type: "cancel",
-        },
-        {
-          classes: "shepherd-button-primary",
-          text: "Back",
-          type: "back",
-        },
-        {
-          classes: "shepherd-button-primary",
-          text: "Next",
-          type: "next",
-        },
+        }
       ],
       classes: "custom-class-name-1 custom-class-name-2",
       highlightClass: "highlight",
