@@ -116,14 +116,14 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="activity-team-name font-size-20 font-weight-600">
                           {team.name}
                         </span>
-                        {/*<span>*/}
-                        {/*  <span className="activity-team-winnings font-weight-500">*/}
-                        {/*    4 Winnings*/}
-                        {/*  </span>*/}
-                        {/*  <span className="activity-team-contests font-weight-500 ml-10">*/}
-                        {/*    10 Contests*/}
-                        {/*  </span>*/}
-                        {/*</span>*/}
+                        <span>
+                         <span className="activity-team-winnings font-weight-500">
+                           4 Winnings
+                         </span>
+                         <span className="activity-team-contests font-weight-500 ml-10">
+                           10 Contests
+                         </span>
+                        </span>
                       </span>
                       <div className="activity-team-coins-preview">
                         <span className="image-wrappers image-1">

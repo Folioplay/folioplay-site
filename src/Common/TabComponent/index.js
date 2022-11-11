@@ -265,7 +265,11 @@ export default function ContestTabs({
             })}
           </>
         ) : (
-          <div className="contestTab__valueItem">No Open Tournament</div>
+          <div className="contestTab__valueItem">
+            
+            You haven't joined any tournaments that are yet to start
+            <img src={require('../../images/activityPage1.jpg').default} width="100%" />
+            </div>
         )}
       </div>
       <div className="mt-20 running-tournament display-none">
@@ -406,7 +410,10 @@ export default function ContestTabs({
             })}
           </>
         ) : (
-          <div className="contestTab__valueItem">No Running Tournament</div>
+          <div className="contestTab__valueItem" style={{margin:"0px"}}>
+            You haven't joined any tournaments that are running
+            <img src={require('../../images/activityPage1.jpg').default} width="100%" />
+            </div>
         )}
       </div>
       <div className="mt-20 completed-tournament display-none">
@@ -611,7 +618,9 @@ export default function ContestTabs({
             })}
           </>
         ) : (
-          <div className="contestTab__valueItem">No Completed Tournament</div>
+          <div className="contestTab__valueItem">
+            <img src={require('../../images/activityPage1.jpg').default} width="100%" />
+            You haven't joined any tournaments that are completed</div>
         )}
       </div>
     </Box>
