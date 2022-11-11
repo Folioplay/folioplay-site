@@ -13,8 +13,7 @@ import MuiAlert from "@mui/material/Alert";
 import { useEventCallback } from "@mui/material";
 import SplashScreen from "../common/SplashScreen";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
-import googleIcon from "../../../images/google_icon.webp";
-import metaIcon from "../../../images/meta.png";
+import web4authLogo from "../../../images/web3authlogo.jpg";
 import { Magic } from "magic-sdk";
 import { OAuthExtension } from "@magic-ext/oauth";
 import { useDispatch, useSelector } from "react-redux";
@@ -128,19 +127,7 @@ function LoginLeft() {
         })
         .then(async function () {
           localStorage.setItem("walletType", "walletConnect");
-          let message = "";
-          if (referralParam !== "") {
-            const returnedMessage = await referralCodePost(referralParam);
-            // const referralResponse = await referralCodePost(referral);
-            if (returnedMessage.statusCode === 200) {
-              message = "Referral applied successfully";
-            } else {
-              if (returnedMessage.statusCode === 400) {
-                message = returnedMessage.message;
-              }
-            }
-          }
-          navigate("tournaments", { state: { referralCodeMessage: message } });
+          navigate("tournaments");
         })
         .catch(function (error) {
           console.log(error);
@@ -199,19 +186,6 @@ function LoginLeft() {
           })
           .then(async (user) => {
             localStorage.setItem("walletType", "metamask");
-            // let message = "";
-            // if (referralParam !== "") {
-            //   const returnedMessage = await referralCodePost(referralParam);
-            //   // const referralResponse = await referralCodePost(referral);
-            //   if (returnedMessage.statusCode === 200) {
-            //     message = "Referral applied successfully";
-            //   } else {
-            //     if (returnedMessage.statusCode === 400) {
-            //       message = returnedMessage.message;
-            //     }
-            //   }
-            // }
-            // navigate("tournaments", {state: {referralCodeMessage: message}});
             navigate("tournaments");
           })
           .catch(function (error) {
@@ -279,7 +253,35 @@ function LoginLeft() {
     // console.log(result);
     console.log(test);
   };
-  const metaOAuthLogin = () => {};
+  const web3Login = async() => {
+    if (!isAuthenticated) {
+      if (!policiesAccepted) {
+        document
+            .getElementsByClassName("policies-error")[0]
+            .classList.remove("show");
+        document
+            .getElementsByClassName("policies-error")[0]
+            .classList.add("show");
+        setTimeout(() => {
+          document
+              .getElementsByClassName("policies-error")[0]
+              .classList.remove("show");
+        }, 2000);
+        return;
+      }
+        await authenticate({
+          provider: "web3Auth",
+          clientId: "BEL7xdrqpzSCcmqfGamqeahjVwi8TE7pPe0TRfdQu7Egc0Eu1XEBPt_FJaufSUiOLcX5ugDXf9aB9kI_gM3nRX4",
+        })
+            .then(async (user) => {
+              await getAuthTokenFunction(user);
+            })
+            .then(async function () {
+              localStorage.setItem("walletType", "web3Auth");
+              navigate("tournaments");
+            })
+    }
+  };
 
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
@@ -355,47 +357,6 @@ function LoginLeft() {
       >
         Continue using
       </span>
-      <div className="folioplay-connect">
-        <Button
-          style={{
-            width: "min(320px,100%)",
-            height: "45px",
-          }}
-          className="folioplay-login-google-button"
-          variant="contained"
-          onClick={googleOAuthLogin}
-        >
-          <img
-            className="mr-8"
-            alt="metamask-icon"
-            src={googleIcon}
-            width={"24px"}
-            height={"24px"}
-          />{" "}
-          Google
-        </Button>
-        <Button
-          style={{
-            width: "min(320px,100%)",
-            height: "45px",
-          }}
-          className="folioplay-login-google-button"
-          variant="contained"
-          onClick={metaOAuthLogin}
-        >
-          <img
-            className="mr-8"
-            alt="metamask-icon"
-            src={metaIcon}
-            width={"24px"}
-            height={"24px"}
-          />{" "}
-          Meta
-        </Button>
-      </div>
-      <h4 className="folioplay-text-separator-wrapper">
-        <span>Or</span>
-      </h4>
       <div style={{ width: "100%", height: "30px" }}></div>
       {/*<h3 style={{ textAlign: "center" }} className="font-weight-500">*/}
       {/*  Connect your web3 wallet*/}
@@ -442,33 +403,54 @@ function LoginLeft() {
       <h4 className="folioplay-text-separator-wrapper">
         <span>Or</span>
       </h4>
-      <div style={{ width: "100%", height: "30px" }}></div>
-      <label
-        style={{ width: "min(320px,100%)" }}
-        className="font-size-12 ml-auto mr-auto"
-        htmlFor="email-field"
-      >
-        Email ID
-      </label>
-      <input
-        type="email"
-        placeholder="Mention your Email ID here"
-        required
-        // autoFocus
-        value={email}
-        name="email-field"
-        id="email-field"
-        onChange={(e) => handleChange(e)}
-      />
-      <Button
-        id="folioplay-login-mail-button"
-        onClick={loginWithMail}
-        variant="filled"
-        size="medium"
-      >
-        Continue
-        <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />
-      </Button>
+      {/*<div style={{ width: "100%", height: "30px" }}></div>*/}
+      {/*<label*/}
+      {/*  style={{ width: "min(320px,100%)" }}*/}
+      {/*  className="font-size-12 ml-auto mr-auto"*/}
+      {/*  htmlFor="email-field"*/}
+      {/*>*/}
+      {/*  Email ID*/}
+      {/*</label>*/}
+      {/*<input*/}
+      {/*  type="email"*/}
+      {/*  placeholder="Mention your Email ID here"*/}
+      {/*  required*/}
+      {/*  // autoFocus*/}
+      {/*  value={email}*/}
+      {/*  name="email-field"*/}
+      {/*  id="email-field"*/}
+      {/*  onChange={(e) => handleChange(e)}*/}
+      {/*/>*/}
+      {/*<Button*/}
+      {/*  id="folioplay-login-mail-button"*/}
+      {/*  onClick={loginWithMail}*/}
+      {/*  variant="filled"*/}
+      {/*  size="medium"*/}
+      {/*>*/}
+      {/*  Continue*/}
+      {/*  <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />*/}
+      {/*</Button>*/}
+      <div className="folioplay-connect">
+
+        <Button
+            style={{
+              width: "min(320px,100%)",
+              height: "45px",
+            }}
+            className="folioplay-login-google-button"
+            variant="contained"
+            onClick={web3Login}
+        >
+          <img
+              className="mr-8"
+              alt="metamask-icon"
+              src={web4authLogo}
+              width={"24px"}
+              height={"24px"}
+          />{" "}
+          Web3Auth
+        </Button>
+      </div>
       {snackBarChangeWalletComponent()}
       {snackBarChangeChainComponent()}
       <span className="mt-20">

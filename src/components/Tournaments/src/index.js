@@ -3,7 +3,7 @@ import { getAuthToken, referralCodePost } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
 import { useMoralis } from "react-moralis";
-
+import {chooseTeamOpen} from "../common/chooseTeamAnimations";
 import LeftComponent from "./LeftComponent";
 import RightComponent from "./RightComponent";
 
