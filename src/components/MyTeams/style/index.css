@@ -228,5 +228,7 @@
     font-size: 60px;
 }
 #circle-add-team-button:hover{
+    transform: scale(1.05);
+    transition: 0.1s all ease-in-out;
     cursor: pointer;
 }
