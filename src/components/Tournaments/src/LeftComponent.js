@@ -587,7 +587,7 @@ const LeftComponent = () => {
               }}
               disabled={disabledTournament}
             >
-              {tournament.entryFee} MGT
+              {tournament.entryFee} FPC
             </Button>
           </div>
           <div>
@@ -646,7 +646,7 @@ const LeftComponent = () => {
             </div>
             <span className="font-size-12">
               <EmojiEventsOutlinedIcon />
-              <span>{tournament.rewards.prize_pool} MGT</span>
+              <span>{tournament.rewards.prize_pool} FPC</span>
             </span>
             {/* {tournament.user_joined ?  */}
             

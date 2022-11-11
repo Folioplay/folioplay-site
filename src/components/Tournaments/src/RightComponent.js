@@ -6,6 +6,7 @@ import { Button, TextField } from "@mui/material";
 import { referralCodePost } from "../../../APIS/apis";
 import SnackbarComponent from "../../../Common/Snackbar";
 import { useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 const style = {
   position: "absolute",
@@ -20,7 +21,9 @@ const style = {
 };
 
 const RightComponent = () => {
+  const dispatch = useDispatch();
   const [snackOpen, setSnackOpen] = React.useState(false);
+  const openReferralRedux = useSelector((state)=> state.LeaderBoardSlice.referralModal)
 
   const snackHandleClose = (event, reason) => {
     if (reason === "clickaway") {

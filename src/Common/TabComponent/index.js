@@ -257,7 +257,7 @@ export default function ContestTabs({
                     </span>
                     <span className="font-size-12">
                       <EmojiEventsOutlinedIcon />
-                      <span>{tournament.amount_won} MGT</span>
+                      <span>{tournament.amount_won} FPC</span>
                     </span>
                   </div>
                 </motion.div>
@@ -402,7 +402,7 @@ export default function ContestTabs({
                   </span>
                   <span className="font-size-12">
                     <EmojiEventsOutlinedIcon />
-                    <span>{tournament.amount_won} MGT</span>
+                    <span>{tournament.amount_won} FPC</span>
                   </span>
                 </div>
               </motion.div>
@@ -545,7 +545,7 @@ export default function ContestTabs({
                     </span>
                     <span className="font-size-12">
                       <EmojiEventsOutlinedIcon />
-                      <span>{tournament.amount_won} MGT</span>
+                      <span>{tournament.amount_won} FPC</span>
                     </span>
                   </div>
                 </motion.div>
@@ -585,7 +585,7 @@ export default function ContestTabs({
                           </span>
                           <span className="reward_amount">
                             <EmojiEventsOutlinedIcon />
-                            {tournament.amount_won} MGT
+                            {tournament.amount_won} FPC
                           </span>
                         </div>
 
@@ -720,7 +720,7 @@ export default function ContestTabs({
                             </span>
                             <span className="reward_amount">
                               <EmojiEventsOutlinedIcon />
-                              {tournament.amount_won} MGT
+                              {tournament.amount_won} FPC
                             </span>
                           </div>
 
@@ -803,7 +803,7 @@ export default function ContestTabs({
                             </span>
                             <span className="reward_amount">
                               <EmojiEventsOutlinedIcon />
-                              {tournament.amount_won} MGT
+                              {tournament.amount_won} FPC
                             </span>
                           </div>
 
@@ -886,7 +886,7 @@ export default function ContestTabs({
                             </span>
                             <span className="reward_amount">
                               <EmojiEventsOutlinedIcon />
-                              {tournament.amount_won} MGT
+                              {tournament.amount_won} FPC
                             </span>
                           </div>
 

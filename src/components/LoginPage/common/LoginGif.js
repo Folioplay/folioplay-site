@@ -1,10 +1,11 @@
 import React from 'react';
 import login_gif from "../../../images/folio_login_gif.gif";
+import ReactLoading from "react-loading";
 
 const LoginGif = () => {
     return (
         <div className="loginGif">
-            <img src={login_gif} alt="Loading..." height="100%" width="100%"/>
+            <ReactLoading type={"bubbles"} color={"black"} height={'10%'} width={'10%'} />
         </div>
     );
 };

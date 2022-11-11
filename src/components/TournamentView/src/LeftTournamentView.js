@@ -27,7 +27,7 @@ const LeftTournamentView = () => {
   var navigate = useNavigate();
   const { user } = useMoralis();
   const { state } = useLocation();
-  let account = user.get("ethAddress");
+  // let account = user.get("ethAddress");
   const [balance, setBalance] = useState("");
   const [balanceSnackOpen, setBalanceSnackOpen] = useState(false);
   const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
@@ -100,6 +100,8 @@ const LeftTournamentView = () => {
     getPresentUser();
   }, []);
 
+  const leaderBoardRedux = useSelector((state)=> state.LeaderBoardSlice.leaderBoard);
+
   if (tournament !== undefined) {
     seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
   }
@@ -157,7 +159,7 @@ const LeftTournamentView = () => {
                   <b>{tournament.rewards.prize_pool} Folioplay Points</b>
                   <br />
                   <span
-                    className="ml-20"
+                    className=""
                     style={{
                       fontSize: "12px",
                       marginLeft: "100px",
@@ -170,7 +172,10 @@ const LeftTournamentView = () => {
                     }}
                   >
                     {/*<u>Click here to view on Polygon.</u>*/}
-                    <u>Tournament ID: XXXXX{tournament.transaction_hash.slice(-5)}</u>
+                    {/*<span className="tournamentView__transactionIdCompleted">*/}
+                      <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
+                      <img src={require("../../../images/polygon_logo.png").default} height={"20"} width={"20"} alt={"polygon"} />
+                    {/*</span>*/}
                   </span>
                 </div>
                 <div>
@@ -190,7 +195,10 @@ const LeftTournamentView = () => {
                 }}
               >
                 {/*<u>Click here to view on Polygon.</u>*/}
-                <u>Tournament ID: XXXXX{tournament.transaction_hash.slice(-5)}</u>
+                <span className="tournamentView__transactionId">
+                  <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
+                  <img src={require("../../../images/polygon_logo.png").default}  height={"20"} width={"20"} alt={"polygon"} />
+                </span>
               </span>
             )}
           </div>
@@ -214,7 +222,7 @@ const LeftTournamentView = () => {
                     <br />
                     <span className="font-size-20 font-weight-500">
                       {/* {tournament.total_reward} MGT */}
-                      {tournament.rewards.prize_pool} MGT
+                      {tournament.rewards.prize_pool} FPC
                     </span>
                   </span>
                   <span className="ml-auto" style={{ textAlign: "right" }}>
@@ -238,7 +246,7 @@ const LeftTournamentView = () => {
                       }}
                       disabled={disabledTournament}
                     >
-                      {tournament.entryFee} MGT
+                      {tournament.entryFee} FPC
                     </Button>
                   </span>
                 </div>
@@ -295,9 +303,9 @@ const LeftTournamentView = () => {
                     </div>
                     <div className="tview__rewardDisplay">
                       {amountWon !== -1 ? (
-                        <span>You won {amountWon} MGT</span>
+                        <span>You won {amountWon} FPC</span>
                       ) : (
-                        <span> You haven't participated in tournament</span>
+                        <span> {leaderBoardRedux[0].user.username} won __ </span>
                       )}
                     </div>
                   </div>

@@ -17,9 +17,16 @@ export const  getLeaderboardAsync = createAsyncThunk(
 export const getLeaderboardSlice = createSlice({
     name: 'get_leaderboard',
     initialState: {
-        leaderBoard:[]
+        leaderBoard:[],
+        referralModal: false
     },
     reducers:{
+        openReferralModal(state) {
+            state.referralModal=true;
+        },
+        closeReferralModal(state){
+            state.referralModal=false;
+        }
 
     },
     extraReducers: {

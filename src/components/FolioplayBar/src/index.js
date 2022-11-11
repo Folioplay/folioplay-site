@@ -29,6 +29,9 @@ import { useNavigate } from "react-router";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
 import Person2Icon from '@mui/icons-material/Person2';
 import {getWalletBalance} from "../../../APIS/apis";
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import BookIcon from '@mui/icons-material/Book';
 
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
@@ -159,16 +162,23 @@ export default function FolioplayBar({ intervalId }) {
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policy"}
           />
         </ListItem>
-        <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
+        <ListItem button key={"enter-referral"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
-            <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
+            <PersonAddIcon size="medium" style={{ color: "var(--dim-white)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ fontFamily: "poppins" }} primary={"Enter Referral"}
+          />
+        </ListItem>
+        <ListItem button key={"Disclaimer"} onClick={openPrivacyPolicies}>
+          <ListItemIcon>
+            <BookIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Disclaimer"}
           />
         </ListItem>
-        <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
+        <ListItem button key={"How-to-Play"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
-            <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
+            <QuestionMarkIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
           <ListItemText style={{ fontFamily: "poppins" }} primary={"How to Play"}
           />
@@ -268,6 +278,7 @@ export default function FolioplayBar({ intervalId }) {
               >
                 {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
                 <MenuItem>Folioplay Points: {folioplayWalletBalance} </MenuItem>
+                <MenuItem>Bonus Points: {"0"} </MenuItem>
                 <Divider />
                 <MenuItem onClick={()=>{
                   clearInterval(intervalId);

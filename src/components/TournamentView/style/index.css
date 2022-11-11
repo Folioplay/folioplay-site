@@ -370,3 +370,17 @@
 .tview__rewardDisplay {
   font-size: 0.85rem;
 }
+
+.tournamentView__transactionId{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tournamentView__transactionIdCompleted{
+  display: flex;
+  /*flex-direction: row;*/
+  /*flex-wrap: wrap;*/
+  justify-content: center;
+}
