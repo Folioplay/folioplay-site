@@ -96,12 +96,12 @@ const LeftTransactionHistoryComponent = () => {
                         <div  className={"summaryTab__dataBody"}>
                             {moment(item.date).format('Do MMMM YYYY, h:mm:ss a')}
                         </div>
-                        {/*<div className={"summaryTab__dataHeading"}>*/}
-                        {/*    Transaction ID: {item._id}*/}
-                        {/*</div>*/}
-                        {/*<div  className={"summaryTab__dataBody"}>*/}
-                        {/*    Transaction ID: {item._id}*/}
-                        {/*</div>*/}
+                        <div className={"summaryTab__dataHeading"}>
+                            Team Name
+                        </div>
+                        <div  className={"summaryTab__dataBody"}>
+                            {item.data.teamName}
+                        </div>
                     </div>
                 </AccordionDetails>
             </AccordionComponent>

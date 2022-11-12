@@ -7,6 +7,9 @@ import { referralCodePost } from "../../../APIS/apis";
 import SnackbarComponent from "../../../Common/Snackbar";
 import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
+// import ReferralModal from "../../ReferralModal/src";
+import {closeReferralModal, openReferralModal} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import Modal from "@mui/material/Modal";
 
 const style = {
   position: "absolute",
@@ -39,27 +42,30 @@ const RightComponent = () => {
     localStorage.getItem("user_referral") === "null"
   );
   const handleClose = () => {
-    setOpen(false);
+    dispatch(closeReferralModal());
+    // setOpen(false);
   };
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    dispatch(openReferralModal);
+    // setOpen(true);
+  }
   const referralExists = localStorage.getItem("user_referral");
-  console.log(referralExists);
 
   const ReferralModal = () => {
     const [referral, setReferral] = useState("");
-    useEffect(() => {
-      if (referralExists !== "null") {
-        setReferral(localStorage.getItem("user_referral"));
-      }
-    },[]);
+    // useEffect(() => {
+    //   if (referralExists !== "null") {
+    //     setReferral(localStorage.getItem("user_referral"));
+    //   }
+    // },[]);
 
     return (
-      <ContentModal
-        open={open}
-        handleClose={handleClose}
-        children={ReferralModal}
-        handleOpen={handleOpen}
-      >
+        <Modal
+            open={openReferralRedux}
+            onClose={handleClose}
+            className="modal"
+            style={{whiteSpace: 'pre-line'}}
+        >
         <Box sx={style}>
           <div className="referralModal__content">
             <div className="referralModal__modalHeading">
@@ -94,8 +100,10 @@ const RightComponent = () => {
                       setSnackSeverityType("error");
                     }
                   }
+                  console.log("fdsf")
                   setSnackOpen(true);
-                  handleClose();
+                  dispatch(closeReferralModal());
+                  console.log("ggwp")
                 }}
               >
                 Let's Play
@@ -103,13 +111,14 @@ const RightComponent = () => {
             </div>
           </div>
         </Box>
-      </ContentModal>
+        </Modal>
     );
   };
 
   return (
     <div id="tournament-page-image">
       {/* {referralExists !== "null" ? null : <ReferralModal />} */}
+      <ReferralModal />
       <SnackbarComponent
         open={snackOpen}
         handleClose={snackHandleClose}

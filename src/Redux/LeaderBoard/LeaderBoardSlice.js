@@ -35,5 +35,6 @@ export const getLeaderboardSlice = createSlice({
         },
     }
 });
+export const { openReferralModal, closeReferralModal } = getLeaderboardSlice.actions
 
 export default getLeaderboardSlice.reducer;

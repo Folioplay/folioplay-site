@@ -34,6 +34,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import BookIcon from '@mui/icons-material/Book';
 import {useDispatch, useSelector} from "react-redux";
 import transactionSlice, {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
+import {openReferralModal} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
@@ -169,7 +170,10 @@ export default function FolioplayBar({ intervalId }) {
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policy"}
           />
         </ListItem>
-        <ListItem button key={"enter-referral"} onClick={openPrivacyPolicies}>
+        <ListItem button key={"enter-referral"} onClick={()=> {
+          console.log("open to hai");
+          dispatch(openReferralModal())
+        }}>
           <ListItemIcon>
             <PersonAddIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
