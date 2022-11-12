@@ -17,6 +17,7 @@ import {
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 import {useDispatch} from "react-redux";
+import {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
@@ -186,6 +187,7 @@ export default function JoinTournamentDrawer({
                   tournaments
               )
               dispatch(getLeaderboardAsync(tournamentId));
+              dispatch(getTransactionsAsync());
             }
             }
           >

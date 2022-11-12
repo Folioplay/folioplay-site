@@ -32,7 +32,6 @@ export const getLeaderboardSlice = createSlice({
     extraReducers: {
         [getLeaderboardAsync.fulfilled]: (leaderBoardList, action) => {
             leaderBoardList.leaderBoard=action.payload;
-            console.log(leaderBoardList.leaderBoard);
         },
     }
 });

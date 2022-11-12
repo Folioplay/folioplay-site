@@ -32,10 +32,15 @@ import {getWalletBalance} from "../../../APIS/apis";
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import BookIcon from '@mui/icons-material/Book';
+import {useDispatch, useSelector} from "react-redux";
+import transactionSlice, {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
 
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let walletBalanceRedux = useSelector(state=> state.transactionSlice.balance);
+  let walletBonusPointsRedux = useSelector(state=> state.transactionSlice.bonus_points);
   var icons = [
     <HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />,
@@ -95,8 +100,9 @@ export default function FolioplayBar({ intervalId }) {
   const lg = () => logOutContext
   const logOut = async () => {
     lg();
-    localStorage.removeItem("authtoken", null);
-    localStorage.removeItem("walletconnect");
+    // localStorage.removeItem("authtoken", null);
+    // localStorage.removeItem("walletconnect");
+    localStorage.clear();
     await logout();
     window.location.pathname = "/";
   };
@@ -123,6 +129,7 @@ export default function FolioplayBar({ intervalId }) {
       const bal = await getWalletBalance();
       setFolioplayWalletBalance(bal.balance);
     }
+    dispatch(getTransactionsAsync());
     setWalletBalance();
   },[]);
 
@@ -277,8 +284,8 @@ export default function FolioplayBar({ intervalId }) {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
-                <MenuItem>Folioplay Points: {folioplayWalletBalance} </MenuItem>
-                <MenuItem>Bonus Points: {"0"} </MenuItem>
+                <MenuItem>Folioplay Points: {walletBalanceRedux} </MenuItem>
+                <MenuItem>Bonus Points: {walletBonusPointsRedux} </MenuItem>
                 <Divider />
                 <MenuItem onClick={()=>{
                   clearInterval(intervalId);
