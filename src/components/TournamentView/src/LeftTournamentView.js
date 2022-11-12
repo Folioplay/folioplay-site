@@ -174,7 +174,7 @@ const LeftTournamentView = () => {
                     {/*<u>Click here to view on Polygon.</u>*/}
                     {/*<span className="tournamentView__transactionIdCompleted">*/}
                       <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
-                      <img src={require("../../../images/polygon_logo.png").default} height={"20"} width={"20"} alt={"polygon"} />
+                      <img className="ml-5" src={require("../../../images/polygon_logo.png").default} height={"20"} width={"20"} alt={"polygon"} />
                     {/*</span>*/}
                   </span>
                 </div>
@@ -197,7 +197,7 @@ const LeftTournamentView = () => {
                 {/*<u>Click here to view on Polygon.</u>*/}
                 <span className="tournamentView__transactionId">
                   <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
-                  <img src={require("../../../images/polygon_logo.png").default}  height={"20"} width={"20"} alt={"polygon"} />
+                  <img className="ml-5" src={require("../../../images/polygon_logo.png").default}  height={"20"} width={"20"} alt={"polygon"} />
                 </span>
               </span>
             )}

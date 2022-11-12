@@ -169,7 +169,7 @@ export function AssignRole() {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.1 * index }}
                       id={"coin-" + coin.name.toLowerCase()}
-                      className="rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5"
+                      className={"rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5 " + coin.category.toLowerCase()+"-border"}
                     >
                       <img
                         src={
