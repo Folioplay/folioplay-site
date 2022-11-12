@@ -99,13 +99,41 @@ const LeftComponent = () => {
       setTournamentId(state.tournamentId);
     }
   },[])
-  
+  function scrollTo(element, to, duration) {
+    if (duration <= 0) return;
+    var difference = to - element.scrollTop;
+    var perTick = difference / duration * 10;
+
+    setTimeout(function() {
+        element.scrollTop = element.scrollTop + perTick;
+        if (element.scrollTop === to) return;
+        scrollTo(element, to, duration - 10);
+    }, 10);
+}
   useEffect(() => {
     console.log("id changed now trying to open drawer");
     if(document.getElementById('choose-team-div')){
       if(state && state.openDrawer){
         console.log("opening drawer ............")
-        chooseTeamOpen();
+        chooseTeamOpen().then(() => {
+          setTimeout(() => {
+            // console.log("i am in the scoll part ..............")
+            var objDiv = document.getElementsByClassName("all-teams")[0];
+            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
+            // objDiv.scrollTop = objDiv.scrollHeight;
+            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
+            // const element = $(`.all-teams`)[0];
+            // element.animate({
+            //     scrollTop: element.prop("scrollHeight")
+            // }, 500);
+            scrollTo(objDiv,objDiv.scrollHeight,400); 
+            
+            selectTeam("team-" + (teams.length-1), teams);  
+          },600);
+          
+
+        });
+
         window.history.replaceState(null, '')
       }
     }

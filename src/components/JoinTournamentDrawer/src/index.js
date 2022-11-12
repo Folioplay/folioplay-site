@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { joinTournamentAPI, deleteTeam } from "../../../APIS/apis";
 import { Button, LinearProgress } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { S3_URL } from "../../../APIS/apis";
 import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
@@ -132,11 +133,10 @@ export default function JoinTournamentDrawer({
                               </span>
                           }
                           <img
-                            src={
-                              require("../../../images/coinLogos/" +
-                                coin.symbol.toLowerCase() +
-                                ".png").default
-                            }
+                            src={ S3_URL +
+                                coin.symbol+
+                                ".png"
+                                }
                             width="40"
                             height="40"
                           />
