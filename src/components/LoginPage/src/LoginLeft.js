@@ -271,9 +271,12 @@ function LoginLeft() {
       }
         await authenticate({
           provider: "web3Auth",
-          clientId: "BEL7xdrqpzSCcmqfGamqeahjVwi8TE7pPe0TRfdQu7Egc0Eu1XEBPt_FJaufSUiOLcX5ugDXf9aB9kI_gM3nRX4",
+          clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
         })
             .then(async (user) => {
+              if(user===undefined){
+                throw new Error("User Not Found");
+              }
               await getAuthTokenFunction(user);
             })
             .then(async function () {
@@ -302,6 +305,7 @@ function LoginLeft() {
   // console.log(getUserDetailsGlobal);
 
   const getAuthTokenFunction = async (user) => {
+    console.log(user);
     const walletAddress = user.get("ethAddress");
     const walletSignature = user["attributes"].authData.moralisEth.signature;
     try {
