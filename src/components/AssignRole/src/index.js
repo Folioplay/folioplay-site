@@ -12,6 +12,7 @@ import TeamPreview from "../../TeamCreation/common/TeamPreview";
 import teamPreview from "../common/teamPreview";
 import { getAllUserTeams } from "../../../APIS/apis";
 import { useMoralis } from "react-moralis";
+import { S3_URL } from "../../../APIS/apis";
 import { ArrowBackIosNewSharp } from "@mui/icons-material";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import "../style/index.css";
@@ -172,10 +173,9 @@ export function AssignRole() {
                       className={"rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5 " + coin.category.toLowerCase()+"-border"}
                     >
                       <img
-                        src={
-                          require("../../../images/coinLogos/" +
+                        src={S3_URL +
                             coin.symbol.toLowerCase() +
-                            ".png").default
+                            ".png"
                         }
                         width="40px"
                         height="40px"

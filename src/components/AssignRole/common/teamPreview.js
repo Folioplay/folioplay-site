@@ -1,4 +1,5 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
+import { S3_URL } from "../../../APIS/apis";
 export default function teamPreview({ superstars, mooning, rekt }) {
   console.log(superstars);
   for (var j = 0; j < superstars.length; j++) {
@@ -8,9 +9,9 @@ export default function teamPreview({ superstars, mooning, rekt }) {
       for (var i = 0; i < bucketPreview.length; i++) {
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement("img");
-          coinImage.src = require("../../../images/coinLogos/" +
+          coinImage.src = S3_URL +
             coinTosymbol[superstars[j].name.toLowerCase()].toLowerCase() +
-            ".png").default;
+            ".png";
           coinImage.width = "75";
           coinImage.height = "75";
           coinImage.id = superstars[j].name + "-preview";
@@ -24,9 +25,9 @@ export default function teamPreview({ superstars, mooning, rekt }) {
         var buckets = document.getElementsByClassName("superstars-cover");
         newSpot.classList.add("superstars-preview", "coin-preview", "ml-20");
         var coinImage = document.createElement("img");
-        coinImage.src = require("../../../images/coinLogos/" +
+        coinImage.src = S3_URL +
           coinTosymbol[superstars[j].name.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
         coinImage.width = "75";
         coinImage.height = "75";
         coinImage.id = superstars[j].name + "-preview";
@@ -43,9 +44,9 @@ export default function teamPreview({ superstars, mooning, rekt }) {
       for (var i = 0; i < bucketPreview.length; i++) {
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement("img");
-          coinImage.src = require("../../../images/coinLogos/" +
+          coinImage.src = S3_URL +
             coinTosymbol[mooning[j].name.toLowerCase()].toLowerCase() +
-            ".png").default;
+            ".png";
           coinImage.width = "75";
           coinImage.height = "75";
           coinImage.id = mooning[j].name + "-preview";
@@ -59,9 +60,9 @@ export default function teamPreview({ superstars, mooning, rekt }) {
         var buckets = document.getElementsByClassName("mooning-cover");
         newSpot.classList.add("mooning-preview", "coin-preview", "ml-20");
         var coinImage = document.createElement("img");
-        coinImage.src = require("../../../images/coinLogos/" +
+        coinImage.src = S3_URL +
           coinTosymbol[mooning[j].name.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
         coinImage.width = "75";
         coinImage.height = "75";
         coinImage.id = mooning[j].name + "-preview";
@@ -78,9 +79,9 @@ export default function teamPreview({ superstars, mooning, rekt }) {
       for (var i = 0; i < bucketPreview.length; i++) {
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement("img");
-          coinImage.src = require("../../../images/coinLogos/" +
+          coinImage.src = S3_URL +
             coinTosymbol[rekt[j].name.toLowerCase()].toLowerCase() +
-            ".png").default;
+            ".png";
           coinImage.width = "75";
           coinImage.height = "75";
           coinImage.id = rekt[j].name + "-preview";
@@ -94,9 +95,9 @@ export default function teamPreview({ superstars, mooning, rekt }) {
         var buckets = document.getElementsByClassName("rekt-cover");
         newSpot.classList.add("rekt-preview", "coin-preview", "ml-20");
         var coinImage = document.createElement("img");
-        coinImage.src = require("../../../images/coinLogos/" +
+        coinImage.src = S3_URL +
           coinTosymbol[rekt[j].name.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
         coinImage.width = "75";
         coinImage.height = "75";
         coinImage.id = rekt[j].name + "-preview";

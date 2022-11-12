@@ -83,7 +83,6 @@ export default function CurrentTeamPreview() {
                               coin.symbol +
                               ".png"
                             }
-                            onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
                             width="40px"
                             height="40px"
                           />
