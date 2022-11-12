@@ -1,4 +1,5 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
+import { S3_URL } from "../../../APIS/apis";
 export default function selectRank(event,coins,finalRanks) {
   const rank = event.target.innerText;
   var coinClicked = event.target.parentElement.id;
@@ -36,27 +37,27 @@ export default function selectRank(event,coins,finalRanks) {
     }
     if (finalRanks[coins[i].name.toLowerCase()] === 1) {
       document.getElementById("coin-rank-1").src =
-        require("../../../images/coinLogos/" +
+        S3_URL +
           coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
       document.getElementById(
         "coin-" + coins[i].name.toLowerCase()
       ).childNodes[1].childNodes[2].innerText = "20000";
     }
     if (finalRanks[coins[i].name.toLowerCase()] === 2) {
       document.getElementById("coin-rank-2").src =
-        require("../../../images/coinLogos/" +
+        S3_URL +
           coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
       document.getElementById(
         "coin-" + coins[i].name.toLowerCase()
       ).childNodes[1].childNodes[2].innerText = "17500";
     }
     if (finalRanks[coins[i].name.toLowerCase()] === 3) {
       document.getElementById("coin-rank-3").src =
-        require("../../../images/coinLogos/" +
+        S3_URL +
           coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
       document.getElementById(
         "coin-" + coins[i].name.toLowerCase()
       ).childNodes[1].childNodes[2].innerText = "15000";
