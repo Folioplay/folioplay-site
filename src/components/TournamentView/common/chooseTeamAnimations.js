@@ -17,7 +17,8 @@ export function chooseTeamClose() {
 }
 
 export function chooseTeamOpen() {
-    document
+    return new Promise(function(resolve, reject) {
+        document
         .getElementById("choose-team-div")
         .classList.remove("animation-move-down");
     setTimeout(() => {
@@ -31,4 +32,6 @@ export function chooseTeamOpen() {
             .classList.remove("display-none");
     }, 400);
     document.getElementsByClassName('overlay-div')[0].classList.add('overlay');
+    resolve();
+    })
 }

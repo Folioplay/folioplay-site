@@ -8,6 +8,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
+import {scrollTo} from '../../../CommonFunctions/functions.js'
 import TimerIcon from "@mui/icons-material/Timer";
 import {
   deleteTeam,
@@ -99,17 +100,7 @@ const LeftComponent = () => {
       setTournamentId(state.tournamentId);
     }
   },[])
-  function scrollTo(element, to, duration) {
-    if (duration <= 0) return;
-    var difference = to - element.scrollTop;
-    var perTick = difference / duration * 10;
-
-    setTimeout(function() {
-        element.scrollTop = element.scrollTop + perTick;
-        if (element.scrollTop === to) return;
-        scrollTo(element, to, duration - 10);
-    }, 10);
-}
+  
   useEffect(() => {
     console.log("id changed now trying to open drawer");
     if(document.getElementById('choose-team-div')){

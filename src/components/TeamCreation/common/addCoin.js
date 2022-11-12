@@ -1,5 +1,6 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import updateSelectedCoins from "./updateSelectedCoins";
+import { S3_URL } from "../../../APIS/apis";
 export default function addCoin(
   event,
   wasActiveTab,
@@ -90,9 +91,9 @@ export default function addCoin(
       for (var i = 0; i < bucketPreview.length; i++) {
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement("img");
-          coinImage.src = require("../../../images/coinLogos/" +
+          coinImage.src = S3_URL +
             coinTosymbol[clickedCoin.toLowerCase()].toLowerCase() +
-            ".png").default;
+            ".png";
           coinImage.width = "75";
           coinImage.height = "75";
           coinImage.id = clickedCoin + "-preview";
@@ -110,9 +111,9 @@ export default function addCoin(
           "ml-20"
         );
         var coinImage = document.createElement("img");
-        coinImage.src = require("../../../images/coinLogos/" +
+        coinImage.src = S3_URL +
           coinTosymbol[clickedCoin.toLowerCase()].toLowerCase() +
-          ".png").default;
+          ".png";
         coinImage.width = "75";
         coinImage.height = "75";
         coinImage.id = clickedCoin + "-preview";

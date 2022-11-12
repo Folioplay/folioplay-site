@@ -189,7 +189,7 @@ export default function JoinTournamentDrawer({
             }
             }
           >
-            Join Tournament
+            Join Now 
           </Button>
           <Button
             variant="filled"

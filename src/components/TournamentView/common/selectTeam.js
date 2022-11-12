@@ -15,7 +15,7 @@ export default function selectTeam(clickedId, teams, tournament) {
     seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
   }
 
-  function selectTeam(clickedId) {
+function selectTeam(clickedId) {
     var allTeams = document.getElementsByClassName("team");
     var selectedTeam = document.getElementById(clickedId);
     for (var i = 0; i < allTeams.length; i++) {

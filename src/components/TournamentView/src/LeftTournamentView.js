@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MuiAlert from "@mui/material/Alert";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useMoralis } from "react-moralis";
+import {scrollTo} from '../../../CommonFunctions/functions.js'
 import {
   getAllUserTeams,
   getAmountWon,
@@ -17,6 +18,7 @@ import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import Snackbar from "@mui/material/Snackbar";
 import { motion } from "framer-motion/dist/framer-motion";
 import { SERVER } from "../../../APIS/apis";
+import selectTeam from "../common/selectTeam";
 import {useDispatch, useSelector} from "react-redux";
 import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
@@ -79,10 +81,26 @@ const LeftTournamentView = () => {
     if(document.getElementById('choose-team-div')){
       if(state && state.openDrawer){
         console.log("opening drawer in view ............")
-        chooseTeamOpen();
+        chooseTeamOpen().then(() => {
+          setTimeout(() => {
+            // console.log("i am in the scoll part ..............")
+            console.log("scrollling     .....................")
+            var objDiv = document.getElementsByClassName("all-teams")[0];
+            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
+            // objDiv.scrollTop = objDiv.scrollHeight;
+            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
+            // const element = $(`.all-teams`)[0];
+            // element.animate({
+            //     scrollTop: element.prop("scrollHeight")
+            // }, 500);
+            scrollTo(objDiv,objDiv.scrollHeight,400); 
+            
+            selectTeam("team-" + (teams.length-1), teams);  
+          },600);
+        });
         window.history.replaceState(null, '')
       }
-    }
+  }
   },[tournament,teams])
   useEffect(() => {
     
