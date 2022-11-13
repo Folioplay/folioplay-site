@@ -14,9 +14,14 @@ export const AuthContextProvider = ({ children }) => {
     const [presentAuthToken, setPresentAuthToken] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
     const [user, setUser] = useState(null);
 
     const {isAuthenticated} =
+=======
+
+    const {isAuthenticated, user, isInitialized} =
+>>>>>>> 0fd28f9 (code change)
         useMoralis();
 
     function callLogin(){
@@ -24,7 +29,11 @@ export const AuthContextProvider = ({ children }) => {
             setTimeout(callLogin, 2000);
         }
         else {
+<<<<<<< HEAD
             fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
+=======
+            fetch(`${process.env.REACT_APP_API_SERVER}/user/is-valid`, {
+>>>>>>> 0fd28f9 (code change)
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),
@@ -47,10 +56,20 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(()=>{
         const token = localStorage.getItem("authtoken");
         if(isAuthenticated && (token === null || token === "")){
+<<<<<<< HEAD
             callLogin();
         }
         else {
             fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
+=======
+            // setTimeout(()=>{
+            //     callLogin();
+            // }, 2000);
+            callLogin();
+        }
+        else {
+            fetch(`${process.env.REACT_APP_API_SERVER}/user/is-valid`, {
+>>>>>>> 0fd28f9 (code change)
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),
@@ -60,6 +79,7 @@ export const AuthContextProvider = ({ children }) => {
                     if (!res.ok) {
                         throw Error();
                     }
+<<<<<<< HEAD
                     return res.json();
                 })
                 .then((data)=>{
@@ -77,6 +97,15 @@ export const AuthContextProvider = ({ children }) => {
                     if (window.location.pathname === "/")
                         window.location.pathname = "/tournaments";
                 })
+=======
+                    console.log("valid")
+                    setPresentAuthToken(true);
+                    setLoggedIn(true);
+                    console.log(window.location.pathname)
+                    if (window.location.pathname === "/")
+                        window.location.pathname = "/tournaments";
+                })
+>>>>>>> 0fd28f9 (code change)
                 .catch(err => {
                     if (window.location.pathname !== "/") {
                         localStorage.clear();
@@ -87,12 +116,23 @@ export const AuthContextProvider = ({ children }) => {
                 .finally(() => setLoading(false));
         }
     },[])
+<<<<<<< HEAD
+=======
+    console.log("isAuthenticated", isAuthenticated);
+    console.log("isInitialized", isInitialized);
+    console.log("presentAuthToken", presentAuthToken);
+    console.log("loading", loading);
+>>>>>>> 0fd28f9 (code change)
 
 
     return (
         <AuthContext.Provider
             value={{loggedIn, presentAuthToken}}>
+<<<<<<< HEAD
             {(!loading)? children: <LoginGif /> }
+=======
+            {(!loading)? children: <CircularProgress /> }
+>>>>>>> 0fd28f9 (code change)
         </AuthContext.Provider>
     );
 }
