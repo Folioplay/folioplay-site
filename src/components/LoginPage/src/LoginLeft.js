@@ -32,13 +32,8 @@ function LoginLeft() {
   const navigate = useNavigate();
   const {
     authenticate,
-    authError,
     isAuthenticated,
-    isAuthenticating,
-    user,
-    account,
     logout,
-    isInitialized,
   } = useMoralis();
   const search = useLocation().search;
   const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
@@ -182,8 +177,8 @@ function LoginLeft() {
           })
           .then(async (user) => {
             localStorage.setItem("walletType", "metamask");
-            // window.location.pathname="tournaments";
-            navigate("/tournaments");
+            window.location.pathname="tournaments";
+            // navigate("/tournaments");
           })
           .catch(function (error) {
             console.log(error);
@@ -276,7 +271,8 @@ function LoginLeft() {
             })
             .then(async function () {
               localStorage.setItem("walletType", "web3Auth");
-              navigate("tournaments");
+              window.location.pathname="tournaments";
+              // navigate("tournaments");
             })
     }
   };

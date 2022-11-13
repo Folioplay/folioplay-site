@@ -5,7 +5,7 @@ import ReactLoading from "react-loading";
 const LoginGif = () => {
     return (
         <div className="loginGif">
-            <ReactLoading type={"bubbles"} color={"black"} height={'10%'} width={'10%'} />
+            <ReactLoading type={"bubbles"} color={"#453df1"} height={'10%'} width={'10%'} />
         </div>
     );
 };

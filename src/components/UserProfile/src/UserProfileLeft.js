@@ -331,7 +331,7 @@ function UserProfileLeft() {
           <div className="sectionDetails">
             Share this referral code and earn rewards &nbsp;
             <span className="profilePage__referralCode">
-                `${window.location.origin}/?code={localStorage.getItem("folioReferralCode")}`
+                {`${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`}
               </span>{" "}
             &nbsp;
             <ContentCopyIcon

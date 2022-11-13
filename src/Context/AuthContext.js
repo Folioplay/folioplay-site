@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import {useMoralis} from "react-moralis";
 import SnackbarComponent from "../Common/Snackbar";
 import {CircularProgress} from "@mui/material";
+import LoginGif from "../components/LoginPage/common/LoginGif";
 // import {useNavigate} from "react-router";
 
 
@@ -13,8 +14,9 @@ export const AuthContextProvider = ({ children }) => {
     const [presentAuthToken, setPresentAuthToken] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
-    const {isAuthenticated, user, isInitialized} =
+    const {isAuthenticated} =
         useMoralis();
 
     function callLogin(){
@@ -22,7 +24,7 @@ export const AuthContextProvider = ({ children }) => {
             setTimeout(callLogin, 2000);
         }
         else {
-            fetch(`${process.env.REACT_APP_API_SERVER}/user/is-valid`, {
+            fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),
@@ -45,13 +47,10 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(()=>{
         const token = localStorage.getItem("authtoken");
         if(isAuthenticated && (token === null || token === "")){
-            // setTimeout(()=>{
-            //     callLogin();
-            // }, 2000);
             callLogin();
         }
         else {
-            fetch(`${process.env.REACT_APP_API_SERVER}/user/is-valid`, {
+            fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),
@@ -61,7 +60,17 @@ export const AuthContextProvider = ({ children }) => {
                     if (!res.ok) {
                         throw Error();
                     }
-                    console.log("valid")
+                    return res.json();
+                })
+                .then((data)=>{
+                    // setUser({
+                    //     walletAddress: data.walletAddress,
+                    //     username: data.username,
+                    //     referralCode: data.referralCode
+                    // })
+                    localStorage.setItem("folioUsername", data.username);
+                    localStorage.setItem("folioWalletAddress", data.walletAddress);
+                    localStorage.setItem("folioReferralCode", data.referralCode);
                     setPresentAuthToken(true);
                     setLoggedIn(true);
                     console.log(window.location.pathname)
@@ -71,22 +80,19 @@ export const AuthContextProvider = ({ children }) => {
                 .catch(err => {
                     if (window.location.pathname !== "/") {
                         localStorage.clear();
+                        setUser(null);
                         window.location.pathname = "/";
                     }
                 })
                 .finally(() => setLoading(false));
         }
     },[])
-    console.log("isAuthenticated", isAuthenticated);
-    console.log("isInitialized", isInitialized);
-    console.log("presentAuthToken", presentAuthToken);
-    console.log("loading", loading);
 
 
     return (
         <AuthContext.Provider
             value={{loggedIn, presentAuthToken}}>
-            {(!loading)? children: <CircularProgress /> }
+            {(!loading)? children: <LoginGif /> }
         </AuthContext.Provider>
     );
 }

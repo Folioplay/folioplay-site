@@ -262,8 +262,16 @@ export async function referralCodePost(referralCode) {
       referralCode: referralCode
     }),
   })
-    .then((res) => res.json())
-    .catch((err) => err.json());
+    .then((res) => {
+      if(!res.ok){
+        return res.json();
+      }
+      return res.json()
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
 }
 
 export async function getWalletBalance() {
