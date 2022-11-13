@@ -15,6 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
 <<<<<<< HEAD
+<<<<<<< HEAD
     const [user, setUser] = useState(null);
 
     const {isAuthenticated} =
@@ -22,6 +23,11 @@ export const AuthContextProvider = ({ children }) => {
 
     const {isAuthenticated, user, isInitialized} =
 >>>>>>> 0fd28f9 (code change)
+=======
+    const [user, setUser] = useState(null);
+
+    const {isAuthenticated} =
+>>>>>>> 10d5df2 (build updated)
         useMoralis();
 
     function callLogin(){
@@ -30,10 +36,14 @@ export const AuthContextProvider = ({ children }) => {
         }
         else {
 <<<<<<< HEAD
+<<<<<<< HEAD
             fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
 =======
             fetch(`${process.env.REACT_APP_API_SERVER}/user/is-valid`, {
 >>>>>>> 0fd28f9 (code change)
+=======
+            fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
+>>>>>>> 10d5df2 (build updated)
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),
@@ -57,6 +67,7 @@ export const AuthContextProvider = ({ children }) => {
         const token = localStorage.getItem("authtoken");
         if(isAuthenticated && (token === null || token === "")){
 <<<<<<< HEAD
+<<<<<<< HEAD
             callLogin();
         }
         else {
@@ -70,6 +81,12 @@ export const AuthContextProvider = ({ children }) => {
         else {
             fetch(`${process.env.REACT_APP_API_SERVER}/user/is-valid`, {
 >>>>>>> 0fd28f9 (code change)
+=======
+            callLogin();
+        }
+        else {
+            fetch(`${process.env.REACT_APP_API_SERVER}/user/`, {
+>>>>>>> 10d5df2 (build updated)
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),
@@ -80,6 +97,9 @@ export const AuthContextProvider = ({ children }) => {
                         throw Error();
                     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 10d5df2 (build updated)
                     return res.json();
                 })
                 .then((data)=>{
@@ -91,6 +111,7 @@ export const AuthContextProvider = ({ children }) => {
                     localStorage.setItem("folioUsername", data.username);
                     localStorage.setItem("folioWalletAddress", data.walletAddress);
                     localStorage.setItem("folioReferralCode", data.referralCode);
+<<<<<<< HEAD
                     setPresentAuthToken(true);
                     setLoggedIn(true);
                     console.log(window.location.pathname)
@@ -99,6 +120,8 @@ export const AuthContextProvider = ({ children }) => {
                 })
 =======
                     console.log("valid")
+=======
+>>>>>>> 10d5df2 (build updated)
                     setPresentAuthToken(true);
                     setLoggedIn(true);
                     console.log(window.location.pathname)
@@ -117,22 +140,29 @@ export const AuthContextProvider = ({ children }) => {
         }
     },[])
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     console.log("isAuthenticated", isAuthenticated);
     console.log("isInitialized", isInitialized);
     console.log("presentAuthToken", presentAuthToken);
     console.log("loading", loading);
 >>>>>>> 0fd28f9 (code change)
+=======
+>>>>>>> 10d5df2 (build updated)
 
 
     return (
         <AuthContext.Provider
             value={{loggedIn, presentAuthToken}}>
 <<<<<<< HEAD
+<<<<<<< HEAD
             {(!loading)? children: <LoginGif /> }
 =======
             {(!loading)? children: <CircularProgress /> }
 >>>>>>> 0fd28f9 (code change)
+=======
+            {(!loading)? children: <LoginGif /> }
+>>>>>>> 10d5df2 (build updated)
         </AuthContext.Provider>
     );
 }

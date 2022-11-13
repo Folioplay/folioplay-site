@@ -9,6 +9,7 @@
     "static/js/3.90ee2f87.chunk.js": "/static/js/3.90ee2f87.chunk.js",
     "static/js/3.90ee2f87.chunk.js.map": "/static/js/3.90ee2f87.chunk.js.map",
     "main.css": "/static/css/main.59f68636.chunk.css",
+<<<<<<< HEAD
     "main.js": "/static/js/main.2a65f043.chunk.js",
     "main.js.map": "/static/js/main.2a65f043.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.ccb0fd38.js",
@@ -16,6 +17,15 @@
     "static/css/6.3eb07a12.chunk.css": "/static/css/6.3eb07a12.chunk.css",
     "static/js/6.24729c8f.chunk.js": "/static/js/6.24729c8f.chunk.js",
     "static/js/6.24729c8f.chunk.js.map": "/static/js/6.24729c8f.chunk.js.map",
+=======
+    "main.js": "/static/js/main.5dadf130.chunk.js",
+    "main.js.map": "/static/js/main.5dadf130.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ccb0fd38.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ccb0fd38.js.map",
+    "static/css/6.3eb07a12.chunk.css": "/static/css/6.3eb07a12.chunk.css",
+    "static/js/6.d1c5ffec.chunk.js": "/static/js/6.d1c5ffec.chunk.js",
+    "static/js/6.d1c5ffec.chunk.js.map": "/static/js/6.d1c5ffec.chunk.js.map",
+>>>>>>> 10d5df2 (build updated)
     "static/js/7.95ac18de.chunk.js": "/static/js/7.95ac18de.chunk.js",
     "static/js/7.95ac18de.chunk.js.map": "/static/js/7.95ac18de.chunk.js.map",
     "static/js/8.a5eee106.chunk.js": "/static/js/8.a5eee106.chunk.js",
@@ -48,7 +58,11 @@
     "static/js/0.940b1c3a.chunk.js.LICENSE.txt": "/static/js/0.940b1c3a.chunk.js.LICENSE.txt",
     "static/js/2.08046762.chunk.js.LICENSE.txt": "/static/js/2.08046762.chunk.js.LICENSE.txt",
     "static/js/3.90ee2f87.chunk.js.LICENSE.txt": "/static/js/3.90ee2f87.chunk.js.LICENSE.txt",
+<<<<<<< HEAD
     "static/js/6.24729c8f.chunk.js.LICENSE.txt": "/static/js/6.24729c8f.chunk.js.LICENSE.txt",
+=======
+    "static/js/6.d1c5ffec.chunk.js.LICENSE.txt": "/static/js/6.d1c5ffec.chunk.js.LICENSE.txt",
+>>>>>>> 10d5df2 (build updated)
     "static/media/FolioPlaySmall.svg": "/static/media/FolioPlaySmall.546f1cc8.svg",
     "static/media/activityPage1.jpg": "/static/media/activityPage1.5676ae23.jpg",
     "static/media/folio_login_gif.64ebae1c.gif": "/static/media/folio_login_gif.64ebae1c.gif",
@@ -64,8 +78,14 @@
   "entrypoints": [
     "static/js/runtime-main.ccb0fd38.js",
     "static/css/6.3eb07a12.chunk.css",
+<<<<<<< HEAD
     "static/js/6.24729c8f.chunk.js",
     "static/css/main.59f68636.chunk.css",
     "static/js/main.2a65f043.chunk.js"
+=======
+    "static/js/6.d1c5ffec.chunk.js",
+    "static/css/main.59f68636.chunk.css",
+    "static/js/main.5dadf130.chunk.js"
+>>>>>>> 10d5df2 (build updated)
   ]
 }
