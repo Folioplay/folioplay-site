@@ -25,6 +25,9 @@ const style = {
 
 const RightComponent = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d7aac5b (build updated)
   // const dispatch = useDispatch();
   // const [snackOpen, setSnackOpen] = React.useState(false);
   // const openReferralRedux = useSelector((state)=> state.LeaderBoardSlice.referralModal)
@@ -113,6 +116,7 @@ const RightComponent = () => {
   //       </Modal>
   //   );
   // };
+<<<<<<< HEAD
 =======
   const dispatch = useDispatch();
   const [snackOpen, setSnackOpen] = React.useState(false);
@@ -203,6 +207,8 @@ const RightComponent = () => {
     );
   };
 >>>>>>> 0fd28f9 (code change)
+=======
+>>>>>>> d7aac5b (build updated)
 
   return (
     <div id="tournament-page-image">
