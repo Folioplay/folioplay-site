@@ -25,10 +25,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 10d5df2 (build updated)
     const dispatch = useDispatch();
     const [snackOpen, setSnackOpen] = React.useState(false);
     const openReferralRedux = useSelector((state)=> state.LeaderBoardSlice.referralModal)
@@ -118,33 +114,18 @@ export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
         );
     };
 
-<<<<<<< HEAD
-=======
->>>>>>> 0fd28f9 (code change)
-=======
->>>>>>> 10d5df2 (build updated)
 
     return (
 
         <div className="wrapper" style={{ color: "var(--white)" }}>
             <div className='overlay-div'></div>
             <PrivacyPolicies />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 10d5df2 (build updated)
             <ReferralModal />
             <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={snackHandleClose} severity={snackSeverityType} sx={{ width: '100%' }}>
                     {snackMessage}
                 </Alert>
             </Snackbar>
-<<<<<<< HEAD
-=======
-            {/*<ReferralModal />*/}
->>>>>>> 0fd28f9 (code change)
-=======
->>>>>>> 10d5df2 (build updated)
             <div className="folioplay-left-view">
                 <LeftComponent />
             </div>

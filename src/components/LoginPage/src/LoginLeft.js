@@ -177,18 +177,8 @@ function LoginLeft() {
           })
           .then(async (user) => {
             localStorage.setItem("walletType", "metamask");
-<<<<<<< HEAD
-<<<<<<< HEAD
             window.location.pathname="tournaments";
             // navigate("/tournaments");
-=======
-            // window.location.pathname="tournaments";
-            navigate("/tournaments");
->>>>>>> 0fd28f9 (code change)
-=======
-            window.location.pathname="tournaments";
-            // navigate("/tournaments");
->>>>>>> 10d5df2 (build updated)
           })
           .catch(function (error) {
             console.log(error);
