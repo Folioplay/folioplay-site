@@ -134,7 +134,6 @@ export default function FolioplayBar({ intervalId }) {
     setWalletBalance();
   },[]);
 
-  console.log("folioplayWalletBalance", folioplayWalletBalance)
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -171,7 +170,6 @@ export default function FolioplayBar({ intervalId }) {
           />
         </ListItem>
         <ListItem button key={"enter-referral"} onClick={()=> {
-          console.log("open to hai");
           dispatch(openReferralModal())
         }}>
           <ListItemIcon>

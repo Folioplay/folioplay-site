@@ -17,7 +17,6 @@ export default function saveTeam(event,coins,finalRanks,setError,setNameSnackOpe
       rankAssigned++;
     }
   }
-  console.log(rankAssigned);
   if (rankAssigned !== 3) {
     setError("Assign all three roles to coins.");
     setNameSnackOpen(true);

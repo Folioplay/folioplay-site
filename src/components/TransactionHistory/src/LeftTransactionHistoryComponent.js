@@ -60,7 +60,6 @@ const LeftTransactionHistoryComponent = () => {
         setTransactionHistory(arr);
     }
 
-    console.log("ts",transactionHistory);
     useEffect(()=>{
         async function setTransactionHistoryFunction() {
             const data = await getTransactionHistory();

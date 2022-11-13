@@ -1,6 +1,5 @@
 export default function selectTeam(clickedId, teams, tournament) {
   var selectedTeam = document.getElementById(clickedId);
-  console.log("in fucntion", teams, tournament);
   for (var i = 0; i < teams.length; i++) {
     document
       .getElementById("team-" + i)

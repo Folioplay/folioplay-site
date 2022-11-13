@@ -28,7 +28,6 @@ export default function ActivityTabs({ teams, tournaments }) {
     console.info("You clicked the Chip.");
   };
   useEffect(() => {
-    console.log(teams, "in useEffect");
     if (teams) setTeamsLength(teams.length);
     if (tournaments) {
       const actualTournaments = tournaments.filter(
@@ -38,7 +37,6 @@ export default function ActivityTabs({ teams, tournaments }) {
     }
   }, []);
 
-  console.log("activity tourametn", tournaments);
 
   const tournamentUpdatedOpen =
     tournaments &&

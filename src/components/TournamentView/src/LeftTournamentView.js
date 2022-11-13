@@ -39,7 +39,6 @@ const LeftTournamentView = () => {
   });
   const [tournament, setTournament] = useState(undefined);
   // const tournament = useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
-  console.log("tournament log", tournament);
   const [amountWon, setAmountWon] = useState(-1);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
@@ -72,19 +71,13 @@ const LeftTournamentView = () => {
   }
   async function fetchRank() {
     const data = await getRank({ tournamentId: _id });
-    console.log(data);
     setRank(data);
   }
-  console.log("STATE in tournament view ..............", state);
   useEffect(() => {
-    console.log("tournament fetched .............");
     if(document.getElementById('choose-team-div')){
       if(state && state.openDrawer){
-        console.log("opening drawer in view ............")
         chooseTeamOpen().then(() => {
           setTimeout(() => {
-            // console.log("i am in the scoll part ..............")
-            console.log("scrollling     .....................")
             var objDiv = document.getElementsByClassName("all-teams")[0];
             // console.log(objDiv.scrollHeight , objDiv.scrollTop);
             // objDiv.scrollTop = objDiv.scrollHeight;
@@ -109,7 +102,6 @@ const LeftTournamentView = () => {
     if ("mooning" in window.localStorage)
       window.localStorage.removeItem("mooning");
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
-    console.log("refresh leaderboard tabs page")
     dispatch(getLeaderboardAsync(_id))
     fetchTournament();
     fetchTeams();
@@ -323,7 +315,9 @@ const LeftTournamentView = () => {
                       {amountWon !== -1 ? (
                         <span>You won {amountWon} FPC</span>
                       ) : (
-                        <span> {leaderBoardRedux[0].user.username} won __ </span>
+                        <span>
+                          {/*{leaderBoardRedux[0].user.username} won __ */}
+                        </span>
                       )}
                     </div>
                   </div>

@@ -57,7 +57,6 @@ const ReferralModal = () => {
         }
     }, []);
     const referralModalOpen = useSelector(state => state.LeaderBoardSlice.referralModal);
-    console.log("open", referralModalOpen);
 
     return (
         <Modal

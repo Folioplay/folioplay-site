@@ -29,7 +29,6 @@ export function TeamCreation() {
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
   const {state} = useLocation();
-  console.log("state on teams page ",state);
   var superstars = [];
   var mooning = [];
   var rekt = [];
@@ -84,7 +83,6 @@ export function TeamCreation() {
   }, []);
   useEffect(() => {
     if(localSuperstars || localMooning || localRekt){
-      console.log(wasActiveTab);
       preservedView(wasActiveTab,localSuperstars,localMooning,localRekt);
       var coinsLimit =
       wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;
@@ -143,18 +141,15 @@ export function TeamCreation() {
 
   if (localMooning !== null) {
     mooning = localMooning;
-    console.log("inlocal", mooning);
   }
   if (localSuperstars !== null) {
     superstars = localSuperstars;
-    console.log("inlocal", superstars);
   }
   if (localRekt !== null) {
     rekt = localRekt;
   }
 
   useEffect(() => {
-    console.log("second use effect now ");
     preservedView(wasActiveTab, superstars, mooning, rekt);
     var coinsLimit =
       wasActiveTab === "superstars" ? 2 : wasActiveTab === "mooning" ? 6 : 6;

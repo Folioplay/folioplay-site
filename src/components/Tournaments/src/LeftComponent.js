@@ -38,7 +38,6 @@ import Modal from "@mui/material/Modal";
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
   const {state} = useLocation();
-  console.log("state at /tournaments" ,state);
   const [loaded, setLoaded] = useState(false);
   const monthNames = [
     "Jan",
@@ -102,10 +101,8 @@ const LeftComponent = () => {
   },[])
   
   useEffect(() => {
-    console.log("id changed now trying to open drawer");
     if(document.getElementById('choose-team-div')){
       if(state && state.openDrawer){
-        console.log("opening drawer ............")
         chooseTeamOpen().then(() => {
           setTimeout(() => {
             // console.log("i am in the scoll part ..............")
@@ -292,10 +289,8 @@ const LeftComponent = () => {
       text: ["Here you can view the tournament info"],
       when: {
         show: () => {
-          console.log("show step");
         },
         hide: () => {
-          console.log("hide step");
         },
       },
     },
@@ -337,10 +332,8 @@ const LeftComponent = () => {
       text: ["By Clicking on this you can play the game"],
       when: {
         show: () => {
-          console.log("show step");
         },
         hide: () => {
-          console.log("hide step");
         },
       },
     },
@@ -382,10 +375,8 @@ const LeftComponent = () => {
       text: ["Here you can see the reward of the tournament"],
       when: {
         show: () => {
-          console.log("show step");
         },
         hide: () => {
-          console.log("hide step");
         },
       },
     },
@@ -427,10 +418,8 @@ const LeftComponent = () => {
       text: ["Here you can access the sidebar"],
       when: {
         show: () => {
-          console.log("show step");
         },
         hide: () => {
-          console.log("hide step");
         },
       },
     },
@@ -462,10 +451,8 @@ const LeftComponent = () => {
       text: ["Here you can see the reward of the tournament"],
       when: {
         show: () => {
-          console.log("show step");
         },
         hide: () => {
-          console.log("hide step");
         },
       },
     },
@@ -498,7 +485,6 @@ const LeftComponent = () => {
   };
   const tournamentsList = tournaments ? (
     tournaments.map((tournament, index) => {
-      // console.log("tournament Page", tournament);
       const seatsFilled =
         (100 * tournament.filled_spots) / tournament.total_spots;
       const startDate = new Date(tournament.start_time);
@@ -517,7 +503,6 @@ const LeftComponent = () => {
           key={"tournament__" + index}
           className="tournament"
           onClick={() => {
-            console.log("intervalId is here", intervalId);
             clearInterval(intervalId);
             navigate(`/tournaments/${tournament._id}`, {
               state: {
@@ -605,7 +590,6 @@ const LeftComponent = () => {
                 var tmp = event.target.parentNode.parentNode.getAttribute("id");
                 setTournamentId(tmp.split("-")[1]);
                 // tournamentId = tournamentId.split("-")[1];
-                console.log(tournamentId);
                 chooseTeamOpen();
               }}
               disabled={disabledTournament}

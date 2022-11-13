@@ -2,9 +2,7 @@ import checkNFTHolder from "../../TournamentView/common/checkNFTHolder";
 import paymentTournament from "../../TournamentView/common/paymentTournament";
 import { chooseTeamClose } from "./chooseTeamAnimations";
 export default async function  joinTournament(teams,tournamentId, joinTournamentAPI, setErrorMessage, setErrorMessageSnackOpen,tournaments) {
-  console.log("in drawer join function ",tournamentId);
   document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
-  console.log("in common of tournaments ... ");
   var teamId = "";
   for (var i = 0; i < teams.length; i++) {
     if (
@@ -16,7 +14,6 @@ export default async function  joinTournament(teams,tournamentId, joinTournament
       break;
     }
   }
-  console.log("team selected ",teamId);
   // console.log(tournaments);
   // const NFTHolder = await checkNFTHolder();
   //       if (!NFTHolder) {

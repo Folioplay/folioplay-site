@@ -36,7 +36,6 @@ export async function getAllCoins() {
 }
 
 export async function getAuthToken(walletAddress, walletSignature, email) {
-  console.log("getting auth token");
   return await fetch(`${SERVER}/user/login`, {
     method: "POST",
     headers: {
@@ -71,7 +70,6 @@ export async function getAllUserTeams() {
 }
 
 export async function joinTournamentAPI(tournamentId, teamId) {
-  console.log("678");
   return await fetch(`${SERVER}/tournament/join`, {
     method: "POST",
     headers: {
@@ -88,7 +86,6 @@ export async function joinTournamentAPI(tournamentId, teamId) {
 }
 
 export async function getLeaderboard(tournament_id) {
-  console.log(tournament_id);
   return await fetch(`${SERVER}/tournament/leaderboard/${tournament_id}`, {
     method: "GET",
     headers: {
@@ -109,7 +106,6 @@ export async function getWinRateAPI() {
 }
 
 export async function getPersonalLeaderboard(tournament_id) {
-  console.log(tournament_id);
   return await fetch(`${SERVER}/tournament/rank/${tournament_id}`, {
     method: "GET",
     headers: {

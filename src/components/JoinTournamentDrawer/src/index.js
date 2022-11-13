@@ -39,7 +39,6 @@ export default function JoinTournamentDrawer({
           return;
         }
       });
-    // console.log("dispatch tid", tournamentId);
     // dispatch(getLeaderboardAsync(tournamentId));
   }, []);
   return (
@@ -208,10 +207,8 @@ export default function JoinTournamentDrawer({
               for (var i = 0; i < allSelectButtons.length; i++) {
                 allSelectButtons[i].style.display = "inline-block";
               }
-              console.log(allTeams);
               for (var i = 0; i < allTeams.length; i++) {
                 allTeams[i].classList.remove("display-none");
-                console.log("team-coins-" + i);
                 document
                   .getElementById("team-coins-" + i)
                   .classList.add("display-none");

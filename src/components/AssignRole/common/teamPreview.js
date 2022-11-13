@@ -1,6 +1,5 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 export default function teamPreview({ superstars, mooning, rekt }) {
-  console.log(superstars);
   for (var j = 0; j < superstars.length; j++) {
     var bucketPreview = document.getElementsByClassName("superstars-preview");
     if (superstars[j].selected) {

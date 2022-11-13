@@ -17,16 +17,13 @@ import { S3_URL } from "../../../APIS/apis";
 export default function TeamPreview() {
   const teamId = useParams().teamId;
   const navigate = useNavigate();
-  console.log(teamId);
   const [team, setTeam] = useState(undefined);
-  console.log("team on team page", team);
   async function fetchTeam() {
     setTeam(await getTeamByid({ teamId }));
   }
   useEffect(() => {
     fetchTeam();
   }, []);
-  console.log("team", team);
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -69,7 +66,6 @@ export default function TeamPreview() {
                   if (coin.rank === 3) {
                     pointNumber = 15000;
                   }
-                  console.log("points table", pointNumber);
 
                   return (
                     <Grid className="coin-card-wrapper" item xs={6}>

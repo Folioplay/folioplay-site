@@ -34,7 +34,6 @@ export default function PrivacyPolicies() {
     useEffect(() => {
         // document.getElementsByClassName('overlay-div')[0].classList.add('overlay');
         document.getElementsByClassName('folio-privacy-policies')[0].addEventListener('mouseup', function (event) {
-            console.log("clicked");
             var pol = document.getElementsByClassName('policies-div')[0];
             if (event.target !== pol && event.target.parentNode !== pol) {
                 document.getElementsByClassName('overlay-div')[0].classList.remove('overlay');
@@ -54,7 +53,7 @@ export default function PrivacyPolicies() {
             <div style={style1} className="policies-div">
                 {/* <Slide direction="up" in={openPolicies} mountOnEnter unmountOnExit> */}
                 < Box >
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{ fontFamily: "poppins" }}>
+                    <Typography component={'span'} variant={'body2'} id="modal-modal-description" sx={{ mt: 2 }} style={{ fontFamily: "poppins" }}>
                         <h1 id="privacy-policy">FOLIOPLAY</h1>
                         <h2 id="privacy-policy">Privacy Policy</h2>
                         <p>Last revised on [DATE]</p>

@@ -41,7 +41,6 @@ function LoginLeft() {
     isInitialized,
   } = useMoralis();
   const search = useLocation().search;
-  console.log(isAuthenticated, isAuthenticating, user, account);
   const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
 
   const [policiesAccepted, setPoliciesAccepted] = useState(false);
@@ -92,14 +91,12 @@ function LoginLeft() {
     })
       .then(async (user) => {
         setLoadingTrue();
-        console.log("user", user);
         await getAuthTokenFunctionEmail(user, emailValue);
-        console.log(user);
       })
       .then(function () {
         localStorage.setItem("walletType", "magicLink");
         setLoadingFalse();
-        navigate("tournaments");
+        window.location.pathname="tournaments";
       });
   };
 
@@ -123,11 +120,10 @@ function LoginLeft() {
       await authenticate({ provider: "walletconnect", chainId: 137 })
         .then(async (user) => {
           await getAuthTokenFunction(user);
-          console.log(user);
         })
         .then(async function () {
           localStorage.setItem("walletType", "walletConnect");
-          navigate("tournaments");
+          window.location.pathname="tournaments";
         })
         .catch(function (error) {
           console.log(error);
@@ -186,7 +182,8 @@ function LoginLeft() {
           })
           .then(async (user) => {
             localStorage.setItem("walletType", "metamask");
-            navigate("tournaments");
+            // window.location.pathname="tournaments";
+            navigate("/tournaments");
           })
           .catch(function (error) {
             console.log(error);
@@ -250,8 +247,6 @@ function LoginLeft() {
         "https://auth.magic.link/v1/oauth2/lY3H4aMq_4Rt1Tk1f-kSPekWRGNsPoxe9JZUdk7Y9WI=/callback",
     });
     // const result = await magic.oauth.getRedirectResult();
-    // console.log(result);
-    console.log(test);
   };
   const web3Login = async() => {
     if (!isAuthenticated) {
@@ -305,7 +300,6 @@ function LoginLeft() {
   // console.log(getUserDetailsGlobal);
 
   const getAuthTokenFunction = async (user) => {
-    console.log(user);
     const walletAddress = user.get("ethAddress");
     const walletSignature = user["attributes"].authData.moralisEth.signature;
     try {
@@ -330,7 +324,6 @@ function LoginLeft() {
         walletSignature,
         emailVal
       );
-      console.log(fetchUserDetails);
       localStorage.setItem("folioplay_new_user", fetchUserDetails.newUser==="true");
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {

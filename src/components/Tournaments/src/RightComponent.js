@@ -100,10 +100,8 @@ const RightComponent = () => {
                       setSnackSeverityType("error");
                     }
                   }
-                  console.log("fdsf")
                   setSnackOpen(true);
                   dispatch(closeReferralModal());
-                  console.log("ggwp")
                 }}
               >
                 Let's Play

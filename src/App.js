@@ -34,125 +34,17 @@ function App() {
 
   function AuthenticatedRoute({children}) {
 
-      const callLogin = async() => {
-          if(localStorage.getItem("authtoken")===null ||localStorage.getItem("authtoken")===undefined || localStorage.getItem("authtoken")===""){
-              setTimeout(callLogin, 2000);
-          }
-          else{
-              fetch(`${SERVER}/user/is-valid`, {
-                  method: "GET",
-                  headers: {
-                      "x-access-token": localStorage.getItem("authtoken"),
-                  },
-              })
-                  .then((res) => {
-                      if (!res.ok) {
-                          console.log("reserr", res.body)
-                          if (res.status === 403)
-                              throw new Error();
-
-                      }
-                      else{
-                          fetch(`${SERVER}/user/`, {
-                              method: "GET",
-                              headers: {
-                                  "x-access-token": localStorage.getItem("authtoken"),
-                              },
-                          })
-                              .then((res) => res.json())
-                              .then((data)=> {
-                                  localStorage.setItem("folioUsername", data.username);
-                                  localStorage.setItem("folioWalletAddress", data.walletAddress);
-                                  localStorage.setItem("folioReferralCode", data.referralCode);
-                              })
-                              .catch((err) => err)
-                              .finally(() => setIsLoading(false));
-                          setIsLoading(false);
-                      }
-                  })
-                  .catch(err => {
-                      // debugger
-                      localStorage.clear();
-                      window.location.pathname = "/";
-                  })
-              setIsLoading(false);
-              // clearTimeout(id);
-          }
-
-      }
-
-      const {isAuthenticated, isWeb3Enabled, user, isInitialized, isAuthenticating, logout} =
-          useMoralis();
-
-      if(isAuthenticated){
-
-          if(localStorage.getItem("authtoken")===null ||localStorage.getItem("authtoken")===undefined || localStorage.getItem("authtoken")===""){
-              fetch(`${SERVER}/user/login`, {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                      walletAddress: user.attributes.ethAddress,
-                      signature: user.attributes.authData.moralisEth.signature,
-                      // email: user.email
-                  }),
-              })
-                  .then((res) => {
-                      if (!res.ok) throw "Invalid user";
-                      else return res.json();
-                  })
-                  .then((data) => {
-                      console.log("data", data);
-                      localStorage.setItem("folioplay_new_user", data.newUser==="true");
-                      localStorage.removeItem("authtoken");
-                      localStorage.setItem("authtoken", data.accessToken);
-                      return {
-                          "userdata": data.user,
-                          "new_user": data.newUser
-                      };
-                  });
-              callLogin();
-          }
-          else{
-              fetch(`${SERVER}/user/is-valid`, {
-                  method: "GET",
-                  headers: {
-                      "x-access-token": localStorage.getItem("authtoken"),
-                  },
-              })
-                  .then((res) => {
-                      if (!res.ok) {
-                          console.log("reserr", res.body)
-                          if (res.status === 403)
-                              throw new Error();
-
-                      }
-                      else{
-                          setIsLoading(false);
-                      }
-                  })
-                  .catch(err => {
-                      localStorage.clear();
-                      window.location.pathname = "/";
-                  })
-          }
-      }
-      if (!isAuthenticated && isInitialized) {
-          window.location.pathname = "/";
-      }
-      return isLoading ? <LoginGif /> : children;
+      const {presentAuthToken, loggedIn} = useContext(AuthContext);
+      return loggedIn ? children : <div> gg </div>;
   }
 
   function LoginRoute({ children }) {
     const { isAuthenticated, isInitialized } = useMoralis();
-    const { isLoading } = useContext(AuthContext);
-    console.log("login route ", isAuthenticated, isInitialized, isLoading);
-    console.log("isLoading login",isLoading);
+    const { isLoading, presentAuthToken } = useContext(AuthContext);
 
-    if ((isAuthenticated && isInitialized)) {
-        window.location.pathname  = "/tournaments";
-    }
+    // if ((isAuthenticated && isInitialized && presentAuthToken)) {
+    //     window.location.pathname  = "/tournaments";
+    // }
     return children;
   }
   const steps = [
@@ -191,9 +83,7 @@ function App() {
             path="/tournaments"
             element={
               <AuthenticatedRoute>
-                {/* */}
                 <Tournaments />
-                {/*  */}
               </AuthenticatedRoute>
             }
           />
@@ -203,7 +93,6 @@ function App() {
             element={
               <AuthenticatedRoute>
                   <TournamentView />
-
               </AuthenticatedRoute>
             }
           />

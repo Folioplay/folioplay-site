@@ -3,8 +3,20 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 export const  getLeaderboardAsync = createAsyncThunk(
     'leaderboard/',
     async(tournament_id)=>{
-        console.log("redux tid", tournament_id);
         return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/leaderboard/${tournament_id}`, {
+            method: "GET",
+            headers: {
+                "x-access-token": localStorage.getItem("authtoken"),
+            },
+        }).then((res) => res.json());
+    }
+)
+
+export const  getWinnersAsync = createAsyncThunk(
+    'winners/',
+    async(tournament_id)=>{
+        console.log("redux tid", tournament_id);
+        return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/winners/${tournament_id}`, {
             method: "GET",
             headers: {
                 "x-access-token": localStorage.getItem("authtoken"),
