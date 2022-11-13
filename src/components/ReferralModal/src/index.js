@@ -7,7 +7,12 @@ import {referralCodePost} from "../../../APIS/apis";
 import {useDispatch, useSelector} from "react-redux";
 import {closeReferralModal} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 import Modal from "@mui/material/Modal";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const style = {
     position: "absolute",
@@ -57,59 +62,70 @@ const ReferralModal = () => {
         }
     }, []);
     const referralModalOpen = useSelector(state => state.LeaderBoardSlice.referralModal);
-    console.log("open", referralModalOpen);
 
     return (
-        <Modal
-            open={referralModalOpen}
-            onClose={handleClose}
-            className="modal"
-            style={{whiteSpace: 'pre-line'}}
-        >
-            <Box sx={style}>
-                <div className="referralModal__content">
-                    <div className="referralModal__modalHeading">
-                        <Typography
-                            className="referralHeader"
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                        >
-                            Enter the referral code below
-                        </Typography>
-                    </div>
-                    <div className="referralModal__inputBox">
-                        <TextField
-                            className="referralModal__modalText"
-                            id="outlined-basic"
-                            label="Referral Code"
-                            variant="outlined"
-                            onChange={(e) => setReferral(e.target.value)}
-                        />
-                        <Button
-                            className="referralModal__modalButton"
-                            variant={"contained"}
-                            onClick={async () => {
-                                const referralResponse = await referralCodePost(referral);
-                                if (referralResponse.statusCode === 200) {
-                                    setSnackMessage("Referral successful");
-                                    setSnackSeverityType("success");
-                                } else {
-                                    if (referralResponse.statusCode === 400) {
-                                        setSnackMessage(referralResponse.message);
-                                        setSnackSeverityType("error");
+        <div>
+            <Modal
+                open={referralModalOpen}
+                onClose={handleClose}
+                className="modal"
+                style={{whiteSpace: 'pre-line'}}
+            >
+                <Box sx={style}>
+                    <div className="referralModal__content">
+                        <div className="referralModal__modalHeading">
+                            <Typography
+                                className="referralHeader"
+                                id="modal-modal-title"
+                                variant="h6"
+                                component="h2"
+                            >
+                                Enter the referral code below
+                            </Typography>
+                        </div>
+                        <div className="referralModal__inputBox">
+                            <TextField
+                                className="referralModal__modalText"
+                                id="outlined-basic"
+                                label="Referral Code"
+                                variant="outlined"
+                                onChange={(e) => setReferral(e.target.value)}
+                            />
+                            <Button
+                                className="referralModal__modalButton"
+                                variant={"contained"}
+                                onClick={async () => {
+                                    const referralResponse = await referralCodePost(referral);
+                                    console.log("referralResponse", referralResponse);
+                                    if (referralResponse.statusCode === 200) {
+                                        setSnackMessage("Referral successful");
+                                        setSnackSeverityType("success");
+                                    } else {
+                                        if ((referralResponse.statusCode/10) === 40) {
+                                            console.log("gg")
+                                            console.log(referralResponse.statusCode/10);
+                                            setSnackMessage(referralResponse.message);
+                                            setSnackSeverityType("error");
+                                        }
                                     }
-                                }
-                                setSnackOpen(true);
-                                handleClose();
-                            }}
-                        >
-                            Let's Play
-                        </Button>
+                                    console.log("sdfd")
+                                    setSnackOpen(true);
+                                    handleClose();
+                                }}
+                            >
+                                Let's Play
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            </Box>
-        </Modal>
+                </Box>
+            </Modal>
+            <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={snackHandleClose} severity={snackSeverityType} sx={{ width: '100%' }}>
+                    {snackMessage}
+                </Alert>
+            </Snackbar>
+        </div>
+
     );
 }
 

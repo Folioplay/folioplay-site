@@ -5,7 +5,6 @@ import '../style/index.css'
 function TickerWidget() {
     useEffect(() => {
         let mounted = true;
-        console.log(mounted);
         if (mounted) {
             mounted = false;
             let scriptContent = `

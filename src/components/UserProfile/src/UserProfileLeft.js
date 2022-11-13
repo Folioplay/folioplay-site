@@ -49,11 +49,9 @@ function UserProfileLeft() {
   const [tapToOpenDisabled, setTapToOpenDisabled] = useState(true);
   const [winRate, setWinRate] = useState(0);
   const [contestPlayed, setContestPlayed] = useState(0);
-  console.log("winrate", winRate);
 
   const setProgressBarValueAPI = async () => {
     const winRateLocal = await getWinRateAPI();
-    console.log("winrate", winRateLocal);
     setWinRate(Math.round(winRateLocal["winRate"] * 100));
     setContestPlayed(winRateLocal["tournamentsPlayed"]);
   };
@@ -76,7 +74,6 @@ function UserProfileLeft() {
     setProgressBarValueAPI();
     getPresentUser();
   }, []);
-  console.log("PRESENT", presentUser);
   const setValueNameField = async () => {
     if (!errorNameField) {
       const response = await changeUserName(currentUserName);
@@ -113,7 +110,6 @@ function UserProfileLeft() {
     setUsernameSnackOpen(false);
   };
   const handleChange = (e) => {
-    console.log(e.target.value);
     setCurrentUserName(e.target.value);
     checkAvailable(e.target.value);
   };
@@ -146,7 +142,6 @@ function UserProfileLeft() {
   const changeProfilePic = (event) => {
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) return;
-    console.log("File Obj", event.target.files[0]);
 
     setFile(event.target.files[0]);
   };
@@ -159,15 +154,12 @@ function UserProfileLeft() {
   }, [file]);
 
   const handleSubmit = async () => {
-    console.log("FILE", file);
     const fileToUpload = file;
     const data = new FormData();
     for (var pair of data.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
     }
     data.append("image", fileToUpload);
     let res = await changeProfilePicture(data);
-    console.log(res);
     setPresentProfileImage(res.path);
   };
   const defaultImage = require("../../../images/profilepic.jpeg").default;
@@ -339,7 +331,7 @@ function UserProfileLeft() {
           <div className="sectionDetails">
             Share this referral code and earn rewards &nbsp;
             <span className="profilePage__referralCode">
-                `${window.location.origin}/?code={localStorage.getItem("folioReferralCode")}`
+                {`${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`}
               </span>{" "}
             &nbsp;
             <ContentCopyIcon

@@ -13,7 +13,6 @@ export default function CurrentTeamPreview() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { leaderBoardData } = state;
-  console.log("team Data", leaderBoardData, state.tournament_id);
   const LeftComponent = () => {
     return (
       <div className="fullpage">

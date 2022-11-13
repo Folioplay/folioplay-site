@@ -56,7 +56,6 @@ export default function addCoin(
       }
       if (checkArray[i].selected) maxSelected++;
     }
-    console.log("total added buttons are ",totalAddedCoins);
     if(totalAddedCoins == 11){
       for (var i = 0; i < allButtons.length; i++) {
         if (allButtons[i].innerText === "ADD") {
@@ -87,7 +86,6 @@ export default function addCoin(
         wasActiveTab + "-preview"
       );
       var emptySpot = false;
-      console.log(bucketPreview);
       for (var i = 0; i < bucketPreview.length; i++) {
         if (bucketPreview[i].childElementCount === 0) {
           var coinImage = document.createElement("img");

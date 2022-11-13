@@ -5,7 +5,6 @@ const provider = new ethers.providers.JsonRpcProvider(
 );
 export default async function paymentTournament(user,tournament) {
   const bal = await provider.getBalance(user.get("ethAddress"));
-  console.log(tournament);
 
   if(localStorage.getItem("walletType") === "metamask" && window.ethereum.networkVersion!=="137"){
       alert("Please Connect to Polygon Mainnet through metamask");
@@ -23,7 +22,6 @@ export default async function paymentTournament(user,tournament) {
         maxFeePerGas: gas,
         maxPriorityFeePerGas: gas,
       };
-      console.log(tx)
       const txn = await signer.sendTransaction(tx);
       await txn.wait();
       return true;

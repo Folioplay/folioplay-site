@@ -25,7 +25,6 @@ export default function MyTeams() {
     fetchUserTournaments();
   }, []);
   const [tournaments, setTournaments] = useState(undefined);
-  console.log("TOURNAMENTS", tournaments);
   const LeftComponent = () => {
     return (
       <div className="fullpage">

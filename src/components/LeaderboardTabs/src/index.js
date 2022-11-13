@@ -41,7 +41,6 @@ export default function LeaderBoardTabs({
 
 
   const getLeaderBoardRedux=useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
-  console.log("getLeaderBoardRedux",getLeaderBoardRedux);
 
   useEffect(() => {
     dispatch(getLeaderboardAsync(tournamentId));
@@ -58,7 +57,6 @@ export default function LeaderBoardTabs({
       setRewardsList(data);
     }
 
-    console.log("refresh leaderboaard tabs")
     // getLeader();
     getPersonalLeader();
     getRewardsDetails();
@@ -71,9 +69,7 @@ export default function LeaderBoardTabs({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // console.log(leaderBoard);
 
-  // console.log("rewardList", tournamentPrizes, rewardSize);
   var updatedPrizes = {};
   var amounts = [];
   var reversePrizes = {};
@@ -94,7 +90,6 @@ export default function LeaderBoardTabs({
     }
     left = right;
   }
-  console.log(reversePrizes)
   // for(var i=0;i<tournamentPrizes.length;i++){
   //   if(tournamentPrizes[i] != tournamentPrizes[i+1]){
   //     var l = i+1;
@@ -118,7 +113,6 @@ export default function LeaderBoardTabs({
   amounts = amounts.sort(function(a, b) {
     return b-a;
   });
-  console.log(amounts,reversePrizes,updatedPrizes);
   // const [initialPrize, setInitialPrize] = useState([
   //   {
   //     "startRange": 1,
@@ -193,7 +187,6 @@ export default function LeaderBoardTabs({
             rewardsList.map((entry, index) => {
               if (entry.user.walletAddress === userWalletAddress) {
                 rewardUserCount++;
-                console.log("Entry", entry);
                 return (
                   <motion.div
                     initial={{ opacity: 0 }}

@@ -39,10 +39,8 @@ export const steps = [
     ],
     when: {
       show: () => {
-        console.log("show step");
       },
       hide: () => {
-        console.log("hide step");
       },
     },
   },

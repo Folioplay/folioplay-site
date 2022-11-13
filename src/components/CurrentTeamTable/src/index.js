@@ -16,11 +16,9 @@ function CurrentTeamTable() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { leaderBoardData } = state;
-  console.log("team Data", leaderBoardData);
   const tournamentId = state.tournament_id;
   const teamId = leaderBoardData.team.id;
 
-  console.log(tournamentId, teamId);
 
   const [coinsData, setCoinsData] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState([]);
@@ -28,7 +26,6 @@ function CurrentTeamTable() {
     const fetchData = async () => {
       const response = await getCoinsTableData(tournamentId, teamId).then(
         (response) => {
-          console.log("Response", response);
           setCoinsData(response);
         }
       );
@@ -46,13 +43,10 @@ function CurrentTeamTable() {
 
   const coinsFlattendedData = coinsData.coins_data;
 
-  console.log(coinsFlattendedData);
-  console.log("Tournmanent", tournamentDetails);
   // DATA TABLE IMPLEMENTATION
   const rows = [];
   const runningRows = [];
   coinsFlattendedData?.forEach((element) => {
-    console.log(element.coin_current_price);
     var parser = {
       id: rows.length + 1,
       coinName: element.coin_name,
@@ -65,7 +59,6 @@ function CurrentTeamTable() {
     rows.push(parser);
   });
   coinsFlattendedData?.forEach((element) => {
-    console.log(element.coin_current_price);
     var parser = {
       id: runningRows.length + 1,
       coinName: element.coin_name,
