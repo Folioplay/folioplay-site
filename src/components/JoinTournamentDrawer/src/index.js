@@ -18,6 +18,7 @@ import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions"
 import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 import {useDispatch} from "react-redux";
 import {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
+import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
@@ -185,6 +186,7 @@ export default function JoinTournamentDrawer({
                   setErrorMessageSnackOpen,
                   tournaments
               )
+              dispatch(getTournamentAsync);
               dispatch(getLeaderboardAsync(tournamentId));
               dispatch(getTransactionsAsync());
             }

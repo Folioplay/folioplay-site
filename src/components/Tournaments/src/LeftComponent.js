@@ -34,10 +34,13 @@ import "shepherd.js/dist/css/shepherd.css";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import {useDispatch, useSelector} from "react-redux";
+import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
 
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
   const {state} = useLocation();
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const monthNames = [
     "Jan",
@@ -68,7 +71,8 @@ const LeftComponent = () => {
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
   };
-  const [tournaments, setTournaments] = useState(undefined);
+  // const [tournaments, setTournaments] = useState(undefined);
+  const tournaments = useSelector((state)=> state.tournamentSlice.tournament);
   const [teams, setTeams] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState({
     message: "",
@@ -138,15 +142,16 @@ const LeftComponent = () => {
           return;
         }
       });
-    fetchTournaments();
+    // fetchTournaments();
+    dispatch(getTournamentAsync());
     fetchTeams();
     setIntervalId(setInterval(nextImage, 2000));
     setL(len);
     // chooseTeamOpen();
   }, []);
-  async function fetchTournaments() {
-    setTournaments(await getAllTournaments());
-  }
+  // async function fetchTournaments() {
+  //   setTournaments(await getAllTournaments());
+  // }
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
