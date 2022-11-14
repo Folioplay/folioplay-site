@@ -304,7 +304,7 @@ function LoginLeft() {
         walletSignature,
         email
       );
-      localStorage.setItem("folioplay_new_user", fetchUserDetails.newUser==="true");
+      localStorage.setItem("folioplay_new_user", fetchUserDetails.new_user===true);
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
