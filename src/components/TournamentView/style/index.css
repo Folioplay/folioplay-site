@@ -49,11 +49,13 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: center;
+  width: 100%;
 }
 
 .profileHeaderNP{
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  /* flex-direction: row; */
   justify-content: center;
   align-content: center;
   width: 100%;
@@ -62,6 +64,23 @@
 .userNameTP {
   font-size: 1.2rem;
   font-weight: 800;
+}
+.winner-cups-img{
+  z-index: -1;
+  position: fixed;
+  top: -25%;
+  transform:translateX(80%) translateY(5%) rotateZ(-25deg);
+}
+.winner-span{
+  font-size:15px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+@media (max-width:500px) {
+  .winner-span{
+    font-size: 14px;
+  }
 }
 .tournament-view-card {
   /*display: flex;*/
@@ -130,11 +149,12 @@
   margin-left: auto;
   margin-right: auto;
   /*background-color: var(--white);*/
-  background-color: #ffcccb;
+  background-color: var(--dim-white);
   transform: translateY(-75px);
   border-radius: 8px;
   height: 5em;
   box-shadow: var(--tournament-card-shadow);
+  overflow: hidden;
 }
 
 .tournament-view-card span {

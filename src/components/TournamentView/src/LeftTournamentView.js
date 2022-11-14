@@ -28,13 +28,15 @@ import {
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    console.log(typeof(days));
+    console.log(typeof days);
 
     return (
       <>
-        <TimerIcon style={{ color: "var(--golden)" }} fontSize="small"/>
+        <TimerIcon style={{ color: "var(--golden)" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"}>
-          {days < 10 ? "0"+days : days} : {hours < 10 ? "0"+hours : hours} : {minutes < 10 ? "0"+minutes : minutes} : {seconds < 10 ? "0"+seconds : seconds}
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
         </span>
       </>
     );
@@ -94,7 +96,7 @@ const LeftTournamentView = () => {
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
         delete state.openDrawer;
-        window.history.replaceState(null, '')
+        window.history.replaceState(null, "");
         chooseTeamOpen().then(() => {
           setTimeout(() => {
             var objDiv = document.getElementsByClassName("all-teams")[0];
@@ -219,7 +221,7 @@ const LeftTournamentView = () => {
                     {/*</span>*/}
                   </span>
                 </div>
-                
+
                 <div>
                   Spots - <b>{tournament.total_spots}</b>
                 </div>
@@ -322,8 +324,26 @@ const LeftTournamentView = () => {
                     </span>
                   </div>
                 </div>
-                <div className="tournamentPage__countdown" style={{display:"flex",justifyContent:"center",alignContent:"center",alignItems:"center"}}>
-                  <span id="timeRemaining" className="font-size-12" style={{display:"flex",justifyContent:"center",alignContent:"center",alignItems:"center",transform:"translateY(-10px)"}}>
+                <div
+                  className="tournamentPage__countdown"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    id="timeRemaining"
+                    className="font-size-12"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center",
+                      transform: "translateY(-10px)",
+                    }}
+                  >
                     {startTime > Date.now() ? (
                       <Countdown
                         date={startTime - 300000}
@@ -346,30 +366,50 @@ const LeftTournamentView = () => {
                 }
               >
                 {amountWon !== -1 ? (
-                  <div className="profileHeaderTP">
-                    <div className="profilePicture">
-                      <img
-                        src={userImg}
-                        alt="profilePic"
-                        height="64px"
-                        width=" 64px"
-                        className="profilepic__image"
-                      />
-                    </div>
+                  <>
+                    <div className="profileHeaderTP">
+                      
+                      <div className="profilePicture">
+                        <img
+                          src={userImg}
+                          alt="profilePic"
+                          height="64px"
+                          width=" 64px"
+                          className="profilepic__image"
+                        />
+                      </div>
 
-                    <div className="userDetails">
-                      <div className="userNameTP">
-                        {localStorage.getItem("folioUsername")}
-                      </div>
-                      <div className="tview__rewardDisplay">
-                        <span>You won {amountWon} FPC</span>
+                      <div className="userDetails">
+                        <div className="userNameTP">
+                          {localStorage.getItem("folioUsername")}
+                        </div>
+                        <div className="tview__rewardDisplay">
+                          <span>You won {amountWon} FPC</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    <img
+                        className="winner-cups-img"
+                        src={require("../../../images/cups-winner.png").default}
+                        width="200px"
+                        style={{transform:"translate(115%,-5%)"}}
+                      />
+                  </>
                 ) : (
                   <div className="profileHeaderNP">
-                      {winnersRedux.length>0 && <span><b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;<b>{winnersRedux[0].amount_won}</b>&nbsp;FPC in this tournament</span>}
-                    </div>
+                    <img
+                      className="winner-cups-img"
+                      src={require("../../../images/cups-winner.png").default}
+                      width="200px"
+                    />
+                    {winnersRedux.length > 0 && (
+                      <span className="winner-span font-weight-500" style={{}}>
+                        <b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;
+                        <b>{winnersRedux[0].amount_won} FPC</b>&nbsp; in this
+                        tournament
+                      </span>
+                    )}
+                  </div>
                 )}
               </motion.div>
             )}
