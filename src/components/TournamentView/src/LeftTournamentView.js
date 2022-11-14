@@ -93,6 +93,8 @@ const LeftTournamentView = () => {
   useEffect(() => {
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
+        delete state.openDrawer;
+        window.history.replaceState(null, '')
         chooseTeamOpen().then(() => {
           setTimeout(() => {
             var objDiv = document.getElementsByClassName("all-teams")[0];
@@ -108,7 +110,6 @@ const LeftTournamentView = () => {
             selectTeam("team-" + (teams.length - 1), teams);
           }, 600);
         });
-        window.history.replaceState(null, "");
       }
     }
   }, [tournament, teams]);

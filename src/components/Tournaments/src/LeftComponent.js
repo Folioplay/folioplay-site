@@ -40,6 +40,8 @@ import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
   const {state} = useLocation();
+  const location = useLocation();
+  console.log(location);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const monthNames = [
@@ -107,6 +109,8 @@ const LeftComponent = () => {
   useEffect(() => {
     if(document.getElementById('choose-team-div')){
       if(state && state.openDrawer){
+        delete state.openDrawer;
+        window.history.replaceState(null, '')
         chooseTeamOpen().then(() => {
           setTimeout(() => {
             // console.log("i am in the scoll part ..............")
@@ -126,7 +130,7 @@ const LeftComponent = () => {
 
         });
 
-        window.history.replaceState(null, '')
+        
       }
     }
   },[tournaments,tournamentId,teams])

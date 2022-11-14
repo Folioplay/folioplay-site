@@ -186,7 +186,7 @@ export default function JoinTournamentDrawer({
                   setErrorMessageSnackOpen,
                   tournaments
               )
-              dispatch(getTournamentAsync);
+              dispatch(getTournamentAsync());
               dispatch(getLeaderboardAsync(tournamentId));
               dispatch(getTransactionsAsync());
             }
