@@ -30,11 +30,7 @@ function LoginLeft() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const navigate = useNavigate();
-  const {
-    authenticate,
-    isAuthenticated,
-    logout,
-  } = useMoralis();
+  const { authenticate, isAuthenticated, logout } = useMoralis();
   const search = useLocation().search;
   const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
 
@@ -91,7 +87,7 @@ function LoginLeft() {
       .then(function () {
         localStorage.setItem("walletType", "magicLink");
         setLoadingFalse();
-        window.location.pathname="tournaments";
+        window.location.pathname = "tournaments";
       });
   };
 
@@ -118,7 +114,7 @@ function LoginLeft() {
         })
         .then(async function () {
           localStorage.setItem("walletType", "walletConnect");
-          window.location.pathname="tournaments";
+          window.location.pathname = "tournaments";
         })
         .catch(function (error) {
           console.log(error);
@@ -177,7 +173,7 @@ function LoginLeft() {
           })
           .then(async (user) => {
             localStorage.setItem("walletType", "metamask");
-            window.location.pathname="tournaments";
+            window.location.pathname = "tournaments";
             // navigate("/tournaments");
           })
           .catch(function (error) {
@@ -243,37 +239,40 @@ function LoginLeft() {
     });
     // const result = await magic.oauth.getRedirectResult();
   };
-  const web3Login = async() => {
+  const web3Login = async () => {
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
-            .getElementsByClassName("policies-error")[0]
-            .classList.remove("show");
+          .getElementsByClassName("policies-error")[0]
+          .classList.remove("show");
         document
-            .getElementsByClassName("policies-error")[0]
-            .classList.add("show");
+          .getElementsByClassName("policies-error")[0]
+          .classList.add("show");
         setTimeout(() => {
           document
-              .getElementsByClassName("policies-error")[0]
-              .classList.remove("show");
+            .getElementsByClassName("policies-error")[0]
+            .classList.remove("show");
         }, 2000);
         return;
       }
-        await authenticate({
-          provider: "web3Auth",
-          clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
+      await authenticate({
+        provider: "web3Auth",
+        clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
+      })
+        .then(async (user) => {
+          if (user === undefined) {
+            document
+            .getElementsByClassName("overlay-div")[0]
+            .classList.remove("overlay-login");
+            throw Error("User Not Found");
+          }
+          await getAuthTokenFunction(user);
         })
-            .then(async (user) => {
-              if(user===undefined){
-                throw new Error("User Not Found");
-              }
-              await getAuthTokenFunction(user);
-            })
-            .then(async function () {
-              localStorage.setItem("walletType", "web3Auth");
-              window.location.pathname="tournaments";
-              // navigate("tournaments");
-            })
+        .then(async function () {
+          localStorage.setItem("walletType", "web3Auth");
+          window.location.pathname = "tournaments";
+          // navigate("tournaments");
+        });
     }
   };
 
@@ -304,7 +303,10 @@ function LoginLeft() {
         walletSignature,
         email
       );
-      localStorage.setItem("folioplay_new_user", fetchUserDetails.new_user===true);
+      localStorage.setItem(
+        "folioplay_new_user",
+        fetchUserDetails.new_user === true
+      );
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
@@ -320,7 +322,10 @@ function LoginLeft() {
         walletSignature,
         emailVal
       );
-      localStorage.setItem("folioplay_new_user", fetchUserDetails.newUser==="true");
+      localStorage.setItem(
+        "folioplay_new_user",
+        fetchUserDetails.newUser === "true"
+      );
       // dispatch(userDetails(fetchUserDetails));
     } catch (e) {
       await logOut();
@@ -361,7 +366,12 @@ function LoginLeft() {
           }}
           className="folioplay-login-google-button mb-15"
           variant="contained"
-          onClick={metamaskLogin}
+          onClick={() => {
+            // document
+            //   .getElementsByClassName("overlay-div")[0]
+            //   .classList.add("overlay");
+            metamaskLogin();
+          }}
         >
           <img
             className="mr-8"
@@ -379,7 +389,12 @@ function LoginLeft() {
           }}
           className="folioplay-login-google-button"
           variant="contained"
-          onClick={walletConnectLogin}
+          onClick={() => {
+            // document
+            //   .getElementsByClassName("overlay-div")[0]
+            //   .classList.add("overlay");
+            walletConnectLogin();
+          }}
         >
           <img
             className="mr-8"
@@ -424,20 +439,28 @@ function LoginLeft() {
       {/*</Button>*/}
       <div className="folioplay-connect">
         <Button
-            style={{
-              width: "min(320px,100%)",
-              height: "45px",
-            }}
-            className="folioplay-login-google-button"
-            variant="contained"
-            onClick={web3Login}
+          style={{
+            width: "min(320px,100%)",
+            height: "45px",
+          }}
+          className="folioplay-login-google-button"
+          variant="contained"
+          onClick={() => {
+            document
+              .getElementsByClassName("overlay-div")[0]
+              .classList.add("overlay-login");
+              // document
+              // .getElementById("web3a-modal")[0]
+              // .style.zIndex = "1";
+            web3Login();
+          }}
         >
           <img
-              className="mr-8"
-              alt="metamask-icon"
-              src={web4authLogo}
-              width={"24px"}
-              height={"24px"}
+            className="mr-8"
+            alt="metamask-icon"
+            src={web4authLogo}
+            width={"24px"}
+            height={"24px"}
           />{" "}
           Web3Auth
         </Button>

@@ -28,11 +28,13 @@ import {
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    console.log(typeof(days));
+
     return (
       <>
         <TimerIcon style={{ color: "var(--golden)" }} fontSize="small"/>
         <span className={"tournamentCard__countdownTimer"}>
-          {days} : {hours} : {minutes} : {seconds}
+          {days < 10 ? "0"+days : days} : {hours < 10 ? "0"+hours : hours} : {minutes < 10 ? "0"+minutes : minutes} : {seconds < 10 ? "0"+seconds : seconds}
         </span>
       </>
     );

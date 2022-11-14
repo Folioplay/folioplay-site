@@ -118,7 +118,7 @@ export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
     return (
 
         <div className="wrapper" style={{ color: "var(--white)" }}>
-            <div className='overlay-div'></div>
+            
             <PrivacyPolicies />
             <ReferralModal />
             <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleClose}>
@@ -132,6 +132,7 @@ export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
             <div className='folioplay-right-view'>
                 <RightComponent />
             </div>
+            <div className='overlay-div'></div>
         </div >
 
     );
