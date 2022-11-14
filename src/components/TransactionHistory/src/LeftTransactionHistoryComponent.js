@@ -69,6 +69,7 @@ const LeftTransactionHistoryComponent = () => {
     },[])
 
     const localAccordionComponent = (item) => {
+        console.log(item);
         return(
             <AccordionComponent>
                 <AccordionSummary
@@ -78,7 +79,7 @@ const LeftTransactionHistoryComponent = () => {
                 >
                     <div className="dateBlock__accordionList__summaryTab">
                         <div className="summaryTab__amount">{item.type==="PAID"? "-" : "+"}{item.data.amount}</div>
-                        <div className={"summaryTab__helperText"}>Joined Tournament</div>
+                        <div className={"summaryTab__helperText"} style={{marginLeft:"20px",marginRight:"auto"}}>{item.type === "RECEIVED" ? "Reward":"Joined Tournament"}</div>
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>
