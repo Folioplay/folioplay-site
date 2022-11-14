@@ -92,11 +92,11 @@ export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
                                 variant={"contained"}
                                 onClick={async () => {
                                     const referralResponse = await referralCodePost(referral);
-                                    if (referralResponse.statusCode === 200) {
+                                    if (Math.floor((referralResponse.statusCode)/10) === 20) {
                                         setSnackMessage("Referral successful");
                                         setSnackSeverityType("success");
                                     } else {
-                                        if (referralResponse.statusCode === 400) {
+                                        if (Math.floor((referralResponse.statusCode)/10) === 40) {
                                             setSnackMessage(referralResponse.message);
                                             setSnackSeverityType("error");
                                         }

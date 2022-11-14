@@ -26,6 +26,7 @@ import {CircularProgress} from "@mui/material";
 import AccordionComponent from "./Common/Accordion";
 import TransactionHistory from "./components/TransactionHistory/src";
 import LoginGif from "./components/LoginPage/common/LoginGif";
+import ReactLoading from "react-loading";
 // import React, { useEffect, useState } from "react";
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
@@ -35,7 +36,7 @@ function App() {
   function AuthenticatedRoute({children}) {
 
       const {presentAuthToken, loggedIn} = useContext(AuthContext);
-      return loggedIn ? children : <div> gg </div>;
+      return loggedIn ? children : <ReactLoading />;
   }
 
   function LoginRoute({ children }) {

@@ -3,6 +3,7 @@ import {useMoralis} from "react-moralis";
 import SnackbarComponent from "../Common/Snackbar";
 import {CircularProgress} from "@mui/material";
 import LoginGif from "../components/LoginPage/common/LoginGif";
+import ReactLoading from "react-loading";
 // import {useNavigate} from "react-router";
 
 
@@ -33,13 +34,25 @@ export const AuthContextProvider = ({ children }) => {
                     if (!res.ok) {
                         throw Error();
                     }
-                    console.log("valid")
+                    return res.json();
+                })
+                .then((data)=>{
+                    localStorage.setItem("folioUsername", data.username);
+                    localStorage.setItem("folioWalletAddress", data.walletAddress);
+                    localStorage.setItem("folioReferralCode", data.referralCode);
                     setPresentAuthToken(true);
                     setLoggedIn(true);
                     console.log(window.location.pathname)
                     if (window.location.pathname === "/")
                         window.location.pathname = "/tournaments";
                 })
+                .catch(err => {
+                    if (window.location.pathname !== "/") {
+                        localStorage.clear();
+                        window.location.pathname = "/";
+                    }
+                })
+                .finally(() => setLoading(false));
         }
     }
 
@@ -85,7 +98,7 @@ export const AuthContextProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{loggedIn, presentAuthToken}}>
-            {(!loading)? children: <LoginGif /> }
+            {(!loading)? children: <ReactLoading /> }
         </AuthContext.Provider>
     );
 }
