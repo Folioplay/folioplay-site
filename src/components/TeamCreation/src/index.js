@@ -470,7 +470,7 @@ export function TeamCreation() {
                 assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
               }
             >
-              Assign Roles
+              Select top 3 Coins
             </Button>
           </div>
           <div className="error-cannot-add-coin">

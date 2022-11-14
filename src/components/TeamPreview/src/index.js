@@ -73,7 +73,7 @@ export default function TeamPreview() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.07 * index }}
-                        className={"coin-card " + coin_card}
+                        className={"coin-card-current-team " + coin_card}
                       >
                         {/*{*/}
                         {/*    coin.rank !== -1 &&*/}
@@ -81,6 +81,9 @@ export default function TeamPreview() {
                         {/*        <span className="ribbon2">{coin.rank}</span>*/}
                         {/*    </div>*/}
                         {/*}*/}
+                        
+                        <div className="coinCategory">{coin.category === 'Defi' ? "Rekt" : coin.category }</div>
+
                         <span className="coin-image-wrapper">
                           {coin.rank !== -1 && (
                             <div className="ribbon">
@@ -89,11 +92,10 @@ export default function TeamPreview() {
                           )}
                           <img
                             src={
-                              S3_URL +
+                              S3_URL+
                               coin.symbol +
                               ".png"
                             }
-                            onerror="this.src = '../../../images/coinLogos/bitcoin.jpg';"
                             width="40px"
                             height="40px"
                           />

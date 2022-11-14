@@ -1,6 +1,9 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import { S3_URL } from "../../../APIS/apis";
 export default function preservedView(wasActiveTab, superstars, mooning, rekt) {
+  if(superstars === null || superstars === undefined)superstars = [];
+  if(mooning === null || mooning === undefined)mooning = [];
+  if(rekt === null || rekt === undefined)rekt = [];
   var allButtons = document.getElementsByClassName("coin-add-button");
   var maxSelected = 0;
   var coinsLimit = 2;

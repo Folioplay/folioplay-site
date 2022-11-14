@@ -57,7 +57,7 @@ export default function JoinTournamentDrawer({
             className="font-size-15 font-weight-500"
             style={{ color: "var(--grey-shade)" }}
           >
-            Select a team that you think should represent you in this contest.
+            {teams && teams.length === 0 ? <>Create a team and start winning.</> : <>Select a team that you think should represent you in this contest.</> }
           </span>
         </div>
         <div className="all-teams">

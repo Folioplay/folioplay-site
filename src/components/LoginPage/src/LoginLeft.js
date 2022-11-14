@@ -272,7 +272,7 @@ function LoginLeft() {
           localStorage.setItem("walletType", "web3Auth");
           window.location.pathname = "tournaments";
           // navigate("tournaments");
-        });
+        }).catch(err =>{console.log(err)});
     }
   };
 
