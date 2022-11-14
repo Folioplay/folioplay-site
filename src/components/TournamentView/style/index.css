@@ -51,6 +51,14 @@
   align-content: center;
 }
 
+.profileHeaderNP{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+
 .userNameTP {
   font-size: 1.2rem;
   font-weight: 800;

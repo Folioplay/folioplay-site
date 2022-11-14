@@ -17,7 +17,7 @@ import { useMoralis } from "react-moralis";
 import {useNavigate} from "react-router-dom";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import LeaderBoardSlice, {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import LeaderBoardSlice, {getLeaderboardAsync, getWinnersAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 
 export default function LeaderBoardTabs({
   tournamentId,

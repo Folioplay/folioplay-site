@@ -20,7 +20,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { SERVER } from "../../../APIS/apis";
 import selectTeam from "../common/selectTeam";
 import {useDispatch, useSelector} from "react-redux";
-import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import {getLeaderboardAsync, getWinnersAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -103,6 +103,7 @@ const LeftTournamentView = () => {
       window.localStorage.removeItem("mooning");
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
     dispatch(getLeaderboardAsync(_id))
+    dispatch(getWinnersAsync(_id));
     fetchTournament();
     fetchTeams();
     fetchRank();
@@ -111,6 +112,8 @@ const LeftTournamentView = () => {
   }, []);
 
   const leaderBoardRedux = useSelector((state)=> state.LeaderBoardSlice.leaderBoard);
+  const winnersRedux = useSelector((state)=> state.LeaderBoardSlice.winners);
+  console.log("winnerredux", winnersRedux);
 
   if (tournament !== undefined) {
     seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
@@ -296,32 +299,32 @@ const LeftTournamentView = () => {
                     : "tournament-view-card-completed-red"
                 }
               >
-                <div className="profileHeaderTP">
-                    <div className="profilePicture">
-                    <img
-                    src={userImg}
-                    alt="profilePic"
-                    height="64px"
-                    width=" 64px"
-                    className="profilepic__image"
-                  />
+                {amountWon !== -1 ?
+                    <div className="profileHeaderTP">
+                      <div className="profilePicture">
+                        <img
+                        src={userImg}
+                        alt="profilePic"
+                        height="64px"
+                        width=" 64px"
+                        className="profilepic__image"
+                      />
+                        </div>
+
+                      <div className="userDetails">
+                        <div className="userNameTP">
+                          {localStorage.getItem("folioUsername")}
+                        </div>
+                        <div className="tview__rewardDisplay">
+                            <span>You won {amountWon} FPC</span>
+                        </div>
+                      </div>
                     </div>
-                  
-                  <div className="userDetails">
-                    <div className="userNameTP">
-                      {localStorage.getItem("folioUsername")}
+                    :
+                    <div className="profileHeaderNP">
+                      <b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;<b>{winnersRedux[0].amount_won}</b>&nbsp;FPC in this tournament
                     </div>
-                    <div className="tview__rewardDisplay">
-                      {amountWon !== -1 ? (
-                        <span>You won {amountWon} FPC</span>
-                      ) : (
-                        <span>
-                          {/*{leaderBoardRedux[0].user.username} won __ */}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                }
               </motion.div>
             )}
 

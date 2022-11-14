@@ -30,7 +30,8 @@ export const getLeaderboardSlice = createSlice({
     name: 'get_leaderboard',
     initialState: {
         leaderBoard:[],
-        referralModal: false
+        referralModal: false,
+        winners: []
     },
     reducers:{
         openReferralModal(state) {
@@ -44,6 +45,9 @@ export const getLeaderboardSlice = createSlice({
     extraReducers: {
         [getLeaderboardAsync.fulfilled]: (leaderBoardList, action) => {
             leaderBoardList.leaderBoard=action.payload;
+        },
+        [getWinnersAsync.fulfilled]: (winnersList, action) => {
+            winnersList.winners=action.payload;
         },
     }
 });
