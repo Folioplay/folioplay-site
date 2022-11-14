@@ -96,7 +96,6 @@ const LeftTournamentView = () => {
   }
   },[tournament,teams])
   useEffect(() => {
-    
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
     if ("mooning" in window.localStorage)
@@ -322,7 +321,7 @@ const LeftTournamentView = () => {
                     </div>
                     :
                     <div className="profileHeaderNP">
-                      <b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;<b>{winnersRedux[0].amount_won}</b>&nbsp;FPC in this tournament
+                      {winnersRedux.length>0 && <span><b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;<b>{winnersRedux[0].amount_won}</b>&nbsp;FPC in this tournament</span>}
                     </div>
                 }
               </motion.div>
