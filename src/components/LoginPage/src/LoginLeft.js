@@ -21,6 +21,7 @@ import { userDetails } from "../../../Redux/AuthSlice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
+import Moralis from "moralis-v1";
 
 function LoginLeft() {
   const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
@@ -30,7 +31,12 @@ function LoginLeft() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const navigate = useNavigate();
-  const { authenticate, isAuthenticated, logout } = useMoralis();
+  const {
+    authenticate,
+    isAuthenticated,
+    isInitialized,
+    logout,
+  } = useMoralis();
   const search = useLocation().search;
   const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
 
@@ -58,38 +64,38 @@ function LoginLeft() {
   };
 
   // For policy
-  const loginWithMail = async () => {
-    if (!policiesAccepted) {
-      document
-        .getElementsByClassName("policies-error")[0]
-        .classList.remove("show");
-      document
-        .getElementsByClassName("policies-error")[0]
-        .classList.add("show");
-      setTimeout(() => {
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.remove("show");
-      }, 2000);
-      return;
-    }
-    const emailValue = document.getElementById("email-field").value;
-    const user = await authenticate({
-      provider: "magicLink",
-      email: emailValue,
-      apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
-      network: "mainnet",
-    })
-      .then(async (user) => {
-        setLoadingTrue();
-        await getAuthTokenFunctionEmail(user, emailValue);
-      })
-      .then(function () {
-        localStorage.setItem("walletType", "magicLink");
-        setLoadingFalse();
-        window.location.pathname = "tournaments";
-      });
-  };
+  // const loginWithMail = async () => {
+  //   if (!policiesAccepted) {
+  //     document
+  //       .getElementsByClassName("policies-error")[0]
+  //       .classList.remove("show");
+  //     document
+  //       .getElementsByClassName("policies-error")[0]
+  //       .classList.add("show");
+  //     setTimeout(() => {
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.remove("show");
+  //     }, 2000);
+  //     return;
+  //   }
+  //   const emailValue = document.getElementById("email-field").value;
+  //   const user = await authenticate({
+  //     provider: "magicLink",
+  //     email: emailValue,
+  //     apiKey: process.env.REACT_APP_MAGIC_LINK_API_KEY,
+  //     network: "mainnet",
+  //   })
+  //     .then(async (user) => {
+  //       setLoadingTrue();
+  //       await getAuthTokenFunctionEmail(user, emailValue);
+  //     })
+  //     .then(function () {
+  //       localStorage.setItem("walletType", "magicLink");
+  //       setLoadingFalse();
+  //       window.location.pathname="tournaments";
+  //     });
+  // };
 
   const walletConnectLogin = async () => {
     if (!isAuthenticated) {
@@ -231,15 +237,7 @@ function LoginLeft() {
     );
   };
 
-  const googleOAuthLogin = async () => {
-    const test = await magic.oauth.loginWithRedirect({
-      provider: "google",
-      redirectURI:
-        "https://auth.magic.link/v1/oauth2/lY3H4aMq_4Rt1Tk1f-kSPekWRGNsPoxe9JZUdk7Y9WI=/callback",
-    });
-    // const result = await magic.oauth.getRedirectResult();
-  };
-  const web3Login = async () => {
+  const web3Login = async() => {
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
