@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MuiAlert from "@mui/material/Alert";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useMoralis } from "react-moralis";
-import {scrollTo} from '../../../CommonFunctions/functions.js'
+import { scrollTo } from "../../../CommonFunctions/functions.js";
 import {
   getAllUserTeams,
   getAmountWon,
@@ -10,18 +10,33 @@ import {
   getTournamentById,
 } from "../../../APIS/apis";
 import ReactLoading from "react-loading";
+import TimerIcon from "@mui/icons-material/Timer";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Button, LinearProgress } from "@mui/material";
 import { chooseTeamOpen } from "../common/chooseTeamAnimations";
 import LeaderBoardTabs from "../../LeaderboardTabs/src";
+import Countdown from "react-countdown";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import Snackbar from "@mui/material/Snackbar";
 import { motion } from "framer-motion/dist/framer-motion";
 import { SERVER } from "../../../APIS/apis";
 import selectTeam from "../common/selectTeam";
-import {useDispatch, useSelector} from "react-redux";
-import {getLeaderboardAsync, getWinnersAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getLeaderboardAsync,
+  getWinnersAsync,
+} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
+  const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    return (
+      <>
+        <TimerIcon style={{ color: "var(--golden)" }} fontSize="small"/>
+        <span className={"tournamentCard__countdownTimer"}>
+          {days} : {hours} : {minutes} : {seconds}
+        </span>
+      </>
+    );
+  };
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -44,7 +59,7 @@ const LeftTournamentView = () => {
   const params = useParams();
   const _id = params.tournamentId;
   const [teams, setTeams] = useState(undefined);
-  const [userImg , setUserImg] = useState(null);
+  const [userImg, setUserImg] = useState(null);
   const defaultImage = require("../../../images/profilepic.jpeg").default;
   var seatsFilled = 0;
   const getPresentUser = async () => {
@@ -74,8 +89,8 @@ const LeftTournamentView = () => {
     setRank(data);
   }
   useEffect(() => {
-    if(document.getElementById('choose-team-div')){
-      if(state && state.openDrawer){
+    if (document.getElementById("choose-team-div")) {
+      if (state && state.openDrawer) {
         chooseTeamOpen().then(() => {
           setTimeout(() => {
             var objDiv = document.getElementsByClassName("all-teams")[0];
@@ -86,22 +101,22 @@ const LeftTournamentView = () => {
             // element.animate({
             //     scrollTop: element.prop("scrollHeight")
             // }, 500);
-            scrollTo(objDiv,objDiv.scrollHeight,400); 
-            
-            selectTeam("team-" + (teams.length-1), teams);  
-          },600);
+            scrollTo(objDiv, objDiv.scrollHeight, 400);
+
+            selectTeam("team-" + (teams.length - 1), teams);
+          }, 600);
         });
-        window.history.replaceState(null, '')
+        window.history.replaceState(null, "");
       }
-  }
-  },[tournament,teams])
+    }
+  }, [tournament, teams]);
   useEffect(() => {
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
     if ("mooning" in window.localStorage)
       window.localStorage.removeItem("mooning");
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
-    dispatch(getLeaderboardAsync(_id))
+    dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
     fetchTournament();
     fetchTeams();
@@ -110,8 +125,10 @@ const LeftTournamentView = () => {
     getPresentUser();
   }, []);
 
-  const leaderBoardRedux = useSelector((state)=> state.LeaderBoardSlice.leaderBoard);
-  const winnersRedux = useSelector((state)=> state.LeaderBoardSlice.winners);
+  const leaderBoardRedux = useSelector(
+    (state) => state.LeaderBoardSlice.leaderBoard
+  );
+  const winnersRedux = useSelector((state) => state.LeaderBoardSlice.winners);
   console.log("winnerredux", winnersRedux);
 
   if (tournament !== undefined) {
@@ -138,6 +155,7 @@ const LeftTournamentView = () => {
   // let tournament_info_contain  er_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
   let empty_header =
     tournament && tournament.status === 3 ? "empty-area-completed" : "";
+  const startTime = tournament ? new Date(tournament.start_time) : undefined;
   return (
     <div className="fullpage">
       {tournament === undefined || teams === undefined ? (
@@ -150,7 +168,7 @@ const LeftTournamentView = () => {
             <ArrowBackIosIcon
               fontSize="medium"
               className="go-back-button"
-              onClick={() => navigate('/tournaments',{})}
+              onClick={() => navigate("/tournaments", {})}
             />
             <span className="ml-20 font-size-20 font-weight-700">
               {tournament.name}
@@ -185,11 +203,20 @@ const LeftTournamentView = () => {
                   >
                     {/*<u>Click here to view on Polygon.</u>*/}
                     {/*<span className="tournamentView__transactionIdCompleted">*/}
-                      <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
-                      <img className="ml-5" src={require("../../../images/polygon_logo.png").default} height={"20"} width={"20"} alt={"polygon"} />
+                    <u>
+                      Tournament ID: {tournament.transaction_hash.slice(-5)}
+                    </u>
+                    <img
+                      className="ml-5"
+                      src={require("../../../images/polygon_logo.png").default}
+                      height={"20"}
+                      width={"20"}
+                      alt={"polygon"}
+                    />
                     {/*</span>*/}
                   </span>
                 </div>
+                
                 <div>
                   Spots - <b>{tournament.total_spots}</b>
                 </div>
@@ -209,7 +236,13 @@ const LeftTournamentView = () => {
                 {/*<u>Click here to view on Polygon.</u>*/}
                 <span className="tournamentView__transactionId">
                   <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
-                  <img className="ml-5" src={require("../../../images/polygon_logo.png").default}  height={"20"} width={"20"} alt={"polygon"} />
+                  <img
+                    className="ml-5"
+                    src={require("../../../images/polygon_logo.png").default}
+                    height={"20"}
+                    width={"20"}
+                    alt={"polygon"}
+                  />
                 </span>
               </span>
             )}
@@ -286,6 +319,17 @@ const LeftTournamentView = () => {
                     </span>
                   </div>
                 </div>
+                <div className="tournamentPage__countdown" style={{display:"flex",justifyContent:"center",alignContent:"center",alignItems:"center"}}>
+                  <span id="timeRemaining" className="font-size-12" style={{display:"flex",justifyContent:"center",alignContent:"center",alignItems:"center",transform:"translateY(-10px)"}}>
+                    {startTime > Date.now() ? (
+                      <Countdown
+                        date={startTime - 300000}
+                        renderer={renderer}
+                      />
+                    ) : null}
+                  </span>
+                  {/* const startDate = new Date(tournament.start_time); */}
+                </div>
               </motion.div>
             ) : (
               <motion.div
@@ -298,32 +342,32 @@ const LeftTournamentView = () => {
                     : "tournament-view-card-completed-red"
                 }
               >
-                {amountWon !== -1 ?
-                    <div className="profileHeaderTP">
-                      <div className="profilePicture">
-                        <img
+                {amountWon !== -1 ? (
+                  <div className="profileHeaderTP">
+                    <div className="profilePicture">
+                      <img
                         src={userImg}
                         alt="profilePic"
                         height="64px"
                         width=" 64px"
                         className="profilepic__image"
                       />
-                        </div>
+                    </div>
 
-                      <div className="userDetails">
-                        <div className="userNameTP">
-                          {localStorage.getItem("folioUsername")}
-                        </div>
-                        <div className="tview__rewardDisplay">
-                            <span>You won {amountWon} FPC</span>
-                        </div>
+                    <div className="userDetails">
+                      <div className="userNameTP">
+                        {localStorage.getItem("folioUsername")}
+                      </div>
+                      <div className="tview__rewardDisplay">
+                        <span>You won {amountWon} FPC</span>
                       </div>
                     </div>
-                    :
-                    <div className="profileHeaderNP">
+                  </div>
+                ) : (
+                  <div className="profileHeaderNP">
                       {winnersRedux.length>0 && <span><b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;<b>{winnersRedux[0].amount_won}</b>&nbsp;FPC in this tournament</span>}
                     </div>
-                }
+                )}
               </motion.div>
             )}
 

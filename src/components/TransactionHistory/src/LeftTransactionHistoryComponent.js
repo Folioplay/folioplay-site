@@ -78,7 +78,7 @@ const LeftTransactionHistoryComponent = () => {
                     id="panel1a-header"
                 >
                     <div className="dateBlock__accordionList__summaryTab">
-                        <div className="summaryTab__amount">{item.type==="PAID"? "-" : "+"}{item.data.amount}</div>
+                        <div className="summaryTab__amount">{item.type==="PAID"? "-" : "+"}{item.data.amount} FPC</div>
                         <div className={"summaryTab__helperText"} style={{marginLeft:"20px",marginRight:"auto"}}>{item.type === "RECEIVED" ? "Reward":"Joined Tournament"}</div>
                     </div>
                 </AccordionSummary>
@@ -92,7 +92,7 @@ const LeftTransactionHistoryComponent = () => {
                         </div>
                         <div className={"summaryTab__dataHeading"}>
                             Transaction Date
-                        </div>
+                        </div>  
                         <div  className={"summaryTab__dataBody"}>
                             {moment(item.date).format('Do MMMM YYYY, h:mm:ss a')}
                         </div>
@@ -121,7 +121,7 @@ const LeftTransactionHistoryComponent = () => {
                 </span>
             </div>
             <div className="transactionHistory__body">
-                {transactionHistory.length!==0 &&
+                {transactionHistory.length!==0 ?
                     transactionHistory.map((data, index)=>{
                         return(
                             <div className="transactionHistory__dateBlock">
@@ -139,7 +139,7 @@ const LeftTransactionHistoryComponent = () => {
                                 </div>
                             </div>
                         )
-                })}
+                }) : <h3>No transactions yet.</h3>}
             </div>
         </div>
     );

@@ -437,6 +437,49 @@ const LeftComponent = () => {
       buttons: [
         {
           classes: "shepherd-button-secondary",
+          text: "Exit",
+          type: "cancel",
+        },
+        {
+          classes: "shepherd-button-secondary",
+          text: "Back",
+          type: "back",
+        },
+        {
+          classes: "shepherd-button-secondary",
+          text: "Next",
+          type: "next",
+        },
+      ],
+      classes: "custom-class-name-1 custom-class-name-2",
+      highlightClass: "highlight",
+      scrollTo: false,
+      cancelIcon: {
+        enabled: true,
+      },
+      title: "Welcome to FolioPlay!",
+      text: ["Here you can access your profile."],
+      when: {
+        show: () => {
+        },
+        hide: () => {
+        },
+      },
+    },
+    {
+      id: "intro-5",
+      attachTo: { element: "#folioplay-wallet", on : "bottom" },
+      beforeShowPromise: function () {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            window.scrollTo(0, 0);
+            resolve();
+          }, 500);
+        });
+      },
+      buttons: [
+        {
+          classes: "shepherd-button-secondary",
           text: "Finish",
           type: "cancel",
         }
@@ -448,7 +491,7 @@ const LeftComponent = () => {
         enabled: true,
       },
       title: "Welcome to FolioPlay!",
-      text: ["Here you can see the reward of the tournament"],
+      text: ["Here you can access your total coins and transaction history."],
       when: {
         show: () => {
         },
