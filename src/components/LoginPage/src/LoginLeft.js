@@ -253,6 +253,9 @@ function LoginLeft() {
         }, 2000);
         return;
       }
+      document
+              .getElementsByClassName("overlay-div")[0]
+              .classList.add("overlay-login");
       await authenticate({
         provider: "web3Auth",
         clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
@@ -444,9 +447,7 @@ function LoginLeft() {
           className="folioplay-login-google-button"
           variant="contained"
           onClick={() => {
-            document
-              .getElementsByClassName("overlay-div")[0]
-              .classList.add("overlay-login");
+            
               // document
               // .getElementById("web3a-modal")[0]
               // .style.zIndex = "1";

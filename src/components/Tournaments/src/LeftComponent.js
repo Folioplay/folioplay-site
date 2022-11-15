@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import { scrollTo } from "../../../CommonFunctions/functions.js";
+import { Chip } from "@material-ui/core";
 import TimerIcon from "@mui/icons-material/Timer";
 import {
   deleteTeam,
@@ -36,6 +37,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
+import { FilterAltOutlined } from "@mui/icons-material";
 
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
@@ -44,6 +46,25 @@ const LeftComponent = () => {
   console.log(location);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
+  const [filter, setFilter] = useState("all");
+  const filterToFunctionMap = {
+    all: filterAll,
+    live: filterLive,
+    upcoming: filterUpcoming,
+    joined: filterJoined,
+  };
+  function filterAll(tournament) {
+    return true;
+  }
+  function filterLive(tournament) {
+    return tournament.status === 2;
+  }
+  function filterUpcoming(tournament) {
+    return tournament.status === 0;
+  }
+  function filterJoined(tournament) {
+    return tournament.user_joined;
+  }
   const monthNames = [
     "Jan",
     "Feb",
@@ -529,10 +550,11 @@ const LeftComponent = () => {
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
-      <><span>Starting in </span>
+      <>
+        <span>Starting in </span>
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
-        {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
         </span>
@@ -540,162 +562,175 @@ const LeftComponent = () => {
     );
   };
   const tournamentsList = tournaments ? (
-    tournaments.map((tournament, index) => {
-      const seatsFilled =
-        (100 * tournament.filled_spots) / tournament.total_spots;
-      const startDate = new Date(tournament.start_time);
-      const finishDate = new Date(tournament.end_time);
-      console.log(startDate, finishDate, finishDate - startDate);
-      const disabledClass =
-        tournament.status !== 0 ? " disable-join-button" : "";
-      const disabledTournament = tournament.status !== 0;
+    tournaments
+      .filter((tournament) => filterToFunctionMap[filter](tournament))
+      .map((tournament, index) => {
+        const seatsFilled =
+          (100 * tournament.filled_spots) / tournament.total_spots;
+        const startDate = new Date(tournament.start_time);
+        const finishDate = new Date(tournament.end_time);
+        console.log(startDate, finishDate, finishDate - startDate);
+        const disabledClass =
+          tournament.status !== 0 ? " disable-join-button" : "";
+        const disabledTournament = tournament.status !== 0;
 
-      return (
-        <motion.div
-          id={"tournament-" + tournament._id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 * (index + 1) }}
-          key={"tournament__" + index}
-          className="tournament"
-          onClick={() => {
-            clearInterval(intervalId);
-            navigate(`/tournaments/${tournament._id}`, {
-              state: {
-                transactionId: tournament.transaction_hash,
-              },
-            });
-          }}
-        >
-          {tournament.user_joined ? (
-            <div style={{ position: "relative" }}>
-              <div className="ribbon1 ribbon1-top-left">
-                <span>Joined</span>
+        return (
+          <motion.div
+            id={"tournament-" + tournament._id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 * (index + 1) }}
+            key={"tournament__" + index}
+            className="tournament"
+            onClick={() => {
+              clearInterval(intervalId);
+              navigate(`/tournaments/${tournament._id}`, {
+                state: {
+                  transactionId: tournament.transaction_hash,
+                },
+              });
+            }}
+          >
+            {tournament.user_joined ? (
+              <div style={{ position: "relative" }}>
+                <div className="ribbon1 ribbon1-top-left">
+                  <span>Joined</span>
+                </div>
               </div>
-            </div>
-          ) : null}
-          {/* <div className="ribbon1">  
+            ) : null}
+            {/* <div className="ribbon1">  
               <span className="ribbon12">Joined</span>
             </div> */}
-          <div className="tournament-info">
-            <span className="tournament-image" style={{ borderRadius: "100%" }}>
-              <img
+            <div className="tournament-info">
+              <span
+                className="tournament-image"
                 style={{ borderRadius: "100%" }}
-                src={tournament.imageURL}
-                width="60px"
-                height={"60px"}
-              />
-            </span>
-            <span style={{ textAlign: "left" }}>
-              <span style={{ color: "#071F36", fontWeight: "700" }}>
-                {tournament.name}
-              </span>
-              {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
-              {/*  {tournament.name}*/}
-              {/*</span>*/}
-              <br />
-              <span className="tournaments-spots">
-                <div className="tournamentPage__startTime">
-                  {startDate.getDate()} {monthNames[startDate.getMonth()]}'
-                  {startDate.getFullYear() % 100} |{" "}
-                  {startDate.getHours() / 10 < 1
-                    ? "0" + startDate.getHours()
-                    : startDate.getHours()}
-                  :
-                  {startDate.getMinutes() / 10 < 1
-                    ? "0" + startDate.getMinutes()
-                    : startDate.getMinutes()}{" "}
-                  GMT <br />
-                  Duration : {(finishDate - startDate) / 60000} mins
-                </div>
-              </span>
-            </span>
-            <Button
-              className={disabledClass + " tournament-fee"}
-              size="small"
-              style={
-                disabledTournament ? {} : { backgroundColor: "var(--golden)" }
-              }
-              onClick={(event) => {
-                event.cancelBubble = true;
-                if (event.stopPropagation) event.stopPropagation();
-                var tmp = event.target.parentNode.parentNode.getAttribute("id");
-                setTournamentId(tmp.split("-")[1]);
-                // tournamentId = tournamentId.split("-")[1];
-                chooseTeamOpen();
-              }}
-              disabled={disabledTournament}
-            >
-              {tournament.entryFee} FPC
-            </Button>
-          </div>
-          <div>
-            <LinearProgress
-              variant="determinate"
-              style={{ backgroundColor: "var(--dim-white)" }}
-              value={seatsFilled}
-            />
-            <div className="spots-wrapper">
-              <span
-                className="font-size-12 font-weight-500 mt-5"
-                style={{ color: "var(--golden)" }}
               >
-                {tournament.status !== 3 ? <>{tournament.available_spots} spots left</> : <>{tournament.total_spots - tournament.available_spots} users joined</>}
+                <img
+                  style={{ borderRadius: "100%" }}
+                  src={tournament.imageURL}
+                  width="60px"
+                  height={"60px"}
+                />
               </span>
-              <span
-                className="font-size-12 font-weight-500 mt-5"
-                style={{ color: "var(--dark-dim-white)" }}
-              >
-                {tournament.total_spots} spots
+              <span style={{ textAlign: "left" }}>
+                <span style={{ color: "#071F36", fontWeight: "700" }}>
+                  {tournament.name}
+                </span>
+                {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
+                {/*  {tournament.name}*/}
+                {/*</span>*/}
+                <br />
+                <span className="tournaments-spots">
+                  <div className="tournamentPage__startTime">
+                    {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                    {startDate.getFullYear() % 100} |{" "}
+                    {startDate.getHours() / 10 < 1
+                      ? "0" + startDate.getHours()
+                      : startDate.getHours()}
+                    :
+                    {startDate.getMinutes() / 10 < 1
+                      ? "0" + startDate.getMinutes()
+                      : startDate.getMinutes()}{" "}
+                    GMT <br />
+                    Duration : {(finishDate - startDate) / 60000} mins
+                  </div>
+                </span>
               </span>
-            </div>
-            {/*<div className="tournamentPage__transactionHash">*/}
-            {/*  {tournament.transaction_hash !== undefined && (*/}
-            {/*    <span*/}
-            {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
-            {/*      onClick={() => {*/}
-            {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
-            {/*      }}*/}
-            {/*    >*/}
-            {/*      Transaction Hash(Polygon):{" "}*/}
-            {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
-            {/*      {tournament.transaction_hash.slice(-10)}*/}
-            {/*    </span>*/}
-            {/*  )}*/}
-            {/*</div>*/}
-          </div>
-          <div className="tournament-reward">
-            {status[tournament.status].value !== "Open" ? (
-              <span
-                className="font-size-12"
-                style={{
-                  color: status[tournament.status].color,
-                  padding: "0 10px",
-                  border: "1px solid " + status[tournament.status].color,
-                  borderRadius: "30px",
+              <Button
+                className={disabledClass + " tournament-fee"}
+                size="small"
+                style={
+                  disabledTournament ? {} : { backgroundColor: "var(--golden)" }
+                }
+                onClick={(event) => {
+                  event.cancelBubble = true;
+                  if (event.stopPropagation) event.stopPropagation();
+                  var tmp =
+                    event.target.parentNode.parentNode.getAttribute("id");
+                  setTournamentId(tmp.split("-")[1]);
+                  // tournamentId = tournamentId.split("-")[1];
+                  chooseTeamOpen();
                 }}
+                disabled={disabledTournament}
               >
-                {status[tournament.status].value}
-              </span>
-            ) : null}
-            <div className="tournamentPage__countdown">
-              <span id="timeRemaining" className="font-size-12">
-                {startDate- 300000 > Date.now() ? (
-                  <Countdown date={startDate - 300000} renderer={renderer} />
-                ) : null}
-              </span>
+                {tournament.entryFee} FPC
+              </Button>
             </div>
-            <span className="font-size-12">
-              <EmojiEventsOutlinedIcon />
-              <span>{tournament.rewards.prize_pool} FPC</span>
-            </span>
-            {/* {tournament.user_joined ?  */}
+            <div>
+              <LinearProgress
+                variant="determinate"
+                style={{ backgroundColor: "var(--dim-white)" }}
+                value={seatsFilled}
+              />
+              <div className="spots-wrapper">
+                <span
+                  className="font-size-12 font-weight-500 mt-5"
+                  style={{ color: "var(--golden)" }}
+                >
+                  {tournament.status !== 3 ? (
+                    <>{tournament.available_spots} spots left</>
+                  ) : (
+                    <>
+                      {tournament.total_spots - tournament.available_spots}{" "}
+                      users joined
+                    </>
+                  )}
+                </span>
+                <span
+                  className="font-size-12 font-weight-500 mt-5"
+                  style={{ color: "var(--dark-dim-white)" }}
+                >
+                  {tournament.total_spots} spots
+                </span>
+              </div>
+              {/*<div className="tournamentPage__transactionHash">*/}
+              {/*  {tournament.transaction_hash !== undefined && (*/}
+              {/*    <span*/}
+              {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+              {/*      onClick={() => {*/}
+              {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+              {/*      }}*/}
+              {/*    >*/}
+              {/*      Transaction Hash(Polygon):{" "}*/}
+              {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+              {/*      {tournament.transaction_hash.slice(-10)}*/}
+              {/*    </span>*/}
+              {/*  )}*/}
+              {/*</div>*/}
+            </div>
+            <div className="tournament-reward">
+              {status[tournament.status].value !== "Open" ? (
+                <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>
+              ) : null}
+              <div className="tournamentPage__countdown">
+                <span id="timeRemaining" className="font-size-12">
+                  {startDate - 300000 > Date.now() ? (
+                    <Countdown date={startDate - 300000} renderer={renderer} />
+                  ) : null}
+                </span>
+              </div>
+              <span className="font-size-12">
+                <EmojiEventsOutlinedIcon />
+                <span>{tournament.rewards.prize_pool} FPC</span>
+              </span>
+              {/* {tournament.user_joined ?  */}
 
-            {/* : null} */}
-          </div>
-        </motion.div>
-      );
-    })
+              {/* : null} */}
+            </div>
+          </motion.div>
+        );
+      })
   ) : (
     <></>
   );
@@ -712,6 +747,90 @@ const LeftComponent = () => {
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
             Trending
+            <Chip
+              className="active-chip ml-10"
+              style={{ marginLeft: "10px", fontFamily: "poppins" }}
+              label="All"
+              variant="outlined"
+              onClick={() => {
+                document
+                  .getElementsByClassName("MuiChip-root")[0]
+                  .classList.add("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[1]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[2]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[3]
+                  .classList.remove("active-chip");
+                setFilter("all");
+              }}
+            />
+            <Chip
+              className="ml-10"
+              style={{ marginLeft: "10px", fontFamily: "poppins" }}
+              label="Live"
+              variant="outlined"
+              onClick={() => {
+                document
+                  .getElementsByClassName("MuiChip-root")[0]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[1]
+                  .classList.add("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[2]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[3]
+                  .classList.remove("active-chip");
+                setFilter("live");
+              }}
+            />
+            <Chip
+              className="ml-10"
+              style={{ marginLeft: "10px", fontFamily: "poppins" }}
+              label="Joined"
+              variant="outlined"
+              onClick={() => {
+                document
+                  .getElementsByClassName("MuiChip-root")[0]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[1]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[2]
+                  .classList.add("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[3]
+                  .classList.remove("active-chip");
+                setFilter("joined");
+              }}
+            />
+            <Chip
+              className="ml-10"
+              style={{ marginLeft: "10px", fontFamily: "poppins" }}
+              label="Upcoming"
+              variant="outlined"
+              onClick={() => {
+                document
+                  .getElementsByClassName("MuiChip-root")[0]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[1]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[2]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[3]
+                  .classList.add("active-chip");
+                setFilter("upcoming");
+              }}
+            />
           </span>
           {tournaments === undefined ||
           tournaments.length === 0 ||
