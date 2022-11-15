@@ -29,11 +29,27 @@ import {
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     console.log(typeof days);
-
+    if(completed)return <>Started !!</>
     return (
       <>
         <TimerIcon style={{ color: "var(--golden)" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"}>
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </span>
+      </>
+    );
+  };
+  const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
+    console.log(typeof days);
+    if(completed)return <>Ended</>
+    return (
+      <>
+      <span style={{fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
+        <TimerIcon style={{ color: "red" }} fontSize="small" />
+        <span className={"tournamentCard__countdownTimer"} style={{color:"red"}}>
+          
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
@@ -161,6 +177,14 @@ const LeftTournamentView = () => {
   let empty_header =
     tournament && tournament.status === 3 ? "empty-area-completed" : "";
   const startTime = tournament ? new Date(tournament.start_time) : undefined;
+  const endTime = tournament ? new Date(tournament.end_time) : undefined;
+  console.log(
+    startTime,
+    endTime,
+    Date.now(),
+    startTime > Date.now(),
+    endTime > Date.now()
+  );
   return (
     <div className="fullpage">
       {tournament === undefined || teams === undefined ? (
@@ -346,10 +370,21 @@ const LeftTournamentView = () => {
                   >
                     {startTime > Date.now() ? (
                       <Countdown
-                        date={startTime - 300000}
+                        date={startTime -3000000 }
                         renderer={renderer}
                       />
-                    ) : null}
+                    ) : (
+                      <>
+                        {endTime > Date.now() ? (
+                          <Countdown
+                            date={endTime}
+                            renderer={rendererEnd}
+                          />
+                        ) : (
+                          null
+                        )}
+                      </>
+                    )}
                   </span>
                   {/* const startDate = new Date(tournament.start_time); */}
                 </div>
@@ -368,7 +403,6 @@ const LeftTournamentView = () => {
                 {amountWon !== -1 ? (
                   <>
                     <div className="profileHeaderTP">
-                      
                       <div className="profilePicture">
                         <img
                           src={userImg}
@@ -389,11 +423,11 @@ const LeftTournamentView = () => {
                       </div>
                     </div>
                     <img
-                        className="winner-cups-img"
-                        src={require("../../../images/cups-winner.png").default}
-                        width="200px"
-                        style={{transform:"translate(115%,-5%)"}}
-                      />
+                      className="winner-cups-img"
+                      src={require("../../../images/cups-winner.png").default}
+                      width="200px"
+                      style={{ transform: "translate(115%,-5%)" }}
+                    />
                   </>
                 ) : (
                   <div className="profileHeaderNP">
@@ -409,8 +443,20 @@ const LeftTournamentView = () => {
                         tournament
                       </span>
                     )}
-                    <span className="font-size-12" style={{letterSpacing:"0.5px"}}>You didn't participated in this tournament.</span>
-                    <span className="font-size-12 join-tourna-span" onClick={() => {navigate('/tournaments')}}>Join new tournaments</span>
+                    <span
+                      className="font-size-12"
+                      style={{ letterSpacing: "0.5px" }}
+                    >
+                      You didn't participated in this tournament.
+                    </span>
+                    <span
+                      className="font-size-12 join-tourna-span"
+                      onClick={() => {
+                        navigate("/tournaments");
+                      }}
+                    >
+                      Join new tournaments
+                    </span>
                   </div>
                 )}
               </motion.div>
