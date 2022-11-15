@@ -370,7 +370,7 @@ const LeftTournamentView = () => {
                   >
                     {startTime > Date.now() ? (
                       <Countdown
-                        date={startTime -3000000 }
+                        date={startTime -300000 }
                         renderer={renderer}
                       />
                     ) : (
