@@ -393,7 +393,7 @@ export function TeamCreation() {
               onClick={() => navigate(-1)}
             />
             <span className="ml-20 font-size-20 font-weight-700">
-              Choose Coins
+              Choose 11 Coins
             </span>
           </div>
           <br />

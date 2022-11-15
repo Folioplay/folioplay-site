@@ -8,7 +8,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
-import {scrollTo} from '../../../CommonFunctions/functions.js'
+import { scrollTo } from "../../../CommonFunctions/functions.js";
 import TimerIcon from "@mui/icons-material/Timer";
 import {
   deleteTeam,
@@ -34,12 +34,12 @@ import "shepherd.js/dist/css/shepherd.css";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import {useDispatch, useSelector} from "react-redux";
-import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
 
 const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
-  const {state} = useLocation();
+  const { state } = useLocation();
   const location = useLocation();
   console.log(location);
   const dispatch = useDispatch();
@@ -74,7 +74,7 @@ const LeftComponent = () => {
     2: { value: "Running", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
-  const tournaments = useSelector((state)=> state.tournamentSlice.tournament);
+  const tournaments = useSelector((state) => state.tournamentSlice.tournament);
   const [teams, setTeams] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState({
     message: "",
@@ -101,16 +101,16 @@ const LeftComponent = () => {
     authTokenGet();
   }, []);
   useEffect(() => {
-    if(state && state.openDrawer){
+    if (state && state.openDrawer) {
       setTournamentId(state.tournamentId);
     }
-  },[])
-  
+  }, []);
+
   useEffect(() => {
-    if(document.getElementById('choose-team-div')){
-      if(state && state.openDrawer){
+    if (document.getElementById("choose-team-div")) {
+      if (state && state.openDrawer) {
         delete state.openDrawer;
-        window.history.replaceState(null, '')
+        window.history.replaceState(null, "");
         chooseTeamOpen().then(() => {
           setTimeout(() => {
             // console.log("i am in the scoll part ..............")
@@ -122,18 +122,14 @@ const LeftComponent = () => {
             // element.animate({
             //     scrollTop: element.prop("scrollHeight")
             // }, 500);
-            scrollTo(objDiv,objDiv.scrollHeight,400); 
-            
-            selectTeam("team-" + (teams.length-1), teams);  
-          },600);
-          
+            scrollTo(objDiv, objDiv.scrollHeight, 400);
 
+            selectTeam("team-" + (teams.length - 1), teams);
+          }, 600);
         });
-
-        
       }
     }
-  },[tournaments,tournamentId,teams])
+  }, [tournaments, tournamentId, teams]);
   useEffect(() => {
     allImages = document.getElementsByClassName("image-div");
     len = allImages.length;
@@ -194,17 +190,17 @@ const LeftComponent = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    height:"520px",
+    height: "520px",
     bgcolor: "background.paper",
     border: "2px solid grey",
     boxShadow: 24,
-    borderRadius:"12px",
-    minHeight:"510px",
-    padding:"20px",
+    borderRadius: "12px",
+    minHeight: "510px",
+    padding: "20px",
     ["@media (max-width:600px)"]: {
-      width:300,
-      height:420,
-      minHeight:420
+      width: 300,
+      height: 420,
+      minHeight: 420,
     },
   };
 
@@ -215,7 +211,7 @@ const LeftComponent = () => {
     const handleClose = () => {
       setOpen1(false);
       localStorage.setItem("folioplay_new_user", false);
-    }
+    };
     const tour = useContext(ShepherdTourContext);
     const handleClick = () => {
       setOpen1(false);
@@ -231,38 +227,56 @@ const LeftComponent = () => {
           disableAutoFocus
         >
           <Box sx={tourModalStyle}>
-            <img src={require('../../../images/howtoplay.jpg').default} width="100%" style={{borderRadius:"12px"}}/>
-            <Typography id="modal-modal-title" variant="h6" component="h1" style={{fontFamily:"poppins"}}>
+            <img
+              src={require("../../../images/howtoplay.jpg").default}
+              width="100%"
+              style={{ borderRadius: "12px" }}
+            />
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h1"
+              style={{ fontFamily: "poppins" }}
+            >
               Welcome to Folioplay!
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{fontFamily:"poppins"}}>
-              Click start tour to get a short tour to the game.
-              Good Luck !!
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2 }}
+              style={{ fontFamily: "poppins" }}
+            >
+              Click start tour to get a short tour to the game. Good Luck !!
             </Typography>
-            <div style={{widows:"100%",display:"flex",justifyContent:"center",marginTop:"5px"}}>
-            <button
-              className="button dark tour-button"
-              onClick={() => {
-                setOpen1(false);
-                localStorage.setItem("folioplay_new_user", false);
-                tour.start();
+            <div
+              style={{
+                widows: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "5px",
               }}
             >
-              {/* <button onClick={handleClick}> */}
-              Start Tour
-              {/* </button> */}
-            </button>
+              <button
+                className="button dark tour-button"
+                onClick={() => {
+                  setOpen1(false);
+                  localStorage.setItem("folioplay_new_user", false);
+                  tour.start();
+                }}
+              >
+                {/* <button onClick={handleClick}> */}
+                Start Tour
+                {/* </button> */}
+              </button>
             </div>
-            
           </Box>
         </Modal>
       </div>
     );
   }
-  const newsteps = [ 
+  const newsteps = [
     {
       id: "intro",
-      attachTo: { element: ".tournament-info", on : "bottom" },
+      attachTo: { element: ".tournament-info", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -297,15 +311,13 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can view the tournament info"],
       when: {
-        show: () => {
-        },
-        hide: () => {
-        },
+        show: () => {},
+        hide: () => {},
       },
     },
     {
       id: "intro-1",
-      attachTo: { element: ".tournament-fee", on : "bottom" },
+      attachTo: { element: ".tournament-fee", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -340,15 +352,13 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["By Clicking on this you can play the game"],
       when: {
-        show: () => {
-        },
-        hide: () => {
-        },
+        show: () => {},
+        hide: () => {},
       },
     },
     {
       id: "intro-2",
-      attachTo: { element: ".tournament-reward", on : "bottom" },
+      attachTo: { element: ".tournament-reward", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -383,15 +393,13 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can see the reward of the tournament"],
       when: {
-        show: () => {
-        },
-        hide: () => {
-        },
+        show: () => {},
+        hide: () => {},
       },
     },
     {
       id: "intro-3",
-      attachTo: { element: "#folioplay-hamburger", on : "bottom" },
+      attachTo: { element: "#folioplay-hamburger", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -426,15 +434,13 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access the sidebar"],
       when: {
-        show: () => {
-        },
-        hide: () => {
-        },
+        show: () => {},
+        hide: () => {},
       },
     },
     {
       id: "intro-4",
-      attachTo: { element: "#profile-icon", on : "bottom" },
+      attachTo: { element: "#profile-icon", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -469,15 +475,13 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access your profile."],
       when: {
-        show: () => {
-        },
-        hide: () => {
-        },
+        show: () => {},
+        hide: () => {},
       },
     },
     {
       id: "intro-5",
-      attachTo: { element: "#folioplay-wallet", on : "bottom" },
+      attachTo: { element: "#folioplay-wallet", on: "bottom" },
       beforeShowPromise: function () {
         return new Promise(function (resolve) {
           setTimeout(function () {
@@ -491,7 +495,7 @@ const LeftComponent = () => {
           classes: "shepherd-button-secondary",
           text: "Finish",
           type: "cancel",
-        }
+        },
       ],
       classes: "custom-class-name-1 custom-class-name-2",
       highlightClass: "highlight",
@@ -502,10 +506,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access your total coins and transaction history."],
       when: {
-        show: () => {
-        },
-        hide: () => {
-        },
+        show: () => {},
+        hide: () => {},
       },
     },
     // ...
@@ -527,10 +529,12 @@ const LeftComponent = () => {
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
-      <>
+      <><span>Starting in </span>
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
-        {days < 10 ? "0"+days : days} : {hours < 10 ? "0"+hours : hours} : {minutes < 10 ? "0"+minutes : minutes} : {seconds < 10 ? "0"+seconds : seconds}
+        {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
         </span>
       </>
     );
@@ -541,7 +545,7 @@ const LeftComponent = () => {
         (100 * tournament.filled_spots) / tournament.total_spots;
       const startDate = new Date(tournament.start_time);
       const finishDate = new Date(tournament.end_time);
-
+      console.log(startDate, finishDate, finishDate - startDate);
       const disabledClass =
         tournament.status !== 0 ? " disable-join-button" : "";
       const disabledTournament = tournament.status !== 0;
@@ -563,13 +567,13 @@ const LeftComponent = () => {
             });
           }}
         >
-          {tournament.user_joined ? 
-          <div style={{position:"relative"}}>
-            <div className="ribbon1 ribbon1-top-left">
-              <span>Joined</span>
+          {tournament.user_joined ? (
+            <div style={{ position: "relative" }}>
+              <div className="ribbon1 ribbon1-top-left">
+                <span>Joined</span>
+              </div>
             </div>
-          </div>
-          : null}
+          ) : null}
           {/* <div className="ribbon1">  
               <span className="ribbon12">Joined</span>
             </div> */}
@@ -582,10 +586,7 @@ const LeftComponent = () => {
                 height={"60px"}
               />
             </span>
-            <span
-              style={{ textAlign: "left" }}
-              
-            >
+            <span style={{ textAlign: "left" }}>
               <span style={{ color: "#071F36", fontWeight: "700" }}>
                 {tournament.name}
               </span>
@@ -595,38 +596,17 @@ const LeftComponent = () => {
               <br />
               <span className="tournaments-spots">
                 <div className="tournamentPage__startTime">
-                  Start Time
-                  <div>
-                    <span className="font-size-12">
-                      {startDate.getDate()} {monthNames[startDate.getMonth()]}'
-                      {startDate.getFullYear() % 100},
-                      {startDate.getHours() / 10 < 1
-                        ? "0" + startDate.getHours()
-                        : startDate.getHours()}
-                      :
-                      {startDate.getMinutes() / 10 < 1
-                        ? "0" + startDate.getMinutes()
-                        : startDate.getMinutes()}
-                      hrs
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  End Time
-                  <div>
-                    <span className="font-size-12">
-                      {startDate.getDate()} {monthNames[startDate.getMonth()]}'
-                      {startDate.getFullYear() % 100},
-                      {finishDate.getHours() / 10 < 1
-                        ? "0" + finishDate.getHours()
-                        : finishDate.getHours()}
-                      :
-                      {finishDate.getMinutes() / 10 < 1
-                        ? "0" + finishDate.getMinutes()
-                        : finishDate.getMinutes()}
-                      hrs
-                    </span>
-                  </div>
+                  {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                  {startDate.getFullYear() % 100} |{" "}
+                  {startDate.getHours() / 10 < 1
+                    ? "0" + startDate.getHours()
+                    : startDate.getHours()}
+                  :
+                  {startDate.getMinutes() / 10 < 1
+                    ? "0" + startDate.getMinutes()
+                    : startDate.getMinutes()}{" "}
+                  GMT <br />
+                  Duration : {(finishDate - startDate) / 60000} mins
                 </div>
               </span>
             </span>
@@ -638,7 +618,7 @@ const LeftComponent = () => {
               }
               onClick={(event) => {
                 event.cancelBubble = true;
-                if(event.stopPropagation) event.stopPropagation();
+                if (event.stopPropagation) event.stopPropagation();
                 var tmp = event.target.parentNode.parentNode.getAttribute("id");
                 setTournamentId(tmp.split("-")[1]);
                 // tournamentId = tournamentId.split("-")[1];
@@ -660,7 +640,7 @@ const LeftComponent = () => {
                 className="font-size-12 font-weight-500 mt-5"
                 style={{ color: "var(--golden)" }}
               >
-                {tournament.available_spots} spots left
+                {tournament.status !== 3 ? <>{tournament.available_spots} spots left</> : <>{tournament.total_spots - tournament.available_spots} users joined</>}
               </span>
               <span
                 className="font-size-12 font-weight-500 mt-5"
@@ -685,20 +665,22 @@ const LeftComponent = () => {
             {/*</div>*/}
           </div>
           <div className="tournament-reward">
-            <span
-              className="font-size-12"
-              style={{
-                color: status[tournament.status].color,
-                padding: "0 10px",
-                border: "1px solid " + status[tournament.status].color,
-                borderRadius: "30px",
-              }}
-            >
-              {status[tournament.status].value}
-            </span>
+            {status[tournament.status].value !== "Open" ? (
+              <span
+                className="font-size-12"
+                style={{
+                  color: status[tournament.status].color,
+                  padding: "0 10px",
+                  border: "1px solid " + status[tournament.status].color,
+                  borderRadius: "30px",
+                }}
+              >
+                {status[tournament.status].value}
+              </span>
+            ) : null}
             <div className="tournamentPage__countdown">
               <span id="timeRemaining" className="font-size-12">
-                {startDate > Date.now() ? (
+                {startDate- 300000 > Date.now() ? (
                   <Countdown date={startDate - 300000} renderer={renderer} />
                 ) : null}
               </span>
@@ -708,8 +690,8 @@ const LeftComponent = () => {
               <span>{tournament.rewards.prize_pool} FPC</span>
             </span>
             {/* {tournament.user_joined ?  */}
-            
-             {/* : null} */}
+
+            {/* : null} */}
           </div>
         </motion.div>
       );

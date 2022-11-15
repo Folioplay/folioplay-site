@@ -187,40 +187,18 @@ export default function ContestTabs({
                       <br />
                       <span className="tournaments-spots">
                         <div className="tournamentPage__startTime">
-                          Start Time
-                          <div>
-                            <span className="font-size-12">
-                              {startDate.getDate()}{" "}
-                              {monthNames[startDate.getMonth()]}'
-                              {startDate.getFullYear() % 100},
-                              {startDate.getHours() / 10 < 1
-                                ? "0" + startDate.getHours()
-                                : startDate.getHours()}
-                              :
-                              {startDate.getMinutes() / 10 < 1
-                                ? "0" + startDate.getMinutes()
-                                : startDate.getMinutes()}
-                              hrs
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          End Time
-                          <div>
-                            <span className="font-size-12">
-                              {startDate.getDate()}{" "}
-                              {monthNames[startDate.getMonth()]}'
-                              {startDate.getFullYear() % 100},
-                              {finishDate.getHours() / 10 < 1
-                                ? "0" + finishDate.getHours()
-                                : finishDate.getHours()}
-                              :
-                              {finishDate.getMinutes() / 10 < 1
-                                ? "0" + finishDate.getMinutes()
-                                : finishDate.getMinutes()}
-                              hrs
-                            </span>
-                          </div>
+                          {startDate.getDate()}{" "}
+                          {monthNames[startDate.getMonth()]}'
+                          {startDate.getFullYear() % 100} |{" "}
+                          {startDate.getHours() / 10 < 1
+                            ? "0" + startDate.getHours()
+                            : startDate.getHours()}
+                          :
+                          {startDate.getMinutes() / 10 < 1
+                            ? "0" + startDate.getMinutes()
+                            : startDate.getMinutes()}{" "}
+                          GMT <br />
+                          Duration : {(finishDate - startDate) / 60000} mins
                         </div>
                       </span>
                     </span>
@@ -271,13 +249,26 @@ export default function ContestTabs({
             })}
           </>
         ) : (
-          <div className="contestTab__valueItem" style={{display:"flex",flexDirection:"column"}}>
+          <div
+            className="contestTab__valueItem"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             You haven't joined any tournaments that are yet to start
             <img
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
             />
-            <Button variant="contained" style={{backgroundColor:"var(--violet-blue)",marginLeft:"auto",marginRight:"auto"}} onClick={() => navigate('/tournaments')}>View Tournaments</Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "var(--violet-blue)",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              onClick={() => navigate("/tournaments")}
+            >
+              View Tournaments
+            </Button>
           </div>
         )}
       </div>
@@ -340,41 +331,19 @@ export default function ContestTabs({
                       {/*</span>*/}
                       <br />
                       <span className="tournaments-spots">
-                        <div className="tournamentPage__startTime">
-                          Start Time
-                          <div>
-                            <span className="font-size-12">
-                              {startDate.getDate()}{" "}
-                              {monthNames[startDate.getMonth()]}'
-                              {startDate.getFullYear() % 100},
-                              {startDate.getHours() / 10 < 1
-                                ? "0" + startDate.getHours()
-                                : startDate.getHours()}
-                              :
-                              {startDate.getMinutes() / 10 < 1
-                                ? "0" + startDate.getMinutes()
-                                : startDate.getMinutes()}
-                              hrs
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          End Time
-                          <div>
-                            <span className="font-size-12">
-                              {startDate.getDate()}{" "}
-                              {monthNames[startDate.getMonth()]}'
-                              {startDate.getFullYear() % 100},
-                              {finishDate.getHours() / 10 < 1
-                                ? "0" + finishDate.getHours()
-                                : finishDate.getHours()}
-                              :
-                              {finishDate.getMinutes() / 10 < 1
-                                ? "0" + finishDate.getMinutes()
-                                : finishDate.getMinutes()}
-                              hrs
-                            </span>
-                          </div>
+                      <div className="tournamentPage__startTime">
+                          {startDate.getDate()}{" "}
+                          {monthNames[startDate.getMonth()]}'
+                          {startDate.getFullYear() % 100} |{" "}
+                          {startDate.getHours() / 10 < 1
+                            ? "0" + startDate.getHours()
+                            : startDate.getHours()}
+                          :
+                          {startDate.getMinutes() / 10 < 1
+                            ? "0" + startDate.getMinutes()
+                            : startDate.getMinutes()}{" "}
+                          GMT <br />
+                          Duration : {(finishDate - startDate) / 60000} mins
                         </div>
                       </span>
                     </span>
@@ -425,13 +394,26 @@ export default function ContestTabs({
             })}
           </>
         ) : (
-          <div className="contestTab__valueItem" style={{ margin: "0px",display:"flex",flexDirection:"column" }}>
+          <div
+            className="contestTab__valueItem"
+            style={{ margin: "0px", display: "flex", flexDirection: "column" }}
+          >
             You haven't joined any tournaments that are running
             <img
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
             />
-            <Button variant="contained" style={{backgroundColor:"var(--violet-blue)",marginLeft:"auto",marginRight:"auto"}} onClick={() => navigate('/tournaments')}>View Tournaments</Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "var(--violet-blue)",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              onClick={() => navigate("/tournaments")}
+            >
+              View Tournaments
+            </Button>
           </div>
         )}
       </div>
@@ -493,41 +475,19 @@ export default function ContestTabs({
                       {/*</span>*/}
                       <br />
                       <span className="tournaments-spots">
-                        <div className="tournamentPage__startTime">
-                          Start Time
-                          <div>
-                            <span className="font-size-12">
-                              {startDate.getDate()}{" "}
-                              {monthNames[startDate.getMonth()]}'
-                              {startDate.getFullYear() % 100},
-                              {startDate.getHours() / 10 < 1
-                                ? "0" + startDate.getHours()
-                                : startDate.getHours()}
-                              :
-                              {startDate.getMinutes() / 10 < 1
-                                ? "0" + startDate.getMinutes()
-                                : startDate.getMinutes()}
-                              hrs
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          End Time
-                          <div>
-                            <span className="font-size-12">
-                              {startDate.getDate()}{" "}
-                              {monthNames[startDate.getMonth()]}'
-                              {startDate.getFullYear() % 100},
-                              {finishDate.getHours() / 10 < 1
-                                ? "0" + finishDate.getHours()
-                                : finishDate.getHours()}
-                              :
-                              {finishDate.getMinutes() / 10 < 1
-                                ? "0" + finishDate.getMinutes()
-                                : finishDate.getMinutes()}
-                              hrs
-                            </span>
-                          </div>
+                      <div className="tournamentPage__startTime">
+                          {startDate.getDate()}{" "}
+                          {monthNames[startDate.getMonth()]}'
+                          {startDate.getFullYear() % 100} |{" "}
+                          {startDate.getHours() / 10 < 1
+                            ? "0" + startDate.getHours()
+                            : startDate.getHours()}
+                          :
+                          {startDate.getMinutes() / 10 < 1
+                            ? "0" + startDate.getMinutes()
+                            : startDate.getMinutes()}{" "}
+                          GMT <br />
+                          Duration : {(finishDate - startDate) / 60000} mins
                         </div>
                       </span>
                     </span>
@@ -643,13 +603,26 @@ export default function ContestTabs({
             })}
           </>
         ) : (
-          <div className="contestTab__valueItem" style={{display:"flex",flexDirection:"column"}}>
+          <div
+            className="contestTab__valueItem"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             You haven't joined any tournaments that are completed
             <img
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
             />
-            <Button variant="contained" style={{backgroundColor:"var(--violet-blue)",marginLeft:"auto",marginRight:"auto"}} onClick={() => navigate('/tournaments')}>View Tournaments</Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "var(--violet-blue)",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              onClick={() => navigate("/tournaments")}
+            >
+              View Tournaments
+            </Button>
           </div>
         )}
       </div>
