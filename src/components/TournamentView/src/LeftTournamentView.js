@@ -409,6 +409,8 @@ const LeftTournamentView = () => {
                         tournament
                       </span>
                     )}
+                    <span className="font-size-12" style={{letterSpacing:"0.5px"}}>You didn't participated in this tournament.</span>
+                    <span className="font-size-12 join-tourna-span" onClick={() => {navigate('/tournaments')}}>Join new tournaments</span>
                   </div>
                 )}
               </motion.div>
