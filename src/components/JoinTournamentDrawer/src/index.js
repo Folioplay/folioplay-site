@@ -145,7 +145,7 @@ export default function JoinTournamentDrawer({
                             {coin.name}
                           </span>
                           <span className="font-size-12 font-weight-500">
-                            {coin.category}
+                            {coin.category === "Defi" ? "Rekt" : coin.category}
                           </span>
                         </div>
                       );
