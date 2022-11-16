@@ -17,7 +17,7 @@ import { S3_URL } from "../../../APIS/apis";
 // import LabTabs from "../../../Common/TabComponent";
 export default function ActivityTabs({ teams, tournaments }) {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("2");
   const [teamsLength, setTeamsLength] = useState(0);
   const [participatedContestsLength, setParticipatedContestsLength] =
     useState(0);

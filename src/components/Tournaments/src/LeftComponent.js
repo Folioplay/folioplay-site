@@ -9,7 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import deleteClickedTeam from "../common/deleteClickedTeam";
 import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import { scrollTo } from "../../../CommonFunctions/functions.js";
-import { Chip } from "@material-ui/core";
+import { Chip } from "@mui/material";
 import TimerIcon from "@mui/icons-material/Timer";
 import {
   deleteTeam,
@@ -126,7 +126,12 @@ const LeftComponent = () => {
       setTournamentId(state.tournamentId);
     }
   }, []);
-
+  useEffect(() => {
+    return () =>{
+      console.log("i am in component will unmount hook...............................",intervalId)
+      if(intervalId){clearInterval(intervalId)}
+    }
+  },[intervalId])
   useEffect(() => {
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
@@ -569,7 +574,6 @@ const LeftComponent = () => {
           (100 * tournament.filled_spots) / tournament.total_spots;
         const startDate = new Date(tournament.start_time);
         const finishDate = new Date(tournament.end_time);
-        console.log(startDate, finishDate, finishDate - startDate);
         const disabledClass =
           tournament.status !== 0 ? " disable-join-button" : "";
         const disabledTournament = tournament.status !== 0;
@@ -639,10 +643,11 @@ const LeftComponent = () => {
               </span>
               <Button
                 className={disabledClass + " tournament-fee"}
-                size="small"
+
                 style={
-                  disabledTournament ? {} : { backgroundColor: "var(--golden)" }
+                  disabledTournament ? {} : { backgroundColor: "var(--golden)"}
                 }
+                size="small"
                 onClick={(event) => {
                   event.cancelBubble = true;
                   if (event.stopPropagation) event.stopPropagation();
@@ -668,7 +673,7 @@ const LeftComponent = () => {
                   className="font-size-12 font-weight-500 mt-5"
                   style={{ color: "var(--golden)" }}
                 >
-                  {tournament.status !== 3 ? (
+                  {tournament.status === 0 ? (
                     <>{tournament.available_spots} spots left</>
                   ) : (
                     <>
@@ -746,7 +751,7 @@ const LeftComponent = () => {
             className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
-            Trending
+            Filters
             <Chip
               className="active-chip ml-10"
               style={{ marginLeft: "10px", fontFamily: "poppins" }}

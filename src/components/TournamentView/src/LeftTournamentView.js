@@ -178,13 +178,6 @@ const LeftTournamentView = () => {
     tournament && tournament.status === 3 ? "empty-area-completed" : "";
   const startTime = tournament ? new Date(tournament.start_time) : undefined;
   const endTime = tournament ? new Date(tournament.end_time) : undefined;
-  console.log(
-    startTime,
-    endTime,
-    Date.now(),
-    startTime > Date.now(),
-    endTime > Date.now()
-  );
   return (
     <div className="fullpage">
       {tournament === undefined || teams === undefined ? (
