@@ -14,6 +14,7 @@ import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions"
 export default function MyTeams() {
   const navigate = useNavigate();
   const [teams, setTeams] = useState(undefined);
+  const [tournaments, setTournaments] = useState(undefined);
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
@@ -24,7 +25,7 @@ export default function MyTeams() {
     fetchTeams();
     fetchUserTournaments();
   }, []);
-  const [tournaments, setTournaments] = useState(undefined);
+  
   const LeftComponent = () => {
     return (
       <div className="fullpage">

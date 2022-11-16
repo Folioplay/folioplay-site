@@ -35,3 +35,16 @@
     scrollbar-width: none;
     z-index: 7;
   }
+  #policies-div{
+    width: max(320px,60%);
+    height: 70%;
+    border-radius: 12px;
+    box-shadow: 24;
+    position: absolute;
+    background-color: var(--dim-white);
+    color: var(--grey-shade);
+    overflow-y: scroll;
+    scrollbar-width: none;
+    z-index: 10;
+    padding: 2px;
+  }

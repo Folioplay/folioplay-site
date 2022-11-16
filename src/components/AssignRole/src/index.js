@@ -23,7 +23,7 @@ export function AssignRole() {
   const [error, setError] = useState("");
   const [teams, setTeams] = useState([]);
   const { user } = useMoralis();
-  const {state} = useLocation();
+  const { state } = useLocation();
   var superstars = [];
   var mooning = [];
   var rekt = [];
@@ -78,12 +78,19 @@ export function AssignRole() {
         ) : (
           <>
             <div className="upper-half">
-              <div style={{position:"fixed",left:"20px",top:"20px",color:"black"}}>
-              <ArrowBackIos
-              fontSize="medium"
-              className="go-back-button"
-              onClick={() => navigate(-1)}
-            />
+              <div
+                style={{
+                  position: "fixed",
+                  left: "20px",
+                  top: "20px",
+                  color: "black",
+                }}
+              >
+                <ArrowBackIos
+                  fontSize="medium"
+                  className="go-back-button"
+                  onClick={() => navigate(-1)}
+                />
               </div>
               <input
                 id="team-name"
@@ -109,7 +116,8 @@ export function AssignRole() {
                       setNameSnackOpen,
                       setSuccessSnackOpen,
                       createTeam,
-                      navigate,state
+                      navigate,
+                      state
                     );
                   }}
                 >
@@ -146,14 +154,12 @@ export function AssignRole() {
                 width="280px"
                 height="220.58px"
               />
-              
             </div>
             {/* <div id="ramp-wrapper">
               <div id="ramp"></div>
             </div> */}
 
             <div className="lower-half pt-20">
-            
               <span
                 id="rank-info"
                 className="pl-10 pt-20 pr-10 pb-20 mb-5 mt-5 font-weight-500"
@@ -170,13 +176,14 @@ export function AssignRole() {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.1 * index }}
                       id={"coin-" + coin.name.toLowerCase()}
-                      className={"rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5 " + coin.category.toLowerCase()+"-border"}
+                      className={
+                        "rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5 " +
+                        coin.category.toLowerCase() +
+                        "-border"
+                      }
                     >
                       <img
-                        src={S3_URL +
-                            coin.symbol.toLowerCase() +
-                            ".png"
-                        }
+                        src={S3_URL + coin.symbol.toLowerCase() + ".png"}
                         width="40px"
                         height="40px"
                       />

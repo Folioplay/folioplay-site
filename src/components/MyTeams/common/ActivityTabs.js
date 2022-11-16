@@ -21,23 +21,6 @@ export default function ActivityTabs({ teams, tournaments }) {
   const [teamsLength, setTeamsLength] = useState(0);
   const [participatedContestsLength, setParticipatedContestsLength] =
     useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
-  useEffect(() => {
-    if (teams) setTeamsLength(teams.length);
-    if (tournaments) {
-      const actualTournaments = tournaments.filter(
-        (item) => item.tournament !== null
-      );
-      setParticipatedContestsLength(actualTournaments.length);
-    }
-  }, []);
-
-
   const tournamentUpdatedOpen =
     tournaments &&
     tournaments.filter(
@@ -53,11 +36,21 @@ export default function ActivityTabs({ teams, tournaments }) {
     tournaments.filter(
       (item) => item.tournament !== null && item.tournament.status === 3
     );
-
-  // const tournamentListFinal = [];
-  // tournamentListFinal.push(tournamentUpdatedListOpen);
-  // tournamentListFinal.push(tournamentUpdatedRunning);
-  // tournamentListFinal.push(tournamentUpdatedCompleted);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handleClick = () => {
+    console.info("You clicked the Chip.");
+  };
+  useEffect(() => {
+    if (teams) setTeamsLength(teams.length);
+    if (tournaments) {
+      const actualTournaments = tournaments.filter(
+        (item) => item.tournament !== null
+      );
+      setParticipatedContestsLength(actualTournaments.length);
+    }
+  }, []);
 
   const tournamentsList = tournaments ? (
     <LabTabs
@@ -94,7 +87,6 @@ export default function ActivityTabs({ teams, tournaments }) {
         </TabPanel>
         <TabPanel value="1">
           <div className="activity-space">
-            
             {teams !== undefined && tournaments !== undefined ? (
               <>
                 {teams.map((team, index) => {
@@ -104,34 +96,29 @@ export default function ActivityTabs({ teams, tournaments }) {
                       onClick={(event) => {
                         navigate("/activity/team/" + team.id);
                       }}
-                      initial={{ opacity:0 }}
-                      animate={{ opacity:1 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       transition={{ duration: 0.35 }}
                       className="activity-team-card mb-15"
                     >
-                      
                       <span className="activity-team-info">
                         <span className="activity-team-name font-size-20 font-weight-600">
                           {team.name}
                         </span>
                         <span>
-                         <span className="activity-team-winnings font-weight-500">
-                           4 Winnings
-                         </span>
-                         <span className="activity-team-contests font-weight-500 ml-10">
-                           10 Contests
-                         </span>
+                          <span className="activity-team-winnings font-weight-500">
+                            4 Winnings
+                          </span>
+                          <span className="activity-team-contests font-weight-500 ml-10">
+                            10 Contests
+                          </span>
                         </span>
                       </span>
                       <div className="activity-team-coins-preview">
                         <span className="image-wrappers image-1">
                           <img
                             className="activity-team-coin-image image-1"
-                            src={
-                              S3_URL +
-                              team.selectedCoins[1].symbol +
-                              ".png"
-                            }
+                            src={S3_URL + team.selectedCoins[1].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -139,11 +126,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-2">
                           <img
                             className="activity-team-coin-image image-2"
-                            src={
-                              S3_URL +
-                              team.selectedCoins[4].symbol +
-                              ".png"
-                            }
+                            src={S3_URL + team.selectedCoins[4].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -151,11 +134,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-3">
                           <img
                             className="activity-team-coin-image image-3"
-                            src={
-                              S3_URL +
-                              team.selectedCoins[8].symbol +
-                              ".png"
-                            }
+                            src={S3_URL + team.selectedCoins[8].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />

@@ -31,23 +31,19 @@ function LoginLeft() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const navigate = useNavigate();
-  const {
-    authenticate,
-    isAuthenticated,
-    isInitialized,
-    logout,
-  } = useMoralis();
+  const { authenticate, isAuthenticated, isInitialized, logout } = useMoralis();
   const search = useLocation().search;
   const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
-
+  const [referralParam, setReferralParam] = useState("");
   const [policiesAccepted, setPoliciesAccepted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [openWallet, setOpenWallet] = useState(false);
+  const [openChain, setOpenChain] = useState(false);
   // useEffect(() => {
   //   console.log("isauth", isAuthenticated, isInitialized);
   //   if (isAuthenticated && isInitialized)
   //     navigate("tournaments");
   // }, []);
-
-  const [referralParam, setReferralParam] = useState("");
 
   useEffect(() => {
     const code = new URLSearchParams(search).get("code");
@@ -57,7 +53,6 @@ function LoginLeft() {
 
   // const name = new URLSearchParams(search).get('code');
 
-  const [email, setEmail] = useState("");
   const handleChange = (event) => {
     event.preventDefault();
     setEmail(event.target.value);
@@ -129,7 +124,6 @@ function LoginLeft() {
   };
 
   //Snackbar Wallet component
-  const [openWallet, setOpenWallet] = useState(false);
   const handleWalletClick = () => {
     setOpenWallet(true);
   };
@@ -141,7 +135,6 @@ function LoginLeft() {
   };
 
   //Snackbar Chain component
-  const [openChain, setOpenChain] = useState(false);
   const handleChainClick = () => {
     setOpenChain(true);
   };
@@ -237,7 +230,7 @@ function LoginLeft() {
     );
   };
 
-  const web3Login = async() => {
+  const web3Login = async () => {
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -254,8 +247,8 @@ function LoginLeft() {
         return;
       }
       document
-              .getElementsByClassName("overlay-div")[0]
-              .classList.add("overlay-login");
+        .getElementsByClassName("overlay-div")[0]
+        .classList.add("overlay-login");
       await authenticate({
         provider: "web3Auth",
         clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
@@ -263,8 +256,8 @@ function LoginLeft() {
         .then(async (user) => {
           if (user === undefined) {
             document
-            .getElementsByClassName("overlay-div")[0]
-            .classList.remove("overlay-login");
+              .getElementsByClassName("overlay-div")[0]
+              .classList.remove("overlay-login");
             throw Error("User Not Found");
           }
           await getAuthTokenFunction(user);
@@ -273,7 +266,10 @@ function LoginLeft() {
           localStorage.setItem("walletType", "web3Auth");
           window.location.pathname = "tournaments";
           // navigate("tournaments");
-        }).catch(err =>{console.log(err)});
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -368,9 +364,6 @@ function LoginLeft() {
           className="folioplay-login-google-button mb-15"
           variant="contained"
           onClick={() => {
-            // document
-            //   .getElementsByClassName("overlay-div")[0]
-            //   .classList.add("overlay");
             metamaskLogin();
           }}
         >
@@ -391,9 +384,6 @@ function LoginLeft() {
           className="folioplay-login-google-button"
           variant="contained"
           onClick={() => {
-            // document
-            //   .getElementsByClassName("overlay-div")[0]
-            //   .classList.add("overlay");
             walletConnectLogin();
           }}
         >
@@ -447,10 +437,6 @@ function LoginLeft() {
           className="folioplay-login-google-button"
           variant="contained"
           onClick={() => {
-            
-              // document
-              // .getElementById("web3a-modal")[0]
-              // .style.zIndex = "1";
             web3Login();
           }}
         >

@@ -44,10 +44,6 @@ export default function LeaderBoardTabs({
 
   useEffect(() => {
     dispatch(getLeaderboardAsync(tournamentId));
-    // async function getLeader() {
-    //   const data = await getLeaderboard(tournamentId);
-    //   setLeaderBoard(data);
-    // }
     async function getPersonalLeader() {
       const data = await getPersonalLeaderboard(tournamentId);
       setPersonalLeaderBoard(data);
@@ -56,15 +52,8 @@ export default function LeaderBoardTabs({
       const data = await getRewardDetailsAPI(tournamentId);
       setRewardsList(data);
     }
-
-    // getLeader();
     getPersonalLeader();
     getRewardsDetails();
-    // async function getPrizes() {
-    //   const data = await getLeaderboard(tournamentId);
-    //   setLeaderBoard(data);
-    // }
-    // getPrizes();
   }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -90,54 +79,9 @@ export default function LeaderBoardTabs({
     }
     left = right;
   }
-  // for(var i=0;i<tournamentPrizes.length;i++){
-  //   if(tournamentPrizes[i] != tournamentPrizes[i+1]){
-  //     var l = i+1;
-  //     updatedPrizes[l+''] = tournamentPrizes[i];
-  //     amounts.push(tournamentPrizes[i]);
-  //     reversePrizes[tournamentPrizes[i]] = l+'';
-  //   }else{
-  //     var left = i;
-  //     while(i<tournamentPrizes.length-1 && tournamentPrizes[left] == tournamentPrizes[i]){
-  //       i++;
-  //     }
-  //     left=left+1;
-  //     var right = i;
-  //     updatedPrizes[left+'-'+right] = tournamentPrizes[left-1];
-  //     amounts.push(tournamentPrizes[left-1]);
-  //     reversePrizes[tournamentPrizes[left-1]] = left+'-'+right;
-  //     i--;
-  //   }
-  // }
-  // console.log(amounts);
   amounts = amounts.sort(function(a, b) {
     return b-a;
   });
-  // const [initialPrize, setInitialPrize] = useState([
-  //   {
-  //     "startRange": 1,
-  //     "endRange": 1,
-  //     "prize": 0
-  //   }
-  // ]);
-  //
-  // const parsePrizes = () => {
-  //   let previousValue = tournamentPrizes[0];
-  //   let rangeStarts = 1;
-  //   let rangeEnds = 1;
-  //   for(let i=1; i<tournamentPrizes.length; i++){
-  //     if(tournamentPrizes[i]!==previousValue){
-  //       setInitialPrize([...initialPrize, {
-  //         "startRange": rangeStarts,
-  //         "endRange": rangeEnds,
-  //         "prize": previousValue
-  //       }])
-  //       rangeStarts = i;
-  //       rangeEnds = i;
-  //     }
-  //   }
-  // }
-
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>

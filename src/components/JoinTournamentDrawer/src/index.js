@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { joinTournamentAPI, deleteTeam } from "../../../APIS/apis";
 import { Button, LinearProgress } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -15,10 +15,10 @@ import {
   chooseTeamOpen,
 } from "../common/chooseTeamAnimations";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
-import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
-import {useDispatch} from "react-redux";
-import {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
-import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
+import { getLeaderboardAsync } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import { useDispatch } from "react-redux";
+import { getTransactionsAsync } from "../../../Redux/Transaction/TransactionSlice";
+import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
@@ -26,21 +26,20 @@ export default function JoinTournamentDrawer({
   setErrorMessageSnackOpen,
   navigate,
   tournaments,
-  intervalId=null,
+  intervalId = null,
 }) {
-
   const dispatch = useDispatch();
   useEffect(() => {
     document
       .getElementsByClassName("overlay-div")[0]
       .addEventListener("mouseup", function (event) {
         var pol = document.getElementById("choose-team-div");
+        
         if (event.target !== pol && event.target.parentNode !== pol) {
           chooseTeamClose();
           return;
         }
       });
-    // dispatch(getLeaderboardAsync(tournamentId));
   }, []);
   return (
     <div key={"enter-tournament"} id="choose-team-div" className="display-none">
@@ -58,7 +57,14 @@ export default function JoinTournamentDrawer({
             className="font-size-15 font-weight-500"
             style={{ color: "var(--grey-shade)" }}
           >
-            {teams && teams.length === 0 ? <>Create a team and start winning.</> : <>Select a team that you think should represent you in this contest.</> }
+            {teams && teams.length === 0 ? (
+              <>Create a team and start winning.</>
+            ) : (
+              <>
+                Select a team that you think should represent you in this
+                contest.
+              </>
+            )}
           </span>
         </div>
         <div className="all-teams">
@@ -124,20 +130,27 @@ export default function JoinTournamentDrawer({
                     className="display-none team-coins"
                   >
                     {team.selectedCoins.map((coin, index) => {
-                      let selected_coin_css = coin.category==="Superstar" ? "team-view-coin-card-superstar": coin.category==="Mooning" ? "team-view-coin-card-mooning" : "team-view-coin-card-rekt"
+                      let selected_coin_css =
+                        coin.category === "Superstar"
+                          ? "team-view-coin-card-superstar"
+                          : coin.category === "Mooning"
+                          ? "team-view-coin-card-mooning"
+                          : "team-view-coin-card-rekt";
                       return (
-                        <div className={"teamview-coin-card mr-10 "+ selected_coin_css}>
-                          {
-                              coin.rank !== -1 &&
-                              <span className="ribbon-team-view">
-                                <span className="ribbon2-team-view">{coin.rank}</span>
-                              </span>
+                        <div
+                          className={
+                            "teamview-coin-card mr-10 " + selected_coin_css
                           }
+                        >
+                          {coin.rank !== -1 && (
+                            <span className="ribbon-team-view">
+                              <span className="ribbon2-team-view">
+                                {coin.rank}
+                              </span>
+                            </span>
+                          )}
                           <img
-                            src={ S3_URL +
-                                coin.symbol+
-                                ".png"
-                                }
+                            src={S3_URL + coin.symbol + ".png"}
                             width="40"
                             height="40"
                           />
@@ -166,33 +179,20 @@ export default function JoinTournamentDrawer({
               fontSize: "17px",
             }}
             onClick={async () => {
-              // joinTournament(
-              //   user,
-              //   tournamentId,
-              //   teams,
-              //   joinTournamentAPI,
-              //   setErrorMessage,
-              //   setErrorMessageSnackOpen,
-              //   tournament,
-              //   tournaments,
-              //   changeTournament,
-              //   account
-              // )
               await joinTournament(
-                  teams,
-                  tournamentId,
-                  joinTournamentAPI,
-                  setErrorMessage,
-                  setErrorMessageSnackOpen,
-                  tournaments
-              )
+                teams,
+                tournamentId,
+                joinTournamentAPI,
+                setErrorMessage,
+                setErrorMessageSnackOpen,
+                tournaments
+              );
               dispatch(getTournamentAsync());
               dispatch(getLeaderboardAsync(tournamentId));
               dispatch(getTransactionsAsync());
-            }
-            }
+            }}
           >
-            Join Now 
+            Join Now
           </Button>
           <Button
             variant="filled"
@@ -226,10 +226,14 @@ export default function JoinTournamentDrawer({
               id="new-team-type1"
               style={{}}
               onClick={() => {
-                if(intervalId)
-                  clearInterval(intervalId);
-                  removeCoinsFromLocalStorage();
-                navigate("/teams/createteam",{state:{comingFrom:window.location.pathname,tournamentId:tournamentId}});
+                if (intervalId) clearInterval(intervalId);
+                removeCoinsFromLocalStorage();
+                navigate("/teams/createteam", {
+                  state: {
+                    comingFrom: window.location.pathname,
+                    tournamentId: tournamentId,
+                  },
+                });
               }}
             >
               Create New Team
@@ -244,10 +248,14 @@ export default function JoinTournamentDrawer({
                 textTransform: "capitalize",
               }}
               onClick={() => {
-                if(intervalId)
-                  clearInterval(intervalId);
-                  removeCoinsFromLocalStorage();
-                navigate("/teams/createteam",{state:{comingFrom:window.location.pathname,tournamentId:tournamentId}});
+                if (intervalId) clearInterval(intervalId);
+                removeCoinsFromLocalStorage();
+                navigate("/teams/createteam", {
+                  state: {
+                    comingFrom: window.location.pathname,
+                    tournamentId: tournamentId,
+                  },
+                });
               }}
             >
               Create New Team

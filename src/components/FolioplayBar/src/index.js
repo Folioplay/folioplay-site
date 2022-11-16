@@ -10,44 +10,50 @@ import MailIcon from "@mui/icons-material/Mail";
 import walletIcon from "../../../images/Vectorwallet.png";
 import hamburgerIcon from "../../../images/Vectorhamburger.png";
 import "../style/index.css";
-import {Link, Menu, MenuItem} from "@mui/material";
+import { Link, Menu, MenuItem } from "@mui/material";
 import { Logout } from "@mui/icons-material";
-import Typography from '@mui/material/Typography';
-import Slide from '@mui/material/Slide';
-import Modal from '@mui/material/Modal';
+import Typography from "@mui/material/Typography";
+import Slide from "@mui/material/Slide";
+import Modal from "@mui/material/Modal";
 import { AuthContext } from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
 import { useMoralis } from "react-moralis";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ethers } from "ethers";
-import HomeIcon from '@mui/icons-material/Home';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import HistoryIcon from '@mui/icons-material/History';
-import SecurityIcon from '@mui/icons-material/Security';
-import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from "@mui/icons-material/Home";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import HistoryIcon from "@mui/icons-material/History";
+import SecurityIcon from "@mui/icons-material/Security";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router";
 import openPrivacyPolicies from "../../PrivacyPolicies/common/openPrivacyPolicies";
-import Person2Icon from '@mui/icons-material/Person2';
-import {getWalletBalance} from "../../../APIS/apis";
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import BookIcon from '@mui/icons-material/Book';
-import {useDispatch, useSelector} from "react-redux";
-import transactionSlice, {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
-import {openReferralModal} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import Person2Icon from "@mui/icons-material/Person2";
+import { getWalletBalance } from "../../../APIS/apis";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import BookIcon from "@mui/icons-material/Book";
+import { useDispatch, useSelector } from "react-redux";
+import transactionSlice, {
+  getTransactionsAsync,
+} from "../../../Redux/Transaction/TransactionSlice";
+import { openReferralModal } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 
 export default function FolioplayBar({ intervalId }) {
   const { logout, user } = useMoralis();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let walletBalanceRedux = useSelector(state=> state.transactionSlice.balance);
-  let walletBonusPointsRedux = useSelector(state=> state.transactionSlice.bonus_points);
+  let walletBalanceRedux = useSelector(
+    (state) => state.transactionSlice.balance
+  );
+  let walletBonusPointsRedux = useSelector(
+    (state) => state.transactionSlice.bonus_points
+  );
   var icons = [
     <HomeIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />,
-    <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />
-  ]
+    <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+  ];
 
   // const provider = new ethers.providers.JsonRpcProvider(
   //   `https://polygon-rpc.com/`
@@ -94,15 +100,10 @@ export default function FolioplayBar({ intervalId }) {
   //   }
   // };
 
-
-
-
-  const {logOutContext} = useContext(AuthContext);
-  const lg = () => logOutContext
+  const { logOutContext } = useContext(AuthContext);
+  const lg = () => logOutContext;
   const logOut = async () => {
     lg();
-    // localStorage.removeItem("authtoken", null);
-    // localStorage.removeItem("walletconnect");
     localStorage.clear();
     await logout();
     window.location.pathname = "/";
@@ -122,18 +123,16 @@ export default function FolioplayBar({ intervalId }) {
     left: false,
   });
 
-
   const [folioplayWalletBalance, setFolioplayWalletBalance] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     async function setWalletBalance() {
       const bal = await getWalletBalance();
       setFolioplayWalletBalance(bal.balance);
     }
     dispatch(getTransactionsAsync());
     setWalletBalance();
-  },[]);
-
+  }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -154,47 +153,75 @@ export default function FolioplayBar({ intervalId }) {
       style={{ fontFamily: "poppins" }}
     >
       <List style={{ fontFamily: "poppins" }}>
-        {[{ name: "Home", link: "/tournaments" }, { name: "Activity", link: "/activity" }, { name: "Profile", link: "/user/profile" }].map((text, index) => (
-          <ListItem button key={text.name} onClick={() => { clearInterval(intervalId); navigate(text.link) }}>
-            <ListItemIcon>
-              {icons[index]}
-            </ListItemIcon>
-            <ListItemText style={{ fontFamily: "poppins" }} primary={text.name} />
+        {[
+          { name: "Home", link: "/tournaments" },
+          { name: "Activity", link: "/activity" },
+          { name: "Profile", link: "/user/profile" },
+        ].map((text, index) => (
+          <ListItem
+            button
+            key={text.name}
+            onClick={() => {
+              clearInterval(intervalId);
+              navigate(text.link);
+            }}
+          >
+            <ListItemIcon>{icons[index]}</ListItemIcon>
+            <ListItemText
+              style={{ fontFamily: "poppins" }}
+              primary={text.name}
+            />
           </ListItem>
         ))}
         <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Privacy Policy"}
+          <ListItemText
+            style={{ fontFamily: "poppins" }}
+            primary={"Privacy Policy"}
           />
         </ListItem>
-        <ListItem button key={"enter-referral"} onClick={()=> {
-          dispatch(openReferralModal())
-        }}>
+        <ListItem
+          button
+          key={"enter-referral"}
+          onClick={() => {
+            dispatch(openReferralModal());
+          }}
+        >
           <ListItemIcon>
-            <PersonAddIcon size="medium" style={{ color: "var(--dim-white)" }} />
+            <PersonAddIcon
+              size="medium"
+              style={{ color: "var(--dim-white)" }}
+            />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Enter Referral"}
+          <ListItemText
+            style={{ fontFamily: "poppins" }}
+            primary={"Enter Referral"}
           />
         </ListItem>
         <ListItem button key={"Disclaimer"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
             <BookIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"Disclaimer"}
+          <ListItemText
+            style={{ fontFamily: "poppins" }}
+            primary={"Disclaimer"}
           />
         </ListItem>
         <ListItem button key={"How-to-Play"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
-            <QuestionMarkIcon size="medium" style={{ color: "var(--dim-white)" }} />
+            <QuestionMarkIcon
+              size="medium"
+              style={{ color: "var(--dim-white)" }}
+            />
           </ListItemIcon>
-          <ListItemText style={{ fontFamily: "poppins" }} primary={"How to Play"}
+          <ListItemText
+            style={{ fontFamily: "poppins" }}
+            primary={"How to Play"}
           />
         </ListItem>
-        <div>
-
-        </div>
+        <div></div>
         <ListItem button onClick={logOut}>
           <ListItemIcon>
             <LogoutIcon style={{ color: "var(--dim-white)" }} />
@@ -202,12 +229,11 @@ export default function FolioplayBar({ intervalId }) {
           <ListItemText style={{ fontFamily: "poppins" }} primary={"Logout"} />
         </ListItem>
       </List>
-
     </Box>
   );
   return (
     <>
-      {user ?
+      {user ? (
         <div className="folioplay-bar-content-wrapper">
           <img
             id="folioplay-hamburger"
@@ -233,90 +259,99 @@ export default function FolioplayBar({ intervalId }) {
             {list("left")}
           </Drawer>
           {/* <span className="font-weight-700 font-size-25">FolioPlay</span> */}
-          <img src={require('../../../images/FolioPlaySmall.svg').default} />
+          <img src={require("../../../images/FolioPlaySmall.svg").default} />
           {/*<Person2Icon />*/}
           <span className={"ml-auto folioplayBar__headerIconsSpan"}>
-            <span className={"folioplayBar__headerIcons"} onClick={()=> {clearInterval(intervalId);navigate("/user/profile")}}>
-              <Person2Icon id="profile-icon"/>
+            <span
+              className={"folioplayBar__headerIcons"}
+              onClick={() => {
+                clearInterval(intervalId);
+                navigate("/user/profile");
+              }}
+            >
+              <Person2Icon id="profile-icon" />
             </span>
             <span className={"folioplayBar__headerIcons"}>
               <React.Fragment>
                 <img
-                id="folioplay-wallet"
-                className="ml-auto"
-                src={walletIcon}
-                alt="wallet-icon"
-                width={"20"}
-                height={"18"}
-                style={{ marginRight: "3.75%" }}
-                onClick={handleClick}
-              />
-              <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
+                  id="folioplay-wallet"
+                  className="ml-auto"
+                  src={walletIcon}
+                  alt="wallet-icon"
+                  width={"20"}
+                  height={"18"}
+                  style={{ marginRight: "3.75%" }}
+                  onClick={handleClick}
+                />
+                <Menu
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
                     },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
-                <MenuItem>Folioplay Points: {walletBalanceRedux} </MenuItem>
-                <MenuItem>Bonus Points: {walletBonusPointsRedux} </MenuItem>
-                <Divider />
-                <MenuItem onClick={()=>{
-                  clearInterval(intervalId);
-                  navigate("/transaction_history")
-                }
-                }>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  View Transaction History
-                </MenuItem>
-                <MenuItem onClick={()=>{
-                  clearInterval(intervalId);
-                    navigate("/coming_soon")
-                  }
-                }>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Add Money
-                </MenuItem>
-              </Menu>
-            </React.Fragment>
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                  {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
+                  <MenuItem>Folioplay Points: {walletBalanceRedux} </MenuItem>
+                  <MenuItem>Bonus Points: {walletBonusPointsRedux} </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    onClick={() => {
+                      clearInterval(intervalId);
+                      navigate("/transaction_history");
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    View Transaction History
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      clearInterval(intervalId);
+                      navigate("/coming_soon");
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Add Money
+                  </MenuItem>
+                </Menu>
+              </React.Fragment>
             </span>
           </span>
           {/*{getUSDTBalance}*/}
         </div>
-        :
-        <></>}
+      ) : (
+        <></>
+      )}
     </>
   );
 }
