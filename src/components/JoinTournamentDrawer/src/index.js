@@ -15,10 +15,11 @@ import {
   chooseTeamOpen,
 } from "../common/chooseTeamAnimations";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
-import { getLeaderboardAsync } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
-import { useDispatch } from "react-redux";
-import { getTransactionsAsync } from "../../../Redux/Transaction/TransactionSlice";
-import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
+import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import {useDispatch} from "react-redux";
+import {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
+import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
+import CommonModal from "../../../Common/Modal/Modal";
 export default function JoinTournamentDrawer({
   teams,
   tournamentId,
@@ -41,6 +42,15 @@ export default function JoinTournamentDrawer({
         }
       });
   }, []);
+
+  const confirmationModal = () => {
+    return(
+      <CommonModal>
+
+      </CommonModal>
+    )
+  }
+
   return (
     <div key={"enter-tournament"} id="choose-team-div" className="display-none">
       <div className="choose-team-bar"></div>
@@ -263,6 +273,7 @@ export default function JoinTournamentDrawer({
           )}
         </div>
       </div>
+      {/*{confirmationModal()}*/}
     </div>
   );
 }
