@@ -29,9 +29,10 @@ import {
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     console.log(typeof days);
-    if(completed)return <>Started !!</>
+    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Pushing data to blockchain ... </span>
     return (
       <>
+      <span style={{color:"var(--dark-dim-white"}}>Starting in </span>
         <TimerIcon style={{ color: "var(--golden)" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"}>
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -46,7 +47,7 @@ const LeftTournamentView = () => {
     if(completed)return <>Ended</>
     return (
       <>
-      <span style={{fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
+      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
         <TimerIcon style={{ color: "red" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"} style={{color:"red"}}>
           
@@ -208,7 +209,7 @@ const LeftTournamentView = () => {
                 // }}
                 >
                   Prize Pool -{" "}
-                  <b>{tournament.rewards.prize_pool} Folioplay Points</b>
+                  <b>{tournament.rewards.prize_pool} FPC</b>
                   <br />
                   <span
                     className=""

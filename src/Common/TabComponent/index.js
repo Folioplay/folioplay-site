@@ -254,10 +254,10 @@ export default function ContestTabs({
             style={{ display: "flex", flexDirection: "column" }}
           >
             You haven't joined any tournaments that are yet to start
-            <img
+            {/* <img
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
-            />
+            /> */}
             <Button
               variant="contained"
               style={{
@@ -399,10 +399,10 @@ export default function ContestTabs({
             style={{ margin: "0px", display: "flex", flexDirection: "column" }}
           >
             You haven't joined any tournaments that are running
-            <img
+            {/* <img
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
-            />
+            /> */}
             <Button
               variant="contained"
               style={{
@@ -608,10 +608,10 @@ export default function ContestTabs({
             style={{ display: "flex", flexDirection: "column" }}
           >
             You haven't joined any tournaments that are completed
-            <img
+            {/* <img
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
-            />
+            /> */}
             <Button
               variant="contained"
               style={{

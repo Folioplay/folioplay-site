@@ -36,7 +36,7 @@ export default function JoinTournamentDrawer({
       .addEventListener("mouseup", function (event) {
         var pol = document.getElementById("choose-team-div");
         
-        if (event.target !== pol && event.target.parentNode !== pol) {
+        if (!pol.contains(event.target)) {
           chooseTeamClose();
           return;
         }

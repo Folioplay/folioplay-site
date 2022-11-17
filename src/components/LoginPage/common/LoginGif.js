@@ -1,5 +1,4 @@
 import React from 'react';
-import login_gif from "../../../images/folio_login_gif.gif";
 import ReactLoading from "react-loading";
 
 const LoginGif = () => {

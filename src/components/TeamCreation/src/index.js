@@ -435,14 +435,20 @@ export function TeamCreation() {
           <div className="tip-div">
             <WbSunnyOutlinedIcon />
             <span className="font-size-12 ml-8">
-              TIP: Below players might show a steep increase <br />
+              TIP: {wasActiveTab === "superstars" ? (
+                <>We are Bullish on these superstars in all tournaments.</>
+              ) : (
+                <>{wasActiveTab === "mooning" ? <>Select coins which you are Bullish upon in the tournament.</> : <>Select coins which you are Bearish upon in the tournament.</>}</>
+              )} <br />
+              <span className="font-weight-600">
               Select{" "}
+              
               {wasActiveTab === "superstars" ? (
-                <>1 - 2</>
+                <>1-2</>
               ) : (
                 <>{wasActiveTab === "mooning" ? <>3-6</> : <>3-6</>}</>
-              )}{" "}
-              from this bucket
+              )}{" "} coins from this bucket
+              </span>
             </span>
           </div>
           {coins.length === 0 ? (

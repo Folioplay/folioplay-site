@@ -181,21 +181,21 @@
     overflow: hidden;
     position: absolute;
   }
-  .ribbon1::before,
+  /* .ribbon1::before,
   .ribbon1::after {
     position: absolute;
     z-index: -1;
     content: '';
     display: block;
     border: 5px solid #2980b9;
-  }
+  } */
   .ribbon1 span {
     position: absolute;
     display: block;
     width: 250px;
     padding: 3px 0;
     background-color: var(--golden);
-    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    /* box-shadow: 0 5px 10px rgba(0,0,0,.1); */
     color: #fff;
     font: 600 10px/1 "poppins";
     text-shadow: 0 1px 1px rgba(0,0,0,.2);

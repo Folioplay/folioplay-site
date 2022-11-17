@@ -751,10 +751,10 @@ const LeftComponent = () => {
             className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
-            Filters
+            {/* Filters */}
             <Chip
-              className="active-chip ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
+              className="active-chip"
+              style={{fontFamily: "poppins" }}
               label="All"
               variant="outlined"
               onClick={() => {
