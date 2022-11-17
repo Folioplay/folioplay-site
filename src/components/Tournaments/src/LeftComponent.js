@@ -613,6 +613,7 @@ const LeftComponent = () => {
                 <img
                   style={{ borderRadius: "100%" }}
                   src={tournament.imageURL}
+                  loading={"lazy"}
                   width="60px"
                   height={"60px"}
                 />

@@ -118,11 +118,6 @@ export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
       </Modal>
     );
   };
-  useEffect(() => {
-    if(document.getElementsByClassName("fullpage")){
-        document.getElementsByClassName("fullpage")[0].focus();
-    }
-  },[])
   
   return (
     <div className="wrapper" style={{ color: "var(--white)" }}>
