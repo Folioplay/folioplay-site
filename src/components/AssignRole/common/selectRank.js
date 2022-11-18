@@ -4,9 +4,9 @@ export default function selectRank(event,coins,finalRanks) {
   const rank = event.target.innerText;
   var coinClicked = event.target.parentElement.id;
   var coinClickedName = coinClicked.split("-")[1];
-  var allChoicesClickedCoin = document.querySelectorAll(
-    "#" + coinClicked + " .rank-choices"
-  );
+  coinClickedName = coinClickedName.replace('_',' ');
+  var allChoicesClickedCoin = document.getElementById(coinClicked
+  ).getElementsByClassName('rank-choices');
   var allChoices = document.getElementsByClassName("rank-choices");
   for (var i = 0; i < allChoices.length; i++) {
     if (allChoices[i].innerText === rank) {
@@ -32,7 +32,7 @@ export default function selectRank(event,coins,finalRanks) {
     ) {
       finalRanks[coins[i].name.toLowerCase()] = -1;
       document.getElementById(
-        "coin-" + coins[i].name.toLowerCase()
+        "coin-" + coins[i].name.toLowerCase().replace(/ /g,'_')
       ).childNodes[1].childNodes[2].innerText = "10000";
     }
     if (finalRanks[coins[i].name.toLowerCase()] === 1) {
@@ -41,7 +41,7 @@ export default function selectRank(event,coins,finalRanks) {
           coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
           ".png";
       document.getElementById(
-        "coin-" + coins[i].name.toLowerCase()
+        "coin-" + coins[i].name.toLowerCase().replace(/ /g,'_')
       ).childNodes[1].childNodes[2].innerText = "20000";
     }
     if (finalRanks[coins[i].name.toLowerCase()] === 2) {
@@ -50,7 +50,7 @@ export default function selectRank(event,coins,finalRanks) {
           coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
           ".png";
       document.getElementById(
-        "coin-" + coins[i].name.toLowerCase()
+        "coin-" + coins[i].name.toLowerCase().replace(/ /g,'_')
       ).childNodes[1].childNodes[2].innerText = "17500";
     }
     if (finalRanks[coins[i].name.toLowerCase()] === 3) {
@@ -59,7 +59,7 @@ export default function selectRank(event,coins,finalRanks) {
           coinTosymbol[coins[i].name.toLowerCase()].toLowerCase() +
           ".png";
       document.getElementById(
-        "coin-" + coins[i].name.toLowerCase()
+        "coin-" + coins[i].name.toLowerCase().replace(/ /g,'_')
       ).childNodes[1].childNodes[2].innerText = "15000";
     }
   }

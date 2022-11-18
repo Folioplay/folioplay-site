@@ -118,7 +118,6 @@ export default function FolioPlayLayout({ LeftComponent, RightComponent }) {
       </Modal>
     );
   };
-  
   return (
     <div className="wrapper" style={{ color: "var(--white)" }}>
       <PrivacyPolicies />

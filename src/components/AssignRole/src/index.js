@@ -175,7 +175,7 @@ export function AssignRole() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.1 * index }}
-                      id={"coin-" + coin.name.toLowerCase()}
+                      id={"coin-" + coin.name.toLowerCase().replace(/ /g,'_')}
                       className={
                         "rank-coin-card pl-10 pt-20 pr-10 pb-20 mt-5 mb-5 " +
                         coin.category.toLowerCase() +
