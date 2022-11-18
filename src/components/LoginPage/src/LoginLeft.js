@@ -33,7 +33,6 @@ function LoginLeft() {
   const navigate = useNavigate();
   const { authenticate, isAuthenticated, isInitialized, logout } = useMoralis();
   const search = useLocation().search;
-  const { setLoadingTrue, setLoadingFalse } = useContext(AuthContext);
   const [referralParam, setReferralParam] = useState("");
   const [policiesAccepted, setPoliciesAccepted] = useState(false);
   const [email, setEmail] = useState("");

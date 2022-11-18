@@ -151,7 +151,6 @@ const LeftTournamentView = () => {
     (state) => state.LeaderBoardSlice.leaderBoard
   );
   const winnersRedux = useSelector((state) => state.LeaderBoardSlice.winners);
-  console.log("winnerredux", winnersRedux);
 
   if (tournament !== undefined) {
     seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
@@ -374,9 +373,7 @@ const LeftTournamentView = () => {
                             date={endTime}
                             renderer={rendererEnd}
                           />
-                        ) : (
-                          null
-                        )}
+                        ) : null}
                       </>
                     )}
                   </span>

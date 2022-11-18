@@ -18,6 +18,7 @@ import {useNavigate} from "react-router-dom";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import LeaderBoardSlice, {getLeaderboardAsync, getWinnersAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function LeaderBoardTabs({
   tournamentId,
@@ -85,7 +86,7 @@ export default function LeaderBoardTabs({
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box className={"tournamentView__leaderboardTabsStyle"} sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab
               label="Prizes"
@@ -97,6 +98,11 @@ export default function LeaderBoardTabs({
               value="2"
               style={{ textTransform: "capitalize", fontFamily: "poppins" }}
             />
+            <span className={"refreshLeaderboard"}>
+              <RefreshIcon onClick={()=>{
+                dispatch(getLeaderboardAsync(tournamentId));
+              }}/>
+            </span>
           </TabList>
         </Box>
         <TabPanel value="1">

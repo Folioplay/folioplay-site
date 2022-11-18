@@ -76,3 +76,20 @@
 #win-dash-tabs{
     font-family: "poppins" !important;
 }
+
+.refreshLeaderboard{
+    cursor: pointer;
+    display: flex;
+    align-items: center;;
+    height: 100%;
+}
+
+.tournamentView__leaderboardTabsStyle{
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+}
+
+.css-heg063-MuiTabs-flexContainer{
+    align-items: center;
+}
