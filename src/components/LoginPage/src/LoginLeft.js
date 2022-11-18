@@ -93,6 +93,7 @@ function LoginLeft() {
   // };
 
   const walletConnectLogin = async () => {
+    localStorage.clear();
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -158,6 +159,7 @@ function LoginLeft() {
   };
 
   const metamaskLogin = async () => {
+    localStorage.clear()
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -267,6 +269,7 @@ function LoginLeft() {
   };
 
   const web3Login = async () => {
+    localStorage.clear();
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -288,6 +291,7 @@ function LoginLeft() {
       await authenticate({
         provider: "web3Auth",
         clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
+        loginMethodsOrder: ["google", "facebook"]
       })
         .then(async (user) => {
           if (user === undefined) {
