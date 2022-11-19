@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -7,8 +7,6 @@ import { MoralisProvider } from "react-moralis";
 import {AuthContextProvider} from "./Context/AuthContext";
 import {Provider as ReduxProvider} from "react-redux";
 import store from "./Redux/Store";
-
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
