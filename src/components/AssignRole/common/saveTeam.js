@@ -1,4 +1,4 @@
-export default function saveTeam(event,coins,finalRanks,setError,setNameSnackOpen,setSuccessSnackOpen,createTeam,navigate,state) {
+export default async function saveTeam(event,coins,finalRanks,setError,setNameSnackOpen,setSuccessSnackOpen,createTeam,navigate,state) {
   event.preventDefault();
   var rankAssigned = 0;
   var selectedCoins = [];
@@ -25,26 +25,31 @@ export default function saveTeam(event,coins,finalRanks,setError,setNameSnackOpe
   // api
   var name = document.getElementById("team-name").value;
   if (name !== null && name !== undefined && name.length > 0) {
-    createTeam({ selectedCoins: selectedCoins, name: name });
-    setSuccessSnackOpen(true);
-    setTimeout(() => {
-      if ("superstars" in window.localStorage)
-        window.localStorage.removeItem("superstars");
-      if ("mooning" in window.localStorage)
-        window.localStorage.removeItem("mooning");
-      if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
-      if(state && state.comingFrom == "/tournaments"){
-        navigate('/tournaments' , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
-      }else{
-        if(state && state.comingFrom == "/tournaments/" + state.tournamentId){
-          navigate(`/tournaments/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
+    let response = await createTeam({ selectedCoins: selectedCoins, name: name });
+    console.log(response);
+    if(response.statusCode === 200){
+      setSuccessSnackOpen(true);
+      setTimeout(() => {
+        if ("superstars" in window.localStorage)
+          window.localStorage.removeItem("superstars");
+        if ("mooning" in window.localStorage)
+          window.localStorage.removeItem("mooning");
+        if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
+        if(state && state.comingFrom == "/tournaments"){
+          navigate('/tournaments' , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
         }else{
-          navigate(-2);
+          if(state && state.comingFrom == "/tournaments/" + state.tournamentId){
+            navigate(`/tournaments/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
+          }else{
+            navigate(-2);
+          } 
         }
-        
-      }
-     
-    }, 2000);
+      }, 2000);
+    }else{
+      setError(response.message);
+      setNameSnackOpen(true);
+    }
+    
   } else {
     setError("Team name can't be empty.");
     setNameSnackOpen(true);

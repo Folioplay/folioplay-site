@@ -83,14 +83,14 @@ export function AssignRole() {
                   position: "fixed",
                   left: "20px",
                   top: "20px",
-                  color: "black",
+                  color: "var(--grey-shade)",display:"flex"
                 }}
+                className="go-back-button font-size-14"
+                onClick={() => navigate(-1)}
               >
                 <ArrowBackIos
-                  fontSize="medium"
-                  className="go-back-button"
-                  onClick={() => navigate(-1)}
-                />
+                  fontSize="small"
+                /> Edit
               </div>
               <input
                 id="team-name"
