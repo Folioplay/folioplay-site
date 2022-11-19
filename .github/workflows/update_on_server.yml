@@ -2,7 +2,8 @@ name: push-to-server
 on:
   push:
     branches:
-      - prod
+      - dev
+      - dev2.0
 jobs:
   update_on_server:
     runs-on: ubuntu-latest
