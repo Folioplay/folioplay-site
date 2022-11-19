@@ -1,2 +1,0 @@
-(this.webpackJsonpfolioplay=this.webpackJsonpfolioplay||[]).push([[10,9,12],{1707:function(n,o){},1712:function(n,o){},1724:function(n,o){},1725:function(n,o){},1727:function(n,o){},1728:function(n,o){}}]);
-//# sourceMappingURL=10.cb19c1d1.chunk.js.map
