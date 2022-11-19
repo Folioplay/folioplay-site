@@ -101,6 +101,7 @@ export default function LeaderBoardTabs({
             <span className={"refreshLeaderboard"}>
               <RefreshIcon onClick={()=>{
                 dispatch(getLeaderboardAsync(tournamentId));
+                dispatch(getWinnersAsync());
               }}/>
             </span>
           </TabList>

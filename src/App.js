@@ -14,7 +14,6 @@ import {getAuthToken, SERVER, validUser} from "./APIS/apis";
 import { useState, useEffect } from "react";
 import { AuthContext} from "./Context/AuthContext";
 import { tournaments } from "./components/Tournaments/common/demoTournaments";
-import Joyride from "react-joyride";
 import MyTeams from "./components/MyTeams/src";
 import UserProfile from "./components/UserProfile/src";
 import TeamPreview from "./components/TeamPreview/src";
@@ -27,9 +26,13 @@ import AccordionComponent from "./Common/Accordion";
 import TransactionHistory from "./components/TransactionHistory/src";
 import LoginGif from "./components/LoginPage/common/LoginGif";
 import ReactLoading from "react-loading";
-// import React, { useEffect, useState } from "react";
+import ReactGA from 'react-ga';
+ReactGA.initialize('4297268886');
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
+  useEffect(()=>{
+      ReactGA.pageview(window.location.pathname + window.location.search);
+  },[])
 
   const [isLoading, setIsLoading] = useState(true);
 
