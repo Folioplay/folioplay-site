@@ -27,7 +27,7 @@ import TransactionHistory from "./components/TransactionHistory/src";
 import LoginGif from "./components/LoginPage/common/LoginGif";
 import ReactLoading from "react-loading";
 import ReactGA from 'react-ga';
-ReactGA.initialize('4297268886');
+ReactGA.initialize('UA-249870980-1');
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
   useEffect(()=>{
