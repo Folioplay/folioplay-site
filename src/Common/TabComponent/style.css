@@ -1,6 +1,7 @@
 .contestTab__valueItem{
-    color: black;
-    font-size: 1rem;
+    color: var(--grey-shade);
+    font-weight: 500;
+    font-size: 12px;
 }
 .active-chip{
     color: #4137F0 !important;

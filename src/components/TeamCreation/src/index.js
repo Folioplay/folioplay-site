@@ -13,7 +13,6 @@ import { getAllCoins } from "../../../APIS/apis";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import { useTheme } from "@material-ui/core/styles";
 import MuiAlert from "@mui/material/Alert";
 import preservedView from "../common/preservedView";
 import assignRoles from "../common/assignRole";
@@ -22,7 +21,6 @@ import TeamPreview from "../common/TeamPreview";
 import "../style/index.css";
 export function TeamCreation() {
   const navigate = useNavigate();
-  const theme = useTheme();
   const [wasActiveTab, setWasActiveTab] = useState("superstars");
   const [graphCoin, setGraphCoin] = useState("");
   const [open, setOpen] = useState(false);

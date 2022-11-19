@@ -259,11 +259,15 @@ export default function ContestTabs({
               width="100%"
             /> */}
             <Button
+            className="mt-20"
               variant="contained"
               style={{
                 backgroundColor: "var(--violet-blue)",
                 marginLeft: "auto",
                 marginRight: "auto",
+                marginTop:"20px",
+                textTransform:"capitalize",
+                fontFamily:"poppins"
               }}
               onClick={() => navigate("/tournaments")}
             >
@@ -404,11 +408,15 @@ export default function ContestTabs({
               width="100%"
             /> */}
             <Button
+            className="mt-20"
               variant="contained"
               style={{
                 backgroundColor: "var(--violet-blue)",
                 marginLeft: "auto",
                 marginRight: "auto",
+                marginTop:"20px",
+                textTransform:"capitalize",
+                fontFamily:"poppins"
               }}
               onClick={() => navigate("/tournaments")}
             >
@@ -613,11 +621,15 @@ export default function ContestTabs({
               width="100%"
             /> */}
             <Button
+            className="mt-20"
               variant="contained"
               style={{
                 backgroundColor: "var(--violet-blue)",
                 marginLeft: "auto",
                 marginRight: "auto",
+                marginTop:"20px",
+                textTransform:"capitalize",
+                fontFamily:"poppins"
               }}
               onClick={() => navigate("/tournaments")}
             >

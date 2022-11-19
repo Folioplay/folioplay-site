@@ -235,16 +235,19 @@ export default function FolioplayBar({ intervalId }) {
     <>
       {user ? (
         <div className="folioplay-bar-content-wrapper">
-          <img
-            id="folioplay-hamburger"
-            className="mr-20"
-            onClick={toggleDrawer("left", true)}
-            src={hamburgerIcon}
-            alt="hamburger-icon"
-            width={"20"}
-            height={"12"}
-            style={{ marginLeft: "3.75%" }}
-          />
+          <span className="mr-20" style={{ marginLeft: "3.75%" }}>
+            <img
+              id="folioplay-hamburger"
+              
+              onClick={toggleDrawer("left", true)}
+              src={hamburgerIcon}
+              alt="hamburger-icon"
+              width={"20"}
+              height={"12"}
+              
+            />
+          </span>
+
           <Drawer
             PaperProps={{
               sx: {
@@ -262,15 +265,6 @@ export default function FolioplayBar({ intervalId }) {
           <img src={require("../../../images/FolioPlaySmall.svg").default} />
           {/*<Person2Icon />*/}
           <span className={"ml-auto folioplayBar__headerIconsSpan"}>
-            <span
-              className={"folioplayBar__headerIcons"}
-              onClick={() => {
-                clearInterval(intervalId);
-                navigate("/user/profile");
-              }}
-            >
-              <Person2Icon id="profile-icon" />
-            </span>
             <span className={"folioplayBar__headerIcons"}>
               <React.Fragment>
                 <img
@@ -318,10 +312,10 @@ export default function FolioplayBar({ intervalId }) {
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
                   {/*<MenuItem>USDT: {balanceUSDT} , USDC: {balanceUSDC}</MenuItem>*/}
-                  <MenuItem>Folioplay Points: {walletBalanceRedux} </MenuItem>
-                  <MenuItem>Bonus Points: {walletBonusPointsRedux} </MenuItem>
+                  <MenuItem style={{fontFamily:"poppins"}}>Folioplay Points: {walletBalanceRedux} </MenuItem>
+                  <MenuItem style={{fontFamily:"poppins"}}>Bonus Points: {walletBonusPointsRedux} </MenuItem>
                   <Divider />
-                  <MenuItem
+                  <MenuItem style={{fontFamily:"poppins"}}
                     onClick={() => {
                       clearInterval(intervalId);
                       navigate("/transaction_history");
@@ -332,7 +326,7 @@ export default function FolioplayBar({ intervalId }) {
                     </ListItemIcon>
                     View Transaction History
                   </MenuItem>
-                  <MenuItem
+                  <MenuItem style={{fontFamily:"poppins"}}
                     onClick={() => {
                       clearInterval(intervalId);
                       navigate("/coming_soon");
@@ -345,6 +339,17 @@ export default function FolioplayBar({ intervalId }) {
                   </MenuItem>
                 </Menu>
               </React.Fragment>
+            </span>
+            <span
+              id="bar-profile-icon"
+              className={"folioplayBar__headerIcons"}
+              onClick={() => {
+                clearInterval(intervalId);
+                navigate("/user/profile");
+              }}
+              style={{}}
+            >
+              <Person2Icon id="profile-icon" />
             </span>
           </span>
           {/*{getUSDTBalance}*/}
