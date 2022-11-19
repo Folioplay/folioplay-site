@@ -4,7 +4,7 @@
 
 
 ### Create env at ___./.env___
-#### Ask a working developer for env credentials to get started 
+#### Ask a working developer for env credentials to get started
 ### Installation
 
 ```bash
