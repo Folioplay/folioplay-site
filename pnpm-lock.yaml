@@ -31,11 +31,10 @@ specifiers:
   react-redux: ^8.0.1
   react-router: ^6.3.0
   react-router-dom: ^6.3.0
-  react-scripts: ^4.0.3
+  react-scripts: 4.0.3
   react-shepherd: ^4.1.0
   redux: ^4.2.0
   shepherd.js: ^10.0.1
-  url: ^0.11.0
   web-vitals: ^2.1.4
 
 dependencies:
@@ -73,7 +72,6 @@ dependencies:
   react-shepherd: 4.1.0_biqbaboplfbrettd7655fr4n2y
   redux: 4.2.0
   shepherd.js: 10.0.1
-  url: 0.11.0
   web-vitals: 2.1.4
 
 packages:
