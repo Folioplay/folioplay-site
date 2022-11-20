@@ -323,9 +323,9 @@ export default function LeaderBoardTabs({
               if (entry.user.walletAddress !== userWalletAddress)
                 return (
                   <motion.div
-                    initial={{ x: 400 }}
-                    animate={{ x: 0 }}
-                    transition={{ duration: 0.1 * index }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
                     className={
                       "leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10"
                     }

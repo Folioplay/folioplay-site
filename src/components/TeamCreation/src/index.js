@@ -473,6 +473,7 @@ export function TeamCreation() {
               onClick={() =>
                 assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
               }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
             >
               Select top 3 Coins
             </Button>

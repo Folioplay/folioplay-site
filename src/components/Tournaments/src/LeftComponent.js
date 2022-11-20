@@ -127,11 +127,16 @@ const LeftComponent = () => {
     }
   }, []);
   useEffect(() => {
-    return () =>{
-      console.log("i am in component will unmount hook...............................",intervalId)
-      if(intervalId){clearInterval(intervalId)}
-    }
-  },[intervalId])
+    return () => {
+      console.log(
+        "i am in component will unmount hook...............................",
+        intervalId
+      );
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [intervalId]);
   useEffect(() => {
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
@@ -644,9 +649,8 @@ const LeftComponent = () => {
               </span>
               <Button
                 className={disabledClass + " tournament-fee"}
-
                 style={
-                  disabledTournament ? {} : { backgroundColor: "var(--golden)"}
+                  disabledTournament ? {} : { backgroundColor: "var(--golden)" }
                 }
                 size="small"
                 onClick={(event) => {
@@ -755,7 +759,7 @@ const LeftComponent = () => {
             {/* Filters */}
             <Chip
               className="active-chip"
-              style={{fontFamily: "poppins" }}
+              style={{ fontFamily: "poppins" }}
               label="All"
               variant="outlined"
               onClick={() => {
@@ -838,26 +842,30 @@ const LeftComponent = () => {
               }}
             />
           </span>
-          {tournaments === undefined ||
-          tournaments.length === 0 ||
-          teams === undefined ? (
+          {tournaments === undefined || tournaments === null || teams === undefined || teams === null ? (
             <div className="loading-component">
               <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
             </div>
           ) : (
             <>
-              {tournamentsList}
-              <JoinTournamentDrawer
-                teams={teams}
-                tournamentId={tournamentId}
-                joinTournamentAPI={joinTournamentAPI}
-                setErrorMessage={setErrorMessage}
-                setErrorMessageSnackOpen={setErrorMessageSnackOpen}
-                tournaments={tournaments}
-                changeTournament={true}
-                navigate={navigate}
-                intervalId={intervalId}
-              />
+              {tournaments.length === 0 ? (
+                <span>No Tournaments</span>
+              ) : (
+                <>
+                  {tournamentsList}
+                  <JoinTournamentDrawer
+                    teams={teams}
+                    tournamentId={tournamentId}
+                    joinTournamentAPI={joinTournamentAPI}
+                    setErrorMessage={setErrorMessage}
+                    setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+                    tournaments={tournaments}
+                    changeTournament={true}
+                    navigate={navigate}
+                    intervalId={intervalId}
+                  />
+                </>
+              )}
             </>
           )}
         </div>

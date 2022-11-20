@@ -41,7 +41,7 @@ const LeftTransactionHistoryComponent = () => {
     function parseTransactionData (data){
         let parsedData = {};
         for (let i=0; i < data.length; i++){
-            let dateKey = moment(data[i].date).format('Do MMMM YYYY');
+            let dateKey = moment(data[i].date).format('Do MMMM YYYY')   ;
             if(!parsedData.hasOwnProperty(`${dateKey}`)){
                 parsedData[`${dateKey}`]=[data[i]];
             }

@@ -8,9 +8,6 @@ import { TeamCreation } from "./components/TeamCreation/src";
 import { AssignRole } from "./components/AssignRole/src";
 import OpenChart from "./components/Charts/src";
 import { useMoralis } from "react-moralis";
-import { Navigate, useLocation } from "react-router";
-import TickerWidget from "./components/TickerWidget/src";
-import {getAuthToken, SERVER, validUser} from "./APIS/apis";
 import { useState, useEffect } from "react";
 import { AuthContext} from "./Context/AuthContext";
 import { tournaments } from "./components/Tournaments/common/demoTournaments";
@@ -27,7 +24,7 @@ import TransactionHistory from "./components/TransactionHistory/src";
 import LoginGif from "./components/LoginPage/common/LoginGif";
 import ReactLoading from "react-loading";
 import ReactGA from 'react-ga';
-ReactGA.initialize('4297268886');
+ReactGA.initialize(`${process.env.REACT_APP_GA_ID}`);
 function App() {
   const SERVER = process.env.REACT_APP_API_SERVER;
   useEffect(()=>{

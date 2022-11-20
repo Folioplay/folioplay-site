@@ -86,6 +86,7 @@ export default function JoinTournamentDrawer({
                   id={"team-" + index}
                   className="mb-15"
                   style={{ padding: "0", borderRadius: "12px" }}
+                  onClick={() => selectTeam(clickedId, teams)}
                 >
                   <div className="team">
                     <span
@@ -95,23 +96,25 @@ export default function JoinTournamentDrawer({
                       {team.name}
                     </span>
                     <span id="visible-coins" style={{ marginLeft: "auto" }}>
-                      <CheckCircleIcon
+                      {/* <CheckCircleIcon
                         className="select-team-button team-buttons"
-                        onClick={() => selectTeam(clickedId, teams)}
+                        // onClick={() => selectTeam(clickedId, teams)}
                         fontSize="large"
-                      />
+                      /> */}
                       <PreviewIcon
                         className="preview-team-button team-buttons ml-5"
                         fontSize="large"
-                        onClick={() => {
-                          document.querySelector(
-                            "#" + clickedId + " .select-team-button"
-                          ).style.display = "none";
+                        onClick={(event) => {
+                          event.cancelBubble = true;
+                          if(event.stopPropagation) event.stopPropagation();
+                          // document.querySelector(
+                          //   "#" + clickedId + " .select-team-button"
+                          // ).style.display = "none";
                           var allTeams =
                             document.getElementsByClassName("team");
                           for (var i = 0; i < allTeams.length; i++) {
                             if (clickedId !== "team-" + i)
-                              allTeams[i].classList.add("display-none");
+                              allTeams[i].parentNode.classList.add("display-none");
                           }
                           document
                             .getElementById(clickedId)
@@ -128,8 +131,10 @@ export default function JoinTournamentDrawer({
                       />
                       <DeleteIcon
                         className="delete-team-button team-buttons ml-5"
-                        onClick={(event) =>
-                          deleteClickedTeam(event, teams, deleteTeam)
+                        onClick={(event) =>{
+                          event.cancelBubble = true;
+                          if(event.stopPropagation) event.stopPropagation();
+                          deleteClickedTeam(event, teams, deleteTeam)}
                         }
                         fontSize="large"
                       />
@@ -220,7 +225,7 @@ export default function JoinTournamentDrawer({
                 allSelectButtons[i].style.display = "inline-block";
               }
               for (var i = 0; i < allTeams.length; i++) {
-                allTeams[i].classList.remove("display-none");
+                allTeams[i].parentNode.classList.remove("display-none");
                 document
                   .getElementById("team-coins-" + i)
                   .classList.add("display-none");
