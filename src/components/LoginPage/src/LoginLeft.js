@@ -92,7 +92,8 @@ function LoginLeft() {
   // };
 
   const walletConnectLogin = async () => {
-    localStorage.clear();
+    localStorage.removeItem("authtoken");
+    await logout();
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -158,7 +159,8 @@ function LoginLeft() {
   };
 
   const metamaskLogin = async () => {
-    localStorage.clear()
+    localStorage.removeItem("authtoken");
+    await logout();
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -268,7 +270,8 @@ function LoginLeft() {
   };
 
   const web3Login = async () => {
-    localStorage.clear();
+    localStorage.removeItem("authtoken");
+    await logout();
     if (!isAuthenticated) {
       if (!policiesAccepted) {
         document
@@ -297,7 +300,7 @@ function LoginLeft() {
             document
               .getElementsByClassName("overlay-div")[0]
               .classList.remove("overlay-login");
-            throw Error("User Not Found");
+            throw new Error("User Not Found");
           }
           await getAuthTokenFunction(user);
         })

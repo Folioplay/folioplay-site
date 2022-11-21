@@ -200,27 +200,27 @@ export default function FolioplayBar({ intervalId }) {
             primary={"Enter Referral"}
           />
         </ListItem>
-        <ListItem button key={"Disclaimer"} onClick={openPrivacyPolicies}>
-          <ListItemIcon>
-            <BookIcon size="medium" style={{ color: "var(--dim-white)" }} />
-          </ListItemIcon>
-          <ListItemText
-            style={{ fontFamily: "poppins" }}
-            primary={"Disclaimer"}
-          />
-        </ListItem>
-        <ListItem button key={"How-to-Play"} onClick={openPrivacyPolicies}>
-          <ListItemIcon>
-            <QuestionMarkIcon
-              size="medium"
-              style={{ color: "var(--dim-white)" }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            style={{ fontFamily: "poppins" }}
-            primary={"How to Play"}
-          />
-        </ListItem>
+        {/*<ListItem button key={"Disclaimer"} onClick={openPrivacyPolicies}>*/}
+        {/*  <ListItemIcon>*/}
+        {/*    <BookIcon size="medium" style={{ color: "var(--dim-white)" }} />*/}
+        {/*  </ListItemIcon>*/}
+        {/*  <ListItemText*/}
+        {/*    style={{ fontFamily: "poppins" }}*/}
+        {/*    primary={"Disclaimer"}*/}
+        {/*  />*/}
+        {/*</ListItem>*/}
+        {/*<ListItem button key={"How-to-Play"} onClick={openPrivacyPolicies}>*/}
+        {/*  <ListItemIcon>*/}
+        {/*    <QuestionMarkIcon*/}
+        {/*      size="medium"*/}
+        {/*      style={{ color: "var(--dim-white)" }}*/}
+        {/*    />*/}
+        {/*  </ListItemIcon>*/}
+        {/*  <ListItemText*/}
+        {/*    style={{ fontFamily: "poppins" }}*/}
+        {/*    primary={"How to Play"}*/}
+        {/*  />*/}
+        {/*</ListItem>*/}
         <div></div>
         <ListItem button onClick={logOut}>
           <ListItemIcon>
