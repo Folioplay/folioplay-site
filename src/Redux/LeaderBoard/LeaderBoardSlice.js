@@ -15,7 +15,6 @@ export const  getLeaderboardAsync = createAsyncThunk(
 export const  getWinnersAsync = createAsyncThunk(
     'winners/',
     async(tournament_id)=>{
-        console.log("redux tid", tournament_id);
         return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/winners/${tournament_id}`, {
             method: "GET",
             headers: {

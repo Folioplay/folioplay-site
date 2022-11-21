@@ -27,6 +27,7 @@ export function TeamCreation() {
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
   const {state} = useLocation();
+  console.log(state);
   var superstars = [];
   var mooning = [];
   var rekt = [];

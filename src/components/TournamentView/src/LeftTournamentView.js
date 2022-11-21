@@ -28,7 +28,6 @@ import {
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    console.log(typeof days);
     if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Pushing data to blockchain ... </span>
     return (
       <>
@@ -43,7 +42,6 @@ const LeftTournamentView = () => {
     );
   };
   const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
-    console.log(typeof days);
     if(completed)return <>Ended</>
     return (
       <>

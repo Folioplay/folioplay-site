@@ -6,6 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { motion } from "framer-motion/dist/framer-motion";
 import { leaderboard } from "../../TournamentView/common/leaderboard";
+import { Button } from "@mui/material";
 import "../style/index.css";
 import { useEffect, useState } from "react";
 import {
@@ -86,8 +87,8 @@ export default function LeaderBoardTabs({
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>
-        <Box className={"tournamentView__leaderboardTabsStyle"} sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+        <Box className={"tournamentView__leaderboardTabsStyle"} sx={{ borderBottom: 1, borderColor: "divider",width:"100%" }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{width:"100%" }}>
             <Tab
               label="Prizes"
               value="1"
@@ -98,11 +99,14 @@ export default function LeaderBoardTabs({
               value="2"
               style={{ textTransform: "capitalize", fontFamily: "poppins" }}
             />
-            <span className={"refreshLeaderboard"}>
-              <RefreshIcon onClick={()=>{
+            <span className={"refreshLeaderboard"} style={{marginLeft:"auto",marginRight:"20px"}}>
+              {/* <RefreshIcon /> */}
+              <Button 
+              style={{color:"var(--grey-shade)",textTransform:"capitalize"}}
+              onClick={()=>{
                 dispatch(getLeaderboardAsync(tournamentId));
-                dispatch(getWinnersAsync());
-              }}/>
+                dispatch(getWinnersAsync(tournamentId));
+              }}>Refresh</Button>
             </span>
           </TabList>
         </Box>

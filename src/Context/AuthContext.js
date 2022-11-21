@@ -80,7 +80,6 @@ export const AuthContextProvider = ({ children }) => {
                     localStorage.setItem("folioReferralCode", data.referralCode);
                     setPresentAuthToken(true);
                     setLoggedIn(true);
-                    console.log(window.location.pathname)
                     if (window.location.pathname === "/")
                         window.location.pathname = "/tournaments";
                 })

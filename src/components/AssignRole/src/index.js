@@ -29,6 +29,11 @@ export function AssignRole() {
   var rekt = [];
   var coins = [];
   var finalRanks = new Map();
+  var selectedSuperstars = [];
+  var selectedMooning = [];
+  var selectedRekt = [];
+  
+  
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -47,10 +52,10 @@ export function AssignRole() {
     }
     setSuccessSnackOpen(false);
   };
-  superstars = JSON.parse(window.localStorage.getItem("superstars"));
-  mooning = JSON.parse(window.localStorage.getItem("mooning"));
-  rekt = JSON.parse(window.localStorage.getItem("rekt"));
-
+  
+  superstars = JSON.parse(window.localStorage.getItem("superstars")) ? JSON.parse(window.localStorage.getItem("superstars")) : [];
+  mooning = JSON.parse(window.localStorage.getItem("mooning")) ? JSON.parse(window.localStorage.getItem("mooning")) : [];
+  rekt = JSON.parse(window.localStorage.getItem("rekt")) ? JSON.parse(window.localStorage.getItem("rekt")) : [];
   for (var i = 0; i < superstars.length; i++) {
     if (superstars[i].selected) coins.push(superstars[i]);
   }
@@ -63,13 +68,40 @@ export function AssignRole() {
   for (var i = 0; i < coins.length; i++) {
     finalRanks.set("" + coins[i].name.toLowerCase(), -1);
   }
+  for (var i = 0; i < superstars.length; i++) {
+    if (superstars[i].selected === true) {
+      selectedSuperstars.push(superstars[i]);
+    }
+  }
+  for (var i = 0; i < mooning.length; i++) {
+    if (mooning[i].selected === true) {
+      selectedMooning.push(mooning[i]);
+    }
+  }
+  for (var i = 0; i < rekt.length; i++) {
+    if (rekt[i].selected === true) {
+      selectedRekt.push(rekt[i]);
+    }
+  }
+  if (
+    selectedSuperstars.length < 1 ||
+    selectedSuperstars.length > 2 ||
+    selectedMooning.length < 3 ||
+    selectedMooning.length > 6 ||
+    selectedRekt.length < 3 ||
+    selectedRekt.length > 6 || coins.length !== 11
+  ) {
+    // navigate('/teams/createteam');
+    window.location.pathname = '/teams/createteam'
+    // return ;
+  }
   useEffect(() => {
     fetchTeams();
   }, []);
   useEffect(() => {
     if (teams !== undefined) teamPreview({ superstars, mooning, rekt });
   }, [teams, nameSnackOpen]);
-
+  
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -258,7 +290,7 @@ export function AssignRole() {
                     severity="success"
                     sx={{ width: "100%" }}
                   >
-                    Team Created Successfully.
+                    Great. You have created your team successfully
                   </Alert>
                 </motion.div>
               </Snackbar>

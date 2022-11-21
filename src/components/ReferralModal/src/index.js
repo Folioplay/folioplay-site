@@ -102,13 +102,11 @@ const ReferralModal = () => {
                                         setSnackSeverityType("success");
                                     } else {
                                         if ((referralResponse.statusCode/10) === 40) {
-                                            console.log("gg")
                                             console.log(referralResponse.statusCode/10);
                                             setSnackMessage(referralResponse.message);
                                             setSnackSeverityType("error");
                                         }
                                     }
-                                    console.log("sdfd")
                                     setSnackOpen(true);
                                     handleClose();
                                 }}

@@ -43,7 +43,6 @@ const LeftComponent = () => {
   const { user, isAuthenticated, logout } = useMoralis();
   const { state } = useLocation();
   const location = useLocation();
-  console.log(location);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [filter, setFilter] = useState("all");
@@ -128,10 +127,6 @@ const LeftComponent = () => {
   }, []);
   useEffect(() => {
     return () => {
-      console.log(
-        "i am in component will unmount hook...............................",
-        intervalId
-      );
       if (intervalId) {
         clearInterval(intervalId);
       }

@@ -26,7 +26,6 @@ export default async function saveTeam(event,coins,finalRanks,setError,setNameSn
   var name = document.getElementById("team-name").value;
   if (name !== null && name !== undefined && name.length > 0) {
     let response = await createTeam({ selectedCoins: selectedCoins, name: name });
-    console.log(response);
     if(response.statusCode === 200){
       setSuccessSnackOpen(true);
       setTimeout(() => {
@@ -41,7 +40,7 @@ export default async function saveTeam(event,coins,finalRanks,setError,setNameSn
           if(state && state.comingFrom == "/tournaments/" + state.tournamentId){
             navigate(`/tournaments/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
           }else{
-            navigate(-2);
+            navigate('/activity');
           } 
         }
       }, 2000);

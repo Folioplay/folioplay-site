@@ -69,7 +69,6 @@ const LeftTransactionHistoryComponent = () => {
     },[])
 
     const localAccordionComponent = (item) => {
-        console.log(item);
         return(
             <AccordionComponent>
                 <AccordionSummary
