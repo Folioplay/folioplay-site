@@ -573,6 +573,8 @@ const LeftComponent = () => {
   };
   const tournamentsList = tournaments ? (
     tournaments
+      .filter((tournament) => filterToFunctionMap[filter](tournament)).length === 0 ? <span style={{color:"var(--grey-shade)"}}>No Tournaments</span> :(
+    tournaments
       .filter((tournament) => filterToFunctionMap[filter](tournament))
       .map((tournament, index) => {
         const seatsFilled =
@@ -741,7 +743,7 @@ const LeftComponent = () => {
           </motion.div>
         );
       })
-  ) : (
+  )) : (
     <></>
   );
   return (
