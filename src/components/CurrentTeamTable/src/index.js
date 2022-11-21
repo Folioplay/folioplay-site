@@ -19,7 +19,6 @@ function CurrentTeamTable() {
   const tournamentId = state.tournament_id;
   const teamId = leaderBoardData.team.id;
 
-
   const [coinsData, setCoinsData] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState([]);
   useEffect(() => {
@@ -52,6 +51,7 @@ function CurrentTeamTable() {
       coinName: element.coin_name,
       initialAllocation: element.coin_allocation,
       priceStart: element.coin_price_start,
+      priceEnd: element.coin_price_end,
       allocatedCoins: element.coin_start_allocation,
       price: element.coin_price,
       points: element.coin_current_points,
@@ -84,6 +84,12 @@ function CurrentTeamTable() {
     {
       field: "priceStart",
       headerName: "Price at start",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "priceEnd",
+      headerName: "Price at end",
       width: 100,
       headerAlign: "center",
     },
