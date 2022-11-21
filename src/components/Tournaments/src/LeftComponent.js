@@ -569,7 +569,7 @@ const LeftComponent = () => {
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
-      <span style={{ color: "var(--grey-shade)" }}>No Tournaments</span>
+      <span className={"no-tournamnet-text"}>No Tournaments</span>
     ) : (
       tournaments
         .filter((tournament) => filterToFunctionMap[filter](tournament))

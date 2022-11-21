@@ -308,3 +308,11 @@
 .font-weight-900 {
     font-weight: 900;
 }
+
+.loadingReactScreen{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

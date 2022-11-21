@@ -97,7 +97,7 @@ export const AuthContextProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{loggedIn, presentAuthToken}}>
-            {(!loading)? children: <ReactLoading /> }
+            {(!loading)? children: <div className="loadingReactScreen"><ReactLoading /> </div>}
         </AuthContext.Provider>
     );
 }

@@ -7,7 +7,9 @@
 .fullpage::-webkit-scrollbar{
     display:none;
 }
-
+.no-tournament-text{
+    color:var(--grey-shade);
+}
 .tournaments-wrapper {
     display: flex;
     align-items: center;

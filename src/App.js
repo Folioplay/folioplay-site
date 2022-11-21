@@ -36,7 +36,7 @@ function App() {
   function AuthenticatedRoute({children}) {
 
       const {presentAuthToken, loggedIn} = useContext(AuthContext);
-      return loggedIn ? children : <ReactLoading />;
+      return loggedIn ? children : <div className={"loadingReactScreen"}><ReactLoading /> </div>;
   }
 
   function LoginRoute({ children }) {
