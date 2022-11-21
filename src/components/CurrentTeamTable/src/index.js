@@ -52,9 +52,9 @@ function CurrentTeamTable() {
       coinName: element.coin_name,
       initialAllocation: element.coin_allocation,
       priceStart: element.coin_price_start,
-      allocatedCoins: element.coin_start_allocation.toFixed(2),
-      price: element.coin_price.toFixed(2),
-      points: element.coin_current_points.toFixed(2),
+      allocatedCoins: element.coin_start_allocation,
+      price: element.coin_price,
+      points: element.coin_current_points,
     };
     rows.push(parser);
   });
@@ -67,7 +67,7 @@ function CurrentTeamTable() {
     runningRows.push(parser);
   });
 
-  const columns: GridColDef[] = [
+  const columns = [
     { field: "id", headerName: "Id", width: 50, headerAlign: "center" },
     {
       field: "coinName",
@@ -102,7 +102,7 @@ function CurrentTeamTable() {
     },
   ];
 
-  const runningColumns: GridColDef[] = [
+  const runningColumns = [
     {
       field: "id",
       headerName: "Id",
@@ -144,7 +144,7 @@ function CurrentTeamTable() {
         </div>
         <br />
         <div className="totalPoints">
-          Total Points:&nbsp;<b>{leaderBoardData.portfolio.toFixed(2)}</b>
+          Total Points:&nbsp;<b>{leaderBoardData.portfolio}</b>
         </div>
         <div className="team-preview-wrapper1 mt-20">
           {tournamentDetails.status === 3 ? (
