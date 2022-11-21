@@ -381,6 +381,7 @@ export function TeamCreation() {
     setSnackOpen(false);
     setWasActiveTab(event.target.firstChild.nodeValue.toLowerCase());
   };
+  var prevRoute = state && state.comingFrom ? state.comingFrom : "/activity";
   const LeftComponent = () => {
     return (
       <div className="fullpage">
@@ -389,7 +390,7 @@ export function TeamCreation() {
             <ArrowBackIosIcon
               fontSize="medium"
               className="go-back-button"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate(prevRoute)}
             />
             <span className="ml-20 font-size-20 font-weight-700">
               Choose 11 Coins

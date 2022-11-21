@@ -92,7 +92,7 @@ export function AssignRole() {
     selectedRekt.length > 6 || coins.length !== 11
   ) {
     // navigate('/teams/createteam');
-    window.location.pathname = '/teams/createteam'
+    window.location.pathname = '/tournaments'
     // return ;
   }
   useEffect(() => {
