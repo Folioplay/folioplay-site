@@ -24,13 +24,26 @@ export const  getWinnersAsync = createAsyncThunk(
     }
 )
 
+export const  getPersonalLeaderBoardAsync = createAsyncThunk(
+    'rank/',
+    async(tournament_id)=>{
+        return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/rank/${tournament_id}`, {
+            method: "GET",
+            headers: {
+                "x-access-token": localStorage.getItem("authtoken"),
+            },
+        }).then((res) => res.json());
+    }
+)
+
 
 export const getLeaderboardSlice = createSlice({
     name: 'get_leaderboard',
     initialState: {
         leaderBoard:[],
         referralModal: false,
-        winners: []
+        winners: [],
+        personalLeaderboard: []
     },
     reducers:{
         openReferralModal(state) {
@@ -47,6 +60,9 @@ export const getLeaderboardSlice = createSlice({
         },
         [getWinnersAsync.fulfilled]: (winnersList, action) => {
             winnersList.winners=action.payload;
+        },
+        [getPersonalLeaderBoardAsync.fulfilled]: (personalList, action) => {
+            personalList.personalLeaderboard=action.payload;
         },
     }
 });

@@ -18,7 +18,11 @@ import { useMoralis } from "react-moralis";
 import {useNavigate} from "react-router-dom";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import LeaderBoardSlice, {getLeaderboardAsync, getWinnersAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import LeaderBoardSlice, {
+  getLeaderboardAsync,
+  getPersonalLeaderBoardAsync,
+  getWinnersAsync
+} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function LeaderBoardTabs({
@@ -43,9 +47,11 @@ export default function LeaderBoardTabs({
 
 
   const getLeaderBoardRedux=useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
+  const getPersonalLeaderBoardRedux=useSelector((state)=>state.LeaderBoardSlice.personalLeaderboard);
 
   useEffect(() => {
     dispatch(getLeaderboardAsync(tournamentId));
+    dispatch(getPersonalLeaderBoardAsync(tournamentId));
     async function getPersonalLeader() {
       const data = await getPersonalLeaderboard(tournamentId);
       setPersonalLeaderBoard(data);
@@ -106,6 +112,7 @@ export default function LeaderBoardTabs({
               onClick={()=>{
                 dispatch(getLeaderboardAsync(tournamentId));
                 dispatch(getWinnersAsync(tournamentId));
+                dispatch(getPersonalLeaderBoardAsync(tournamentId));
               }}>Refresh</Button>
             </span>
           </TabList>
@@ -283,8 +290,8 @@ export default function LeaderBoardTabs({
 
           {/*Show personal points when tournament is ended*/}
           {tournamentStatus !== 0 &&
-            personalLeaderBoard.length !== 0 &&
-            personalLeaderBoard.map((entry, index) => {
+              getPersonalLeaderBoardRedux.length !== 0 &&
+              getPersonalLeaderBoardRedux.map((entry, index) => {
               return (
                 <motion.div
                   initial={{ opacity: 0 }}
