@@ -32,11 +32,11 @@
 #bar-profile-icon{
     height:24px;
     border-radius:4px;
-    background:#d2e0ee52;
+    /*background:#d2e0ee52;*/
     transition: 0.2s all ease-in-out;
 }
 #bar-profile-icon:hover{
-    background-color: #d2e0ee99;
+    /*background-color: #d2e0ee99;*/
     transition: 0.2s all ease-in-out;
 
 }
