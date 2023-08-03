@@ -8,7 +8,7 @@ import "../style/index.css";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import { useNavigate } from "react-router";
 import { getTeamByid } from "../../../APIS/apis";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
