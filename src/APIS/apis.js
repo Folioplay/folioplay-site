@@ -1,12 +1,8 @@
-// export const SERVER = "http://13.235.244.216";
 export const SERVER = process.env.REACT_APP_API_SERVER;
-
 export const S3_URL = process.env.REACT_APP_S3_URL
 
 export async function getAllTournaments() {
-console.log(SERVER);
-  const authtoken = await localStorage.getItem("authtoken");
-  return await fetch(`${SERVER}/tournament`, {
+  return await fetch(`${SERVER}/tournament/`, {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("authtoken"),
@@ -39,37 +35,7 @@ export async function getAllCoins() {
   }).then((res) => res.json());
 }
 
-// export async function getAuthToken(walletAddress, walletSignature, email) {
-//   return await fetch(`${SERVER}/user/login`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       walletAddress: walletAddress,
-//       signature: walletSignature,
-//       email: email
-//     }),
-//   })
-//     .then((res) => {
-//       if (!res.ok) throw "Invalid user";
-//       else return res.json();
-//     })
-//     .then((data) => {
-//       localStorage.removeItem("authtoken");
-//       localStorage.setItem("authtoken", data.accessToken);
-//       return {
-//         "userdata": data.user,
-//         "new_user": data.newUser
-//       };
-//     });
-// }
-
-export async function getAuthToken(walletAddresss, walletSignaturee, emaill) {
- 
-  const didToken =  await  localStorage.getItem("didToken");;
-  const walletAddress =   await  localStorage.getItem("walletAddress");
- 
+export async function getAuthToken(walletAddress, walletSignature, email) {
   return await fetch(`${SERVER}/user/login`, {
     method: "POST",
     headers: {
@@ -77,7 +43,8 @@ export async function getAuthToken(walletAddresss, walletSignaturee, emaill) {
     },
     body: JSON.stringify({
       walletAddress: walletAddress,
-      didToken: didToken,
+      signature: walletSignature,
+      email: email
     }),
   })
     .then((res) => {
@@ -91,48 +58,8 @@ export async function getAuthToken(walletAddresss, walletSignaturee, emaill) {
         "userdata": data.user,
         "new_user": data.newUser
       };
-    }) .catch(err => {
-     
-          localStorage.clear();
-          window.location.pathname = "/";
-      });
-}
-
-
-// Magic Auth Funtion
-export async function getMagicAuthToken(diidToken,walleetAddress) {
-  // console.log("user from apis export folder");
-  //   console.log(user);
-  //   console.log("user from apis export folder");
-    const didToken =  diidToken;
-    const walletAddress = walleetAddress;
-
-    console.log("final data didtoekn & walletaddress" +" "+didToken+" "+ walletAddress)
-    return await fetch(`${SERVER}/user/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-       walletAddress: walletAddress,
-       didToken: didToken,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw "Invalid user";
-        else return res.json();
-      })
-    .then((data) => {
-      localStorage.removeItem("authtoken");
-      localStorage.setItem("authtoken", data.accessToken);
-      return {
-        "userdata": data.user,
-        "new_user": data.newUser
-      };
     });
 }
-
-
 export async function getAllUserTeams() {
   return await fetch(`${SERVER}/teams/`, {
     method: "GET",

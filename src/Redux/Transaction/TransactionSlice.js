@@ -1,13 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-export const Server = process.env.REACT_APP_API_SERVER;
-
 export const  getTransactionsAsync = createAsyncThunk(
     'transactions/',
     async()=>{
-        //       `${process.env.REACT_APP_API_SERVER}/wallet`,
         return await fetch(
-            `${Server}/wallet`,
+            `${process.env.REACT_APP_API_SERVER}/wallet`,
             {
                 method: "GET",
                 headers: {

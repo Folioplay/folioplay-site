@@ -14,7 +14,7 @@ import {
   getPersonalLeaderboard,
   getRewardDetailsAPI,
 } from "../../../APIS/apis";
-// import { useMoralis } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import {useNavigate} from "react-router-dom";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
@@ -33,19 +33,10 @@ export default function LeaderBoardTabs({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [value, setValue] = React.useState("1");
-  const [user, setUser] =useState("");
-  // const { user } = useMoralis();
-
-  
-  const localStoritems = async () => {
-    const userwallet = await localStorage.getItem("walletAddress");
-    setUser(userwallet);
-  }
-
-  const userWalletAddress = user
-    ? user
+  const { user } = useMoralis();
+  const userWalletAddress = user.attributes.ethAddress
+    ? user.attributes.ethAddress
     : "";
   // const [leaderBoard, setLeaderBoard] = useState([]);
   const [personalLeaderBoard, setPersonalLeaderBoard] = useState([]);
@@ -59,7 +50,6 @@ export default function LeaderBoardTabs({
   const getPersonalLeaderBoardRedux=useSelector((state)=>state.LeaderBoardSlice.personalLeaderboard);
 
   useEffect(() => {
-    localStoritems();
     dispatch(getLeaderboardAsync(tournamentId));
     dispatch(getPersonalLeaderBoardAsync(tournamentId));
     async function getPersonalLeader() {

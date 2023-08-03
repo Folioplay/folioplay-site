@@ -17,7 +17,7 @@ import Slide from "@mui/material/Slide";
 import Modal from "@mui/material/Modal";
 import { AuthContext } from "../../../Context/AuthContext";
 import Divider from "@mui/material/Divider";
-// import { useMoralis } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ethers } from "ethers";
 import HomeIcon from "@mui/icons-material/Home";
@@ -39,16 +39,9 @@ import transactionSlice, {
 import { openReferralModal } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 
 export default function FolioplayBar({ intervalId }) {
-  const [user, setUser] =useState("");
-  // const { logout } = useMoralis();
+  const { logout, user } = useMoralis();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const localStoritems = async () => {
-    const userr = await localStorage.getItem("user");
-    setUser(userr);
-  }
-
   let walletBalanceRedux = useSelector(
     (state) => state.transactionSlice.balance
   );
@@ -112,7 +105,7 @@ export default function FolioplayBar({ intervalId }) {
   const logOut = async () => {
     lg();
     localStorage.clear();
-    // await logout();
+    await logout();
     window.location.pathname = "/";
   };
 
@@ -133,7 +126,6 @@ export default function FolioplayBar({ intervalId }) {
   const [folioplayWalletBalance, setFolioplayWalletBalance] = useState(0);
 
   useEffect(() => {
-    localStoritems();
     async function setWalletBalance() {
       const bal = await getWalletBalance();
       setFolioplayWalletBalance(bal.balance);
@@ -157,7 +149,7 @@ export default function FolioplayBar({ intervalId }) {
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, true)}
+      onKeyDown={toggleDrawer(anchor, false)}
       style={{ fontFamily: "poppins" }}
     >
       <List style={{ fontFamily: "poppins" }}>

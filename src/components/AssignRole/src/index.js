@@ -11,7 +11,7 @@ import { createTeam } from "../../../APIS/apis";
 import TeamPreview from "../../TeamCreation/common/TeamPreview";
 import teamPreview from "../common/teamPreview";
 import { getAllUserTeams } from "../../../APIS/apis";
-// import { useMoralis } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import { S3_URL } from "../../../APIS/apis";
 import { ArrowBackIosNewSharp } from "@mui/icons-material";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
@@ -22,14 +22,7 @@ export function AssignRole() {
   const [successSnackOpen, setSuccessSnackOpen] = useState(false);
   const [error, setError] = useState("");
   const [teams, setTeams] = useState([]);
-  const [user, setUser] =useState("");
-  
-  const localStoritems = async () => {
-    const userr = await localStorage.getItem("user");
-    await setUser(userr);
-   
-  }
-
+  const { user } = useMoralis();
   const { state } = useLocation();
   var superstars = [];
   var mooning = [];
@@ -103,7 +96,6 @@ export function AssignRole() {
     // return ;
   }
   useEffect(() => {
-    localStoritems();
     fetchTeams();
   }, []);
   useEffect(() => {

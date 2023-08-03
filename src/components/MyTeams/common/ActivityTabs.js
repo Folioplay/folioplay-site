@@ -7,7 +7,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { motion } from "framer-motion/dist/framer-motion";
 import "../style/index.css";
 import { useEffect, useState } from "react";
-// import { useMoralis } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
 import { Chip, LinearProgress } from "@mui/material";
