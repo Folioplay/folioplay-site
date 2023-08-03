@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MuiAlert from "@mui/material/Alert";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import { scrollTo } from "../../../CommonFunctions/functions.js";
 import {
   getAllUserTeams,
@@ -61,7 +61,17 @@ const LeftTournamentView = () => {
   });
   const dispatch = useDispatch();
   var navigate = useNavigate();
-  const { user } = useMoralis();
+  
+const [user, setUser] =useState("");
+const [isAuthenticated, setIsAuthenticated] =useState("");
+
+const localStoritems = async () => {
+  const userr = await localStorage.getItem("user");
+  await setUser(userr);
+  const isLoggedIn = await localStorage.getItem("isLoggedIn");
+  await setIsAuthenticated(isLoggedIn);
+}
+  // const { user } = useMoralis();
   const { state } = useLocation();
   // let account = user.get("ethAddress");
   const [balance, setBalance] = useState("");
@@ -108,6 +118,8 @@ const LeftTournamentView = () => {
     setRank(data);
   }
   useEffect(() => {
+    
+  localStoritems();
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
         delete state.openDrawer;

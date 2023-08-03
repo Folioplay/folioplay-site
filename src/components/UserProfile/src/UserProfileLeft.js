@@ -6,7 +6,7 @@ import "../style/index.css";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import InlineEdit from "../common/InlineEditComponent";
 import { LinearProgress, TextField } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -23,8 +23,18 @@ import { useSelector } from "react-redux";
 import { AuthContext } from "../../../Context/AuthContext";
 import Snackbar from "../../../Common/Snackbar";
 function UserProfileLeft() {
-  const { user } = useMoralis();
-  const walletAdd = user.attributes.ethAddress;
+  
+const [user, setUser] =useState("");
+const [isAuthenticated, setIsAuthenticated] =useState("");
+
+const localStoritems = async () => {
+  const userr = await localStorage.getItem("user");
+  await setUser(userr);
+  const isLoggedIn = await localStorage.getItem("isLoggedIn");
+  await setIsAuthenticated(isLoggedIn);
+}
+  // const { user } = useMoralis();
+  const walletAdd = localStorage.getItem("walletAddress");
   const [snackMessage, setSnackMessage] = useState("");
   const referralCode = localStorage.getItem("folioReferralCode");
   const referralCodeLink = `${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`;
@@ -147,6 +157,8 @@ function UserProfileLeft() {
   };
 
   useEffect(() => {
+    
+  localStoritems();
     if (file) {
       handleSubmit();
       return;

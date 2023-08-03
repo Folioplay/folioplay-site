@@ -20,7 +20,7 @@ import {
 } from "../../../APIS/apis";
 import { Button, LinearProgress, Snackbar } from "@mui/material";
 import joinTournament from "../common/joinTournament";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import MuiAlert from "@mui/material/Alert";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -40,7 +40,18 @@ import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
 import { FilterAltOutlined } from "@mui/icons-material";
 
 const LeftComponent = () => {
-  const { user, isAuthenticated, logout } = useMoralis();
+  // const { user, isAuthenticated,  } = useMoralis();
+
+  const [user, setUser] =useState("");
+  const [isAuthenticated, setIsAuthenticated] =useState("");
+
+  const localStoritems = async () => {
+    const userr = await localStorage.getItem("user");
+    await setUser(userr);
+    const isLoggedIn = await localStorage.getItem("isLoggedIn");
+    await setIsAuthenticated(isLoggedIn);
+  }
+
   const { state } = useLocation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -84,7 +95,7 @@ const LeftComponent = () => {
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
     localStorage.removeItem("walletconnect");
-    await logout();
+    // await logOut();
   };
 
   const status = {
@@ -113,6 +124,8 @@ const LeftComponent = () => {
   const [intervalId, setIntervalId] = useState(undefined);
   const [referral, setReferral] = useState("");
   useEffect(() => {
+    
+  localStoritems();
     async function authTokenGet() {
       if (isAuthenticated && localStorage.getItem("authtoken") == null) {
         await getAuthToken(user);
@@ -592,7 +605,7 @@ const LeftComponent = () => {
               className="tournament"
               onClick={() => {
                 clearInterval(intervalId);
-                navigate(`/tournaments/${tournament._id}`, {
+                navigate(`/tournament/${tournament._id}`, {
                   state: {
                     transactionId: tournament.transaction_hash,
                   },

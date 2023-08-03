@@ -1,9 +1,12 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
+const Server = process.env.REACT_APP_API_SERVER;
+
+// const Server = "http://13.235.244.216"; 
 export const  getLeaderboardAsync = createAsyncThunk(
     'leaderboard/',
     async(tournament_id)=>{
-        return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/leaderboard/${tournament_id}`, {
+        return await fetch(`${Server}/tournament/leaderboard/${tournament_id}`, {
             method: "GET",
             headers: {
                 "x-access-token": localStorage.getItem("authtoken"),
@@ -15,7 +18,7 @@ export const  getLeaderboardAsync = createAsyncThunk(
 export const  getWinnersAsync = createAsyncThunk(
     'winners/',
     async(tournament_id)=>{
-        return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/winners/${tournament_id}`, {
+        return await fetch(`${Server}/tournament/winners/${tournament_id}`, {
             method: "GET",
             headers: {
                 "x-access-token": localStorage.getItem("authtoken"),
@@ -27,7 +30,7 @@ export const  getWinnersAsync = createAsyncThunk(
 export const  getPersonalLeaderBoardAsync = createAsyncThunk(
     'rank/',
     async(tournament_id)=>{
-        return await fetch(`${process.env.REACT_APP_API_SERVER}/tournament/rank/${tournament_id}`, {
+        return await fetch(`${Server}/tournament/rank/${tournament_id}`, {
             method: "GET",
             headers: {
                 "x-access-token": localStorage.getItem("authtoken"),
