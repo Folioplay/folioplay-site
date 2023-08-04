@@ -103,7 +103,7 @@ export const AuthContextProvider = ({ children }) => {
                 
         }
         else {
-            fetch(`http://13.235.244.216/user/`, {
+            fetch(`${SERVER}/user/`, {
                 method: "GET",
                 headers: {
                     "x-access-token": localStorage.getItem("authtoken"),

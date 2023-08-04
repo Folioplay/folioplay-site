@@ -1,4 +1,4 @@
-// export const SERVER = "http://13.235.244.216";
+
 export const SERVER = process.env.REACT_APP_API_SERVER;
 
 export const S3_URL = process.env.REACT_APP_S3_URL

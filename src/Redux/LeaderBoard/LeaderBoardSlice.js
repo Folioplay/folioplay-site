@@ -2,7 +2,6 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 const Server = process.env.REACT_APP_API_SERVER;
 
-// const Server = "http://13.235.244.216"; 
 export const  getLeaderboardAsync = createAsyncThunk(
     'leaderboard/',
     async(tournament_id)=>{
