@@ -16,7 +16,7 @@ import { OAuthExtension } from "@magic-ext/oauth";
 
 export const AuthContext = createContext({});
 // const SERVER = process.env.REACT_APP_API_SERVER;
-const SERVER = "http://13.235.244.216";
+const SERVER = process.env.REACT_APP_API_SERVER;
 
 export const AuthContextProvider = ({ children }) => {
 
