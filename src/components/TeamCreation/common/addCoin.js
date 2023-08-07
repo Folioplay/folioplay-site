@@ -15,7 +15,7 @@ export default function addCoin(
       ? mooning
       : rekt;
   var coinsLimit = wasActiveTab === "superstars" ? 2 : 6;
-  const prevVal = event.target.innerText;
+  const prevVal = event.target.innerText.replace("\n","");
   const clickedCoin = event.target.previousSibling.innerText;
   const updateCoin = prevVal === "ADD" ? true : false;
   var allButtons = document.getElementsByClassName("coin-add-button");
