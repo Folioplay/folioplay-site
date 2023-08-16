@@ -106,7 +106,7 @@ export default function FolioplayBar({ intervalId }) {
   //     setBalanceUSDC(parseFloat(ethers.utils.formatEther(bal) * (10 ** 12)).toFixed(4));
   //   }
   // };
-
+const [balance, setBalance] = useState("")
   const { logOutContext } = useContext(AuthContext);
   const lg = () => logOutContext;
   const logOut = async () => {
@@ -131,16 +131,22 @@ export default function FolioplayBar({ intervalId }) {
   });
 
   const [folioplayWalletBalance, setFolioplayWalletBalance] = useState(0);
+  
 
   useEffect(() => {
     localStoritems();
     async function setWalletBalance() {
+    
       const bal = await getWalletBalance();
+      setBalance(bal);
       setFolioplayWalletBalance(bal.balance);
     }
     dispatch(getTransactionsAsync());
     setWalletBalance();
   }, []);
+  useEffect(() => {
+    console.log(balance);
+  }, [balance]);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (

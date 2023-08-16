@@ -310,6 +310,26 @@ const localStoritems = async () => {
                       Entry Fee
                     </span>
                     <br />
+                    {!disabledTournament &&
+                    
+                    <Button
+                      className={disabledClass + " tournament-fee"}
+                      size="small"
+                      style={
+                        disabledTournament
+                          ? {}
+                          : { backgroundColor: "var(--golden)" }
+                      }
+                      onClick={() => {
+                        chooseTeamOpen();
+                      }}
+                      disabled={disabledTournament}
+                    >
+                     JOIN&nbsp;@{tournament.entryFee} FPC
+                    </Button> }
+
+                    {disabledTournament &&
+                    
                     <Button
                       className={disabledClass + " tournament-fee"}
                       size="small"
@@ -324,7 +344,7 @@ const localStoritems = async () => {
                       disabled={disabledTournament}
                     >
                       {tournament.entryFee} FPC
-                    </Button>
+                    </Button> }
                   </span>
                 </div>
                 <div>

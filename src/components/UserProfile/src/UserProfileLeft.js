@@ -200,6 +200,7 @@ const localStoritems = async () => {
             <input
               type="file"
               id="file"
+              accept=".jpg,.png,.jpeg"
               ref={inputFile}
               style={{ display: "none" }}
               onChange={changeProfilePic}

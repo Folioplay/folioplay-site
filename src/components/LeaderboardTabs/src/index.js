@@ -8,6 +8,9 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { leaderboard } from "../../TournamentView/common/leaderboard";
 import { Button } from "@mui/material";
 import "../style/index.css";
+
+import LinearProgress from '@mui/material/LinearProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect, useState } from "react";
 import {
   getLeaderboard,
@@ -34,11 +37,19 @@ export default function LeaderBoardTabs({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [loading, setLoding] = useState("");
   const [value, setValue] = React.useState("1");
   const [user, setUser] =useState("");
   // const { user } = useMoralis();
 
   
+  const showLoding = async () => {
+    setLoding(true);
+
+    setTimeout(() => {
+      setLoding(false);
+    }, 500);
+  }
   const localStoritems = async () => {
     const userwallet = await localStorage.getItem("walletAddress");
     setUser(userwallet);
@@ -120,6 +131,7 @@ export default function LeaderBoardTabs({
               <Button 
               style={{color:"var(--grey-shade)",textTransform:"capitalize"}}
               onClick={()=>{
+                showLoding();
                 dispatch(getLeaderboardAsync(tournamentId));
                 dispatch(getWinnersAsync(tournamentId));
                 dispatch(getPersonalLeaderBoardAsync(tournamentId));
@@ -127,6 +139,126 @@ export default function LeaderBoardTabs({
             </span>
           </TabList>
         </Box>
+{/*  Progress Bar for Leaderboard & Prizes panel */}
+        {loading &&
+          <TabPanel value="1">
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ display: 'flex', justifyContent: "center", marginTop: "25%", width: "100%" }}>   <CircularProgress />
+              </Box>
+            </Box>
+          </TabPanel>}
+        {loading &&
+          <TabPanel value="2">
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ display: 'flex', justifyContent: "center", marginTop: "25%", width: "100%" }}>   <CircularProgress />
+              </Box>
+            </Box>
+          </TabPanel>}
+
+
+
+          {!getWinnersAsync && !loading &&
+        <TabPanel value="1">
+          No Data
+
+          {/*// Show rewards when the Tournament is not completed*/}
+          {tournamentStatus!==3 &&
+              amounts.map((value, index) => {
+                let leaderboardActive = tournamentStatus!==0 ? "leaderboard-active": "";
+                return (
+                  <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
+              >
+                <span className="leaderboard-points">{"  "}{reversePrizes[value]}</span>
+                <span className="ml-auto">{value}</span>
+              </motion.div>
+                );
+              })}
+
+          {tournamentStatus === 3 &&
+            rewardsList.length !== 0 &&
+            rewardsList.map((entry, index) => {
+              if (entry.user.walletAddress === userWalletAddress) {
+                rewardUserCount++;
+                return (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className={
+                      "leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10 font-weight-700"
+                    }
+                    onClick={() => {
+                      navigate("/activity/team/currentStatus", {
+                        state: {
+                          leaderBoardData: entry,
+                          tournament_id: tournamentId,
+                        },
+                      });
+                    }}
+                  >
+                    <span className="mr-10">
+                      {"  "}
+                      {entry.rank}
+                    </span>
+                    <span className={"leaderboard-username"}>
+                      {localStorage.getItem("folioUsername")}{" "}
+                      <span className={"teamCount"}>
+                        T{entry.user_team_count}
+                      </span>
+                    </span>
+                    <span className="ml-auto">{entry.amount_won} FPC</span>
+                  </motion.div>
+                );
+              }
+            })}
+
+          {/*// Show all points when tournament is closed*/}
+          {tournamentStatus === 3 &&
+            rewardsList.length !== 0 &&
+            rewardsList.map((entry, index) => {
+              if (entry.user.walletAddress !== userWalletAddress)
+                return (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className={
+                      "leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10"
+                    }
+                    onClick={() => {
+                      navigate("/activity/team/currentStatus", {
+                        state: {
+                          leaderBoardData: entry,
+                          tournament_id: tournamentId,
+                        },
+                      });
+                    }}
+                  >
+                    <span className="mr-10">
+                      {"  "}
+                      {entry.rank}
+                    </span>
+                    <span className={"leaderboard-username"}>
+                      {entry.user.username}{" "}
+                      <span className={"teamCount"}>
+                        T{entry.user_team_count}
+                      </span>
+                    </span>
+                    <span className="ml-auto">{entry.amount_won} FPC</span>
+                  </motion.div>
+                );
+            })}
+
+
+
+          {/*Leaderboard Section*/}
+        </TabPanel>}
+
+        {getWinnersAsync && !loading &&
         <TabPanel value="1">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
             <span className="mr-10">Rank</span>
@@ -232,8 +364,9 @@ export default function LeaderBoardTabs({
 
 
           {/*Leaderboard Section*/}
-        </TabPanel>
-        <TabPanel value="2">
+        </TabPanel>}
+
+        {getWinnersAsync && !loading &&<TabPanel value="2">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
             <span className="mr-10">Rank</span>
             <span className="ml-20">User</span>
@@ -373,7 +506,7 @@ export default function LeaderBoardTabs({
                   </motion.div>
                 );
             })}
-        </TabPanel>
+        </TabPanel>}
       </TabContext>
     </Box>
   );

@@ -582,7 +582,7 @@ const LeftComponent = () => {
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
-      <span className={"no-tournamnet-text"}>No Tournaments</span>
+      <span className={"no-tournamnet-text"} style={{color:"black", fontWeight:"700"}}>No Tournaments...</span>
     ) : (
       tournaments
         .filter((tournament) => filterToFunctionMap[filter](tournament))
@@ -659,7 +659,7 @@ const LeftComponent = () => {
                     </div>
                   </span>
                 </span>
-                <Button
+                {!disabledTournament && <Button
                   className={disabledClass + " tournament-fee"}
                   style={
                     disabledTournament
@@ -678,8 +678,30 @@ const LeftComponent = () => {
                   }}
                   disabled={disabledTournament}
                 >
-                  {tournament.entryFee} FPC
-                </Button>
+                 JOIN&nbsp;@{tournament.entryFee} FPC
+                </Button>}
+
+                {disabledTournament && <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                 {tournament.entryFee} FPC
+                </Button> }
               </div>
               <div>
                 <LinearProgress
@@ -697,6 +719,7 @@ const LeftComponent = () => {
                     ) : (
                       <>
                         {tournament.total_spots - tournament.available_spots}{" "}
+                       
                         users joined
                       </>
                     )}
