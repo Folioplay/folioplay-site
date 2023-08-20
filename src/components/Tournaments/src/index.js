@@ -6,6 +6,8 @@ import "../style/index.css";
 import {chooseTeamOpen} from "../common/chooseTeamAnimations";
 import LeftComponent from "./LeftComponent";
 import RightComponent from "./RightComponent";
+import ReactGA from "react-ga4";
+
 
 const style = {
   position: "absolute",
@@ -22,6 +24,7 @@ const style = {
 
 
 export default function Tournaments() {
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
   const [user, setUser] =useState("");
   const [isAuthenticated, setIsAuthenticated] =useState("");
 
@@ -39,10 +42,15 @@ export default function Tournaments() {
       const isAuthenticated = localStorage.getItem("isLoggedIn")
       if (isAuthenticated && localStorage.getItem("authtoken") == null) {
         await getAuthToken(user);
-        console.log("auting")
+      
       }
     }
     authTokenGet();
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+      title: window.location.pathname
+    });
     localStorage.removeItem("user_referral");
   }, []);
 

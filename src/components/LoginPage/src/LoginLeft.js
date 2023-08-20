@@ -611,12 +611,14 @@ import Moralis from "moralis-v1";
 import { FcGoogle } from "react-icons/fc";
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from "@magic-ext/oauth";
+import ReactGA from "react-ga4";
 
 
 
 
 
 function LoginLeft() {
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
   const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
     extensions: [new OAuthExtension()],
   });
@@ -933,9 +935,22 @@ function LoginLeft() {
         });
     }
   };
+
+
   // NAMAN CODES
+  //  Google login data sending to google analytics
+function GoogleAnalyticsLoginData(){
+  ReactGA.event({
+    category: "Google Login Event",
+    action: "Google Login Event",
+    label: "Google Login Event", // optional   
+    nonInteraction: false, // optional, true/false
+   
+  });
 
-
+  ReactGA.send({ hitType: "GoogleLogin", page: "GoogleLogin", title: "GoogleLogin" });
+}
+ // Magic Login By Naman
 const magicGoogleLogin = async () => {
   localStorage.clear();
   await logout();
@@ -963,7 +978,7 @@ const magicGoogleLogin = async () => {
   });
   await localStorage.setItem("loginInitiated", true);
   try {
-    
+    GoogleAnalyticsLoginData();
     await magic.oauth.loginWithRedirect({
       provider: "google",
       redirectURI: new URL("/loginverify", window.location.origin).href,

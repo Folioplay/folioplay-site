@@ -293,13 +293,14 @@ import AccordionComponent from "./Common/Accordion";
 import TransactionHistory from "./components/TransactionHistory/src";
 import LoginGif from "./components/LoginPage/common/LoginGif";
 import ReactLoading from "react-loading";
-import ReactGA from 'react-ga';
 import LoginVerify from "./components/LoginPage/src/LoginVerify";
+import ReactGA from "react-ga4";
 
 
 
 ReactGA.initialize(`${process.env.REACT_APP_GA_ID}`);
 function App() {
+  ReactGA.initialize("UA-282278636-2");
   const SERVER = process.env.REACT_APP_API_SERVER;
   
 
@@ -349,10 +350,11 @@ const [token, setToken] =useState("");
   }
 
   useEffect(()=>{
-  
-    localStoritems();
-
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname + window.location.search
+    });
 },[])
   const steps = [
     {
