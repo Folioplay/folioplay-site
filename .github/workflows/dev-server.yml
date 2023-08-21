@@ -14,4 +14,4 @@ jobs:
         PORT: 22
         USER: ubuntu
         PRIVATE_SSH_KEY: ${{ secrets.SSH_DEV_PRIVATE_KEY }}
-        COMMAND: cd /usr/share/nginx/folioplay-site ; git pull
+        COMMAND: cd /usr/share/nginx/folioplay-site ; git pull origin dev
