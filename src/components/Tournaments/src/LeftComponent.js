@@ -46,7 +46,7 @@ const LeftComponent = () => {
   const [user, setUser] =useState("");
   const [isAuthenticated, setIsAuthenticated] =useState("");
 
-  ReactGA.initialize(process.env.REACT_APP_GA_ID);
+  ReactGA.initialize("UA-282470184-1");
   const localStoritems = async () => {
     const userr = await localStorage.getItem("user");
     await setUser(userr);

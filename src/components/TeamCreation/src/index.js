@@ -19,6 +19,7 @@ import assignRoles from "../common/assignRole";
 import addCoin from "../common/addCoin";
 import TeamPreview from "../common/TeamPreview";
 import "../style/index.css";
+import ReactGA from "react-ga4";
 export function TeamCreation() {
   const navigate = useNavigate();
   const [wasActiveTab, setWasActiveTab] = useState("superstars");
@@ -34,6 +35,7 @@ export function TeamCreation() {
   var localSuperstars = JSON.parse(window.localStorage.getItem("superstars"));
   var localMooning = JSON.parse(window.localStorage.getItem("mooning"));
   var localRekt = JSON.parse(window.localStorage.getItem("rekt"));
+  ReactGA.initialize("UA-282470184-1");
   const style = {
     position: "absolute",
     transform: "translate(-30%, -50%)",
@@ -75,6 +77,11 @@ export function TeamCreation() {
     setCoins(await getAllCoins());
   }
   useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+      title: window.location.pathname
+    });
     // localStorage.removeItem("superstars");
     // localStorage.removeItem("mooning");
     // localStorage.removeItem("rekt");
