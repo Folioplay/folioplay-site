@@ -618,7 +618,7 @@ import ReactGA from "react-ga4";
 
 
 function LoginLeft() {
-   ReactGA.initialize("UA-282470184-1");
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
   const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
     extensions: [new OAuthExtension()],
   });
@@ -948,11 +948,6 @@ function GoogleAnalyticsLoginData(){
    
   });
 
-  ReactGA.send({
-    hitType: "pageview",
-    page: window.location.pathname,
-    title: window.location.pathname
-  });
   ReactGA.send({ hitType: "GoogleLogin", page: "GoogleLogin", title: "GoogleLogin" });
 }
  // Magic Login By Naman
@@ -983,11 +978,6 @@ const magicGoogleLogin = async () => {
   });
   await localStorage.setItem("loginInitiated", true);
   try {
-    ReactGA.send({
-      hitType: "pageview",
-      page: window.location.pathname,
-      title: window.location.pathname
-    });
     GoogleAnalyticsLoginData();
     await magic.oauth.loginWithRedirect({
       provider: "google",
