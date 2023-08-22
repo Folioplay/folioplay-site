@@ -298,11 +298,14 @@ import ReactGA from "react-ga4";
 
 
 
-ReactGA.initialize(`${process.env.REACT_APP_GA_ID}`);
 function App() {
-  ReactGA.initialize("UA-282278636-2");
-  const SERVER = process.env.REACT_APP_API_SERVER;
-  
+  const TRACKING_ID = "G-KZQWCKX4JP";
+  ReactGA.initialize(TRACKING_ID);
+  ReactGA.send({
+    hitType: "pageview",
+    page: window.location.pathname,
+    title: window.location.pathname
+  });
 
   const [isLoading, setIsLoading] = useState(true);
  
