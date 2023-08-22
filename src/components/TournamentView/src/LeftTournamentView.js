@@ -26,6 +26,9 @@ import {
   getLeaderboardAsync,
   getWinnersAsync,
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import ReactGA from "react-ga4";
+
+
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Pushing data to blockchain ... </span>
@@ -61,7 +64,7 @@ const LeftTournamentView = () => {
   });
   const dispatch = useDispatch();
   var navigate = useNavigate();
-  
+  ReactGA.initialize("UA-282470184-1");
 const [user, setUser] =useState("");
 const [isAuthenticated, setIsAuthenticated] =useState("");
 
@@ -118,7 +121,11 @@ const localStoritems = async () => {
     setRank(data);
   }
   useEffect(() => {
-    
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+      title: window.location.pathname
+    });
   localStoritems();
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
