@@ -38,6 +38,7 @@ import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
 import { FilterAltOutlined } from "@mui/icons-material";
+import ReactGA from "react-ga4";
 
 const LeftComponent = () => {
   // const { user, isAuthenticated,  } = useMoralis();
@@ -45,6 +46,7 @@ const LeftComponent = () => {
   const [user, setUser] =useState("");
   const [isAuthenticated, setIsAuthenticated] =useState("");
 
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
   const localStoritems = async () => {
     const userr = await localStorage.getItem("user");
     await setUser(userr);
@@ -124,7 +126,11 @@ const LeftComponent = () => {
   const [intervalId, setIntervalId] = useState(undefined);
   const [referral, setReferral] = useState("");
   useEffect(() => {
-    
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+      title: window.location.pathname
+    });
   localStoritems();
     async function authTokenGet() {
       if (isAuthenticated && localStorage.getItem("authtoken") == null) {
