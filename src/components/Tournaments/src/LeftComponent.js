@@ -63,15 +63,19 @@ const LeftComponent = () => {
     live: filterLive,
     upcoming: filterUpcoming,
     joined: filterJoined,
+    cancelled: filterCancelled,
   };
   function filterAll(tournament) {
-    return true;
+    return tournament.status === 3;
   }
   function filterLive(tournament) {
     return tournament.status === 2;
   }
   function filterUpcoming(tournament) {
     return tournament.status === 0;
+  }
+  function filterCancelled(tournament) {
+    return tournament.status === -2;
   }
   function filterJoined(tournament) {
     return tournament.user_joined;
@@ -133,6 +137,7 @@ const LeftComponent = () => {
       }
     }
     authTokenGet();
+    console.log()
   }, []);
   useEffect(() => {
     if (state && state.openDrawer) {
@@ -184,6 +189,7 @@ const LeftComponent = () => {
       });
     // fetchTournaments();
     dispatch(getTournamentAsync());
+    console.log( dispatch(getTournamentAsync()));
     fetchTeams();
     setIntervalId(setInterval(nextImage, 2000));
     setL(len);
@@ -725,6 +731,8 @@ const LeftComponent = () => {
                       </>
                     )}
                   </span>
+
+                 
                   <span
                     className="font-size-12 font-weight-500 mt-5"
                     style={{ color: "var(--dark-dim-white)" }}
@@ -881,6 +889,30 @@ const LeftComponent = () => {
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.add("active-chip");
                 setFilter("upcoming");
+              }}
+            />
+             <Chip
+              className="ml-10"
+              style={{ marginLeft: "10px", fontFamily: "poppins" }}
+              label="Cancelled"
+              variant="outlined"
+              onClick={() => {
+                document
+                  .getElementsByClassName("MuiChip-root")[0]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[1]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[2]
+                  .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[3]
+                  .classList.remove("active-chip");
+                  document
+                  .getElementsByClassName("MuiChip-root")[4]
+                  .classList.add("active-chip");
+                setFilter("cancelled");
               }}
             />
           </span>

@@ -71,7 +71,8 @@ const LoginVerify = () => {
        localStorage.setItem("isLoggedIn", isLoggedIn);
           const didToken = await result.magic.idToken;
        await  localStorage.setItem("didToken", didToken);
-       await  localStorage.setItem("authtoken", didToken);
+     
+      //  await  localStorage.setItem("didToken", didToken);
          const userEmail = await  result.magic.userMetadata.email;
         await  localStorage.setItem("user", userEmail);
         const walletAddress = await  result.magic.userMetadata.publicAddress;
