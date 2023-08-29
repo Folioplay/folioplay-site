@@ -108,6 +108,7 @@ const LeftComponent = () => {
     1: { value: "Closed", color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
+    "-2": { value: "Cancelled", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
   const tournaments = useSelector((state) => state.tournamentSlice.tournament);
@@ -825,6 +826,10 @@ const LeftComponent = () => {
                 document
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[4]
+                  .classList.remove("active-chip");
+                  
                 setFilter("all");
               }}
             />
@@ -846,6 +851,10 @@ const LeftComponent = () => {
                 document
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[4]
+                  .classList.remove("active-chip");
+                  
                 setFilter("live");
               }}
             />
@@ -867,6 +876,9 @@ const LeftComponent = () => {
                 document
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.remove("active-chip");
+                document
+                  .getElementsByClassName("MuiChip-root")[4]
+                  .classList.remove("active-chip");                  
                 setFilter("joined");
               }}
             />
@@ -888,6 +900,9 @@ const LeftComponent = () => {
                 document
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.add("active-chip");
+                document
+                .getElementsByClassName("MuiChip-root")[4]
+                .classList.remove("active-chip");
                 setFilter("upcoming");
               }}
             />
