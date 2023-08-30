@@ -66,7 +66,7 @@ const LeftComponent = () => {
     cancelled: filterCancelled,
   };
   function filterAll(tournament) {
-    return tournament.status === 3;
+    return true;
   }
   function filterLive(tournament) {
     return tournament.status === 2;
@@ -828,8 +828,7 @@ const LeftComponent = () => {
                   .classList.remove("active-chip");
                 document
                   .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");
-                  
+                  .classList.remove("active-chip");                  
                 setFilter("all");
               }}
             />
