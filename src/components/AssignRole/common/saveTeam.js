@@ -38,7 +38,7 @@ export default async function saveTeam(event,coins,finalRanks,setError,setNameSn
           navigate('/tournaments' , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
         }else{
           if(state && state.comingFrom == "/tournaments/" + state.tournamentId){
-            navigate(`/tournaments/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
+            navigate(`/tournament/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
           }else{
             navigate('/activity');
           } 
