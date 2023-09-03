@@ -45,6 +45,7 @@ export default function ActivityTabs({ teams, tournaments }) {
   useEffect(() => {
     if (teams) setTeamsLength(teams.length);
     if (tournaments) {
+      console.log(tournaments);
       const actualTournaments = tournaments.filter(
         (item) => item.tournament !== null
       );
@@ -110,7 +111,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                             4 Winnings
                           </span>
                           <span className="activity-team-contests font-weight-500 ml-10">
-                            10 Contests
+                             {`${teams.length} Contests`}
                           </span>
                         </span>
                       </span>
