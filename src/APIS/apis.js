@@ -142,6 +142,19 @@ export async function getAllUserTeams() {
   }).then((res) => res.json());
 }
 
+
+// // My team activity
+
+// export async function getMyTeamActivities() {
+//   const authtoken = localStorage.getItem("authtoken");
+//   return await fetch(`${SERVER}/user/activity/teams`, {
+//     method: "GET",
+//     headers: {
+//       "x-access-token": authtoken,
+//     },
+//   }).then((res) => res.json());
+// }
+
 export async function joinTournamentAPI(tournamentId, teamId) {
   return await fetch(`${SERVER}/tournament/join`, {
     method: "POST",
@@ -269,6 +282,19 @@ export async function getTeamByid({ teamId }) {
     },
   }).then((res) => res.json());
 }
+
+// My team activity
+
+export async function getMyTeamActivities() {
+  const authtoken = localStorage.getItem("authtoken");
+  return await fetch(`${SERVER}/user/activity/teams`, {
+    method: "GET",
+    headers: {
+      "x-access-token": authtoken,
+    },
+  }).then((res) => res.json());
+}
+
 
 export async function checkAvailableUsername(name) {
   const authtoken = localStorage.getItem("authtoken");

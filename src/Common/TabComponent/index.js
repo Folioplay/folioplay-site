@@ -155,7 +155,7 @@ export default function ContestTabs({
                     width: "90%",
                   }}
                   onClick={() => {
-                    navigate(`/tournaments/${tournament.tournament._id}`, {
+                    navigate(`/tournament/${tournament.tournament._id}`, {
                       state: {
                         transactionId: tournament.transaction_hash,
                       },
@@ -553,7 +553,7 @@ export default function ContestTabs({
                     key={"tournament__" + index}
                     className="activity-tournament"
                     onClick={() => {
-                      navigate(`/tournaments/${tournament.tournament._id}`);
+                      navigate(`/tournament/${tournament.tournament._id}`);
                     }}
                   >
                     <div className="tournament-info">
@@ -710,7 +710,7 @@ export default function ContestTabs({
                       key={"tournament__" + index}
                       className="activity-tournament"
                       onClick={() => {
-                        navigate(`/tournaments/${tournament.tournament._id}`);
+                        navigate(`/tournament/${tournament.tournament._id}`);
                       }}
                     >
                       <div className="tournament-info">
@@ -793,7 +793,7 @@ export default function ContestTabs({
                       key={"tournament__" + index}
                       className="activity-tournament"
                       onClick={() => {
-                        navigate(`/tournaments/${tournament.tournament._id}`);
+                        navigate(`/tournament/${tournament.tournament._id}`);
                       }}
                     >
                       <div className="tournament-info">
@@ -876,7 +876,7 @@ export default function ContestTabs({
                       key={"tournament__" + index}
                       className="activity-tournament"
                       onClick={() => {
-                        navigate(`/tournaments/${tournament.tournament._id}`);
+                        navigate(`/tournament/${tournament.tournament._id}`);
                       }}
                     >
                       <div className="tournament-info">
@@ -961,7 +961,7 @@ export default function ContestTabs({
         {/*                            key={"tournament__" + index}*/}
         {/*                            className="activity-tournament"*/}
         {/*                            onClick={() => {*/}
-        {/*                                navigate(`/tournaments/${tournament.tournament._id}`);*/}
+        {/*                                navigate(`/tournament/${tournament.tournament._id}`);*/}
         {/*                            }}*/}
         {/*                        >*/}
         {/*                            <div className="tournament-info">*/}

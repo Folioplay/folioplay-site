@@ -97,10 +97,8 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(()=>{
         checkLoggedIn();
         const token = localStorage.getItem("authtoken");
-        if(isAuthenticated && (token === null || token === "")){
-           
-                    setTimeout(callLogin, 2000);
-                
+        if(isAuthenticated && (token === null || token === "")){           
+                    setTimeout(callLogin, 2000);                
         }
         else {
             fetch(`${SERVER}/user/`, {
