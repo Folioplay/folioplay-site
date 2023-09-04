@@ -95,7 +95,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                     <motion.div
                       id={"team-" + index}
                       onClick={(event) => {
-                        navigate("/activity/team/" + team.id);
+                        navigate("/activity/team/" + team.teamData.id);
                       }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -104,14 +104,14 @@ export default function ActivityTabs({ teams, tournaments }) {
                     >
                       <span className="activity-team-info">
                         <span className="activity-team-name font-size-20 font-weight-600">
-                          {team.name}
+                          {team.teamData.name}
                         </span>
                         <span>
                           <span className="activity-team-winnings font-weight-500">
-                            4 Winnings
+                          {`${team.totalWinnings} Winnings`}
                           </span>
                           <span className="activity-team-contests font-weight-500 ml-10">
-                             {`${teams.length} Contests`}
+                            {`${team.totalTournamentsPlayed} Contests`}
                           </span>
                         </span>
                       </span>
@@ -119,7 +119,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-1">
                           <img
                             className="activity-team-coin-image image-1"
-                            src={S3_URL + team.selectedCoins[1].symbol + ".png"}
+                            src={S3_URL + team.teamData.selectedCoins[1].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -127,7 +127,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-2">
                           <img
                             className="activity-team-coin-image image-2"
-                            src={S3_URL + team.selectedCoins[4].symbol + ".png"}
+                            src={S3_URL + team.teamData.selectedCoins[4].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -135,7 +135,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-3">
                           <img
                             className="activity-team-coin-image image-3"
-                            src={S3_URL + team.selectedCoins[8].symbol + ".png"}
+                            src={S3_URL + team.teamData.selectedCoins[8].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />

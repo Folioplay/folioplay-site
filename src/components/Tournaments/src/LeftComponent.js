@@ -129,16 +129,19 @@ const LeftComponent = () => {
 
   const [intervalId, setIntervalId] = useState(undefined);
   const [referral, setReferral] = useState("");
+
+  async function authTokenGet() {
+    if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+      await getAuthToken(user);
+    }
+  }
+
   useEffect(() => {
    
   localStoritems();
-    async function authTokenGet() {
-      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
-        await getAuthToken(user);
-      }
-    }
+    
     authTokenGet();
-    console.log()
+    console.log("me calling from oturnament")
   }, []);
   useEffect(() => {
     if (state && state.openDrawer) {

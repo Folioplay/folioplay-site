@@ -9,6 +9,7 @@ import ActivityTabs from "../common/ActivityTabs";
 import {
   getAllUserTeams,
   getPreviousUserTournaments,
+  getMyTeamActivities
 } from "../../../APIS/apis";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 export default function MyTeams() {
@@ -16,7 +17,13 @@ export default function MyTeams() {
   const [teams, setTeams] = useState(undefined);
   const [tournaments, setTournaments] = useState(undefined);
   async function fetchTeams() {
-    setTeams(await getAllUserTeams());
+    // setTeams(await getAllUserTeams());
+    setTeams(await getMyTeamActivities());
+    console.log(getAllUserTeams());
+    console.log("get all user");
+    console.log(getMyTeamActivities());
+    console.log("get my team");
+
   }
   async function fetchUserTournaments() {
     setTournaments(await getPreviousUserTournaments());
