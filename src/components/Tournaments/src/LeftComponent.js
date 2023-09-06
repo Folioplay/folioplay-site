@@ -602,9 +602,17 @@ const LeftComponent = () => {
             (100 * tournament.filled_spots) / tournament.total_spots;
           const startDate = new Date(tournament.start_time);
           const finishDate = new Date(tournament.end_time);
-          const disabledClass =
-            tournament.status !== 0 ? " disable-join-button" : "";
-          const disabledTournament = tournament.status !== 0;
+          // const disabledClass =
+          //   tournament.status !== 0 ? " disable-join-button" : "";
+         
+            const disabledClass =" disable-join-button";
+        
+            const disabledTournament = tournament.status !== 0;
+          const openTournament = tournament.status === 0;
+          const liveTournament = tournament.status === 2;
+          const closedTournament = tournament.status === 1;
+          const cancelledTournament = tournament.status === -2;
+          const completedTournament = tournament.status === 3;
 
           return (
             <motion.div
@@ -670,12 +678,34 @@ const LeftComponent = () => {
                     </div>
                   </span>
                 </span>
-                {!disabledTournament && <Button
-                  className={disabledClass + " tournament-fee"}
+
+
+
+               
+                
+                {openTournament && !tournament.user_joined && <Button
+                  className={" tournament-fee"}
+                  style={{ backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                 
+                >
+                 JOIN&nbsp;@{tournament.entryFee} FPC
+                </Button>}
+
+                {openTournament && tournament.user_joined  && <Button
+                  className={" tournament-fee"}
                   style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
+                     { backgroundColor: "var(--golden)" }
                   }
                   size="small"
                   onClick={(event) => {
@@ -689,10 +719,12 @@ const LeftComponent = () => {
                   }}
                   disabled={disabledTournament}
                 >
-                 JOIN&nbsp;@{tournament.entryFee} FPC
-                </Button>}
+                 Joined@{tournament.entryFee} FPC
+                </Button> } 
 
-                {disabledTournament && <Button
+                
+
+                { liveTournament  &&   <Button
                   className={disabledClass + " tournament-fee"}
                   style={
                     disabledTournament
@@ -712,8 +744,123 @@ const LeftComponent = () => {
                   disabled={disabledTournament}
                 >
                  {tournament.entryFee} FPC
-                </Button> }
+                </Button> } 
+                
+{/* Open tournament */}
+                {/* {!disabledTournament && <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                 JOIN&nbsp;@{tournament.entryFee} FPC
+                </Button>} */}
+
+{ closedTournament  && <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                 {tournament.entryFee} FPC
+                </Button> } 
+
+                
+{ cancelledTournament  && <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                 {tournament.entryFee} FPC
+                </Button> } 
+
+                {completedTournament && <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                 {tournament.entryFee} FPC
+                </Button> } 
+
+
+{/* disabled join button */}
+                {/* {disabledTournament && <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                 {tournament.entryFee} FPC
+                </Button> } */}
               </div>
+
               <div>
                 <LinearProgress
                   variant="determinate"
@@ -773,6 +920,8 @@ const LeftComponent = () => {
                     {status[tournament.status].value}
                   </span>
                 ) : null}
+
+                
                 <div className="tournamentPage__countdown">
                   <span id="timeRemaining" className="font-size-12">
                     {startDate - 300000 > Date.now() ? (
