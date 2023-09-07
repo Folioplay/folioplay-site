@@ -576,11 +576,27 @@ const LeftComponent = () => {
     return timeLeft;
   };
 
+  const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
+    if(completed)return <></>
+    return (
+      <>
+      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
+        <TimerIcon style={{ color: "red" }} fontSize="small" />
+        <span className={"tournamentCard__countdownTimer"} style={{color:"red"}}>
+          
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </span>
+      </>
+    )}
+
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
       <>
-        <span>Starting in </span>
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Startin  in{" "}</span>
+      
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -590,6 +606,8 @@ const LeftComponent = () => {
       </>
     );
   };
+
+  
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
@@ -605,14 +623,15 @@ const LeftComponent = () => {
           // const disabledClass =
           //   tournament.status !== 0 ? " disable-join-button" : "";
          
-            const disabledClass =" disable-join-button";
-        
-            const disabledTournament = tournament.status !== 0;
-          const openTournament = tournament.status === 0;
-          const liveTournament = tournament.status === 2;
-          const closedTournament = tournament.status === 1;
-          const cancelledTournament = tournament.status === -2;
-          const completedTournament = tournament.status === 3;
+          const disabledClass =
+          tournament.status !== 0 ? " disable-join-button" : "";
+        const disabledTournament = tournament.status !== 0;
+
+          // const openTournament = tournament.status === 0;
+          // const liveTournament = tournament.status === 2;
+          // const closedTournament = tournament.status === 1;
+          // const cancelledTournament = tournament.status === -2;
+          // const completedTournament = tournament.status === 3;
 
           return (
             <motion.div
@@ -678,189 +697,33 @@ const LeftComponent = () => {
                     </div>
                   </span>
                 </span>
-
-
-
+                <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                  {/* {tournament.status=== -2 ? <> {tournament.entryFee} FPC</> : <> {tournament.entryFee} FPC</> } */}
+                {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
+                {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined &&  <> Join @{tournament.entryFee} FPC</>} */}
+                  {tournament.status===0 && !tournament.user_joined ? <> Join @{tournament.entryFee} FPC</> :  <>{tournament.entryFee} FPC</>}
                
-                
-                {openTournament && !tournament.user_joined && <Button
-                  className={" tournament-fee"}
-                  style={{ backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                 
-                >
-                 JOIN&nbsp;@{tournament.entryFee} FPC
-                </Button>}
-
-                {openTournament && tournament.user_joined  && <Button
-                  className={" tournament-fee"}
-                  style={
-                     { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 Joined@{tournament.entryFee} FPC
-                </Button> } 
-
-                
-
-                { liveTournament  &&   <Button
-                  className={disabledClass + " tournament-fee"}
-                  style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 {tournament.entryFee} FPC
-                </Button> } 
-                
-{/* Open tournament */}
-                {/* {!disabledTournament && <Button
-                  className={disabledClass + " tournament-fee"}
-                  style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 JOIN&nbsp;@{tournament.entryFee} FPC
-                </Button>} */}
-
-{ closedTournament  && <Button
-                  className={disabledClass + " tournament-fee"}
-                  style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 {tournament.entryFee} FPC
-                </Button> } 
-
-                
-{ cancelledTournament  && <Button
-                  className={disabledClass + " tournament-fee"}
-                  style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 {tournament.entryFee} FPC
-                </Button> } 
-
-                {completedTournament && <Button
-                  className={disabledClass + " tournament-fee"}
-                  style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 {tournament.entryFee} FPC
-                </Button> } 
-
-
-{/* disabled join button */}
-                {/* {disabledTournament && <Button
-                  className={disabledClass + " tournament-fee"}
-                  style={
-                    disabledTournament
-                      ? {}
-                      : { backgroundColor: "var(--golden)" }
-                  }
-                  size="small"
-                  onClick={(event) => {
-                    event.cancelBubble = true;
-                    if (event.stopPropagation) event.stopPropagation();
-                    var tmp =
-                      event.target.parentNode.parentNode.getAttribute("id");
-                    setTournamentId(tmp.split("-")[1]);
-                    // tournamentId = tournamentId.split("-")[1];
-                    chooseTeamOpen();
-                  }}
-                  disabled={disabledTournament}
-                >
-                 {tournament.entryFee} FPC
-                </Button> } */}
+                </Button>
               </div>
-
               <div>
                 <LinearProgress
                   variant="determinate"
@@ -877,13 +740,10 @@ const LeftComponent = () => {
                     ) : (
                       <>
                         {tournament.total_spots - tournament.available_spots}{" "}
-                       
                         users joined
                       </>
                     )}
                   </span>
-
-                 
                   <span
                     className="font-size-12 font-weight-500 mt-5"
                     style={{ color: "var(--dark-dim-white)" }}
@@ -919,17 +779,42 @@ const LeftComponent = () => {
                   >
                     {status[tournament.status].value}
                   </span>
-                ) : null}
-
-                
+                ) :  <span
+                className="font-size-12"
+                style={{
+                  color: status[tournament.status].color,
+                  padding: "0 10px",
+                  border: "1px solid " + status[tournament.status].color,
+                  borderRadius: "30px",
+                }}
+              >
+                {status[tournament.status].value}
+              </span>}
                 <div className="tournamentPage__countdown">
                   <span id="timeRemaining" className="font-size-12">
-                    {startDate - 300000 > Date.now() ? (
+                    {/* {startDate - 300000 > Date.now() ? (
                       <Countdown
                         date={startDate - 300000}
                         renderer={renderer}
                       />
-                    ) : null}
+                    ) : null} */}
+                   
+                     {startDate-300000> Date.now() ? (
+                      <Countdown
+                        date={startDate -300000 }
+                        renderer={renderer}
+                      />
+                    ) : (
+                      <>
+                        {tournament.status !==-2 && startDate <= Date.now() ? (
+                          <Countdown
+                            date={finishDate}
+                            renderer={rendererEnd}
+                          />
+                        ) : null}
+                      </>
+                    )}
+                   
                   </span>
                 </div>
                 <span className="font-size-12">
