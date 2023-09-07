@@ -352,7 +352,7 @@ export default function LeaderBoardTabs({
                     </span>
                     <span className={"leaderboard-username"}>
                       {entry.user.username}{" "}
-                      <span className={"teamCount"} style={{marginLeft:"45px"}}> 
+                      <span className={"teamCount"}> 
                         T{entry.user_team_count}
                       </span>
                     </span>
@@ -498,7 +498,7 @@ export default function LeaderBoardTabs({
                     </span>
                     <span className={"leaderboard-username"}>
                       {entry.user.username}{" "}
-                      <span className={"teamCount"} style={{marginLeft:"45px"}}>
+                      <span className={"teamCount"} >
                         T{entry.user_team_count}
                       </span>
                     </span>

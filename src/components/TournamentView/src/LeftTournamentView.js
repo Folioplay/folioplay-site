@@ -28,7 +28,7 @@ import {
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Pushing data to blockchain ... </span>
+    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration Closed <br/> tournament starting in ... </span>
     return (
       <>
       <span style={{color:"var(--dark-dim-white"}}>Starting in </span>
@@ -105,6 +105,7 @@ const localStoritems = async () => {
   };
   async function fetchTournament() {
     setTournament(await getTournamentById({ _id: _id }));
+    console.log(await getTournamentById({ _id: _id }));
   }
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
@@ -321,17 +322,15 @@ const localStoritems = async () => {
                           ? {}
                           : { backgroundColor: "var(--golden)" }
                       }
-                      onClick={() => {
-                        chooseTeamOpen();
-                      }}
-                      disabled={disabledTournament}
-                    >
-                     JOIN&nbsp;@{tournament.entryFee} FPC
-                    </Button> }
-
-                    {disabledTournament &&
-                    
-                    <Button
+                          onClick={() => {
+                            chooseTeamOpen();
+                          }}
+                          disabled={disabledTournament}
+                        >
+                       {tournament.entryFee} FPC
+                        </Button>}
+                      {disabledTournament &&
+                        <Button
                       className={disabledClass + " tournament-fee"}
                       size="small"
                       style={
@@ -344,6 +343,7 @@ const localStoritems = async () => {
                       }}
                       disabled={disabledTournament}
                     >
+                      {/* {tournament.entryFee} FPC */}
                       {tournament.entryFee} FPC
                     </Button> }
                   </span>
@@ -415,7 +415,7 @@ const localStoritems = async () => {
                       />
                     ) : (
                       <>
-                        {endTime > Date.now() ? (
+                        { tournament.status !==-2 && endTime > Date.now() ? (
                           <Countdown
                             date={endTime}
                             renderer={rendererEnd}
@@ -438,7 +438,7 @@ const localStoritems = async () => {
                     : "tournament-view-card-completed-red"
                 }
               >
-                {amountWon !== -1 ? (
+                {amountWon !== -2 ? (
                   <>
                     <div className="profileHeaderTP">
                       <div className="profilePicture">
