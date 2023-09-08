@@ -313,7 +313,43 @@ const localStoritems = async () => {
                       Entry Fee
                     </span>
                     <br />
-                    {!disabledTournament &&
+
+                    {startTime-300000 > Date.now() ? (
+                    <Button
+                      className={disabledClass + " tournament-fee"}
+                      size="small"
+                      style={
+                        disabledTournament
+                          ? {}
+                          : { backgroundColor: "var(--golden)" }
+                      }
+                          onClick={() => {
+                            chooseTeamOpen();
+                          }}
+                          disabled={disabledTournament}
+                        >
+                       {tournament.entryFee} FPC
+                        </Button>):(<Button
+                      className={disabledClass + " tournament-fee"}
+                      size="small"
+                      style={
+                        disabledTournament
+                          ? {}
+                          : { backgroundColor: "var(--golden)" }
+                      }
+                      onClick={() => {
+                        chooseTeamOpen();
+                      }}
+                      disabled={disabledTournament}
+                    >
+                      {/* {tournament.entryFee} FPC */}
+                      {tournament.entryFee} FPC
+                    </Button> )}
+
+
+
+
+                    {/* {!disabledTournament &&
                     
                     <Button
                       className={disabledClass + " tournament-fee"}
@@ -330,6 +366,8 @@ const localStoritems = async () => {
                         >
                        {tournament.entryFee} FPC
                         </Button>}
+
+
                       {disabledTournament &&
                         <Button
                       className={disabledClass + " tournament-fee"}
@@ -344,11 +382,15 @@ const localStoritems = async () => {
                       }}
                       disabled={disabledTournament}
                     >
-                      {/* {tournament.entryFee} FPC */}
+                     
                       {tournament.entryFee} FPC
-                    </Button> }
+                    </Button> } */}
                   </span>
                 </div>
+              
+              
+              
+              
                 {tournament.status === -2 &&
                 <div>
                   <LinearProgress

@@ -595,6 +595,8 @@ const LeftComponent = () => {
 
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
+    if(completed)
     return (
       <>
        <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in{" "}</span>
@@ -801,8 +803,10 @@ const LeftComponent = () => {
                       />
                     ) : null} */}
                      
+                     {tournament.status === 1 ? ( <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
+):("") }
 
-                     {tournament.status !==-2 && tournament.status !==1 && startDate > Date.now() ? (
+                     {tournament.status !==-2 && tournament.status !==1 && tournament.status ===0 && startDate > Date.now() ? (
                       <Countdown
                         date={startDate-60000}
                         renderer={renderer}
