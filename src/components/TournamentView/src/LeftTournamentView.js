@@ -28,7 +28,8 @@ import {
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration Closed <br/> tournament starting in ... </span>
+    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
+   
     return (
       <>
       <span style={{color:"var(--dark-dim-white"}}>Starting in </span>
@@ -410,7 +411,7 @@ const localStoritems = async () => {
                   >
                     {startTime > Date.now() ? (
                       <Countdown
-                        date={startTime -300000 }
+                        date={startTime-60000 }
                         renderer={renderer}
                       />
                     ) : (

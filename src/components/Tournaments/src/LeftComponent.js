@@ -142,6 +142,7 @@ const LeftComponent = () => {
     
     authTokenGet();
     console.log("me calling from oturnament")
+
   }, []);
   useEffect(() => {
     if (state && state.openDrawer) {
@@ -156,6 +157,7 @@ const LeftComponent = () => {
     };
   }, [intervalId]);
   useEffect(() => {
+    console.log(tournaments);
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
         delete state.openDrawer;
@@ -595,7 +597,7 @@ const LeftComponent = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     return (
       <>
-       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Startin  in{" "}</span>
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in{" "}</span>
       
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
@@ -720,7 +722,7 @@ const LeftComponent = () => {
                 {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
                 {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
                   {/* {!tournament.user_joined &&  <> Join @{tournament.entryFee} FPC</>} */}
-                  {tournament.status===0 && !tournament.user_joined ? <> Join @{tournament.entryFee} FPC</> :  <>{tournament.entryFee} FPC</>}
+                {tournament.entryFee} FPC
                
                 </Button>
               </div>
@@ -798,10 +800,11 @@ const LeftComponent = () => {
                         renderer={renderer}
                       />
                     ) : null} */}
-                   
-                     {startDate-300000> Date.now() ? (
+                     
+
+                     {tournament.status !==-2 && tournament.status !==1 && startDate > Date.now() ? (
                       <Countdown
-                        date={startDate -300000 }
+                        date={startDate-60000}
                         renderer={renderer}
                       />
                     ) : (
