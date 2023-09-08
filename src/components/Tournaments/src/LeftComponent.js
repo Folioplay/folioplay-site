@@ -596,7 +596,6 @@ const LeftComponent = () => {
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
-    if(completed)
     return (
       <>
        <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in{" "}</span>
