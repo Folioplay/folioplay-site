@@ -105,7 +105,7 @@ const LeftComponent = () => {
 
   const status = {
     3: { value: "Completed", color: "#ff000096" },
-    1: { value: "Closed", color: "#FFCC00" },
+    1: { value: `Registration${" "}closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
     "-2": { value: "Cancelled", color: "#FFCC00" },
@@ -595,10 +595,16 @@ const LeftComponent = () => {
 
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
+    if(completed)return <> <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
+    <Countdown
+     date={Date.now() + 60000} 
+     renderer={rendererBuffer}
+                      /></span>
+
+    </>
     return (
       <>
-       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in{" "}</span>
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Registration Closingin{" "}</span>
       
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
@@ -606,6 +612,22 @@ const LeftComponent = () => {
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
         </span>
+      </>
+    );
+  };
+
+  const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
+    if(completed)return <>Tournament Started</>
+    return (
+      <>
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in
+      
+        <TimerIcon style={{ color: "var(--golden)" }} />
+        <span className={"tournamentCard__countdownTimer"}>
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </span></span>
       </>
     );
   };
@@ -802,8 +824,11 @@ const LeftComponent = () => {
                       />
                     ) : null} */}
                      
-                     {tournament.status === 1 ? ( <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
-):("") }
+                     {tournament.status === 1 ? ( <Countdown
+                       date={startDate}
+                        renderer={rendererBuffer}
+                      />
+):(null) }
 
                      {tournament.status !==-2 && tournament.status !==1 && tournament.status ===0 && startDate > Date.now() ? (
                       <Countdown
