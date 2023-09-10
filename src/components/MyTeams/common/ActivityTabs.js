@@ -7,6 +7,8 @@ import TabPanel from "@mui/lab/TabPanel";
 import { motion } from "framer-motion/dist/framer-motion";
 import "../style/index.css";
 import { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+// import deleteClickedTeam from "../common/deleteCLickedTeam";
 // import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +16,7 @@ import { Chip, LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LabTabs from "../../../Common/TabComponent";
 import { S3_URL } from "../../../APIS/apis";
+import { deleteTeamId } from "../../../APIS/apis";
 // import LabTabs from "../../../Common/TabComponent";
 export default function ActivityTabs({ teams, tournaments }) {
   const navigate = useNavigate();
@@ -42,16 +45,26 @@ export default function ActivityTabs({ teams, tournaments }) {
   const handleClick = () => {
     console.info("You clicked the Chip.");
   };
+
+async function deleteTeamById(teamid,teamIndex){
+  await localStorage.setItem("teamId",teamid)
+  await localStorage.setItem("teamIndex",teamIndex)
+  await deleteTeamId(teamid,teamIndex);
+  window.location.reload();
+ 
+}
+
   useEffect(() => {
-    if (teams) setTeamsLength(teams.length);
-    if (tournaments) {
-      console.log(tournaments);
+    console.log("useEffect Called 1")
+    if (teams) setTeamsLength(teams.length);   
+    if (tournaments) {      
       const actualTournaments = tournaments.filter(
         (item) => item.tournament !== null
       );
       setParticipatedContestsLength(actualTournaments.length);
     }
   }, []);
+
 
   const tournamentsList = tournaments ? (
     <LabTabs
@@ -92,18 +105,17 @@ export default function ActivityTabs({ teams, tournaments }) {
               <>
                 {teams.map((team, index) => {
                   return (
-                    <motion.div
-                      id={"team-" + index}
-                      onClick={(event) => {
-                        navigate("/activity/team/" + team.teamData.id);
-                      }}
+                    <motion.div                     
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.35 }}
                       className="activity-team-card mb-15"
                     >
                       <span className="activity-team-info">
-                        <span className="activity-team-name font-size-20 font-weight-600">
+                        <span className="activity-team-name font-size-20 font-weight-600"  id={"team-" + index}
+                      onClick={(event) => {
+                        navigate("/activity/team/" + team.teamData.id);
+                      }}>
                           {team.teamData.name}
                         </span>
                         <span>
@@ -115,7 +127,34 @@ export default function ActivityTabs({ teams, tournaments }) {
                           </span>
                         </span>
                       </span>
+                      <span className="image-wrappers image-1">
+                          {/* <img
+                            className="activity-team-coin-image image-1"
+                            src={S3_URL + team.teamData.selectedCoins[1].symbol + ".png"}
+                            width="45px"
+                            height="45px"
+                          /> */}
+                           <DeleteIcon
+                        className="delete-team-button team-buttons ml-5"
+                        id={"team-" + index}
+                      onClick={(event) => {
+                        deleteTeamById(team.teamData.id,index);
+                      }}
+                        fontSize="large"
+                      />
+
+{/* <DeleteIcon
+                        className="delete-team-button team-buttons ml-5"
+                        onClick={(event) =>{
+                          event.cancelBubble = true;
+                          if(event.stopPropagation) event.stopPropagation();
+                          deleteClickedTeam(event, teams, deleteTeam)}
+                        }
+                        fontSize="large"
+                      /> */}
+                        </span>
                       <div className="activity-team-coins-preview">
+                      
                         <span className="image-wrappers image-1">
                           <img
                             className="activity-team-coin-image image-1"
@@ -144,7 +183,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                           <span className="font-size-12 font-weight-600">
                             +8
                           </span>
-                        </span>
+                        </span>                       
                       </div>
                     </motion.div>
                   );
