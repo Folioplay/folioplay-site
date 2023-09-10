@@ -84,7 +84,7 @@ const localStoritems = async () => {
   });
   const [tournament, setTournament] = useState(undefined);
   // const tournament = useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
-  const [amountWon, setAmountWon] = useState(-1);
+  const [amountWon, setAmountWon] = useState(0);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
   const _id = params.tournamentId;

@@ -226,20 +226,47 @@ export async function createTeam({ selectedCoins, name }) {
   }).then((res) => res.json());
 }
 
+// export async function deleteTeam({ teamId, teamIndex }) {
+//   const authtoken = localStorage.getItem("authtoken");
+//   return await fetch(`${SERVER}/teams/` + teamId + "/", {
+//     method: "DELETE",
+//     headers: {
+//       "x-access-token": authtoken,
+//     },
+//   }).then(() => {
+//     document.getElementById("team-" + teamIndex).classList.add("display-none");
+//     document.getElementById("jointournament-button").style.display = "none";
+//   });
+// }
 export async function deleteTeam({ teamId, teamIndex }) {
   const authtoken = localStorage.getItem("authtoken");
-
-  return await fetch(`${SERVER}/teams/` + teamId + "/", {
+  console.log("api team id"+" "+teamId+teamIndex);
+  return await fetch(`${SERVER}/teams/${teamId}/`, {
     method: "DELETE",
     headers: {
       "x-access-token": authtoken,
     },
   }).then(() => {
-    document.getElementById("team-" + teamIndex).classList.add("display-none");
-    document.getElementById("jointournament-button").style.display = "none";
+   console.log("sucess");
   });
 }
 
+export async function deleteTeamId({ teamId, teamIndex }) {
+  const authtoken = localStorage.getItem("authtoken");
+  const teamIdd = localStorage.getItem("teamId");
+  localStorage.removeItem("teamId")
+  const teamIndexx = localStorage.getItem("teamIndex");
+  localStorage.removeItem("teamIndex")
+  console.log("api team id"+" "+teamId+teamIndex);
+  return await fetch(`${SERVER}/teams/${teamIdd}/`, {
+    method: "DELETE",
+    headers: {
+      "x-access-token": authtoken,
+    },
+  }).then(() => {
+   console.log("sucess");
+  });
+}
 
 export async function validUser() {
   return await fetch(`${SERVER}/user/is-valid`, {
@@ -266,7 +293,7 @@ export async function getRank({ tournamentId }) {
 
 export async function getPreviousUserTournaments() {
   const authtoken = localStorage.getItem("authtoken");
-  return await fetch(`${SERVER}/user/activity/`, {
+  return await fetch(`${SERVER}/user/activity/tournaments`, {
     method: "GET",
     headers: {
       "x-access-token": authtoken,

@@ -617,7 +617,7 @@ const LeftComponent = () => {
   };
 
   const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <>Tournament Started</>
+    if(completed)return <></>
     return (
       <>
        <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in
