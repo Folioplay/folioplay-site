@@ -181,7 +181,7 @@ export async function getLeaderboard(tournament_id) {
 }
 
 export async function getWinRateAPI() {
-  return await fetch(`${SERVER}/user/activity?win-rate`, {
+  return await fetch(`${SERVER}/user/activity/tournaments?win-rate`, {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("authtoken"),
