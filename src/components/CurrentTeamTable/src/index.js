@@ -26,6 +26,8 @@ function CurrentTeamTable() {
       const response = await getCoinsTableData(tournamentId, teamId).then(
         (response) => {
           setCoinsData(response);
+          console.log("coin data")
+          console.log(response)
         }
       );
     };
@@ -34,6 +36,9 @@ function CurrentTeamTable() {
         _id: tournamentId,
       }).then((response) => {
         setTournamentDetails(response);
+        console.log("tournament details data")
+        console.log(response)
+
       });
     };
     fetchData();
@@ -49,6 +54,7 @@ function CurrentTeamTable() {
     var parser = {
       id: rows.length + 1,
       coinName: element.coin_name,
+      coinCategory: element.coin_category,
       initialAllocation: element.coin_allocation,
       priceStart: element.coin_price_start,
       priceEnd: element.coin_price_end,
@@ -62,16 +68,23 @@ function CurrentTeamTable() {
     var parser = {
       id: runningRows.length + 1,
       coinName: element.coin_name,
+      coinCategory:element.coin_category,
       allocatedCoins: element.coin_allocation,
     };
     runningRows.push(parser);
   });
 
   const columns = [
-    { field: "id", headerName: "Id", width: 50, headerAlign: "center" },
+    { field: "id", headerName: "Id", width: 20, headerAlign: "center" },
     {
       field: "coinName",
       headerName: "Coin Name",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "coinCategory",
+      headerName: "Coin Category",
       width: 100,
       headerAlign: "center",
     },
@@ -122,6 +135,12 @@ function CurrentTeamTable() {
       headerAlign: "center",
     },
     {
+      field: "coinCategory",
+      headerName: "Category",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
       field: "allocatedCoins",
       headerName: "Allocated Coins",
       width: 150,
@@ -129,7 +148,7 @@ function CurrentTeamTable() {
     },
   ];
 
-  /////////////////
+  
 
   const LeftComponent = () => {
     return (
@@ -154,7 +173,15 @@ function CurrentTeamTable() {
         </div>
         <div className="team-preview-wrapper1 mt-20">
           {tournamentDetails.status === 3 ? (
-            <DataGrid rows={rows} columns={columns} pageSize={12} />
+            <DataGrid rows={rows} columns={columns} pageSize={12}            
+            />
+          ) : (
+           ""
+          )}
+
+{tournamentDetails.status === 2 ? (
+            <DataGrid rows={rows} columns={columns} pageSize={12}            
+            />
           ) : (
             <DataGrid
               rows={runningRows}

@@ -110,6 +110,8 @@ const localStoritems = async () => {
   }
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
+    console.log("ammounttt");
+    console.log(await getAmountWon({ _id: _id }));
   }
 
   async function fetchTeams() {
