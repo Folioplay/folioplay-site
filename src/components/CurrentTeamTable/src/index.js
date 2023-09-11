@@ -172,14 +172,7 @@ function CurrentTeamTable() {
           Total Points:&nbsp;<b>{leaderBoardData.portfolio}</b>
         </div>
         <div className="team-preview-wrapper1 mt-20">
-          {tournamentDetails.status === 3 ? (
-            <DataGrid rows={rows} columns={columns} pageSize={12}            
-            />
-          ) : (
-           ""
-          )}
-
-{tournamentDetails.status === 2 ? (
+          {tournamentDetails.status === 3 || tournamentDetails.status === 2  ? (
             <DataGrid rows={rows} columns={columns} pageSize={12}            
             />
           ) : (
@@ -189,6 +182,7 @@ function CurrentTeamTable() {
               pageSize={12}
             />
           )}
+
         </div>
       </div>
     );
