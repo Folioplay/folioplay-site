@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import FolioplayBar from "../../FolioplayBar/src";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getTransactionHistory} from "../../../APIS/apis";
 import moment from "moment";
 import AccordionComponent from "../../../Common/Accordion";
@@ -13,7 +13,7 @@ import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-
+import { SERVER } from '../../../APIS/apis';
 
 const LeftTransactionHistoryComponent = () => {
 
@@ -60,10 +60,17 @@ const LeftTransactionHistoryComponent = () => {
         setTransactionHistory(arr);
     }
 
+    const NavigateTournament =(TournamentId) =>{
+        
+       
+console.log("TournamentId"+TournamentId)
+    }
+
     useEffect(()=>{
         async function setTransactionHistoryFunction() {
             const data = await getTransactionHistory();
             parseTransactionData(data);
+            console.log(data);
         }
         setTransactionHistoryFunction();
     },[])
@@ -83,6 +90,12 @@ const LeftTransactionHistoryComponent = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className={"summaryTab__extendedDetails"}>
+                    <div className={"summaryTab__dataHeading"}>
+                            Tournament Name
+                        </div>
+                        <Link to={`/tournament/${item.data.fromId}`}><div  className={"summaryTab__dataBody"} style={{textDecoration:"none"}}>
+                       {item.data.tournamentName}
+                        </div></Link>   
                         <div className={"summaryTab__dataHeading"}>
                             Transaction ID
                         </div>
