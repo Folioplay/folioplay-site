@@ -28,8 +28,10 @@ import {
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
-   
+    if(completed){
+      fetchTournament();
+      return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
+  }
     return (
       <>
       <span style={{color:"var(--dark-dim-white"}}>Starting in </span>
@@ -43,7 +45,10 @@ const LeftTournamentView = () => {
     );
   };
   const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <>Ended</>
+    if(completed){
+      fetchTournament();
+      return <></>
+    }
     return (
       <>
       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
@@ -483,7 +488,7 @@ const localStoritems = async () => {
                     : "tournament-view-card-completed-red"
                 }
               >
-                {amountWon !== -2 ? (
+                {amountWon !== -2 && tournament.user_joined ? (
                   <>
                     <div className="profileHeaderTP">
                       <div className="profilePicture">

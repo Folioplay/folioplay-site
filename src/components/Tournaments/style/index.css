@@ -308,3 +308,9 @@
   }.shepherd-button{
     /* background-color: var(--golden) !important; */
   }
+
+  
+.no-tournamnet-text{
+  color: black;
+  font-weight: 700;
+}

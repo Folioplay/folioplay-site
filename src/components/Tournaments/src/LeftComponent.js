@@ -105,7 +105,7 @@ const LeftComponent = () => {
 
   const status = {
     3: { value: "Completed", color: "#ff000096" },
-    1: { value: `Registration${" "}closed`, color: "#FFCC00" },
+    1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
     "-2": { value: "Cancelled", color: "#FFCC00" },
@@ -579,7 +579,7 @@ const LeftComponent = () => {
   };
 
   const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <></>
+    if(completed) {  dispatch(getTournamentAsync()); return <></>}
     return (
       <>
       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
@@ -595,13 +595,17 @@ const LeftComponent = () => {
 
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <> <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
+    if(completed){
+      dispatch(getTournamentAsync());
+    return <> <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
+   
     <Countdown
      date={Date.now() + 60000} 
      renderer={rendererBuffer}
                       /></span>
 
     </>
+    }
     return (
       <>
        <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Registration Closingin{" "}</span>
@@ -617,7 +621,9 @@ const LeftComponent = () => {
   };
 
   const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <></>
+    if(completed) {
+      dispatch(getTournamentAsync());
+      return <></>}
     return (
       <>
        <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in
@@ -636,7 +642,7 @@ const LeftComponent = () => {
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
-      <span className={"no-tournamnet-text"} style={{color:"black", fontWeight:"700"}}>No Tournaments...</span>
+      <span className={"no-tournamnet-text"} >No Tournaments...</span>
     ) : (
       tournaments
         .filter((tournament) => filterToFunctionMap[filter](tournament))
@@ -1009,7 +1015,7 @@ const LeftComponent = () => {
           ) : (
             <>
               {tournaments.length === 0 ? (
-                <span>No Tournaments</span>
+                <span className={"no-tournamnet-text"}>No Tournaments...</span>
               ) : (
                 <>
                   {tournamentsList}
