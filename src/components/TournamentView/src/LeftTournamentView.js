@@ -29,7 +29,7 @@ import {
 const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if(completed){
-      fetchTournament();
+     
       return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
   }
     return (
@@ -46,7 +46,7 @@ const LeftTournamentView = () => {
   };
   const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
     if(completed){
-      fetchTournament();
+  
       return <></>
     }
     return (

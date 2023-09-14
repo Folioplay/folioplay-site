@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import FolioplayBar from "../../FolioplayBar/src";
 import ImageSlider from "../../ImageSlider/src";
 import ReactLoading from "react-loading";
@@ -579,7 +579,9 @@ const LeftComponent = () => {
   };
 
   const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed) {  dispatch(getTournamentAsync()); return <></>}
+    if(completed) {
+ console.log("calling from end timer 583")
+    return <></>}
     return (
       <>
       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
@@ -596,7 +598,7 @@ const LeftComponent = () => {
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if(completed){
-      dispatch(getTournamentAsync());
+      // dispatch(getTournamentAsync());
     return <> <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
    
     <Countdown
@@ -622,7 +624,8 @@ const LeftComponent = () => {
 
   const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
     if(completed) {
-      dispatch(getTournamentAsync());
+      
+      // dispatch(getTournamentAsync());
       return <></>}
     return (
       <>
