@@ -32,7 +32,7 @@ export default function CurrentTeamPreview() {
         </div>
         <br />
         <div className="totalPoints">
-          Total Points:&nbsp;<b>{leaderBoardData.portfolio.toFixed(2)}</b>
+          Total Points:&nbsp;<b>{leaderBoardData.portfolio}</b>
           <TableRowsOutlined
             style={{ cursor: "pointer", marginLeft: "10px" }}
             onClick={() =>

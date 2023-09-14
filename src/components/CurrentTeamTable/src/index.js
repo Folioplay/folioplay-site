@@ -16,12 +16,13 @@ function CurrentTeamTable() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { leaderBoardData } = state;
-  const tournamentId = state.tournament_id;
-  const teamId = leaderBoardData.team.id;
+  const tournamentId = state.leaderBoardData.tournamentId;
+  const teamId = state.leaderBoardData.team.id;
 
   const [coinsData, setCoinsData] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState([]);
   useEffect(() => {
+    console.log("current view")
     const fetchData = async () => {
       const response = await getCoinsTableData(tournamentId, teamId).then(
         (response) => {
@@ -43,6 +44,9 @@ function CurrentTeamTable() {
     };
     fetchData();
     fetchTournament();
+    console.log("tournament_id"+tournamentId+"teamId"+ teamId)
+    console.log("tournament_id"+ fetchData())
+    console.log("tournament_id"+tournamentId+ fetchTournament())
   }, []);
 
   const coinsFlattendedData = coinsData.coins_data;

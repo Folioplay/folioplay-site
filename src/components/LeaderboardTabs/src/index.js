@@ -194,8 +194,8 @@ export default function LeaderBoardTabs({
                     onClick={() => {
                       navigate("/activity/team/currentStatus", {
                         state: {
-                          leaderBoardData: entry,
-                          tournament_id: tournamentId,
+                           leaderBoardData: entry,
+                          tournament_id: entry.tournamentId,
                         },
                       });
                     }}
@@ -232,8 +232,8 @@ export default function LeaderBoardTabs({
                     onClick={() => {
                       navigate("/activity/team/currentStatus", {
                         state: {
-                          leaderBoardData: entry,
-                          tournament_id: tournamentId,
+                           leaderBoardData: entry,
+                          tournament_id: entry.tournamentId,
                         },
                       });
                     }}
@@ -302,8 +302,8 @@ export default function LeaderBoardTabs({
                     onClick={() => {
                       navigate("/activity/team/currentStatus", {
                         state: {
-                          leaderBoardData: entry,
-                          tournament_id: tournamentId,
+                           leaderBoardData: entry,
+                          tournament_id: entry.tournamentId,
                         },
                       });
                     }}
@@ -340,8 +340,8 @@ export default function LeaderBoardTabs({
                     onClick={() => {
                       navigate("/activity/team/currentStatus", {
                         state: {
-                          leaderBoardData: entry,
-                          tournament_id: tournamentId,
+                           leaderBoardData: entry,
+                          tournament_id: entry.tournamentId,
                         },
                       });
                     }}
@@ -486,8 +486,8 @@ export default function LeaderBoardTabs({
                     onClick={() => {
                       navigate("/activity/team/currentStatus", {
                         state: {
-                          leaderBoardData: entry,
-                          tournament_id: tournamentId,
+                           leaderBoardData: entry,
+                          tournament_id: entry.tournamentId,
                         },
                       });
                     }}
