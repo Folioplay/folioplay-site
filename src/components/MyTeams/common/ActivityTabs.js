@@ -127,13 +127,7 @@ async function deleteTeamById(teamid,teamIndex){
                           </span>
                         </span>
                       </span>
-                      <span className="image-wrappers image-1">
-                          {/* <img
-                            className="activity-team-coin-image image-1"
-                            src={S3_URL + team.teamData.selectedCoins[1].symbol + ".png"}
-                            width="45px"
-                            height="45px"
-                          /> */}
+                      {/* <span className="image-wrappers image-1">
                            <DeleteIcon
                         className="delete-team-button team-buttons ml-5"
                         id={"team-" + index}
@@ -142,17 +136,7 @@ async function deleteTeamById(teamid,teamIndex){
                       }}
                         fontSize="large"
                       />
-
-{/* <DeleteIcon
-                        className="delete-team-button team-buttons ml-5"
-                        onClick={(event) =>{
-                          event.cancelBubble = true;
-                          if(event.stopPropagation) event.stopPropagation();
-                          deleteClickedTeam(event, teams, deleteTeam)}
-                        }
-                        fontSize="large"
-                      /> */}
-                        </span>
+                        </span> */}
                       <div className="activity-team-coins-preview">
                       
                         <span className="image-wrappers image-1">
@@ -185,6 +169,17 @@ async function deleteTeamById(teamid,teamIndex){
                           </span>
                         </span>                       
                       </div>
+                      <span >
+                           <DeleteIcon
+                        className="delete-team-button team-buttons ml-5"
+                        id={"team-" + index}
+                      onClick={(event) => {
+                        deleteTeamById(team.teamData.id,index);
+                      }}
+                        fontSize="large"
+                        style={{marginTop:"50px",fontSize:"1.1rem"}}
+                      />
+                        </span>
                     </motion.div>
                   );
                 })}

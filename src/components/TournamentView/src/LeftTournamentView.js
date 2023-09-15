@@ -27,14 +27,28 @@ import {
   getWinnersAsync,
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed){
-     
-      return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Registration closed </span>
-  }
+    if (completed) {
+
+      return <span className="font-weight-500" style={{ color: "var(--grey-shade" }}>Registration closed </span>
+    }
     return (
       <>
-      <span style={{color:"var(--dark-dim-white"}}>Starting in </span>
+        <span style={{ color: "var(--dark-dim-white" }}>Starting in </span>
         <TimerIcon style={{ color: "var(--golden)" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"}>
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -45,16 +59,16 @@ const LeftTournamentView = () => {
     );
   };
   const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed){
-  
+    if (completed) {
+
       return <></>
     }
     return (
       <>
-      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
+        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Ends in{" "}</span>
         <TimerIcon style={{ color: "red" }} fontSize="small" />
-        <span className={"tournamentCard__countdownTimer"} style={{color:"red"}}>
-          
+        <span className={"tournamentCard__countdownTimer"} style={{ color: "red" }}>
+
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
@@ -67,16 +81,16 @@ const LeftTournamentView = () => {
   });
   const dispatch = useDispatch();
   var navigate = useNavigate();
-  
-const [user, setUser] =useState("");
-const [isAuthenticated, setIsAuthenticated] =useState("");
 
-const localStoritems = async () => {
-  const userr = await localStorage.getItem("user");
-  await setUser(userr);
-  const isLoggedIn = await localStorage.getItem("isLoggedIn");
-  await setIsAuthenticated(isLoggedIn);
-}
+  const [user, setUser] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState("");
+
+  const localStoritems = async () => {
+    const userr = await localStorage.getItem("user");
+    await setUser(userr);
+    const isLoggedIn = await localStorage.getItem("isLoggedIn");
+    await setIsAuthenticated(isLoggedIn);
+  }
   // const { user } = useMoralis();
   const { state } = useLocation();
   // let account = user.get("ethAddress");
@@ -115,21 +129,23 @@ const localStoritems = async () => {
   }
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
-    console.log("ammounttt");
+    await console.log("ammounttt from line 118");
     console.log(await getAmountWon({ _id: _id }));
   }
 
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
-   
+
   }
   async function fetchRank() {
     const data = await getRank({ tournamentId: _id });
     setRank(data);
+    await console.log("rank data")
+    await console.log(data)
   }
   useEffect(() => {
-    
-  localStoritems();
+
+    localStoritems();
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
         delete state.openDrawer;
@@ -160,6 +176,7 @@ const localStoritems = async () => {
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
     dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
+
     fetchTournament();
     fetchTeams();
     fetchRank();
@@ -215,8 +232,28 @@ const localStoritems = async () => {
             <span className="ml-20 font-size-20 font-weight-700">
               {tournament.name}
             </span>
+
           </div>
+          <div className="tournaments-spots_White">
+            <div>    Date : {startTime.getDate()} {monthNames[startTime.getMonth()]}'
+              {startTime.getFullYear() % 100}</div>
+
+            <div>
+              Time :  {startTime.getHours() / 10 < 1
+                ? "0" + startTime.getHours()
+                : startTime.getHours()}
+              :
+              {startTime.getMinutes() / 10 < 1
+                ? "0" + startTime.getMinutes()
+                : startTime.getMinutes()}{" "}
+              GMT
+            </div>
+          </div>
+
+
+
           <div className={"empty-area-completed "}>
+
             {tournament.status === 3 ? (
               <>
                 <div
@@ -289,8 +326,8 @@ const localStoritems = async () => {
               </span>
             )}
           </div>
-          
-  <div className={"tournament-info-container "}>
+
+          <div className={"tournament-info-container "}>
             {tournament.status !== 3 ? (
               <motion.div
                 initial={{ scale: 0 }}
@@ -321,37 +358,37 @@ const localStoritems = async () => {
                     </span>
                     <br />
 
-                    {startTime-300000 > Date.now() ? (
-                    <Button
-                      className={disabledClass + " tournament-fee"}
-                      size="small"
-                      style={
-                        disabledTournament
-                          ? {}
-                          : { backgroundColor: "var(--golden)" }
-                      }
-                          onClick={() => {
-                            chooseTeamOpen();
-                          }}
-                          disabled={disabledTournament}
-                        >
-                       {tournament.entryFee} FPC
-                        </Button>):(<Button
-                      className={disabledClass + " tournament-fee"}
-                      size="small"
-                      style={
-                        disabledTournament
-                          ? {}
-                          : { backgroundColor: "var(--golden)" }
-                      }
-                      onClick={() => {
-                        chooseTeamOpen();
-                      }}
-                      disabled={disabledTournament}
-                    >
-                      {/* {tournament.entryFee} FPC */}
-                      {tournament.entryFee} FPC
-                    </Button> )}
+                    {startTime - 300000 > Date.now() ? (
+                      <Button
+                        className={disabledClass + " tournament-fee"}
+                        size="small"
+                        style={
+                          disabledTournament
+                            ? {}
+                            : { backgroundColor: "var(--golden)" }
+                        }
+                        onClick={() => {
+                          chooseTeamOpen();
+                        }}
+                        disabled={disabledTournament}
+                      >
+                        {tournament.entryFee} FPC
+                      </Button>) : (<Button
+                        className={disabledClass + " tournament-fee"}
+                        size="small"
+                        style={
+                          disabledTournament
+                            ? {}
+                            : { backgroundColor: "var(--golden)" }
+                        }
+                        onClick={() => {
+                          chooseTeamOpen();
+                        }}
+                        disabled={disabledTournament}
+                      >
+                        {/* {tournament.entryFee} FPC */}
+                        {tournament.entryFee} FPC
+                      </Button>)}
 
 
 
@@ -394,50 +431,50 @@ const localStoritems = async () => {
                     </Button> } */}
                   </span>
                 </div>
-              
-              
-              
-              
+
+
+
+
                 {tournament.status === -2 &&
-                <div>
-                  <LinearProgress
-                    variant="determinate"
-                    style={{ backgroundColor: "var(--dim-white)" }}
-                    value={seatsFilled}
-                  />
-                  <div className="spots-wrapper">
-                    <span
-                      className="font-size-12 font-weight-500 mt-5"
-                      style={{ color: "var(--golden)" }}
-                    >Cancelled
-                    </span>                  
-                  </div>
-                </div> }
+                  <div>
+                    <LinearProgress
+                      variant="determinate"
+                      style={{ backgroundColor: "var(--dim-white)" }}
+                      value={seatsFilled}
+                    />
+                    <div className="spots-wrapper">
+                      <span
+                        className="font-size-12 font-weight-500 mt-5"
+                        style={{ color: "var(--golden)" }}
+                      >Cancelled
+                      </span>
+                    </div>
+                  </div>}
                 {tournament.status !== -2 &&
-                <div>
-                  <LinearProgress
-                    variant="determinate"
-                    style={{ backgroundColor: "var(--dim-white)" }}
-                    value={seatsFilled}
-                  />
-                  <div className="spots-wrapper">
-                    <span
-                      className="font-size-12 font-weight-500 mt-5"
-                      style={{ color: "var(--golden)" }}
-                    >
-                      <span id={tournament.id + "-left-spots"}>
-                        {tournament.total_spots - tournament.filled_spots}
-                      </span>{" "}
-                      spots left
-                    </span>
-                    <span
-                      className="font-size-12 font-weight-500 mt-5"
-                      style={{ color: "var(--dark-dim-white)" }}
-                    >
-                      {tournament.total_spots} spots
-                    </span>
-                  </div>
-                </div> }
+                  <div>
+                    <LinearProgress
+                      variant="determinate"
+                      style={{ backgroundColor: "var(--dim-white)" }}
+                      value={seatsFilled}
+                    />
+                    <div className="spots-wrapper">
+                      <span
+                        className="font-size-12 font-weight-500 mt-5"
+                        style={{ color: "var(--golden)" }}
+                      >
+                        <span id={tournament.id + "-left-spots"}>
+                          {tournament.total_spots - tournament.filled_spots}
+                        </span>{" "}
+                        spots left
+                      </span>
+                      <span
+                        className="font-size-12 font-weight-500 mt-5"
+                        style={{ color: "var(--dark-dim-white)" }}
+                      >
+                        {tournament.total_spots} spots
+                      </span>
+                    </div>
+                  </div>}
                 <div
                   className="tournamentPage__countdown"
                   style={{
@@ -460,12 +497,12 @@ const localStoritems = async () => {
                   >
                     {startTime > Date.now() ? (
                       <Countdown
-                        date={startTime-60000 }
+                        date={startTime - 60000}
                         renderer={renderer}
                       />
                     ) : (
                       <>
-                        { tournament.status !==-2 && endTime > Date.now() ? (
+                        {tournament.status !== -2 && endTime > Date.now() ? (
                           <Countdown
                             date={endTime}
                             renderer={rendererEnd}
@@ -488,7 +525,7 @@ const localStoritems = async () => {
                     : "tournament-view-card-completed-red"
                 }
               >
-                {amountWon !== -2 && tournament.user_joined ? (
+                {amountWon !== -2 ? (
                   <>
                     <div className="profileHeaderTP">
                       <div className="profilePicture">
@@ -568,7 +605,7 @@ const localStoritems = async () => {
               changeTournament={true}
             />
           </div>
-                 </>
+        </>
       )}
       <Snackbar
         open={balanceSnackOpen}
