@@ -43,7 +43,7 @@ export default async function saveTeam(event,coins,finalRanks,setError,setNameSn
             navigate('/activity');
           } 
         }
-      }, 2000);
+      }, 500);
     }else{
       setError(response.message);
       setNameSnackOpen(true);

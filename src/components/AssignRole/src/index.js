@@ -17,7 +17,7 @@ import { ArrowBackIosNewSharp } from "@mui/icons-material";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import "../style/index.css";
 export function AssignRole() {
-  const navigate = new useNavigate();
+  const navigate = useNavigate();
   const [nameSnackOpen, setNameSnackOpen] = useState(false);
   const [successSnackOpen, setSuccessSnackOpen] = useState(false);
   const [error, setError] = useState("");
@@ -149,15 +149,16 @@ export function AssignRole() {
                   }}
                   onClick={(event) => {
                     saveTeam(
+                   
                       event,
                       coins,
                       finalRanks,
                       setError,
                       setNameSnackOpen,
                       setSuccessSnackOpen,
-                      createTeam,
+                      createTeam,                  
                       navigate,
-                      state
+                      state,
                     );
                   }}
                 >
@@ -283,7 +284,7 @@ export function AssignRole() {
               </Snackbar>
               <Snackbar
                 open={successSnackOpen}
-                autoHideDuration={2000}
+                autoHideDuration={500}
                 onClose={handleSuccessSnackClose}
               >
                 <motion.div
@@ -296,6 +297,7 @@ export function AssignRole() {
                     id="team-creation-message"
                     onClose={handleSuccessSnackClose}
                     severity="success"
+                    autoHideDuration={500}
                     sx={{ width: "100%" }}
                   >
                     Great. You have created your team successfully

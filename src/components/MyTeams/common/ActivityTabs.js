@@ -17,8 +17,11 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LabTabs from "../../../Common/TabComponent";
 import { S3_URL } from "../../../APIS/apis";
 import { deleteTeamId } from "../../../APIS/apis";
+import {fetchTeams} from "../src/index"
+import {getMyTeamActivities} from "../../../APIS/apis"
 // import LabTabs from "../../../Common/TabComponent";
-export default function ActivityTabs({ teams, tournaments }) {
+export default function ActivityTabs({ tournaments }) {
+  const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
   const [value, setValue] = React.useState("2");
   const [teamsLength, setTeamsLength] = useState(0);
@@ -46,17 +49,27 @@ export default function ActivityTabs({ teams, tournaments }) {
     console.info("You clicked the Chip.");
   };
 
+   async function fetchTeams() {
+    // setTeams(await getAllUserTeams());
+    const teamData = await getMyTeamActivities()
+   await setTeams(teamData); 
+   setTeamsLength(teamData.length);
+    await console.log("team featched") 
+    await console.log(teamData) 
+  }
+
 async function deleteTeamById(teamid,teamIndex){
   await localStorage.setItem("teamId",teamid)
   await localStorage.setItem("teamIndex",teamIndex)
   await deleteTeamId(teamid,teamIndex);
-  window.location.reload();
- 
+  // window.location.reload();
+  fetchTeams();
+  
 }
 
   useEffect(() => {
-    console.log("useEffect Called 1")
-    if (teams) setTeamsLength(teams.length);   
+    fetchTeams();
+    console.log("useEffect Called 1")   
     if (tournaments) {      
       const actualTournaments = tournaments.filter(
         (item) => item.tournament !== null
@@ -64,6 +77,8 @@ async function deleteTeamById(teamid,teamIndex){
       setParticipatedContestsLength(actualTournaments.length);
     }
   }, []);
+
+  
 
 
   const tournamentsList = tournaments ? (
