@@ -56,7 +56,7 @@ export default function MyTeams() {
             />
           </div>
           <div id="activity-tabs-wrapper">
-            <ActivityTabs teams={teams} tournaments={tournaments} />
+            <ActivityTabs  tournaments={tournaments} />
             {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
           </div>
         </div>
