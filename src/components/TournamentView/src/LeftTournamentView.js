@@ -252,39 +252,29 @@ const LeftTournamentView = () => {
 
 
 
-          <div className={"empty-area-completed "}>
 
-            {tournament.status === 3 ? (
-              <>
-                <div
-                // style={{
-                //   alignItems: "center",
-                //   display: "flex",
-                //   flexDirection: "column",
-                //   justifyContent: "center",
-                // }}
+
+          {tournament.status === 3 ? (
+            <>
+              <div className={"empty-area-completed "}>
+                <div className={"empity-area-text"} style={{ maxWidth: "100%", display: "flex", justifyContent: "space-evenly", width: "100%", textAlign: "center" }}>
+                  <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool - <b>{tournament.rewards.prize_pool} FPC </b></div>
+                  <div style={{ maxWidth: "50%", width: "100%" }}> Spots - <b>{tournament.total_spots}</b></div>
+                </div>
+                <div className="" style={{ maxWidth: "100%", display: "flex", justifyContent: "center", marginTop: "20px" }}> <span
+                  style={{
+                    fontSize: "15px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    window.open(
+                      `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                    );
+                  }}
                 >
-                  Prize Pool -{" "}
-                  <b>{tournament.rewards.prize_pool} FPC</b>
-                  <br />
-                  <span
-                    className=""
-                    style={{
-                      fontSize: "12px",
-                      marginLeft: "100px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      window.open(
-                        `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
-                      );
-                    }}
-                  >
-                    {/*<u>Click here to view on Polygon.</u>*/}
-                    {/*<span className="tournamentView__transactionIdCompleted">*/}
-                    <u>
-                      Tournament ID: {tournament.transaction_hash.slice(-5)}
-                    </u>
+                  {/*<u>Click here to view on Polygon.</u>*/}
+                  <span className="tournamentView__transactionId">
+                    <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
                     <img
                       className="ml-5"
                       src={require("../../../images/polygon_logo.png").default}
@@ -292,40 +282,40 @@ const LeftTournamentView = () => {
                       width={"20"}
                       alt={"polygon"}
                     />
-                    {/*</span>*/}
                   </span>
-                </div>
-
-                <div>
-                  Spots - <b>{tournament.total_spots}</b>
-                </div>
-              </>
-            ) : (
-              <span
-                style={{
-                  fontSize: "15px",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  window.open(
-                    `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
-                  );
-                }}
-              >
-                {/*<u>Click here to view on Polygon.</u>*/}
-                <span className="tournamentView__transactionId">
-                  <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
-                  <img
-                    className="ml-5"
-                    src={require("../../../images/polygon_logo.png").default}
-                    height={"20"}
-                    width={"20"}
-                    alt={"polygon"}
-                  />
+                </span></div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={"empty-area-incompleted "}>
+                <span
+                  style={{
+                    fontSize: "15px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    window.open(
+                      `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                    );
+                  }}
+                >
+                  {/*<u>Click here to view on Polygon.</u>*/}
+                  <span className="tournamentView__transactionId">
+                    <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
+                    <img
+                      className="ml-5"
+                      src={require("../../../images/polygon_logo.png").default}
+                      height={"20"}
+                      width={"20"}
+                      alt={"polygon"}
+                    />
+                  </span>
                 </span>
-              </span>
-            )}
-          </div>
+              </div>
+            </>
+          )}
+
 
           <div className={"tournament-info-container "}>
             {tournament.status !== 3 ? (
@@ -431,10 +421,6 @@ const LeftTournamentView = () => {
                     </Button> } */}
                   </span>
                 </div>
-
-
-
-
                 {tournament.status === -2 &&
                   <div>
                     <LinearProgress

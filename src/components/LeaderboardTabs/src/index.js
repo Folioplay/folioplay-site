@@ -8,7 +8,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { leaderboard } from "../../TournamentView/common/leaderboard";
 import { Button } from "@mui/material";
 import "../style/index.css";
-
+import RefreshIcon from "../../../images/RefreshIcon.png"
 import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect, useState } from "react";
@@ -26,7 +26,6 @@ import LeaderBoardSlice, {
   getPersonalLeaderBoardAsync,
   getWinnersAsync
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
-import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function LeaderBoardTabs({
   tournamentId,
@@ -135,7 +134,7 @@ export default function LeaderBoardTabs({
                 dispatch(getLeaderboardAsync(tournamentId));
                 dispatch(getWinnersAsync(tournamentId));
                 dispatch(getPersonalLeaderBoardAsync(tournamentId));
-              }}>Refresh</Button>
+              }}><img src={RefreshIcon} alt="refresh" style={{width:"50%"}} /></Button>
             </span>
           </TabList>
         </Box>
@@ -200,17 +199,23 @@ export default function LeaderBoardTabs({
                       });
                     }}
                   >
-                    <span className="mr-10">
-                      {"  "}
-                      {entry.rank}
-                    </span>
-                    <span className={"leaderboard-username"}>
-                      {localStorage.getItem("folioUsername")}{" "}
-                      <span className={"teamCount"}>
-                        T{entry.user_team_count}
-                      </span>
-                    </span>
-                    <span className="ml-auto">{entry.amount_won} FPC</span>
+                     <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
+                    {entry.rank}
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
+                     {localStorage.getItem("folioUsername")}{" "}
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   T{entry.user_team_count}
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                   {entry.amount_won} FPC
+                    </div>
+
+                  </div>
                   </motion.div>
                 );
               }
@@ -238,17 +243,22 @@ export default function LeaderBoardTabs({
                       });
                     }}
                   >
-                    <span className="mr-10">
-                      {"  "}
-                      {entry.rank}
-                    </span>
-                    <span className={"leaderboard-username"}>
+                  <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
+                    {entry.rank}
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
                       {entry.user.username}{" "}
-                      <span className={"teamCount"}>
-                        T{entry.user_team_count}
-                      </span>
-                    </span>
-                    <span className="ml-auto">{entry.amount_won} FPC</span>
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   T{entry.user_team_count}
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                   {entry.amount_won} FPC
+                    </div>
+                  </div>
                   </motion.div>
                 );
             })}
@@ -260,13 +270,15 @@ export default function LeaderBoardTabs({
 
         {getWinnersAsync && !loading &&
         <TabPanel value="1">
-          <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
-            <span className="mr-10">Rank</span>
+          <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10" style={{display:"flex", maxWidth:"100%", width:"100%", textAlign:"start"}}>
+          <div style={{maxWidth:"15%", width:"100%"}}>Rank</div>
+                    
             {tournamentStatus === 3 && getLeaderBoardRedux.length && (
-              <span className="ml-20">User</span>
+             <div style={{maxWidth:"35%", width:"100%"}}>User</div>
             )}
             {/*<span className='ml-auto'>Team</span> */}
-            <span className="ml-auto">Prizes</span>
+            <div style={{maxWidth:"25%", width:"100%"}}>Team</div>
+            <div style={{maxWidth:"25%", width:"100%"}}>Prizes</div>
           </div>
 
           {/*// Show rewards when the Tournament is not completed*/}
@@ -308,17 +320,22 @@ export default function LeaderBoardTabs({
                       });
                     }}
                   >
-                    <span className="mr-10">
-                      {"  "}
-                      {entry.rank}
-                    </span>
-                    <span className={"leaderboard-username"}>
-                      {localStorage.getItem("folioUsername")}{" "}
-                      <span className={"teamCount"}>
-                        T{entry.user_team_count}
-                      </span>
-                    </span>
-                    <span className="ml-auto">{entry.amount_won} FPC</span>
+                <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
+                    {entry.rank}
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
+                       {localStorage.getItem("folioUsername")}{" "}
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   T{entry.user_team_count}
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                   {entry.amount_won} FPC
+                    </div>
+                  </div>
                   </motion.div>
                 );
               }
@@ -346,17 +363,23 @@ export default function LeaderBoardTabs({
                       });
                     }}
                   >
-                    <span className="mr-10">
-                      {"  "}
-                      {entry.rank}
-                    </span>
-                    <span className={"leaderboard-username"}>
-                      {entry.user.username}{" "}
-                      <span className={"teamCount"}> 
-                        T{entry.user_team_count}
-                      </span>
-                    </span>
-                    <span className="ml-auto">{entry.amount_won} FPC</span>
+                   
+ <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
+                    {entry.rank}
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
+                       {entry.user.username}{" "}
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   T{entry.user_team_count}
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                   {entry.amount_won} FPC
+                    </div>
+                  </div>
                   </motion.div>
                 );
             })}
@@ -367,11 +390,13 @@ export default function LeaderBoardTabs({
         </TabPanel>}
 
         {getWinnersAsync && !loading &&<TabPanel value="2">
-          <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10">
-            <span className="mr-10">Rank</span>
-            <span className="ml-20">User</span>
+          <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10" style={{display:"flex", maxWidth:"100%", width:"100%", textAlign:"start"}}>
+          <div style={{maxWidth:"15%", width:"100%"}}>Rank</div>
+          <div style={{maxWidth:"35%", width:"100%"}}>User</div>
+          <div style={{maxWidth:"25%", width:"100%"}}>Team</div>
+          <div style={{maxWidth:"25%", width:"100%"}}>Points</div>
             {/* <span className='ml-auto'>Team</span> */}
-            <span className="ml-auto">Points</span>
+            
           </div>
 
           {tournamentStatus === 0 &&
@@ -455,17 +480,23 @@ export default function LeaderBoardTabs({
                     });
                   }}
                 >
-                  <span className="mr-10">
-                    {"  "}
+                 <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
                     {entry.rank}
-                  </span>
-                  <span className={"leaderboard-username"}>
-                    {localStorage.getItem("folioUsername")}{" "}
-                    <span className={"teamCount"}>
-                      T{entry.user_team_count}
-                    </span>
-                  </span>
-                  <span className="ml-auto">{entry.portfolio}</span>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
+                       {localStorage.getItem("folioUsername")}{" "}
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   T{entry.user_team_count}
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                  {entry.portfolio}
+                    </div>
+                  </div>
+
                 </motion.div>
               );
             })}
@@ -491,18 +522,25 @@ export default function LeaderBoardTabs({
                         },
                       });
                     }}
+                    style={{display:"flex", maxWidth:"100%", width:"100%", textAlign:"start"}}
                   >
-                    <span className="mr-10">
-                      {"  "}
-                      {entry.rank}
-                    </span>
-                    <span className={"leaderboard-username"}>
-                      {entry.user.username}{" "}
-                      <span className={"teamCount"} >
-                        T{entry.user_team_count}
-                      </span>
-                    </span>
-                    <span className="ml-auto">{entry.portfolio}</span>
+                    
+ <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
+                    {entry.rank}
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
+                         {entry.user.username}{" "}
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   T{entry.user_team_count}
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                  {entry.portfolio}
+                    </div>
+                  </div>
                   </motion.div>
                 );
             })}

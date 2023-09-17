@@ -31,6 +31,45 @@
     font-size: 0.8rem;
 }
 
+/*  lleaderboard width controller for all component */
+.leaderboard-Main-Controller{
+    display: flex;
+    max-width: 100%;
+    width: 100%;
+    text-align: start;
+}
+
+.leaderboard-Main-Controller-Rank{
+   
+    max-width: 15%;
+    width: 100%;
+    text-align: start;
+}
+
+.leaderboard-Main-Controller-UserName{   
+    max-width: 35%;
+    width: 100%;
+    transition: 0.2s all ease-in-out;
+    text-align: start;
+}
+.leaderboard-Main-Controller-TeamCount{   
+    max-width: 25%;
+    width: 100%;
+    text-align: start;
+}
+.leaderboard-Main-Controller-Porfolio{   
+    max-width: 25%;
+    width: 100%;
+    text-align: start;
+}
+
+.teamCounttemp{
+    background-color: lightgrey;
+    padding: 2px;
+   text-align: center;
+    font-size: 0.8rem;
+}
+
 .totalPoints{
     display: flex;
     justify-content: center;
@@ -43,7 +82,7 @@
     white-space: nowrap;
     text-overflow: ellipsis; */
     transition: 0.2s all ease-in-out;
-    margin-left: 3rem;
+    /* margin-left: 3rem; */
 }
 
 .leaderboard-username:hover {

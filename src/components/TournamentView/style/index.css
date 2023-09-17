@@ -128,7 +128,7 @@
   box-shadow: var(--tournament-card-shadow);
 }
 
-.empty-area-completed {
+/* .empty-area-completed {
   width: 100%;
   height: 9.125em;
   display: flex;
@@ -137,6 +137,30 @@
   font-weight: 500;
   font-size: 1rem;
   justify-content: space-evenly;
+} */
+
+.empty-area-completed {
+  width: 100%;
+  height: 24%;  
+  font-weight: 500;
+  font-size: 1rem;
+ 
+}
+
+.empty-area-incompleted {
+  width: 100%;
+  height: 18%;  
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 2%;
+ 
+}
+.empity-area-text{
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+   width: 100%;
+  height: auto;
 }
 
 .tournament-view-card-completed {
