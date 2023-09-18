@@ -44,17 +44,44 @@ const LeftTournamentView = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
 
-      return <span className="font-weight-500" style={{ color: "var(--grey-shade" }}>Registration closed </span>
+      return (
+      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
+   
+      <Countdown
+       date={Date.now() + 60000} 
+       renderer={rendererBuffer}
+                        /></span>
+      )
+  
     }
     return (
       <>
-        <span style={{ color: "var(--dark-dim-white" }}>Starting in </span>
+        <span style={{ color: "var(--dark-dim-white" }}>Registration closing in </span>
         <TimerIcon style={{ color: "var(--golden)" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"}>
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
         </span>
+      </>
+    );
+  };
+
+  const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
+    if(completed) {
+      
+      // dispatch(getTournamentAsync());
+      return <></>}
+    return (
+      <>
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in
+      
+        <TimerIcon style={{ color: "var(--golden)" }} />
+        <span className={"tournamentCard__countdownTimer"}>
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </span></span>
       </>
     );
   };
@@ -378,47 +405,8 @@ const LeftTournamentView = () => {
                       >
                         {/* {tournament.entryFee} FPC */}
                         {tournament.entryFee} FPC
-                      </Button>)}
-
-
-
-
-                    {/* {!disabledTournament &&
-                    
-                    <Button
-                      className={disabledClass + " tournament-fee"}
-                      size="small"
-                      style={
-                        disabledTournament
-                          ? {}
-                          : { backgroundColor: "var(--golden)" }
-                      }
-                          onClick={() => {
-                            chooseTeamOpen();
-                          }}
-                          disabled={disabledTournament}
-                        >
-                       {tournament.entryFee} FPC
-                        </Button>}
-
-
-                      {disabledTournament &&
-                        <Button
-                      className={disabledClass + " tournament-fee"}
-                      size="small"
-                      style={
-                        disabledTournament
-                          ? {}
-                          : { backgroundColor: "var(--golden)" }
-                      }
-                      onClick={() => {
-                        chooseTeamOpen();
-                      }}
-                      disabled={disabledTournament}
-                    >
-                     
-                      {tournament.entryFee} FPC
-                    </Button> } */}
+                      </Button>
+                      )}
                   </span>
                 </div>
                 {tournament.status === -2 &&
@@ -481,6 +469,14 @@ const LeftTournamentView = () => {
                       transform: "translateY(-10px)",
                     }}
                   >
+
+{tournament.status === 1 ? ( <Countdown
+                       date={startTime}
+                        renderer={rendererBuffer}
+                      />
+):(null) }
+
+                   
                     {startTime > Date.now() ? (
                       <Countdown
                         date={startTime - 60000}
@@ -579,6 +575,7 @@ const LeftTournamentView = () => {
                 tournamentStatus={tournament.status}
                 tournamentPrizes={tournament.rewards.distribution}
                 rewardSize={tournament.rewards.places_paid}
+                tournament={tournament}
               />
             </div>
             <JoinTournamentDrawer

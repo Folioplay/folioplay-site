@@ -42,9 +42,22 @@ import { FilterAltOutlined } from "@mui/icons-material";
 
 const LeftComponent = () => {
   // const { user, isAuthenticated,  } = useMoralis();
-
-  const [user, setUser] =useState("");
-  const [isAuthenticated, setIsAuthenticated] =useState("");
+  const formatDuration = (startDate, finishDate) => {
+    const diffInMs = finishDate - startDate;
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMs / (60000 * 60));
+    const diffInDays = Math.floor(diffInMs / (60000 * 60 * 24));
+  
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} minutes`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hours`;
+    } else {
+      return `${diffInDays} days`;
+    }
+  };
+  const [user, setUser] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState("");
 
   const localStoritems = async () => {
     const userr = await localStorage.getItem("user");
@@ -137,9 +150,9 @@ const LeftComponent = () => {
   }
 
   useEffect(() => {
-   
-  localStoritems();
-    
+
+    localStoritems();
+
     authTokenGet();
     console.log("me calling from oturnament")
 
@@ -195,7 +208,7 @@ const LeftComponent = () => {
       });
     // fetchTournaments();
     dispatch(getTournamentAsync());
-    console.log( dispatch(getTournamentAsync()));
+    console.log(dispatch(getTournamentAsync()));
     fetchTeams();
     setIntervalId(setInterval(nextImage, 2000));
     setL(len);
@@ -255,6 +268,8 @@ const LeftComponent = () => {
       minHeight: 420,
     },
   };
+
+  
 
   function TourModal() {
     const [open1, setOpen1] = useState(
@@ -363,8 +378,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can view the tournament info"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -404,8 +419,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["By Clicking on this you can play the game"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -445,8 +460,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can see the reward of the tournament"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -486,8 +501,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access the sidebar"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -527,8 +542,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access your profile."],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -558,8 +573,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access your total coins and transaction history."],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     // ...
@@ -578,48 +593,52 @@ const LeftComponent = () => {
     return timeLeft;
   };
 
-        
 
 
-  const RendererEnd = ({ days, hours, minutes, seconds, completed } ) => {
-   
-   
 
-    if(completed) {
-        
+  const RendererEnd = ({ days, hours, minutes, seconds, completed }) => {
+
+
+
+    if (completed) {
+
       // console.log("line 588")    
       // dispatch(getTournamentAsync());
-    return <></>}
+      return <></>
+    }
     return (
       <>
-      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
+        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Ends in{" "}</span>
         <TimerIcon style={{ color: "red" }} fontSize="small" />
-        <span className={"tournamentCard__countdownTimer"} style={{color:"red"}}>
-          
+        <span className={"tournamentCard__countdownTimer"} style={{ color: "red" }}>
+
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
         </span>
       </>
-    )}
+    )
+  }
 
   const [expire, setExpire] = useState(false);
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed){
+    if (completed) {
       // dispatch(getTournamentAsync());
-    return <> <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
-   
-    <Countdown
-     date={Date.now() + 60000} 
-     renderer={rendererBuffer}
-                      /></span>
+      return <> <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>{" "}
 
-    </>
+        <Countdown
+          date={Date.now() + 60000}
+          renderer={rendererBuffer}
+        /></span>
+
+      </>
     }
+
+   
     return (
       <>
-       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}></span>
-      
+        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}></span>
+
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -631,25 +650,26 @@ const LeftComponent = () => {
   };
 
   const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed) {
-      
+    if (completed) {
+
       // dispatch(getTournamentAsync());
-      return <></>}
+      return <></>
+    }
     return (
       <>
-       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in
-      
-        <TimerIcon style={{ color: "var(--golden)" }} />
-        <span className={"tournamentCard__countdownTimer"}>
-          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
-          {minutes < 10 ? "0" + minutes : minutes} :{" "}
-          {seconds < 10 ? "0" + seconds : seconds}
-        </span></span>
+        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Starting in
+
+          <TimerIcon style={{ color: "var(--golden)" }} />
+          <span className={"tournamentCard__countdownTimer"}>
+            {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+            {minutes < 10 ? "0" + minutes : minutes} :{" "}
+            {seconds < 10 ? "0" + seconds : seconds}
+          </span></span>
       </>
     );
   };
 
-  
+
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
@@ -664,10 +684,10 @@ const LeftComponent = () => {
           const finishDate = new Date(tournament.end_time);
           // const disabledClass =
           //   tournament.status !== 0 ? " disable-join-button" : "";
-         
+
           const disabledClass =
-          tournament.status !== 0 ? " disable-join-button" : "";
-        const disabledTournament = tournament.status !== 0;
+            tournament.status !== 0 ? " disable-join-button" : "";
+          const disabledTournament = tournament.status !== 0;
 
           // const openTournament = tournament.status === 0;
           // const liveTournament = tournament.status === 2;
@@ -735,7 +755,7 @@ const LeftComponent = () => {
                         ? "0" + startDate.getMinutes()
                         : startDate.getMinutes()}{" "}
                       GMT <br />
-                      Duration : {(finishDate - startDate) / 60000} mins
+                      Duration : { `${formatDuration(startDate,finishDate)}`}
                     </div>
                   </span>
                 </span>
@@ -759,11 +779,11 @@ const LeftComponent = () => {
                   disabled={disabledTournament}
                 >
                   {/* {tournament.status=== -2 ? <> {tournament.entryFee} FPC</> : <> {tournament.entryFee} FPC</> } */}
-                {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
-                {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
+                  {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
                   {/* {!tournament.user_joined &&  <> Join @{tournament.entryFee} FPC</>} */}
-                {tournament.entryFee} FPC
-               
+                  {tournament.entryFee} FPC
+
                 </Button>
               </div>
               <div>
@@ -793,9 +813,9 @@ const LeftComponent = () => {
                     {tournament.total_spots} spots
                   </span>
 
-                
+
                 </div>
-                
+
                 {/*<div className="tournamentPage__transactionHash">*/}
                 {/*  {tournament.transaction_hash !== undefined && (*/}
                 {/*    <span*/}
@@ -811,10 +831,10 @@ const LeftComponent = () => {
                 {/*  )}*/}
                 {/*</div>*/}
               </div>
-              {tournament.status !==-2 && tournament.status !==1 && tournament.status ===0 && startDate > Date.now() ? (
-                     
-              <div className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",textAlign:"center", fontSize:"0.8rem",marginBottom:"-2%"}}>Registration Closing in{" "}</div>
-              ):(null)}
+              {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Registration closing in{" "}</div>
+              ) : (null)}
               <div className="tournament-reward">
                 {status[tournament.status].value !== "Open" ? (
                   <span
@@ -828,17 +848,17 @@ const LeftComponent = () => {
                   >
                     {status[tournament.status].value}
                   </span>
-                ) :  <span
-                className="font-size-12"
-                style={{
-                  color: status[tournament.status].color,
-                  padding: "0 10px",
-                  border: "1px solid " + status[tournament.status].color,
-                  borderRadius: "30px",
-                }}
-              >
-                {status[tournament.status].value}
-              </span>}
+                ) : <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>}
                 <div className="tournamentPage__countdown">
                   <span id="timeRemaining" className="font-size-12">
                     {/* {startDate - 300000 > Date.now() ? (
@@ -847,21 +867,21 @@ const LeftComponent = () => {
                         renderer={renderer}
                       />
                     ) : null} */}
-                     
-                     {tournament.status === 1 ? ( <Countdown
-                       date={startDate}
-                        renderer={rendererBuffer}
-                      />
-):(null) }
 
-                     {tournament.status !==-2 && tournament.status !==1 && tournament.status ===0 && startDate > Date.now() ? (
+                    {tournament.status === 1 ? (<Countdown
+                      date={startDate}
+                      renderer={rendererBuffer}
+                    />
+                    ) : (null)}
+
+                    {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate > Date.now() ? (
                       <Countdown
-                        date={startDate-60000}
+                        date={startDate - 60000}
                         renderer={renderer}
                       />
                     ) : (
                       <>
-                        {tournament.status !==-2 && startDate <= Date.now() ? (
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
                           <Countdown
                             date={finishDate}
                             renderer={RendererEnd}
@@ -869,7 +889,7 @@ const LeftComponent = () => {
                         ) : null}
                       </>
                     )}
-                   
+
                   </span>
                 </div>
                 <span className="font-size-12">
@@ -921,7 +941,7 @@ const LeftComponent = () => {
                   .classList.remove("active-chip");
                 document
                   .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");                  
+                  .classList.remove("active-chip");
                 setFilter("all");
               }}
             />
@@ -946,7 +966,7 @@ const LeftComponent = () => {
                 document
                   .getElementsByClassName("MuiChip-root")[4]
                   .classList.remove("active-chip");
-                  
+
                 setFilter("live");
               }}
             />
@@ -970,7 +990,7 @@ const LeftComponent = () => {
                   .classList.remove("active-chip");
                 document
                   .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");                  
+                  .classList.remove("active-chip");
                 setFilter("joined");
               }}
             />
@@ -993,12 +1013,12 @@ const LeftComponent = () => {
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.add("active-chip");
                 document
-                .getElementsByClassName("MuiChip-root")[4]
-                .classList.remove("active-chip");
+                  .getElementsByClassName("MuiChip-root")[4]
+                  .classList.remove("active-chip");
                 setFilter("upcoming");
               }}
             />
-             <Chip
+            <Chip
               className="ml-10"
               style={{ marginLeft: "10px", fontFamily: "poppins" }}
               label="Cancelled"
@@ -1016,7 +1036,7 @@ const LeftComponent = () => {
                 document
                   .getElementsByClassName("MuiChip-root")[3]
                   .classList.remove("active-chip");
-                  document
+                document
                   .getElementsByClassName("MuiChip-root")[4]
                   .classList.add("active-chip");
                 setFilter("cancelled");
@@ -1024,9 +1044,9 @@ const LeftComponent = () => {
             />
           </span>
           {tournaments === undefined ||
-          tournaments === null ||
-          teams === undefined ||
-          teams === null ? (
+            tournaments === null ||
+            teams === undefined ||
+            teams === null ? (
             <div className="loading-component">
               <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
             </div>
