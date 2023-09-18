@@ -32,12 +32,27 @@ export default function LeaderBoardTabs({
   tournamentStatus,
   tournamentPrizes,
   rewardSize,
+  tournament
 }) {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [loading, setLoding] = useState("");
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("3");
   const [user, setUser] =useState("");
   // const { user } = useMoralis();
 
@@ -70,6 +85,8 @@ export default function LeaderBoardTabs({
 
   useEffect(() => {
     localStoritems();
+    console.log("tournament prop passed")
+    console.log(tournament);
     dispatch(getLeaderboardAsync(tournamentId));
     dispatch(getPersonalLeaderBoardAsync(tournamentId));
     async function getPersonalLeader() {
@@ -110,11 +127,161 @@ export default function LeaderBoardTabs({
   amounts = amounts.sort(function(a, b) {
     return b-a;
   });
+
+  const startTime = tournament ? new Date(tournament.start_time) : undefined;
+  const endTime = tournament ? new Date(tournament.end_time) : undefined;
+
+  const monthNamesArray = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+//  Cancelled Tournament Data
+  const TournamentCancelledData = [{
+    id:1,
+    Title:"Tournament Name",
+    Value: tournament.name
+  },
+  {
+    id:2,
+    Title:"Tournament Status",
+    Value: "Cancelled"
+  },
+{
+  id:3,
+  Title:"Start Time",
+  Value:  <div>{startTime.getDate()} {monthNames[startTime.getMonth()]}'
+  {startTime.getFullYear() % 100} {" "} | {startTime.getHours() / 10 < 1
+  ? "0" + startTime.getHours()
+  : startTime.getHours()}
+:
+{startTime.getMinutes() / 10 < 1
+  ? "0" + startTime.getMinutes()
+  : startTime.getMinutes()}{" "}GMT</div>
+
+},
+{
+  id:4,
+  Title:"End Time",
+  Value:  <div>{endTime.getDate()} {monthNames[endTime.getMonth()]}'
+  {endTime.getFullYear() % 100} {" "} | {endTime.getHours() / 10 < 1
+  ? "0" + endTime.getHours()
+  : endTime.getHours()}
+:
+{endTime.getMinutes() / 10 < 1
+  ? "0" + endTime.getMinutes()
+  : endTime.getMinutes()}{" "}GMT</div>
+
+}
+
+]
+
+const TournamentInfoData = [{
+  id:1,
+  Title:"Tournament Name",
+  Value: tournament.name
+},
+{
+  id:2,
+  Title:"Tournament Status",
+  Value: <>
+  {tournament.status=== 0 && "Open"}
+  {tournament.status=== 1 && "Closed"}
+  {tournament.status=== 2 && "Running"}
+  {tournament.status=== 3 && "Completed"}
+  </>
+},
+{
+id:3,
+Title:"Start Time",
+Value:  <div>{startTime.getDate()} {monthNames[startTime.getMonth()]}'
+{startTime.getFullYear() % 100} {" "} | {startTime.getHours() / 10 < 1
+? "0" + startTime.getHours()
+: startTime.getHours()}
+:
+{startTime.getMinutes() / 10 < 1
+? "0" + startTime.getMinutes()
+: startTime.getMinutes()}{" "}GMT</div>
+
+},
+{
+id:4,
+Title:"End Time",
+Value:  <div>{endTime.getDate()} {monthNames[endTime.getMonth()]}'
+{endTime.getFullYear() % 100} {" "} | {endTime.getHours() / 10 < 1
+? "0" + endTime.getHours()
+: endTime.getHours()}
+:
+{endTime.getMinutes() / 10 < 1
+? "0" + endTime.getMinutes()
+: endTime.getMinutes()}{" "}GMT</div>
+
+},
+{
+id:5,
+Title: <>
+{tournament.status=== 0 && "Registration Closing"}
+{tournament.status=== 1 || tournament.status=== 2 || tournament.status=== 3 && "Registration Closed"}
+  
+</>,
+Value: <div>{startTime.getDate()} {monthNames[startTime.getMonth()]}'
+{startTime.getFullYear() % 100} {" "} | {startTime.getHours() / 10 < 1
+? "0" + startTime.getHours()
+: startTime.getHours()}
+:
+{startTime.getMinutes() / 10 < 1
+? "0" + startTime.getMinutes()
+: startTime.getMinutes()-1}{" "}GMT</div>
+},
+{
+id:6,
+Title:"Prize Money",
+Value: tournament.rewards.prize_pool
+},
+{
+id:7,
+Title:"Places Paid",
+Value: tournament.rewards.places_paid
+
+},
+{
+id:8,
+Title:"Minimum Entries",
+Value: tournament.status
+},
+{
+id:9,
+Title:"Spots Filled",
+Value: tournament.filled_spots
+},
+{
+id:10,
+Title:"Current Prize Pool",
+Value: tournament.rewardsprize_pool
+},
+]
+
+
   return (
     <Box sx={{ width: "100%", typography: "body1" }} id="win-dash-tabs">
       <TabContext value={value}>
         <Box className={"tournamentView__leaderboardTabsStyle"} sx={{ borderBottom: 1, borderColor: "divider",width:"100%" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{width:"100%" }}>
+          <Tab
+              label="Tournament Info"
+              value="3"
+              style={{ textTransform: "capitalize", fontFamily: "poppins" }}
+            />
             <Tab
               label="Prizes"
               value="1"
@@ -125,6 +292,7 @@ export default function LeaderBoardTabs({
               value="2"
               style={{ textTransform: "capitalize", fontFamily: "poppins" }}
             />
+           
             <span className={"refreshLeaderboard"} style={{marginLeft:"auto",marginRight:"20px"}}>
               {/* <RefreshIcon /> */}
               <Button 
@@ -134,7 +302,7 @@ export default function LeaderBoardTabs({
                 dispatch(getLeaderboardAsync(tournamentId));
                 dispatch(getWinnersAsync(tournamentId));
                 dispatch(getPersonalLeaderBoardAsync(tournamentId));
-              }}><img src={RefreshIcon} alt="refresh" style={{width:"50%"}} /></Button>
+              }}><img src={RefreshIcon} alt="refresh" style={{width:"42%"}} /></Button>
             </span>
           </TabList>
         </Box>
@@ -147,7 +315,14 @@ export default function LeaderBoardTabs({
             </Box>
           </TabPanel>}
         {loading &&
-          <TabPanel value="2">
+          <TabPanel value="2" >
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ display: 'flex', justifyContent: "center", marginTop: "25%", width: "100%" }}>   <CircularProgress />
+              </Box>
+            </Box>
+          </TabPanel>}
+          {loading &&
+          <TabPanel value="3" >
             <Box sx={{ width: '100%' }}>
               <Box sx={{ display: 'flex', justifyContent: "center", marginTop: "25%", width: "100%" }}>   <CircularProgress />
               </Box>
@@ -274,10 +449,10 @@ export default function LeaderBoardTabs({
           <div style={{maxWidth:"15%", width:"100%"}}>Rank</div>
                     
             {tournamentStatus === 3 && getLeaderBoardRedux.length && (
-             <div style={{maxWidth:"35%", width:"100%"}}>User</div>
+             <div style={{maxWidth:"35%", width:"100%",textAlign:"center"}}>User</div>
             )}
             {/*<span className='ml-auto'>Team</span> */}
-            <div style={{maxWidth:"25%", width:"100%"}}>Team</div>
+            <div style={{maxWidth:"25%", width:"100%"}}></div>
             <div style={{maxWidth:"25%", width:"100%"}}>Prizes</div>
           </div>
 
@@ -388,12 +563,13 @@ export default function LeaderBoardTabs({
 
           {/*Leaderboard Section*/}
         </TabPanel>}
+        {/*  Tab Panel Value 2 started */}
 
         {getWinnersAsync && !loading &&<TabPanel value="2">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10" style={{display:"flex", maxWidth:"100%", width:"100%", textAlign:"start"}}>
           <div style={{maxWidth:"15%", width:"100%"}}>Rank</div>
-          <div style={{maxWidth:"35%", width:"100%"}}>User</div>
-          <div style={{maxWidth:"25%", width:"100%"}}>Team</div>
+          <div style={{maxWidth:"35%", width:"100%",textAlign:"center"}}>User</div>
+          <div style={{maxWidth:"25%", width:"100%"}}></div>
           <div style={{maxWidth:"25%", width:"100%"}}>Points</div>
             {/* <span className='ml-auto'>Team</span> */}
             
@@ -545,6 +721,79 @@ export default function LeaderBoardTabs({
                 );
             })}
         </TabPanel>}
+
+        {getWinnersAsync && !loading &&<TabPanel value="3">
+          <>
+         
+           {/* <div className={"leaderboard-Main-Controller"} >
+                    <div className={"leaderboard-Main-Controller-Rank"} >
+                    1
+                    </div>
+                    <div className={"leaderboard-Main-Controller-UserName"}>
+                      TOurnament Name
+                    </div>
+                    <div  className={"leaderboard-Main-Controller-TeamCount"} >
+                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                 
+                   </div>
+                    </div>
+                    <div className={"leaderboard-Main-Controller-Porfolio"} >
+                    {tournament.name}
+                    </div>
+                  </div> */}
+                  {tournament.status === -2 ? (<>
+                  
+                    {TournamentCancelledData.map((tourna)=>(
+            <div className={"leaderboard-Main-Controller-Tab3"} key={tourna.id} mb-20 pb-10 >
+  <div style={{maxWidth:"7%", width:"100%"}}>
+  {tourna.id}
+  </div>
+  <div style={{maxWidth:"40%", width:"100%"}}>
+  {tourna.Title}
+  </div>
+  
+  <div style={{maxWidth:"3%", width:"100%"}}>
+   
+  </div>
+ 
+    <div style={{maxWidth:"50%", width:"100%", textAlign:"start"}} >
+    {tourna.Value}
+    </div>
+
+</div>
+           ))}   
+                  </>):(<>
+                    {TournamentInfoData.map((tourna)=>(
+            <div className={"leaderboard-Main-Controller-Tab3"} key={tourna.id} mb-20 pb-10 >
+  <div style={{maxWidth:"7%", width:"100%"}}>
+  {tourna.id}
+  </div>
+  <div style={{maxWidth:"40%", width:"100%"}}>
+  {tourna.Title}
+  </div>
+  
+  <div style={{maxWidth:"3%", width:"100%"}}>
+   
+  </div>
+ 
+    <div style={{maxWidth:"50%", width:"100%", textAlign:"start"}} >
+    {tourna.Value}
+    </div>
+
+</div>
+           ))}   
+                  </>)}
+             
+  
+
+             
+ 
+          </>
+
+
+</TabPanel>}
+
+
       </TabContext>
     </Box>
   );
