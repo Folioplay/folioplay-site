@@ -41,13 +41,18 @@ import { FilterAltOutlined } from "@mui/icons-material";
 
 
 const LeftComponent = () => {
+  //  Auto Refresh tournament Counters for saving from loop
+  const [openRefreshCounter, setOpenRefreshCounter] = useState(0);
+  const [bufferRefreshCounter, setBufferRefreshCounter] = useState(0);
+  const [completeRefreshCounter, setCompleteRefreshCounter] = useState(0);
+ 
   // const { user, isAuthenticated,  } = useMoralis();
   const formatDuration = (startDate, finishDate) => {
     const diffInMs = finishDate - startDate;
     const diffInMinutes = Math.floor(diffInMs / 60000);
     const diffInHours = Math.floor(diffInMs / (60000 * 60));
     const diffInDays = Math.floor(diffInMs / (60000 * 60 * 24));
-  
+
     if (diffInMinutes < 60) {
       return `${diffInMinutes} minutes`;
     } else if (diffInHours < 24) {
@@ -150,12 +155,8 @@ const LeftComponent = () => {
   }
 
   useEffect(() => {
-
     localStoritems();
-
     authTokenGet();
-    console.log("me calling from oturnament")
-
   }, []);
   useEffect(() => {
     if (state && state.openDrawer) {
@@ -170,24 +171,14 @@ const LeftComponent = () => {
     };
   }, [intervalId]);
   useEffect(() => {
-    console.log(tournaments);
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
         delete state.openDrawer;
         window.history.replaceState(null, "");
         chooseTeamOpen().then(() => {
           setTimeout(() => {
-            // console.log("i am in the scoll part ..............")
             var objDiv = document.getElementsByClassName("all-teams")[0];
-            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
-            // objDiv.scrollTop = objDiv.scrollHeight;
-            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
-            // const element = $(`.all-teams`)[0];
-            // element.animate({
-            //     scrollTop: element.prop("scrollHeight")
-            // }, 500);
             scrollTo(objDiv, objDiv.scrollHeight, 400);
-
             selectTeam("team-" + (teams.length - 1), teams);
           }, 600);
         });
@@ -208,12 +199,17 @@ const LeftComponent = () => {
       });
     // fetchTournaments();
     dispatch(getTournamentAsync());
-    console.log(dispatch(getTournamentAsync()));
-    fetchTeams();
+   fetchTeams();
     setIntervalId(setInterval(nextImage, 2000));
     setL(len);
     // chooseTeamOpen();
   }, []);
+
+  //  This use effect controlling tournament auto refresh & its contrlling infinte loop for tournament calling
+  useEffect(() => {
+    dispatch(getTournamentAsync());
+    }, [bufferRefreshCounter,openRefreshCounter,completeRefreshCounter]);
+
   // async function fetchTournaments() {
   //   setTournaments(await getAllTournaments());
   // }
@@ -269,7 +265,7 @@ const LeftComponent = () => {
     },
   };
 
-  
+
 
   function TourModal() {
     const [open1, setOpen1] = useState(
@@ -601,9 +597,6 @@ const LeftComponent = () => {
 
 
     if (completed) {
-
-      // console.log("line 588")    
-      // dispatch(getTournamentAsync());
       return <></>
     }
     return (
@@ -634,7 +627,7 @@ const LeftComponent = () => {
       </>
     }
 
-   
+
     return (
       <>
         <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}></span>
@@ -648,17 +641,44 @@ const LeftComponent = () => {
       </>
     );
   };
+//  Thsese 3 funtions from  662 Line to  694 is controlling the auto refresh of tournaments
+  const openRefresh = () => {
+    if (openRefreshCounter === 0) {
+      setOpenRefreshCounter(5);
+      if (openRefreshCounter === 5) {
+      setOpenRefreshCounter(0);
+      }
+    } 
+
+    return;
+  }
+  const completeRefresh = () => {  
+    if (completeRefreshCounter === 0) {
+      setCompleteRefreshCounter(5);
+      if (completeRefreshCounter === 5) {
+       setCompleteRefreshCounter(0);
+      }
+    }  
+    return;
+  }
+    const bufferRefresh = () => {
+    if (bufferRefreshCounter === 0) {
+      setBufferRefreshCounter(5);
+      if (bufferRefreshCounter === 5) {
+          setBufferRefreshCounter(0);
+      }
+    }
+    return;
+  }
+
 
   const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
-    if (completed) {
-
-      // dispatch(getTournamentAsync());
+    if (completed) {      
       return <></>
     }
     return (
       <>
         <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Starting in
-
           <TimerIcon style={{ color: "var(--golden)" }} />
           <span className={"tournamentCard__countdownTimer"}>
             {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -755,7 +775,7 @@ const LeftComponent = () => {
                         ? "0" + startDate.getMinutes()
                         : startDate.getMinutes()}{" "}
                       GMT <br />
-                      Duration : { `${formatDuration(startDate,finishDate)}`}
+                      Duration : {`${formatDuration(startDate, finishDate)}`}
                     </div>
                   </span>
                 </span>
@@ -871,6 +891,7 @@ const LeftComponent = () => {
                     {tournament.status === 1 ? (<Countdown
                       date={startDate}
                       renderer={rendererBuffer}
+                      onComplete={bufferRefresh}
                     />
                     ) : (null)}
 
@@ -878,13 +899,17 @@ const LeftComponent = () => {
                       <Countdown
                         date={startDate - 60000}
                         renderer={renderer}
+                        onComplete={openRefresh}
                       />
                     ) : (
                       <>
                         {tournament.status !== -2 && startDate <= Date.now() ? (
+
+                    
                           <Countdown
                             date={finishDate}
                             renderer={RendererEnd}
+                            onComplete={completeRefresh}
                           />
                         ) : null}
                       </>
