@@ -65,7 +65,7 @@ function CurrentTeamTable() {
     };
     rows.push(parser);
   });
-
+ 
   coinsFlattendedData?.forEach((element) => {
     var parser = {
       id: runningTournamentRows.length + 1,
