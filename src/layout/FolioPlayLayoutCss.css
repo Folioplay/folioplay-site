@@ -26,11 +26,17 @@
   display: flex;
   transition: all 0.3s ease-in-out;
 }
-
+@media only screen and (max-width: 418px) {
+  .team-preview-wrapper{
+    height:150%;
+  }
+  }
 @media only screen and (max-width: 600px) {
   .folioplay-right-view {
     display: none;
   }
+
+
 
   .folioplay-left-view {
     flex: 0 0 100%;
