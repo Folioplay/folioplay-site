@@ -17,6 +17,9 @@ console.log(SERVER);
 export async function getTournamentById({ _id }) {
   return await fetch(`${SERVER}/tournament/` + _id, {
     method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("authtoken"),
+    },
   }).then((res) => res.json());
 }
 
