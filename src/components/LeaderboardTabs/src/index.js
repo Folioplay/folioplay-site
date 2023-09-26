@@ -280,6 +280,9 @@ Value: tournament.rewardsprize_pool
           <Tab
               label="Tournament Info"
               value="3"
+             sx={{'@media (max-width: 450px)': {
+              maxWidth: '30%'
+            }}}
               style={{ textTransform: "capitalize", fontFamily: "poppins" }}
             />
             <Tab
