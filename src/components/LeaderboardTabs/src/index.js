@@ -385,7 +385,7 @@ Value: tournament.rewardsprize_pool
                      {localStorage.getItem("folioUsername")}{" "}
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                    T{entry.user_team_count}
                    </div>
                     </div>
@@ -429,7 +429,7 @@ Value: tournament.rewardsprize_pool
                       {entry.user.username}{" "}
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                    T{entry.user_team_count}
                    </div>
                     </div>
@@ -452,11 +452,17 @@ Value: tournament.rewardsprize_pool
           <div style={{maxWidth:"15%", width:"100%"}}>Rank</div>
                     
             {tournamentStatus === 3 && getLeaderBoardRedux.length && (
-             <div style={{maxWidth:"35%", width:"100%",textAlign:"center"}}>User</div>
+             <div style={{maxWidth:"35%", width:"100%",textAlign:"start"}}>User</div>
             )}
             {/*<span className='ml-auto'>Team</span> */}
             <div style={{maxWidth:"25%", width:"100%"}}></div>
-            <div style={{maxWidth:"25%", width:"100%"}}>Prizes</div>
+
+            {tournamentStatus === 3 && getLeaderBoardRedux.length   ? ( <div style={{maxWidth:"25%", width:"100%",textAlign:"end"}}>Prizes</div>):(
+               <div style={{maxWidth:"60%", width:"100%",textAlign:"end"}}>Prizes</div>
+            )
+            
+          }
+           
           </div>
 
           {/*// Show rewards when the Tournament is not completed*/}
@@ -470,7 +476,7 @@ Value: tournament.rewardsprize_pool
                   transition={{ duration: 0.3 }}
                   className={"leaderboard-entry ml-auto mr-auto mb-20 pb-10 font-weight-700 " + leaderboardActive}
               >
-                <span className="leaderboard-points">{"  "}{reversePrizes[value]}</span>
+                <span className="leaderboard-points" >{"  "}{reversePrizes[value]}</span>
                 <span className="ml-auto">{value}</span>
               </motion.div>
                 );
@@ -506,7 +512,7 @@ Value: tournament.rewardsprize_pool
                        {localStorage.getItem("folioUsername")}{" "}
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                    T{entry.user_team_count}
                    </div>
                     </div>
@@ -550,7 +556,7 @@ Value: tournament.rewardsprize_pool
                        {entry.user.username}{" "}
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                    T{entry.user_team_count}
                    </div>
                     </div>
@@ -571,7 +577,7 @@ Value: tournament.rewardsprize_pool
         {getWinnersAsync && !loading &&<TabPanel value="2">
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10" style={{display:"flex", maxWidth:"100%", width:"100%", textAlign:"start"}}>
           <div style={{maxWidth:"15%", width:"100%"}}>Rank</div>
-          <div style={{maxWidth:"35%", width:"100%",textAlign:"center"}}>User</div>
+          <div style={{maxWidth:"35%", width:"100%",textAlign:"start"}}>User</div>
           <div style={{maxWidth:"25%", width:"100%"}}></div>
           <div style={{maxWidth:"25%", width:"100%"}}>Points</div>
             {/* <span className='ml-auto'>Team</span> */}
@@ -667,7 +673,7 @@ Value: tournament.rewardsprize_pool
                        {localStorage.getItem("folioUsername")}{" "}
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                    T{entry.user_team_count}
                    </div>
                     </div>
@@ -712,7 +718,7 @@ Value: tournament.rewardsprize_pool
                          {entry.user.username}{" "}
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                    T{entry.user_team_count}
                    </div>
                     </div>
@@ -736,7 +742,7 @@ Value: tournament.rewardsprize_pool
                       TOurnament Name
                     </div>
                     <div  className={"leaderboard-Main-Controller-TeamCount"} >
-                   <div className={"teamCounttemp"} style={{ width:"18%"}}>
+                   <div className={"teamCounttemp"} style={{ maxWidth:"30%",width:"auto"}}>
                  
                    </div>
                     </div>

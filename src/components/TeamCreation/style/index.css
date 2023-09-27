@@ -13,6 +13,28 @@
     scrollbar-width: none;  
 }
 
+@media only screen and (max-width: 418px) {
+    .coins {
+        width: 100%;
+        min-height:180% !important;
+        background-color: var(--white);
+        /* padding-top: 1.25em; */
+        padding-bottom: 1.25em;
+        /* overflow-y: scroll; */
+        scrollbar-width: none;  
+    }
+
+    #assign-role-button{
+       
+        position: inherit !important;
+        
+      }
+
+      .assign-roles-div {
+      
+        justify-content: center !important;
+    }
+    }
 .coin-card-wrapper {
     display: flex;
     justify-content: center;
