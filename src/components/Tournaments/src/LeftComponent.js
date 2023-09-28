@@ -1044,7 +1044,7 @@ const LeftComponent = () => {
               }}
             />
             <Chip
-              className="ml-10"
+              className="cancelled-Tournament-chip"
               style={{ marginLeft: "10px", fontFamily: "poppins" }}
               label="Cancelled"
               variant="outlined"

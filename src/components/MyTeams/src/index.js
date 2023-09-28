@@ -45,7 +45,20 @@ export default function MyTeams() {
         <br />
         <br />
         <div className="activity-content-wrapper mt-20">
-        <div className="activity-add-team-buttton">
+        {/* <div className="activity-add-team-buttton">
+            <AddCircleIcon
+              className="mr-10"
+              id="circle-add-team-button"
+              onClick={() => {
+                removeCoinsFromLocalStorage();
+                navigate("/teams/createteam/");
+              }}
+            />
+          </div> */}
+          <div id="activity-tabs-wrapper">
+            <ActivityTabs  tournaments={tournaments} />
+            {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
+            <div className="activity-add-team-buttton">
             <AddCircleIcon
               className="mr-10"
               id="circle-add-team-button"
@@ -55,9 +68,6 @@ export default function MyTeams() {
               }}
             />
           </div>
-          <div id="activity-tabs-wrapper">
-            <ActivityTabs  tournaments={tournaments} />
-            {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
           </div>
         </div>
       </div>

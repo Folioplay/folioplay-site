@@ -140,7 +140,7 @@ export function AssignRole() {
                 maxlength="15"
                 defaultValue={"Team" + "-" + (teams.length + 1)}
               />
-              <div id="save-team-button">
+              {/* <div id="save-team-button">
                 <Button
                   variant="contained"
                   style={{
@@ -164,7 +164,7 @@ export function AssignRole() {
                 >
                   Save Team
                 </Button>
-              </div>
+              </div> */}
               <img
                 id="crown"
                 src={require("../../../images/crown1.png").default}
@@ -261,6 +261,7 @@ export function AssignRole() {
                   );
                 })
               )}
+              
               <Snackbar
                 open={nameSnackOpen}
                 autoHideDuration={3500}
@@ -304,7 +305,33 @@ export function AssignRole() {
                   </Alert>
                 </motion.div>
               </Snackbar>
-              <span style={{ width: "100%", height: "60px" }}></span>
+              <div style={{ width: "100%", height: "60px",display:"flex",justifyContent:"center" }}>
+              <div id="save-team-button">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "var(--golden)",
+                    borderRadius: "8px",
+                  }}
+                  onClick={(event) => {
+                    saveTeam(
+                   
+                      event,
+                      coins,
+                      finalRanks,
+                      setError,
+                      setNameSnackOpen,
+                      setSuccessSnackOpen,
+                      createTeam,                  
+                      navigate,
+                      state,
+                    );
+                  }}
+                >
+                  Save Team
+                </Button>
+              </div>
+              </div>
             </div>
           </>
         )}

@@ -31,6 +31,17 @@
   /* clip-path: polygon(0 0, 100% 16%, 100% 100%, 0 100%); */
 }
 
+
+@media only screen and (min-width: 390px)  and (max-width: 425px) {
+ 
+.lower-half {
+
+  min-height: 140% !important;
+
+}
+}
+
+
 #rank-info {
   max-height: 1.875em;
   width: 80%;
@@ -140,6 +151,24 @@
   #save-team-button {
     width: 100%;
   }
+}
+
+@media only screen and (min-width: 380px) and (max-width: 425px) {
+  
+#save-team-button button {
+  margin-left: 0% !important;
+  
+}
+
+#save-team-button {
+  position: unset !important;
+  display: flex;
+  justify-content: center;
+ 
+}
+.save-team-button{
+  position: unset !important;
+}
 }
 
 #crown {

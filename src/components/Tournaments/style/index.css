@@ -1,7 +1,7 @@
 .fullpage {
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: none;
 }
 .fullpage::-webkit-scrollbar{
@@ -20,6 +20,13 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding-top: 2.75em;
+}
+
+@media only screen and (max-width: 396px) {
+  .cancelled-Tournament-chip{
+    margin-top: 4px !important;
+    margin-left: 0px !important;
+  }
 }
 
 .css-5xe99f-MuiLinearProgress-bar1 , .css-t752vm {

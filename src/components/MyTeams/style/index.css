@@ -11,6 +11,36 @@
     font-family: "poppins";
 }
 
+@media only screen and (max-width: 380px) {
+    .activity-space{
+       
+        min-height:67vh !important;
+     
+    }
+  }
+
+  @media only screen and (min-width: 380px) and (max-width: 420px){
+    .activity-space{
+       
+        min-height:50vh !important;
+     
+    }
+  }
+  @media only screen and (min-width: 425px) and (max-width: 700px){
+    .activity-space{
+       
+        min-height:65vh !important;
+     
+    }
+  }
+
+  @media only screen and (min-width: 701px) {
+    .activity-space{
+       
+        min-height:69vh !important;
+     
+    }
+  }
 .activity-tournament{
     /* width: 85%; */
     min-height: 5em;
@@ -223,6 +253,8 @@
         width: 100%;
     }
   }
+
+  
 #circle-add-team-button{
     color: var(--golden);
     font-size: 60px;
