@@ -1,6 +1,6 @@
 .activity-space{
     width: 100%;
-    min-height:100vh;
+    min-height:75vh;
     background-color: var(--white);
     transition: all 0.3s ease-in-out;
     display: flex;
@@ -10,23 +10,23 @@
     align-content: center;
     font-family: "poppins";
 }
-
+/* 
 @media only screen and (max-width: 380px) {
     .activity-space{
        
         min-height:67vh !important;
      
     }
-  }
+  } */
 
-  @media only screen and (min-width: 380px) and (max-width: 420px){
+  @media only screen and (min-width: 390px) and (max-width: 420px){
     .activity-space{
        
         min-height:50vh !important;
      
     }
   }
-  @media only screen and (min-width: 425px) and (max-width: 700px){
+  /*@media only screen and (min-width: 425px) and (max-width: 700px){
     .activity-space{
        
         min-height:65vh !important;
@@ -40,7 +40,7 @@
         min-height:69vh !important;
      
     }
-  }
+  } */
 .activity-tournament{
     /* width: 85%; */
     min-height: 5em;
@@ -250,7 +250,7 @@
 }
 @media only screen and (max-width: 600px) {
     .activity-add-team-buttton{
-        width: 100%;
+        width: 90%;
     }
   }
 
