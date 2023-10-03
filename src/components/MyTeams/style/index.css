@@ -1,6 +1,6 @@
 .activity-space{
     width: 100%;
-    min-height:75vh;
+    min-height:72vh;
     background-color: var(--white);
     transition: all 0.3s ease-in-out;
     display: flex;
@@ -21,8 +21,9 @@
 
   @media only screen and (min-width: 390px) and (max-width: 420px){
     .activity-space{
-       
-        min-height:50vh !important;
+        max-height: 100vh !important;
+    min-height: 70vh !important;
+    height: 60vh;
      
     }
   }
