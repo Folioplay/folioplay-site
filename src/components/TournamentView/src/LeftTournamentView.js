@@ -45,12 +45,7 @@ const LeftTournamentView = () => {
     if (completed) {
 
       return (
-      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>{" "}
-   
-      <Countdown
-       date={Date.now() + 60000} 
-       renderer={rendererBuffer}
-                        /></span>
+     <></>
       )
   
     }
