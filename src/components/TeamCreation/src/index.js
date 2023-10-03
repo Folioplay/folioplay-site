@@ -459,15 +459,24 @@ export function TeamCreation() {
             <></>
           )}
           <div id="superstars" className="coinClass-content">
-            <Superstars />
+            <Superstars />  
+            <div className="assign-roles-div mt-20">
+            <Button
+              id="assign-role-button"
+              variant="contained"
+              className="role-button ml-auto"
+              onClick={() =>
+                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+              Select top 3 Coins
+            </Button>
+          </div>          
           </div>
-          <div id="mooning" className="coinClass-content display-none">
+          <div id="mooning" className="coinClass-content display-none" style={{height:"200vh"}}>
             <Mooning />
-          </div>
-          <div id="rekt" className="coinClass-content display-none">
-            <Rekt />
-          </div>
-          <div className="assign-roles-div mt-20">
+            <div className="assign-roles-div mt-20">
             <Button
               id="assign-role-button"
               variant="contained"
@@ -480,6 +489,36 @@ export function TeamCreation() {
               Select top 3 Coins
             </Button>
           </div>
+          </div>
+          <div id="rekt" className="coinClass-content display-none" style={{height:"120vh"}}>
+            <Rekt />
+            <div className="assign-roles-div mt-20">
+            <Button
+              id="assign-role-button"
+              variant="contained"
+              className="role-button ml-auto"
+              onClick={() =>
+                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+              Select top 3 Coins
+            </Button>
+          </div>
+          </div>
+          {/* <div className="assign-roles-div mt-20">
+            <Button
+              id="assign-role-button"
+              variant="contained"
+              className="role-button ml-auto"
+              onClick={() =>
+                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+              Select top 3 Coins
+            </Button>
+          </div> */}
           <div className="error-cannot-add-coin">
             <ErrorOutlineOutlinedIcon />{" "}
             <span className="ml-10">
