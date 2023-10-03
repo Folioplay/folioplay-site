@@ -21,9 +21,9 @@
 
   @media only screen and (min-width: 390px) and (max-width: 420px){
     .activity-space{
-        max-height: 100vh !important;
-    min-height: 70vh !important;
-    height: 60vh;
+        max-height: 170vh !important;
+    min-height: 100%;
+    height: auto;
      
     }
   }
@@ -143,6 +143,7 @@
     border-top-right-radius:20px;
     background-color: var(--white);
     transition: all 0.3s ease-in-out;
+    min-height: 100%;
 }
 #activity-tabs-wrapper{
     transform: translateY(-48px) !important;
@@ -243,7 +244,7 @@
 }
 .activity-add-team-buttton{
     width: 450px;
-    position: fixed;
+    position: relative;
     bottom: 20px;
     display: flex;
     justify-content: flex-end;
@@ -251,7 +252,9 @@
 }
 @media only screen and (max-width: 600px) {
     .activity-add-team-buttton{
-        width: 90%;
+
+    max-width: 84% !important;
+
     }
   }
 
