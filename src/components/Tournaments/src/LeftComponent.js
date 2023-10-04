@@ -948,6 +948,7 @@ const LeftComponent = () => {
             className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
+            <div className="ChipsScrollController">
             {/* hey */}
             {/* Filters */}
             <Chip
@@ -1071,6 +1072,7 @@ const LeftComponent = () => {
                 setFilter("cancelled");
               }}
             />
+            </div>
           </span>
           {tournaments === undefined ||
             tournaments === null ||

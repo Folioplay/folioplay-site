@@ -22,10 +22,12 @@
     padding-top: 2.75em;
 }
 
-@media only screen and (max-width: 396px) {
-  .cancelled-Tournament-chip{
-    margin-top: 4px !important;
-    margin-left: 0px !important;
+@media only screen  and (max-width: 800px){
+  .ChipsScrollController{
+     max-width: 85vw;
+     display: flex;
+     overflow-x: scroll;
+   
   }
 }
 
