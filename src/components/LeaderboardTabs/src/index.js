@@ -269,6 +269,7 @@ id:10,
 Title:"Current Prize Pool",
 Value: tournament.rewardsprize_pool
 },
+
 ]
 
 
