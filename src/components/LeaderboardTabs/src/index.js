@@ -576,12 +576,12 @@ Value: tournament.rewardsprize_pool
 
         {getWinnersAsync && !loading &&<TabPanel value="2">
          
-        {tournamentStatus === 0 && tournamentStatus === 1 ? (<>
+        {tournamentStatus === 0 || tournamentStatus === 1 ? (<>
           <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10" style={{display:"flex", maxWidth:"100%", width:"100%", textAlign:"start"}}>
         
-        <div style={{maxWidth:"50%", width:"100%",textAlign:"start"}}>User</div>
+        <div style={{maxWidth:"50%", width:"100%",textAlign:"start",padding:"0 0px 0px 20px"}}>User</div>
         <div style={{maxWidth:"25%", width:"100%"}}></div>
-        <div style={{maxWidth:"25%", width:"100%",textAlign:"end"}}>Points</div>
+        <div style={{maxWidth:"25%", width:"100%",textAlign:"end",padding: "0 3px 0px"}}>Points</div>
           {/* <span className='ml-auto'>Team</span> */}
           
         </div></>) :(<>
