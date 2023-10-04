@@ -678,7 +678,7 @@ const LeftComponent = () => {
     }
     return (
       <>
-        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Starting in
+        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>
           <TimerIcon style={{ color: "var(--golden)" }} />
           <span className={"tournamentCard__countdownTimer"}>
             {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -851,6 +851,10 @@ const LeftComponent = () => {
                 {/*  )}*/}
                 {/*</div>*/}
               </div>
+              {tournament.status === 1  ? (
+
+<div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Starting in{" "}</div>
+) : (null)}
               {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
 
                 <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Registration closing in{" "}</div>
