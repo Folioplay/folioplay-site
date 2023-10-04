@@ -474,7 +474,17 @@ export function TeamCreation() {
             </Button>
           </div>          
           </div>
-          <div id="mooning" className="coinClass-content display-none" style={{height:"200vh"}}>
+          <div id="mooning" className="coinClass-content display-none"  style={
+        window.innerWidth >= 600
+        ? {height:"200vh" } // Desktop styles
+        : window.innerWidth === 375
+        ? { height:"200vh" } // For width 375
+        : (window.innerWidth >= 390 && window.innerWidth <= 420)
+        ? { height:"170vh" } // For width 390 to 420
+        : (window.innerWidth >= 425 && window.innerWidth <= 600)
+        ? { height:"200vh" } // For width 425 to 600
+        : { height:"200vh"} // Default case
+      }>
             <Mooning />
             <div className="assign-roles-div mt-20">
             <Button
@@ -490,7 +500,7 @@ export function TeamCreation() {
             </Button>
           </div>
           </div>
-          <div id="rekt" className="coinClass-content display-none" style={{height:"120vh"}}>
+          <div id="rekt" className="coinClass-content display-none" style={{height:"112vh"}}>
             <Rekt />
             <div className="assign-roles-div mt-20">
             <Button
