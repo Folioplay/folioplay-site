@@ -59,20 +59,22 @@ height: 100%;
 }
 
 .leaderboard-Main-Controller-UserName{   
-    max-width: 45%;
-    width: 100%;
+    /* max-width: 45%; */
+    width: auto;
     transition: 0.2s all ease-in-out;
     text-align: start;
+    display: flex;
 }
 .leaderboard-Main-Controller-TeamCount{   
     max-width: 15%;
     width: 100%;
     text-align: start;
+    padding: 0 2px;
 }
 .leaderboard-Main-Controller-Porfolio{   
     max-width: 25%;
     width: 100%;
-    text-align: start;
+    text-align: end;
 }
 
 .teamCounttemp{
