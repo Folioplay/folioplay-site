@@ -459,6 +459,7 @@ export function TeamCreation() {
             <></>
           )}
           <div id="superstars" className="coinClass-content">
+          <div className="superstars_Height_Controll">
             <Superstars />  
             <div className="assign-roles-div mt-20">
             <Button
@@ -474,17 +475,9 @@ export function TeamCreation() {
             </Button>
           </div>          
           </div>
-          <div id="mooning" className="coinClass-content display-none"  style={
-        window.innerWidth >= 600
-        ? {height:"200vh" } // Desktop styles
-        : window.innerWidth === 375
-        ? { height:"200vh" } // For width 375
-        : (window.innerWidth >= 390 && window.innerWidth <= 420)
-        ? { height:"165vh" } // For width 390 to 420
-        : (window.innerWidth >= 425 && window.innerWidth <= 600)
-        ? { height:"200vh" } // For width 425 to 600
-        : { height:"200vh"} // Default case
-      }>
+          </div>
+          <div id="mooning" className="coinClass-content display-none" >
+         <div className="mooning_Height_Controll">
             <Mooning />
             <div className="assign-roles-div mt-20">
             <Button
@@ -500,7 +493,9 @@ export function TeamCreation() {
             </Button>
           </div>
           </div>
-          <div id="rekt" className="coinClass-content display-none" style={{height:"107vh"}}>
+          </div>
+          <div id="rekt" className="coinClass-content display-none">
+          <div className="rekt_Height_Controll">
             <Rekt />
             <div className="assign-roles-div mt-20">
             <Button
@@ -514,6 +509,7 @@ export function TeamCreation() {
             >
               Select top 3 Coins
             </Button>
+          </div>
           </div>
           </div>
           {/* <div className="assign-roles-div mt-20">

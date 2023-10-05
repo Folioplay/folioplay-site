@@ -152,7 +152,7 @@ const LeftTournamentView = () => {
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
     await console.log("ammounttt from line 118");
-    console.log(await getAmountWon({ _id: _id }));
+   await console.log(await getAmountWon({ _id: _id }));
   }
 
   async function fetchTeams() {
