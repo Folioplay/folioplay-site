@@ -58,16 +58,16 @@ export default function MyTeams() {
           <div id="activity-tabs-wrapper">
             <ActivityTabs  tournaments={tournaments} />
             {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
-            <div className="activity-add-team-buttton">
+           
+          </div>
+          <div className="activity-add-team-buttton">
             <AddCircleIcon
-              className="mr-10"
-              id="circle-add-team-button"
+              className="circle-add-team-button"
               onClick={() => {
                 removeCoinsFromLocalStorage();
                 navigate("/teams/createteam/");
               }}
             />
-          </div>
           </div>
         </div>
       </div>
