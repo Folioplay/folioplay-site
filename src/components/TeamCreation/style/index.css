@@ -15,39 +15,60 @@
     height: fit-content;
 }
 
-@media only screen and (max-width: 379px) {
+/* @media only screen and (max-width: 379px) {
 
     .mooning_Height_Controll{
 height:193vh !important;
     }
     .rekt_Height_Controll{
         height:111vh !important;   
-    }
+    } */
 
   
 
-}
+/* } */
+/* @media only screen and(min-height: 730px) {
+   
+    .mooning_Height_Controll{
+        height:147vh !important;
+            } 
 
+  } */
+
+  
+/* 
 @media only screen and (min-width: 380px)and (max-width: 400px) {
 
     .mooning_Height_Controll{
-height:172vh !important;
+height:183vh !important;
     }
     .rekt_Height_Controll{
-        height:106vh !important;   
+        height:111vh !important;   
     }
 
-}
+} */
 
-@media only screen and (min-width: 401px) and (max-width: 425px) {
+
+
+@media only screen and (max-width: 600px) {
 
     .mooning_Height_Controll{
-height: 170vh !important;
+max-height: 200vh ;
+height: auto;
     }
 
     .rekt_Height_Controll{
-        height:108vh !important;   
+        max-height: 115vh ;
+        height: auto;
     }
+
+    
+    .superstars_Height_Controll{
+        max-height: 100vh ;
+        height: auto;
+    }
+
+   
 
 }
 
