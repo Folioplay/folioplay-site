@@ -24,7 +24,7 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
-  min-height: 65%;
+  /* min-height: 65%; */
   width: 100%;
   background-color: #fff4e2;
   color: var(--black);
@@ -36,7 +36,8 @@
  
 .lower-half {
 
-  min-height: 135% !important;
+  max-height: 170vh !important;
+  height: auto;
 
 }
 }
