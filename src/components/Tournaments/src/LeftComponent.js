@@ -653,16 +653,14 @@ const LeftComponent = () => {
     );
   };
 //  Thsese 3 funtions from  662 Line to  694 is controlling the auto refresh of tournaments
-  const openRefresh = () => {
-    console.log("openrefresh countdown 646");
-    if (openRefreshCounter === 0) {
-      setOpenRefreshCounter(5);
-      if (openRefreshCounter === 5) {
-      setOpenRefreshCounter(0);
-      }
-    } 
-
-    return;
+  const openRefresh = (tournamentStatus) => {
+    if(tournamentStatus === 0){
+      dispatch(getTournamentAsync()); 
+       setTimeout(() => {
+       dispatch(getTournamentAsync());
+     }, 4000);   
+   return;
+ }
   }
 
   const completeRefresh = (tournamentStatus) => {  
@@ -670,20 +668,19 @@ const LeftComponent = () => {
        dispatch(getTournamentAsync()); 
         setTimeout(() => {
         dispatch(getTournamentAsync());
-      }, 20000);   
+      }, 4000);   
     return;
   }
 }
 
-    const bufferRefresh = () => {
-      console.log("bufferrefresh countdown 669");
-    if (bufferRefreshCounter === 0) {
-      setBufferRefreshCounter(5);
-      if (bufferRefreshCounter === 5) {
-          setBufferRefreshCounter(0);
-      }
-    }
-    return;
+    const bufferRefresh = (tournamentStatus) => {
+      if(tournamentStatus === 1){
+        dispatch(getTournamentAsync()); 
+         setTimeout(() => {
+         dispatch(getTournamentAsync());
+       }, 4000);   
+     return;
+   }
   }
 
 
@@ -910,7 +907,7 @@ const LeftComponent = () => {
                     {tournament.status === 1 ? (<Countdown
                       date={startDate}
                       renderer={rendererBuffer}
-                      onComplete={bufferRefresh}
+                      onComplete={() =>bufferRefresh(tournament.status)}
                     />
                     ) : (null)}
 
@@ -918,7 +915,7 @@ const LeftComponent = () => {
                       <Countdown
                         date={startDate - 60000}
                         renderer={renderer}
-                        onComplete={openRefresh}
+                        onComplete={() =>openRefresh(tournament.status)}
                       />
                     ) : (
                       <>
