@@ -146,8 +146,8 @@ const LeftTournamentView = () => {
     else setUserImg(defaultImage);
   };
   async function fetchTournament() {
-    setTournament(await getTournamentById({ _id: _id }));
-    console.log(await getTournamentById({ _id: _id }));
+   await setTournament(await getTournamentById({ _id: _id }));
+   
   }
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
@@ -237,6 +237,37 @@ const LeftTournamentView = () => {
     tournament && tournament.status === 3 ? "empty-area-completed" : "";
   const startTime = tournament ? new Date(tournament.start_time) : undefined;
   const endTime = tournament ? new Date(tournament.end_time) : undefined;
+
+  const openRefresh = (tournamentStatus) => {
+    if(tournamentStatus === 0){
+      fetchTournament(); 
+       setTimeout(() => {
+        fetchTournament();
+     }, 4000);   
+   return;
+ }
+  }
+
+  const completeRefresh = (tournamentStatus) => {  
+   if(tournamentStatus === 2){
+    fetchTournament();
+        setTimeout(() => {
+          fetchTournament();
+      }, 4000);   
+    return;
+  }
+}
+
+    const bufferRefresh = (tournamentStatus) => {
+      if(tournamentStatus === 1){
+        fetchTournament();
+         setTimeout(() => {
+          fetchTournament();
+       }, 4000);   
+     return;
+   }
+  }
+
   return (
     <div className="fullpage">
       {tournament === undefined || teams === undefined ? (
@@ -471,6 +502,7 @@ const LeftTournamentView = () => {
 {tournament.status === 1 ? ( <Countdown
                        date={startTime}
                         renderer={rendererBuffer}
+                        onComplete={() => bufferRefresh(tournament.status)}
                       />
 ):(null) }
 
@@ -479,6 +511,7 @@ const LeftTournamentView = () => {
                       <Countdown
                         date={startTime - 60000}
                         renderer={renderer}
+                        onComplete={() => openRefresh(tournament.status)}
                       />
                     ) : (
                       <>
@@ -486,6 +519,7 @@ const LeftTournamentView = () => {
                           <Countdown
                             date={endTime}
                             renderer={rendererEnd}
+                            onComplete={() => completeRefresh(tournament.status)}
                           />
                         ) : null}
                       </>
