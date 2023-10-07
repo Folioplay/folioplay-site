@@ -239,7 +239,37 @@
     transform: rotate(45deg);
   }
 
+  /* top right*/
+.pinned-top-right {
+  top: -20px;
+  right: -112px;
+}
 
+.pinned-top-right::before,
+.pinned-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.pinned-top-right::before {
+  top: 0;
+  left: 0;
+}
+.pinned-top-right::after {
+  bottom: 0;
+  right: 0;
+}
+.pinned-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+
+.pinned1{
+  width: 133px;
+  height: 100px;
+  overflow: hidden;
+  position: absolute;
+}
   /* top left*/
 .ribbon1-top-left {
     top: -10px;
