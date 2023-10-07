@@ -207,12 +207,23 @@ const LeftComponent = () => {
 
   //  This use effect controlling tournament auto refresh & its contrlling infinte loop for tournament calling
   useEffect(() => {
+    console.log("use effect open called for tournamnets refreshing 210 line");
     dispatch(getTournamentAsync());
-    }, [bufferRefreshCounter,openRefreshCounter,completeRefreshCounter]);
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+     
+    }, [openRefreshCounter]);
+   
+    useEffect(() => {
+      console.log("use effect buffer called for tournamnets refreshing 215 line");
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+      }, [bufferRefreshCounter]);
 
-  // async function fetchTournaments() {
-  //   setTournaments(await getAllTournaments());
-  // }
+     
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
@@ -643,6 +654,7 @@ const LeftComponent = () => {
   };
 //  Thsese 3 funtions from  662 Line to  694 is controlling the auto refresh of tournaments
   const openRefresh = () => {
+    console.log("openrefresh countdown 646");
     if (openRefreshCounter === 0) {
       setOpenRefreshCounter(5);
       if (openRefreshCounter === 5) {
@@ -652,16 +664,19 @@ const LeftComponent = () => {
 
     return;
   }
-  const completeRefresh = () => {  
-    if (completeRefreshCounter === 0) {
-      setCompleteRefreshCounter(5);
-      if (completeRefreshCounter === 5) {
-       setCompleteRefreshCounter(0);
-      }
-    }  
+
+  const completeRefresh = (tournamentStatus) => {  
+   if(tournamentStatus === 2){
+       dispatch(getTournamentAsync()); 
+        setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 20000);   
     return;
   }
+}
+
     const bufferRefresh = () => {
+      console.log("bufferrefresh countdown 669");
     if (bufferRefreshCounter === 0) {
       setBufferRefreshCounter(5);
       if (bufferRefreshCounter === 5) {
@@ -907,13 +922,11 @@ const LeftComponent = () => {
                       />
                     ) : (
                       <>
-                        {tournament.status !== -2 && startDate <= Date.now() ? (
-
-                    
+                        {tournament.status !== -2 && startDate <= Date.now() ? (                    
                           <Countdown
                             date={finishDate}
                             renderer={RendererEnd}
-                            onComplete={completeRefresh}
+                            onComplete={() => completeRefresh(tournament.status)}
                           />
                         ) : null}
                       </>

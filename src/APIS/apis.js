@@ -339,6 +339,7 @@ export async function checkAvailableUsername(name) {
 }
 
 export async function changeUserName(name) {
+  console.log(name.toString());
   const authtoken = localStorage.getItem("authtoken");
   return await fetch(`${SERVER}/user/username/`, {
     method: "PUT",

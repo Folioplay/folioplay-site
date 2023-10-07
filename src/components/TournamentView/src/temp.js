@@ -96,6 +96,7 @@
         justifyContent: "center",
         alignContent: "center",
         alignItems: "center",
+        backgroundColor:"Red"
       }}
     >
       <span

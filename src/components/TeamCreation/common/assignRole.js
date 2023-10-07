@@ -30,4 +30,5 @@ export default function assignRoles(superstars, mooning, rekt, setSnackOpen, nav
   }
 
   navigate("/teams/createteam/assignrole",{state:state});
+
 }

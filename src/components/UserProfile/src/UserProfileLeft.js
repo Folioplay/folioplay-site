@@ -11,6 +11,8 @@ import InlineEdit from "../common/InlineEditComponent";
 import { LinearProgress, TextField } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ReactSpeedometer from "react-d3-speedometer";
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import {
   changeProfilePicture,
   changeUserName,
@@ -23,19 +25,20 @@ import { useSelector } from "react-redux";
 import { AuthContext } from "../../../Context/AuthContext";
 import Snackbar from "../../../Common/Snackbar";
 function UserProfileLeft() {
-  
-const [user, setUser] =useState("");
-const [isAuthenticated, setIsAuthenticated] =useState("");
+  const [errorInputForm, setErrorInputForm] = useState(false);
+  const [user, setUser] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState("");
 
-const localStoritems = async () => {
-  const userr = await localStorage.getItem("user");
-  await setUser(userr);
-  const isLoggedIn = await localStorage.getItem("isLoggedIn");
-  await setIsAuthenticated(isLoggedIn);
-}
+  const localStoritems = async () => {
+    const userr = await localStorage.getItem("user");
+    await setUser(userr);
+    const isLoggedIn = await localStorage.getItem("isLoggedIn");
+    await setIsAuthenticated(isLoggedIn);
+  }
   // const { user } = useMoralis();
   const walletAdd = localStorage.getItem("walletAddress");
   const [snackMessage, setSnackMessage] = useState("");
+  const [snackMessageFail, setSnackMessageFail] = useState("");
   const referralCode = localStorage.getItem("folioReferralCode");
   const referralCodeLink = `${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`;
   function copytoClipboard() {
@@ -87,25 +90,54 @@ const localStoritems = async () => {
   const setValueNameField = async () => {
     if (!errorNameField) {
       const response = await changeUserName(currentUserName);
+      console.log(response);
       if (!response) {
         setHelperTextNameField("Input must be a non-empty string");
       } else {
         setHelperTextNameField("Username Changed");
         setDisabledNameField(true);
       }
+      if (response === true) {
+        setSnackMessage("Username Updated");
+        setOpen(true)
+      }
+      if (response === false) {
+        setSnackMessageFail("Username Can't be changed!");
+        setUsernameSnackOpen(true);
+      }
+
     } else {
       setHelperTextNameField("Username Can't be changed!");
+      setSnackMessageFail("Username Can't be changed!");
+      setUsernameSnackOpen(true);
     }
+    setTimeout(() => {
+      setOpen(false);
+      setUsernameSnackOpen(false);
+    }, 4000);
   };
 
   const checkAvailable = async (data) => {
-    const availableName = await checkAvailableUsername(data);
-    if (!availableName) {
-      setErrorNameField(availableName);
-      setHelperTextNameField("Username already taken");
-    } else {
-      setHelperTextNameField("Username can be taken!");
+    const currentName = await localStorage.getItem("folioUsername");
+    if (currentName !== data) {
+      const availableName = await checkAvailableUsername(data);
+      if (!availableName) {
+        setErrorNameField(availableName);
+        setHelperTextNameField("Username already taken");
+        setErrorInputForm(true);
+
+      } else {
+
+        setHelperTextNameField("Username is available!");
+        setErrorInputForm(false);
+
+      }
     }
+    if (currentName === data) {
+      setHelperTextNameField("Its your current user name!");
+      setErrorInputForm(false);
+    }
+
   };
   const [currentUserName, setCurrentUserName] = useState(
     localStorage.getItem("folioUsername")
@@ -122,11 +154,12 @@ const localStoritems = async () => {
   const handleChange = (e) => {
     setCurrentUserName(e.target.value);
     checkAvailable(e.target.value);
+    console.log(checkAvailable(e.target.value));
   };
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen(true);
+    setOpen();
   };
 
   const handleClose = (event, reason) => {
@@ -139,9 +172,14 @@ const localStoritems = async () => {
   const changeDisabledButton = () => {
     if (presentUser.usernameChanged) {
       setUsernameSnackOpen(true);
+      setSnackMessageFail("Username can be changed only once")
     } else {
       setDisabledNameField(!disabledNameField);
     }
+    setTimeout(() => {
+      setOpen(false);
+      setUsernameSnackOpen(false);
+    }, 4000);
   };
   const inputFile = useRef(null);
   const handleInputClick = () => {
@@ -157,8 +195,8 @@ const localStoritems = async () => {
   };
 
   useEffect(() => {
-    
-  localStoritems();
+
+    localStoritems();
     if (file) {
       handleSubmit();
       return;
@@ -176,7 +214,7 @@ const localStoritems = async () => {
   };
   const defaultImage = require("../../../images/profilepic.jpeg").default;
   const [presentProfileImage, setPresentProfileImage] = useState(null);
- 
+
   return (
     <div className="fullpage">
       <FolioplayBar />
@@ -232,24 +270,24 @@ const localStoritems = async () => {
       <div className="profile-info-wrapper">
         <div className="headingPersonalInfo">Journey Stats</div>
         <div className="personalDetails" >
-          <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",}}>
-            <div style={{width:"200px",height:"111px"}}>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
+            <div style={{ width: "200px", height: "111px" }}>
               <ReactSpeedometer
-                  ringWidth={20}
-                  needleHeightRatio={0.6}
-                  needleTransition="easeQuadInOut"
-                  // width={"100px"}
-                  // height={""}
-                  fluidWidth={true}
-                  minValue={"0"}
-                  maxValue={"100"}
-                  needleColor={"#453df1"}
-                  value={winRate}
-                  maxSegmentLabels={5}
-                  segments={1000}
-                  // height={"180px"}
+                ringWidth={20}
+                needleHeightRatio={0.6}
+                needleTransition="easeQuadInOut"
+                // width={"100px"}
+                // height={""}
+                fluidWidth={true}
+                minValue={"0"}
+                maxValue={"100"}
+                needleColor={"#453df1"}
+                value={winRate}
+                maxSegmentLabels={5}
+                segments={1000}
+              // height={"180px"}
               />
-          </div>
+            </div>
             <span>Win Rate {winRate} %</span>
           </div>
 
@@ -269,8 +307,9 @@ const localStoritems = async () => {
                 id="nameField"
                 value={currentUserName}
                 disabled={disabledNameField}
-                className="nameTextField"
                 onChange={handleChange}
+                maxLength={20}
+                className={errorInputForm ? "errorNameTextField" : "nameTextField"}
               />
               {disabledNameField ? (
                 <EditIcon
@@ -279,14 +318,24 @@ const localStoritems = async () => {
                   className="editIcon"
                 />
               ) : (
-                <DoneIcon
-                  onClick={setValueNameField}
-                  fontSize="1.15rem"
+
+                errorInputForm ? (<ErrorOutlineOutlinedIcon
+                  color="red"
+                  fontSize="medium"
                   className="editIcon"
-                />
+                  style={{ color: "red" }}
+                />) : (<CheckCircleOutlineOutlinedIcon
+                  onClick={setValueNameField}
+                  fontSize="medium"
+                  className="editIcon"
+                  style={{ color: "green" }}
+                />)
+
               )}
             </div>
-            <div className="errorText">{helperTextNameField}</div>
+            {errorInputForm ? (<div className="errorText" style={{ color: "red" }}>{helperTextNameField}</div>)
+              : (<div className="errorText" style={{ color: "green" }}>{helperTextNameField}</div>)}
+
             <div className="sectionHeading">Wallet Address</div>
             <div className="sectionDetails">
               {tapToOpenDisabled ? (
@@ -341,20 +390,20 @@ const localStoritems = async () => {
                 onClick={copytoClipboardReferral}
               />
             </div>
-          <div className="sectionDetails">
-            Share this referral code and earn rewards &nbsp;
-            <span className="profilePage__referralCode">
+            <div className="sectionDetails">
+              Share this referral code and earn rewards &nbsp;
+              <span className="profilePage__referralCode">
                 {`${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`}
               </span>{" "}
-            &nbsp;
-            <ContentCopyIcon
+              &nbsp;
+              <ContentCopyIcon
                 id="copy-to-clipboard"
                 className="ml-10"
                 fontSize="medium"
                 style={{ color: "var(--black)" }}
                 onClick={copytoClipboardReferralLink}
-            />
-          </div>
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -367,7 +416,7 @@ const localStoritems = async () => {
       <Snackbar
         open={usernameSnackOpen}
         handleClose={handleUsernameSnack}
-        message="Username can be changed only once"
+        message={snackMessageFail}
         severityType="error"
       />
       {/*<div className="copied">*/}
