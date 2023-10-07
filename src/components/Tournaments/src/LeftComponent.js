@@ -11,6 +11,9 @@ import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import { scrollTo } from "../../../CommonFunctions/functions.js";
 import { Chip } from "@mui/material";
 import TimerIcon from "@mui/icons-material/Timer";
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+
 import {
   deleteTeam,
   getAllTournaments,
@@ -41,11 +44,7 @@ import { FilterAltOutlined } from "@mui/icons-material";
 
 
 const LeftComponent = () => {
-  //  Auto Refresh tournament Counters for saving from loop
-  const [openRefreshCounter, setOpenRefreshCounter] = useState(0);
-  const [bufferRefreshCounter, setBufferRefreshCounter] = useState(0);
-  const [completeRefreshCounter, setCompleteRefreshCounter] = useState(0);
- 
+
   // const { user, isAuthenticated,  } = useMoralis();
   const formatDuration = (startDate, finishDate) => {
     const diffInMs = finishDate - startDate;
@@ -198,32 +197,16 @@ const LeftComponent = () => {
         }
       });
     // fetchTournaments();
+    console.log(dispatch(getTournamentAsync()));
     dispatch(getTournamentAsync());
-   fetchTeams();
+    fetchTeams();
     setIntervalId(setInterval(nextImage, 2000));
     setL(len);
     // chooseTeamOpen();
   }, []);
 
-  //  This use effect controlling tournament auto refresh & its contrlling infinte loop for tournament calling
-  useEffect(() => {
-    console.log("use effect open called for tournamnets refreshing 210 line");
-    dispatch(getTournamentAsync());
-      setTimeout(() => {
-        dispatch(getTournamentAsync());
-      }, 4000);
-     
-    }, [openRefreshCounter]);
-   
-    useEffect(() => {
-      console.log("use effect buffer called for tournamnets refreshing 215 line");
-      dispatch(getTournamentAsync());
-      setTimeout(() => {
-        dispatch(getTournamentAsync());
-      }, 4000);
-      }, [bufferRefreshCounter]);
 
-     
+
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
@@ -652,40 +635,40 @@ const LeftComponent = () => {
       </>
     );
   };
-//  Thsese 3 funtions from  662 Line to  694 is controlling the auto refresh of tournaments
+  //  Thsese 3 funtions from  662 Line to  694 is controlling the auto refresh of tournaments
   const openRefresh = (tournamentStatus) => {
-    if(tournamentStatus === 0){
-      dispatch(getTournamentAsync()); 
-       setTimeout(() => {
-       dispatch(getTournamentAsync());
-     }, 4000);   
-   return;
- }
-  }
-
-  const completeRefresh = (tournamentStatus) => {  
-   if(tournamentStatus === 2){
-       dispatch(getTournamentAsync()); 
-        setTimeout(() => {
+    if (tournamentStatus === 0) {
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
         dispatch(getTournamentAsync());
-      }, 4000);   
-    return;
+      }, 4000);
+      return;
+    }
   }
-}
 
-    const bufferRefresh = (tournamentStatus) => {
-      if(tournamentStatus === 1){
-        dispatch(getTournamentAsync()); 
-         setTimeout(() => {
-         dispatch(getTournamentAsync());
-       }, 4000);   
-     return;
-   }
+  const completeRefresh = (tournamentStatus) => {
+    if (tournamentStatus === 2) {
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+      return;
+    }
+  }
+
+  const bufferRefresh = (tournamentStatus) => {
+    if (tournamentStatus === 1) {
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+      return;
+    }
   }
 
 
   const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
-    if (completed) {      
+    if (completed) {
       return <></>
     }
     return (
@@ -744,6 +727,17 @@ const LeftComponent = () => {
                 });
               }}
             >
+
+              {tournament.isPinned ? (
+                <div style={{ position: "relative" }}>
+                  <div style={{ justifyContent: "end" }}>
+                    <div className="pinned1 pinned-top-right">
+                      <PushPinOutlinedIcon style={{ color: "#fea31b", fontWeight: "bold", }} />
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+
               {tournament.user_joined ? (
                 <div style={{ position: "relative" }}>
                   <div className="ribbon1 ribbon1-top-left">
@@ -751,6 +745,7 @@ const LeftComponent = () => {
                   </div>
                 </div>
               ) : null}
+
               {/* <div className="ribbon1">  
               <span className="ribbon12">Joined</span>
             </div> */}
@@ -863,10 +858,10 @@ const LeftComponent = () => {
                 {/*  )}*/}
                 {/*</div>*/}
               </div>
-              {tournament.status === 1  ? (
+              {tournament.status === 1 ? (
 
-<div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Starting in{" "}</div>
-) : (null)}
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Starting in{" "}</div>
+              ) : (null)}
               {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
 
                 <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Registration closing in{" "}</div>
@@ -907,7 +902,7 @@ const LeftComponent = () => {
                     {tournament.status === 1 ? (<Countdown
                       date={startDate}
                       renderer={rendererBuffer}
-                      onComplete={() =>bufferRefresh(tournament.status)}
+                      onComplete={() => bufferRefresh(tournament.status)}
                     />
                     ) : (null)}
 
@@ -915,11 +910,11 @@ const LeftComponent = () => {
                       <Countdown
                         date={startDate - 60000}
                         renderer={renderer}
-                        onComplete={() =>openRefresh(tournament.status)}
+                        onComplete={() => openRefresh(tournament.status)}
                       />
                     ) : (
                       <>
-                        {tournament.status !== -2 && startDate <= Date.now() ? (                    
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
                           <Countdown
                             date={finishDate}
                             renderer={RendererEnd}
@@ -959,129 +954,129 @@ const LeftComponent = () => {
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
             <div className="ChipsScrollController">
-            {/* hey */}
-            {/* Filters */}
-            <Chip
-              className="active-chip"
-              style={{ fontFamily: "poppins" }}
-              label="All"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");
-                setFilter("all");
-              }}
-            />
-            <Chip
-              className="ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Live"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");
+              {/* hey */}
+              {/* Filters */}
+              <Chip
+                className="active-chip"
+                style={{ fontFamily: "poppins" }}
+                label="All"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+                  setFilter("all");
+                }}
+              />
+              <Chip
+                className="ml-10"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Live"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
 
-                setFilter("live");
-              }}
-            />
-            <Chip
-              className="ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Joined"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");
-                setFilter("joined");
-              }}
-            />
-            <Chip
-              className="ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Upcoming"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[4]
-                  .classList.remove("active-chip");
-                setFilter("upcoming");
-              }}
-            />
-            <Chip
-              className="cancelled-Tournament-chip"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Cancelled"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[4]
-                  .classList.add("active-chip");
-                setFilter("cancelled");
-              }}
-            />
+                  setFilter("live");
+                }}
+              />
+              <Chip
+                className="ml-10"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Joined"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+                  setFilter("joined");
+                }}
+              />
+              <Chip
+                className="ml-10"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Upcoming"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+                  setFilter("upcoming");
+                }}
+              />
+              <Chip
+                className="cancelled-Tournament-chip"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Cancelled"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.add("active-chip");
+                  setFilter("cancelled");
+                }}
+              />
             </div>
           </span>
           {tournaments === undefined ||
