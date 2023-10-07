@@ -381,6 +381,7 @@ const LeftTournamentView = () => {
                         }
                         onClick={() => {
                           chooseTeamOpen();
+                          fetchTournament();
                         }}
                         disabled={disabledTournament}
                       >
@@ -395,6 +396,7 @@ const LeftTournamentView = () => {
                         }
                         onClick={() => {
                           chooseTeamOpen();
+                         
                         }}
                         disabled={disabledTournament}
                       >
@@ -451,6 +453,7 @@ const LeftTournamentView = () => {
                     justifyContent: "center",
                     alignContent: "center",
                     alignItems: "center",
+                    padding:"5px 0 0 0"
                   }}
                 >
                   <span

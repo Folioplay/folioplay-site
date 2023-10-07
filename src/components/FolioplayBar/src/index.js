@@ -31,6 +31,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import { getWalletBalance } from "../../../APIS/apis";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
 import BookIcon from "@mui/icons-material/Book";
 import { useDispatch, useSelector } from "react-redux";
 import transactionSlice, {
@@ -60,6 +61,7 @@ export default function FolioplayBar({ intervalId }) {
     <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <LeaderboardOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
   ];
 
   // const provider = new ethers.providers.JsonRpcProvider(
@@ -170,7 +172,9 @@ const [balance, setBalance] = useState("")
         {[
           { name: "Home", link: "/tournaments" },
           { name: "Activity", link: "/activity" },
+          { name: "Histroy", link: "/user/profile" },
           { name: "Profile", link: "/user/profile" },
+          { name: "Leader Board", link: "/user/profile" },
         ].map((text, index) => (
           <ListItem
             button

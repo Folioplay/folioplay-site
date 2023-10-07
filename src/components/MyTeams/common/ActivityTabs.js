@@ -44,6 +44,7 @@ export default function ActivityTabs({ tournaments }) {
     );
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    
   };
   const handleClick = () => {
     console.info("You clicked the Chip.");
