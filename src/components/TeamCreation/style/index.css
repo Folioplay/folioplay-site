@@ -72,20 +72,6 @@ height: auto;
 
 }
 
-@media only screen and (max-width: 418px) {
-   
-
-    #assign-role-button{
-       
-        position: inherit !important;
-        
-      }
-
-      .assign-roles-div {
-      
-        justify-content: center !important;
-    }
-    }
 .coin-card-wrapper {
     display: flex;
     justify-content: center;
@@ -154,7 +140,7 @@ height: auto;
 .assign-roles-div {
     width: 94%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .role-button {

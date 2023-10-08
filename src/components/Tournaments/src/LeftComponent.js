@@ -860,11 +860,11 @@ const LeftComponent = () => {
               </div>
               {tournament.status === 1 ? (
 
-                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Starting in{" "}</div>
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Starting in{" "}</div>
               ) : (null)}
               {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
 
-                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-2%" }}>Registration closing in{" "}</div>
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration closing in{" "}</div>
               ) : (null)}
               <div className="tournament-reward">
                 {status[tournament.status].value !== "Open" ? (
