@@ -148,7 +148,7 @@ const LeftTournamentView = () => {
   };
   async function fetchTournament() {
   //  await setTournament(await getTournamentById({ _id: _id }));
-//  await  dispatch(getTournamentByIdAsync(_id));
+ await  dispatch(getTournamentByIdAsync(_id));
 
   }
   async function fetchAmountWon() {

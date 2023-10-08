@@ -31,7 +31,7 @@ export default function ContestTabs({
     "Dec",
   ];
   var navigate = useNavigate();
-  const [valueContest, setValueContest] = React.useState("1");
+  const [valueContest, setValueContest] = React.useState("2");
 
   const handleChangeContest = (event, newValue) => {
     setValueContest(newValue);
