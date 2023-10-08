@@ -281,7 +281,9 @@ export default function LeaderBoardTabs({
             <Tab
               label="Tournament Info"
               value="3"
-              style={{ textTransform: "capitalize", fontFamily: "poppins" }}
+              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth: window.innerWidth <= 420 ? "30vw" : "" }}
+             
+
             />
             <Tab
               label="Prizes"
@@ -506,12 +508,15 @@ export default function LeaderBoardTabs({
                         <div className={"leaderboard-Main-Controller-Rank"} >
                           {entry.rank}
                         </div>
+                        <div style={{maxWidth:"60%",display:"flex",width:"100%"}}>
                         <div className={"leaderboard-Main-Controller-UserName"}>
                           {localStorage.getItem("folioUsername")}{" "}
                         </div>
                         <div className={"leaderboard-Main-Controller-TeamCount"} >
-                          <div className={"teamCounttemp"} style={{ maxWidth: "30%", width: "auto" }}>
+                          <div className={"teamCounttemp"} style={{ maxWidth: "100%", width: "auto" }}>
                             T{entry.user_team_count}
+                          
+                          </div>
                           </div>
                         </div>
                         <div className={"leaderboard-Main-Controller-Porfolio"} >

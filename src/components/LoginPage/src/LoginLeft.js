@@ -597,7 +597,7 @@ const magicGoogleLogin = async () => {
       {snackBarChangeWalletComponent()}
       {snackBarChangeChainComponent()}
       {snackBarNoMetamaskComponent()}
-      <span className="mt-20">
+      <span className="mt-20" style={{marginLeft:"26px"}}>
         <input
           type="checkbox"
           required
@@ -608,12 +608,12 @@ const magicGoogleLogin = async () => {
           onClick={handlePolicyChange}
         />
         <label
-          className="font-size-15 ml-auto mr-auto"
+          className="font-size-15 mr-auto"
           htmlFor="privacy-policies"
         >
-          Agree to Folioplay
+          I agree to T&C &
           <span
-            className="login-privacy-policies ml-20"
+            className="login-privacy-policies ml-10"
             onClick={openPrivacyPolicies}
           >
             <u>Privacy Policies</u>

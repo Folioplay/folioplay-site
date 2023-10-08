@@ -145,7 +145,7 @@
 }
 
 #save-team-button button {
-  margin-left: 65%;
+  margin-left: 35%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -153,7 +153,7 @@
     width: 100%;
   }
 }
-
+/* 
 @media only screen and (min-width: 380px) and (max-width: 425px) {
   
 #save-team-button button {
@@ -170,7 +170,7 @@
 .save-team-button{
   position: unset !important;
 }
-}
+} */
 
 #crown {
   transform: translate(1.8rem, 0.1rem);
