@@ -34,6 +34,13 @@
 .css-5xe99f-MuiLinearProgress-bar1 , .css-t752vm {
     background-color: var(--golden) !important;
 }
+::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+::-webkit-scrollbar-track {
+  display: none !important;
+}
 
 .tournament {
     width: 89%;
