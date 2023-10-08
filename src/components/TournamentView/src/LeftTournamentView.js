@@ -148,14 +148,16 @@ const LeftTournamentView = () => {
   };
   async function fetchTournament() {
   //  await setTournament(await getTournamentById({ _id: _id }));
- await  dispatch(getTournamentByIdAsync(_id));
+   dispatch(getTournamentByIdAsync(_id));
+   }
 
-  }
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
-    await console.log("ammounttt from line 118");
-   await console.log(await getAmountWon({ _id: _id }));
+  
   }
+  const tournament = useSelector(
+    (state) => state.LeaderBoardSlice.tournamentByIdData
+  );
 
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
@@ -167,8 +169,10 @@ const LeftTournamentView = () => {
     await console.log("rank data")
     await console.log(data)
   }
+  useEffect(()=>{
+    fetchTournament();
+  },[])
   useEffect(() => {
-
     localStoritems();
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
@@ -193,6 +197,7 @@ const LeftTournamentView = () => {
     }
   }, [ teams]);
   useEffect(() => {
+    
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
     if ("mooning" in window.localStorage)
@@ -201,8 +206,7 @@ const LeftTournamentView = () => {
     dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
     dispatch(getTournamentByIdAsync(_id));
-
-    fetchTournament();
+   
     fetchTeams();
     fetchRank();
     fetchAmountWon();
@@ -210,10 +214,7 @@ const LeftTournamentView = () => {
   }, []);
 
 
-  const tournament = useSelector(
-    (state) => state.LeaderBoardSlice.tournamentByIdData
-  );
-
+  
   console.log("line no 216 tournament redux" );
   // console.log(tournamentDataRedux);
   const leaderBoardRedux = useSelector(
@@ -222,7 +223,7 @@ const LeftTournamentView = () => {
   const winnersRedux = useSelector((state) => state.LeaderBoardSlice.winners);
 
   if (tournament !== undefined) {
-    seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
+    seatsFilled = (100 * tournament?.filled_spots) / tournament?.total_spots;
   }
   const [snackOpen, setSnackOpen] = useState(false);
   const handleSnackClose = (event, reason) => {
@@ -239,14 +240,14 @@ const LeftTournamentView = () => {
     setErrorMessageSnackOpen(false);
   };
   var disabledClass =
-    tournament && tournament.status !== 0 ? " disable-join-button" : "";
-  var disabledTournament = tournament && tournament.status !== 0 ? true : false;
+    tournament && tournament?.status !== 0 ? " disable-join-button" : "";
+  var disabledTournament = tournament && tournament?.status !== 0 ? true : false;
   // disabledTournament = false;
-  // let tournament_info_contain  er_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
+  // let tournament_info_contain  er_completed = (tournament && tournament?.status === 3) ? "tournament-info-container-completed-bgc" : "";
   let empty_header =
-    tournament && tournament.status === 3 ? "empty-area-completed" : "";
-  const startTime = tournament ? new Date(tournament.start_time) : undefined;
-  const endTime = tournament ? new Date(tournament.end_time) : undefined;
+    tournament && tournament?.status === 3 ? "empty-area-completed" : "";
+  const startTime = tournament ? new Date(tournament?.start_time) : undefined;
+  const endTime = tournament ? new Date(tournament?.end_time) : undefined;
 
   const openRefresh = (tournamentStatus) => {
     if(tournamentStatus === 0){
@@ -293,7 +294,7 @@ const LeftTournamentView = () => {
               onClick={() => navigate("/tournaments", {})}
             />
             <span className="ml-20 font-size-20 font-weight-700">
-              {tournament.name}
+              {tournament?.name}
             </span>
 
           </div>
@@ -317,12 +318,12 @@ const LeftTournamentView = () => {
 
 
 
-          {tournament.status === 3 ? (
+          {tournament?.status === 3 ? (
             <>
               <div className={"empty-area-completed "}>
                 <div className={"empity-area-text"} style={{ maxWidth: "100%", display: "flex", justifyContent: "space-evenly", width: "100%", textAlign: "center" }}>
-                  <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool - <b>{tournament.rewards.prize_pool} FPC </b></div>
-                  <div style={{ maxWidth: "50%", width: "100%" }}> Spots - <b>{tournament.total_spots}</b></div>
+                  <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool - <b>{tournament?.rewards.prize_pool} FPC </b></div>
+                  <div style={{ maxWidth: "50%", width: "100%" }}> Spots - <b>{tournament?.total_spots}</b></div>
                 </div>
                 <div className="" style={{ maxWidth: "100%", display: "flex", justifyContent: "center", marginTop: "20px" }}> <span
                   style={{
@@ -331,13 +332,13 @@ const LeftTournamentView = () => {
                   }}
                   onClick={() => {
                     window.open(
-                      `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                      `https://mumbai.polygonscan.com/tx/${tournament?.transaction_hash}`
                     );
                   }}
                 >
                   {/*<u>Click here to view on Polygon.</u>*/}
                   <span className="tournamentView__transactionId">
-                    <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
+                    <u>Tournament ID: {tournament?.transaction_hash.slice(-5)}</u>
                     <img
                       className="ml-5"
                       src={require("../../../images/polygon_logo.png").default}
@@ -359,13 +360,13 @@ const LeftTournamentView = () => {
                   }}
                   onClick={() => {
                     window.open(
-                      `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                      `https://mumbai.polygonscan.com/tx/${tournament?.transaction_hash}`
                     );
                   }}
                 >
                   {/*<u>Click here to view on Polygon.</u>*/}
                   <span className="tournamentView__transactionId">
-                    <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
+                    <u>Tournament ID: {tournament?.transaction_hash.slice(-5)}</u>
                     <img
                       className="ml-5"
                       src={require("../../../images/polygon_logo.png").default}
@@ -381,7 +382,7 @@ const LeftTournamentView = () => {
 
 
           <div className={"tournament-info-container "}>
-            {tournament.status !== 3 ? (
+            {tournament?.status !== 3 ? (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1, y: -90 }}
@@ -398,8 +399,8 @@ const LeftTournamentView = () => {
                     </span>
                     <br />
                     <span className="font-size-20 font-weight-500">
-                      {/* {tournament.total_reward} MGT */}
-                      {tournament.rewards.prize_pool} FPC
+                      {/* {tournament?.total_reward} MGT */}
+                      {tournament?.rewards.prize_pool} FPC
                     </span>
                   </span>
                   <span className="ml-auto" style={{ textAlign: "right" }}>
@@ -426,7 +427,7 @@ const LeftTournamentView = () => {
                         }}
                         disabled={disabledTournament}
                       >
-                        {tournament.entryFee} FPC
+                        {tournament?.entryFee} FPC
                       </Button>) : (<Button
                         className={disabledClass + " tournament-fee"}
                         size="small"
@@ -441,13 +442,13 @@ const LeftTournamentView = () => {
                         }}
                         disabled={disabledTournament}
                       >
-                        {/* {tournament.entryFee} FPC */}
-                        {tournament.entryFee} FPC
+                        {/* {tournament?.entryFee} FPC */}
+                        {tournament?.entryFee} FPC
                       </Button>
                       )}
                   </span>
                 </div>
-                {tournament.status === -2 &&
+                {tournament?.status === -2 &&
                   <div>
                     <LinearProgress
                       variant="determinate"
@@ -462,7 +463,7 @@ const LeftTournamentView = () => {
                       </span>
                     </div>
                   </div>}
-                {tournament.status !== -2 &&
+                {tournament?.status !== -2 &&
                   <div>
                     <LinearProgress
                       variant="determinate"
@@ -474,8 +475,8 @@ const LeftTournamentView = () => {
                         className="font-size-12 font-weight-500 mt-5"
                         style={{ color: "var(--golden)" }}
                       >
-                        <span id={tournament.id + "-left-spots"}>
-                          {tournament.total_spots - tournament.filled_spots}
+                        <span id={tournament?.id + "-left-spots"}>
+                          {tournament?.total_spots - tournament?.filled_spots}
                         </span>{" "}
                         spots left
                       </span>
@@ -483,7 +484,7 @@ const LeftTournamentView = () => {
                         className="font-size-12 font-weight-500 mt-5"
                         style={{ color: "var(--dark-dim-white)" }}
                       >
-                        {tournament.total_spots} spots
+                        {tournament?.total_spots} spots
                       </span>
                     </div>
                   </div>}
@@ -509,10 +510,10 @@ const LeftTournamentView = () => {
                     }}
                   >
 
-{tournament.status === 1 ? ( <Countdown
+{tournament?.status === 1 ? ( <Countdown
                        date={startTime}
                         renderer={rendererBuffer}
-                        onComplete={() => bufferRefresh(tournament.status)}
+                        onComplete={() => bufferRefresh(tournament?.status)}
                       />
 ):(null) }
 
@@ -521,21 +522,21 @@ const LeftTournamentView = () => {
                       <Countdown
                         date={startTime - 60000}
                         renderer={renderer}
-                        onComplete={() => openRefresh(tournament.status)}
+                        onComplete={() => openRefresh(tournament?.status)}
                       />
                     ) : (
                       <>
-                        {tournament.status !== -2 && endTime > Date.now() ? (
+                        {tournament?.status !== -2 && endTime > Date.now() ? (
                           <Countdown
                             date={endTime}
                             renderer={rendererEnd}
-                            onComplete={() => completeRefresh(tournament.status)}
+                            onComplete={() => completeRefresh(tournament?.status)}
                           />
                         ) : null}
                       </>
                     )}
                   </span>
-                  {/* const startDate = new Date(tournament.start_time); */}
+                  {/* const startDate = new Date(tournament?.start_time); */}
                 </div>
               </motion.div>
             ) : (
@@ -544,7 +545,7 @@ const LeftTournamentView = () => {
                 animate={{ scale: 1, y: -90 }}
                 transition={{ duration: 0.3 }}
                 className={
-                  tournament.status === 0
+                  tournament?.status === 0
                     ? "tournament-view-card-completed"
                     : "tournament-view-card-completed-red"
                 }
@@ -596,7 +597,7 @@ const LeftTournamentView = () => {
                       className="font-size-12"
                       style={{ letterSpacing: "0.5px" }}
                     >
-                      You didn't participated in this tournament.
+                      You didn't participated in this tournament?.
                     </span>
                     <span
                       className="font-size-12 join-tourna-span"
@@ -613,16 +614,16 @@ const LeftTournamentView = () => {
 
             <div className="folioplay-tabs">
               <LeaderBoardTabs
-                tournamentId={tournament.id}
-                tournamentStatus={tournament.status}
-                tournamentPrizes={tournament.rewards.distribution}
-                rewardSize={tournament.rewards.places_paid}
+                tournamentId={tournament?.id}
+                tournamentStatus={tournament?.status}
+                tournamentPrizes={tournament?.rewards.distribution}
+                rewardSize={tournament?.rewards.places_paid}
                 tournament={tournament}
               />
             </div>
             <JoinTournamentDrawer
               teams={teams}
-              tournamentId={tournament.id}
+              tournamentId={tournament?.id}
               tournaments={[]}
               setErrorMessage={setErrorMessage}
               setErrorMessageSnackOpen={setErrorMessageSnackOpen}
