@@ -99,9 +99,11 @@ function UserProfileLeft() {
         setHelperTextNameField("Username Changed");
         setDisabledNameField(true);
       }
-      if (response === true) {
+      if (response === true) {     
+        getPresentUser();
         setSnackMessage("Username Updated");
         setOpen(true)
+        
       }
       if (response === false) {
         setSnackMessageFail("Username Can't be changed!");
