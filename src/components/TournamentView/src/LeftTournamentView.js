@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getLeaderboardAsync,
   getWinnersAsync,
+  getTournamentByIdAsync
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
   const monthNames = [
@@ -123,7 +124,7 @@ const LeftTournamentView = () => {
     message: "",
     variant: "error",
   });
-  const [tournament, setTournament] = useState(undefined);
+  // const [tournament, setTournament] = useState(undefined);
   // const tournament = useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
   const [amountWon, setAmountWon] = useState(0);
   const [rank, setRank] = useState(undefined);
@@ -146,8 +147,9 @@ const LeftTournamentView = () => {
     else setUserImg(defaultImage);
   };
   async function fetchTournament() {
-   await setTournament(await getTournamentById({ _id: _id }));
-   
+  //  await setTournament(await getTournamentById({ _id: _id }));
+//  await  dispatch(getTournamentByIdAsync(_id));
+
   }
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
@@ -189,7 +191,7 @@ const LeftTournamentView = () => {
         });
       }
     }
-  }, [tournament, teams]);
+  }, [ teams]);
   useEffect(() => {
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
@@ -198,6 +200,7 @@ const LeftTournamentView = () => {
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
     dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
+    dispatch(getTournamentByIdAsync(_id));
 
     fetchTournament();
     fetchTeams();
@@ -206,6 +209,13 @@ const LeftTournamentView = () => {
     getPresentUser();
   }, []);
 
+
+  const tournament = useSelector(
+    (state) => state.LeaderBoardSlice.tournamentByIdData
+  );
+
+  console.log("line no 216 tournament redux" );
+  // console.log(tournamentDataRedux);
   const leaderBoardRedux = useSelector(
     (state) => state.LeaderBoardSlice.leaderBoard
   );

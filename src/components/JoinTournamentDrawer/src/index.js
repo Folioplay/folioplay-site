@@ -16,6 +16,7 @@ import {
 } from "../common/chooseTeamAnimations";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import {getTournamentByIdAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 import {useDispatch} from "react-redux";
 import {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
 import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
@@ -205,6 +206,7 @@ export default function JoinTournamentDrawer({
               dispatch(getTournamentAsync());
               dispatch(getLeaderboardAsync(tournamentId));
               dispatch(getTransactionsAsync());
+              dispatch(getTournamentByIdAsync(tournamentId));
             }}
           >
             Join Now
