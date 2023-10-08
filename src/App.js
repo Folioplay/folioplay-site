@@ -288,6 +288,7 @@ import AddMoney from "./components/AddMoney/src";
 import CurrentTeamPreview from "./components/CurrentTeam/src";
 import CurrentTeamTable from "./components/CurrentTeamTable/src";
 import ComingSoon from "./components/AddMoney/src/ComingSoon";
+import GlobalLeaderboard from "./components/GlobalLeaderboard/src";
 import {CircularProgress} from "@mui/material";
 import AccordionComponent from "./Common/Accordion";
 import TransactionHistory from "./components/TransactionHistory/src";
@@ -343,7 +344,7 @@ const [token, setToken] =useState("");
   }
 
   function LoginRoute({ children }) {
-    // const { isAuthenticated, isInitialized } = useMoralis();
+    
     const { isLoading, presentAuthToken } = useContext(AuthContext);
 
     // if ((isAuthenticated && isInitialized && presentAuthToken)) {
@@ -473,6 +474,16 @@ const [token, setToken] =useState("");
             element={
               <AuthenticatedRoute>
                   <CurrentTeamPreview />
+
+              </AuthenticatedRoute>
+            }
+          />
+            <Route
+            exact
+            path="/globalleaderboard"
+            element={
+              <AuthenticatedRoute>
+                  <GlobalLeaderboard />
 
               </AuthenticatedRoute>
             }

@@ -80,6 +80,8 @@ function UserProfileLeft() {
       },
     }).then((res) => res.json());
     setPresentUser(res);
+    console.log(res);
+    setCurrentUserName(res.username);
     if (res.imageURL) setPresentProfileImage(res.imageURL);
     else setPresentProfileImage(defaultImage);
   };
@@ -97,9 +99,11 @@ function UserProfileLeft() {
         setHelperTextNameField("Username Changed");
         setDisabledNameField(true);
       }
-      if (response === true) {
+      if (response === true) {     
+        getPresentUser();
         setSnackMessage("Username Updated");
         setOpen(true)
+        
       }
       if (response === false) {
         setSnackMessageFail("Username Can't be changed!");
@@ -139,9 +143,7 @@ function UserProfileLeft() {
     }
 
   };
-  const [currentUserName, setCurrentUserName] = useState(
-    localStorage.getItem("folioUsername")
-  );
+  const [currentUserName, setCurrentUserName] = useState("");
 
   const [usernameSnackOpen, setUsernameSnackOpen] = useState(false);
 
@@ -312,11 +314,12 @@ function UserProfileLeft() {
                 className={errorInputForm ? "errorNameTextField" : "nameTextField"}
               />
               {disabledNameField ? (
-                <EditIcon
+                !presentUser.usernameChanged ? (<EditIcon
                   onClick={changeDisabledButton}
                   fontSize="1.15rem"
                   className="editIcon"
-                />
+                />):(null)
+                
               ) : (
 
                 errorInputForm ? (<ErrorOutlineOutlinedIcon

@@ -125,7 +125,7 @@ const LeftComponent = () => {
     1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
-    "-2": { value: "Cancelled", color: "#FFCC00" },
+   "-2": { value: "Cancelled", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
   const tournaments = useSelector((state) => state.tournamentSlice.tournament);
@@ -222,11 +222,22 @@ const LeftComponent = () => {
     var leftMargin = -1 * currImage * 100;
     var buffer = -1 * currImage * 20;
     if (currImage !== len) {
+    try{
       allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
+    }catch(e){
+console.log(e);
+    }
+    
       if (!paused) currImage++;
     } else {
-      allImages[0].style = `margin-left:0px`;
+      try{
+      
+        allImages[0].style = `margin-left:0px`;
       currImage = 1;
+      }catch(e){
+  console.log(e);
+      }
+    
     }
   }
 
