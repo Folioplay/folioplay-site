@@ -155,9 +155,7 @@ const LeftTournamentView = () => {
     setAmountWon(await getAmountWon({ _id: _id }));
   
   }
-  const tournament = useSelector(
-    (state) => state.LeaderBoardSlice.tournamentByIdData
-  );
+
 
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
@@ -166,12 +164,9 @@ const LeftTournamentView = () => {
   async function fetchRank() {
     const data = await getRank({ tournamentId: _id });
     setRank(data);
-    await console.log("rank data")
-    await console.log(data)
+   
   }
-  useEffect(()=>{
-    fetchTournament();
-  },[])
+ 
   useEffect(() => {
     localStoritems();
     if (document.getElementById("choose-team-div")) {
@@ -195,7 +190,7 @@ const LeftTournamentView = () => {
         });
       }
     }
-  }, [ teams]);
+  }, [ teams,tournament]);
   useEffect(() => {
     
     if ("superstars" in window.localStorage)
@@ -206,17 +201,17 @@ const LeftTournamentView = () => {
     dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
     dispatch(getTournamentByIdAsync(_id));
-   
+  
     fetchTeams();
     fetchRank();
     fetchAmountWon();
     getPresentUser();
   }, []);
 
-
+  const tournament = useSelector(
+    (state) => state.LeaderBoardSlice.tournamentByIdData
+  );
   
-  console.log("line no 216 tournament redux" );
-  // console.log(tournamentDataRedux);
   const leaderBoardRedux = useSelector(
     (state) => state.LeaderBoardSlice.leaderBoard
   );

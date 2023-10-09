@@ -260,6 +260,7 @@
 
 
 
+
   
 .blinkData{ 
     font-size: 5em; 
@@ -270,7 +271,7 @@
     width:"100%";
     text-align: center; 
     animation: animate  
-        1.5s linear infinite; 
+        3s linear infinite; 
   } 
   
   @keyframes animate { 
@@ -289,16 +290,16 @@
   
   @media only screen and (max-width: 700px) {
     .loginVerifyFPLogo{
-   width: 100vw !important;
+   width: 90%;
     }
     .loginVerifyFPText{
-     width: 100vw !important;
+     width: 90%;
     }
    
     .loginverfiyPageBlink{ 
      position: absolute; 
      top: 40%; 
-
+     left: 50%; 
      transform: translate(-50%, -50%); 
    } 
    
