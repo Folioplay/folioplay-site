@@ -310,7 +310,7 @@ function UserProfileLeft() {
                 value={currentUserName}
                 disabled={disabledNameField}
                 onChange={handleChange}
-                maxLength={20}
+                maxLength={17}
                 className={errorInputForm ? "errorNameTextField" : "nameTextField"}
               />
               {disabledNameField ? (
