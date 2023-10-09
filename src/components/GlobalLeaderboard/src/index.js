@@ -19,21 +19,22 @@ export default function TournamentView() {
         <div  className="bli">
 <img src={folioPlayLogo} alt="folioplayLogo" style={{zIndex:"1",width:"50%"}} />
         </div></div> </div> */}
-         <Box sx={{ width: '100vw',height:"100vh", backgroundColor:"#453df1",position:"absolute"}}>
-            
-            <LinearProgress style={{color:"blue",padding:"2px 0 0 0",backgroundColor:"white"}}/>
-          <Box sx={{ display: 'flex', justifyContent:"center" , width:"100%" ,backgroundColor:"blue"}}> 
-          <div className="loginverfiyPageBlink">
-                  <div  className="blinkData">
-                    <div>
-          <img src={folioPlayLogo} alt="folioplayLogo" style={{zIndex:"1"}} className="loginVerifyFPLogo"/>
-                </div>
-                <div> <img src={folioPlayLogoText} alt="folioplayLogo" style={{zIndex:"1"}} className="loginVerifyFPText"/>
-          </div>
-                  </div></div>
-          </Box>
-          
-          </Box>
+        <Box sx={{ width: '100vw', height: "100vh", backgroundColor: "#453df1", position: "absolute" }}>
+
+<LinearProgress style={{ color: "blue", padding: "2px 0 0 0", backgroundColor: "white" }} />
+<br/> 
+<Box sx={{ display: 'flex', justifyContent: "center", width: "100%", backgroundColor: "blue" }}>
+  <div className="loginverfiyPageBlink">
+    <div className="blinkData">
+      <div>
+        <img src={folioPlayLogo} alt="folioplayLogo" className="loginVerifyFPLogo" style={{ zIndex: "1" }} />
+      </div>
+      <div> <img src={folioPlayLogoText} alt="folioplayLogo" className="loginVerifyFPText" style={{ zIndex: "1" }} />
+      </div>
+    </div></div>
+</Box>
+
+</Box>
         </>):(<>
           <FolioPlayLayout
       LeftComponent={LeftTournamentView}
