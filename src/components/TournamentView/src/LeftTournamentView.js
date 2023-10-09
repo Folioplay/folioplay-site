@@ -205,7 +205,7 @@ const LeftTournamentView = () => {
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
     dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
-    dispatch(getTournamentByIdAsync(_id));
+   
    
     fetchTeams();
     fetchRank();
