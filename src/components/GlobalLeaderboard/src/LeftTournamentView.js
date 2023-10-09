@@ -27,6 +27,7 @@ import {
   getWinnersAsync,
   getTournamentByIdAsync
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import folioPlayLogo from "../../../images/folioplay-manifest.jpg"
 const LeftTournamentView = () => {
   const monthNames = [
     "Jan",
@@ -118,7 +119,7 @@ const LeftTournamentView = () => {
     
   }, []);
 
-
+const loading =true;
 
   return (
     <div className="fullpage">
@@ -127,15 +128,19 @@ const LeftTournamentView = () => {
           <ReactLoading type={"spin"} color="var(--white)" />{" "}
         </div> */}
     
-        
-          <div className="tournament-view-bar">
+        {!loading ? (<>
+        <div className="loginverfiyPageBlink">
+<img src={folioPlayLogo} alt="folioplayLogo" className="bli"/>
+        </div>
+        </>):( <div className="tournament-view-bar">
             <ArrowBackIosIcon
               fontSize="medium"
               className="go-back-button"
               onClick={() => navigate("/tournaments", {})}
             />
            
-          </div>
+          </div>)}
+         
          
         
 

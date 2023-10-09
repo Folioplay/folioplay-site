@@ -492,7 +492,11 @@ export function TeamCreation() {
               Select top 3 Coins
             </Button>
           </div>
+          <br/>
+          <br/>
           </div>
+          <br/>
+          <br/>
           </div>
           <div id="rekt" className="coinClass-content display-none">
           <div className="rekt_Height_Controll">
@@ -510,7 +514,11 @@ export function TeamCreation() {
               Select top 3 Coins
             </Button>
           </div>
+          <br/>
+          <br/>
           </div>
+          <br/>
+          <br/>
           </div>
           {/* <div className="assign-roles-div mt-20">
             <Button
