@@ -26,9 +26,10 @@
   display: flex;
   transition: all 0.3s ease-in-out;
 }
-@media only screen and (max-width: 418px) {
+@media only screen and (max-width: 600px) {
   .team-preview-wrapper{
-    height:161%;
+    max-height: 180vh !important;
+    height: auto !important;
   }
   }
 @media only screen and (max-width: 600px) {
