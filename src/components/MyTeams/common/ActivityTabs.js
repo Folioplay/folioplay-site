@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import deleteClickedTeam from "../common/deleteCLickedTeam";
 // import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { Chip, LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LabTabs from "../../../Common/TabComponent";
@@ -21,9 +21,13 @@ import {fetchTeams} from "../src/index"
 import {getMyTeamActivities} from "../../../APIS/apis"
 // import LabTabs from "../../../Common/TabComponent";
 export default function ActivityTabs({ tournaments }) {
+  const { state } = useLocation();
+  console.log(state);
+  console.log("activity tab state called")
+  console.log("line 26 activity page")
   const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
-  const [value, setValue] = React.useState("2");
+  const [value, setValue] = React.useState("");
   const [teamsLength, setTeamsLength] = useState(0);
   const [participatedContestsLength, setParticipatedContestsLength] =
     useState(0);
@@ -55,8 +59,7 @@ export default function ActivityTabs({ tournaments }) {
     const teamData = await getMyTeamActivities()
    await setTeams(teamData); 
    setTeamsLength(teamData.length);
-    await console.log("team featched") 
-    await console.log(teamData) 
+   
   }
 
 async function deleteTeamById(teamid,teamIndex){
@@ -70,13 +73,21 @@ async function deleteTeamById(teamid,teamIndex){
 
   useEffect(() => {
     fetchTeams();
-    console.log("useEffect Called 1")   
+    
     if (tournaments) {      
       const actualTournaments = tournaments.filter(
         (item) => item.tournament !== null
       );
       setParticipatedContestsLength(actualTournaments.length);
     }
+    if(state && state.tabValue){
+      setValue(state.tabValue);
+      
+    }else{
+      setValue("2");
+    }
+
+    
   }, []);
 
   

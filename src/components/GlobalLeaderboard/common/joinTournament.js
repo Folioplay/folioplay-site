@@ -16,8 +16,8 @@ export default async function joinTournament(user, tournament, teams, joinTourna
     }
   }
   // const NFTHolder = await checkNFTHolder(tournament.valid_nfts, account);
-  // console.log("NFTHolder",NFTHolder);
-  //   console.log(tournament)
+  ////  console.log("NFTHolder",NFTHolder);
+  //  //  console.log(tournament)
   //       if (!NFTHolder) {
   //           await paymentTournament(user,tournament);
   //       }

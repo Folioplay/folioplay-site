@@ -12,6 +12,8 @@ import { TableRowsOutlined } from "@mui/icons-material";
 export default function CurrentTeamPreview() {
   const navigate = useNavigate();
   const { state } = useLocation();
+ //  console.log("state from line 13");
+ //  console.log(state);
   const { leaderBoardData } = state;
   const LeftComponent = () => {
     return (
@@ -20,7 +22,12 @@ export default function CurrentTeamPreview() {
           <ArrowBackIosIcon
             fontSize="medium"
             className="go-back-button"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(-1, {
+              state: {
+                tounamentViewTab:"2"
+              },
+            })
+          }
           />
           <span className="ml-20 font-size-20 font-weight-700">
             {leaderBoardData.team !== undefined ? (

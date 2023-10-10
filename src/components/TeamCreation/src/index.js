@@ -27,7 +27,7 @@ export function TeamCreation() {
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
   const {state} = useLocation();
-  console.log(state);
+  // console.log(state);
   var superstars = [];
   var mooning = [];
   var rekt = [];
@@ -468,6 +468,7 @@ export function TeamCreation() {
               className="role-button ml-auto"
               onClick={() =>
                 assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
+                
               }
               // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
             >

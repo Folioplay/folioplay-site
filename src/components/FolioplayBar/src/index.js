@@ -147,7 +147,7 @@ const [balance, setBalance] = useState("")
     setWalletBalance();
   }, []);
   useEffect(() => {
-    console.log(balance);
+   //  console.log(balance);
   }, [balance]);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -519,13 +519,13 @@ const [balance, setBalance] = useState("")
 //     localStoritems();
 //     async function featchdata(){
 //     const res = await  dispatch(getTransactionsAsync()); 
-//     console.log("calling from foliobar in funtion")
+//    //  console.log("calling from foliobar in funtion")
  
-//     console.log(res) ;
+//    //  console.log(res) ;
 //     }
 //     featchdata();
 
-//  console.log("calling from foliobar out funtion")
+// //  console.log("calling from foliobar out funtion")
 
     
 //   }, []);

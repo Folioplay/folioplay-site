@@ -18,7 +18,7 @@ import {
   getRewardDetailsAPI,
 } from "../../../APIS/apis";
 // import { useMoralis } from "react-moralis";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation} from "react-router-dom";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import LeaderBoardSlice, {
@@ -50,9 +50,11 @@ export default function LeaderBoardTabs({
   ];
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { state } = useLocation();
+ //  console.log("state called 54 line");
+ //  console.log(state);
   const [loading, setLoding] = useState("");
-  const [value, setValue] = React.useState("3");
+  const [value, setValue] = React.useState(localStorage.getItem("tounamentViewTabValue") || "3");
   const [user, setUser] = useState("");
   // const { user } = useMoralis();
 
@@ -85,8 +87,8 @@ export default function LeaderBoardTabs({
 
   useEffect(() => {
     localStoritems();
-    console.log("tournament prop passed")
-    console.log(tournament);
+   //  console.log("tournament prop passed")
+   //  console.log(tournament);
     dispatch(getLeaderboardAsync(tournamentId));
     dispatch(getPersonalLeaderBoardAsync(tournamentId));
     async function getPersonalLeader() {
@@ -99,9 +101,19 @@ export default function LeaderBoardTabs({
     }
     getPersonalLeader();
     getRewardsDetails();
+
+    // if(state && state.tounamentViewTab){
+    //  //  console.log("tab value 104")
+    //  //  console.log(state.tounamentViewTab);
+    //   setValue(state.tounamentViewTab);
+    // }else{
+    //   setValue("3")
+    // }
   }, []);
   const handleChange = (event, newValue) => {
+    localStorage.setItem("tounamentViewTabValue",newValue);
     setValue(newValue);
+   
   };
 
   var updatedPrizes = {};
@@ -257,7 +269,7 @@ export default function LeaderBoardTabs({
   {
     id: 8,
     Title: "Minimum Entries",
-    Value: tournament.status
+    Value: tournament.minimum_spots
   },
   {
     id: 9,
@@ -373,6 +385,8 @@ export default function LeaderBoardTabs({
                           state: {
                             leaderBoardData: entry,
                             tournament_id: entry.tournamentId,
+                            tournamentViewTabState:value
+                            
                           },
                         });
                       }}
@@ -417,6 +431,7 @@ export default function LeaderBoardTabs({
                           state: {
                             leaderBoardData: entry,
                             tournament_id: entry.tournamentId,
+                            tournamentViewTabState:value
                           },
                         });
                       }}
@@ -500,6 +515,7 @@ export default function LeaderBoardTabs({
                           state: {
                             leaderBoardData: entry,
                             tournament_id: entry.tournamentId,
+                            tournamentViewTabState:value
                           },
                         });
                       }}
@@ -546,6 +562,7 @@ export default function LeaderBoardTabs({
                           state: {
                             leaderBoardData: entry,
                             tournament_id: entry.tournamentId,
+                            tournamentViewTabState:value
                           },
                         });
                       }}
@@ -617,6 +634,7 @@ export default function LeaderBoardTabs({
                           state: {
                             leaderBoardData: entry,
                             tournament_id: tournamentId,
+                            tournamentViewTabState:value
                           },
                         });
                     }}
@@ -676,6 +694,7 @@ export default function LeaderBoardTabs({
                       state: {
                         leaderBoardData: teamData,
                         tournament_id: tournamentId,
+                        tournamentViewTabState:value
                       },
                     });
                   }}
@@ -721,6 +740,7 @@ export default function LeaderBoardTabs({
                         state: {
                           leaderBoardData: entry,
                           tournament_id: entry.tournamentId,
+                          tournamentViewTabState:value
                         },
                       });
                     }}

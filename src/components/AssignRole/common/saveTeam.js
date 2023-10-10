@@ -1,4 +1,7 @@
 export default async function saveTeam(event,coins,finalRanks,setError,setNameSnackOpen,setSuccessSnackOpen,createTeam,navigate,state) {
+//  console.log(state);
+ 
+ //  console.log("save team activity called ")
   event.preventDefault();
   var rankAssigned = 0;
   var selectedCoins = [];
@@ -34,15 +37,23 @@ export default async function saveTeam(event,coins,finalRanks,setError,setNameSn
         if ("mooning" in window.localStorage)
           window.localStorage.removeItem("mooning");
         if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
+        
+        
+        if(state && state.comingFrom == "/activity") {
+         //  console.log("save team activity called 44");
+          
+          navigate(`/activity` , {state:{tabValue:"1",comingFrom:""}});
+        }else{
         if(state && state.comingFrom == "/tournaments"){
           navigate('/tournaments' , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
         }else{
+          
           if(state && state.comingFrom == "/tournament/" + state.tournamentId){
             navigate(`/tournament/`+state.tournamentId , {state:{tournamentId:state.tournamentId,openDrawer:true,comingFrom:""}});
           }else{
             navigate('/activity');
           } 
-        }
+        }}
       }, 500);
     }else{
       setError(response.message);

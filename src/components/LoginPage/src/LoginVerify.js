@@ -27,24 +27,24 @@ const LoginVerify = () => {
   //     const result = await magic.oauth.getRedirectResult();
 
   //      setUser(result);
-  //     console.log("result neeche hai");
+  //  //  console.log("result neeche hai");
   //     setRes(result);
-  //     console.log("json uper hai");
-  //     console.log(result);
-  //     console.log("result uper hai");
+  //  //  console.log("json uper hai");
+  //  //  console.log(result);
+  //  //  console.log("result uper hai");
 
   //     const meta  = await magic.user.getMetadata();
-  //     console.log("meta data 31 line"+ JSON.stringify(meta))
-  //     console.log("string resposnse  user data 32 line"+ JSON.stringify(user))
-  //     console.log("user resposnse 33 line"+ user)
+  //  //  console.log("meta data 31 line"+ JSON.stringify(meta))
+  //  //  console.log("string resposnse  user data 32 line"+ JSON.stringify(user))
+  //  //  console.log("user resposnse 33 line"+ user)
 
   //   } catch (err) {
   //     console.error(err);
   //   }
 
-  //   console.log("res neche hai");
-  //     console.log(res);
-  //     console.log("res uper hai");
+  ////  console.log("res neche hai");
+  //  //  console.log(res);
+  //  //  console.log("res uper hai");
   // }
 
   const magic = new Magic("pk_live_3CE84BD39270E181", {
@@ -114,7 +114,7 @@ const LoginVerify = () => {
   };
   const cons = async () => {
     try {
-      console.log(user)
+   //  console.log(user)
 
       // console.log(user.magic.userMetadata.email)
     } catch (err) {
