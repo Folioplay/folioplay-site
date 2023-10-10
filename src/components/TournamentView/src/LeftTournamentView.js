@@ -275,6 +275,7 @@ const LeftTournamentView = () => {
   }
 
   async function checkState(){
+    localStorage.removeItem("tounamentViewTabValue");
     if(state && state.comingFrom == "/transaction_history") {
        navigate(`/transaction_history` , {state:{comingFrom:"/tournament",}});
      }else{
