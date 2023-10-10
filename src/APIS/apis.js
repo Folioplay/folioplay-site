@@ -104,13 +104,13 @@ export async function getAuthToken(walletAddresss, walletSignaturee, emaill) {
 
 // Magic Auth Funtion
 export async function getMagicAuthToken(diidToken,walleetAddress) {
-  // console.log("user from apis export folder");
-  //   console.log(user);
-  //   console.log("user from apis export folder");
+  ////  console.log("user from apis export folder");
+  //  //  console.log(user);
+  //  //  console.log("user from apis export folder");
     const didToken =  diidToken;
     const walletAddress = walleetAddress;
 
-    console.log("final data didtoekn & walletaddress" +" "+didToken+" "+ walletAddress)
+   //  console.log("final data didtoekn & walletaddress" +" "+didToken+" "+ walletAddress)
     return await fetch(`${SERVER}/user/login`, {
       method: "POST",
       headers: {
@@ -243,14 +243,14 @@ export async function createTeam({ selectedCoins, name }) {
 // }
 export async function deleteTeam({ teamId, teamIndex }) {
   const authtoken = localStorage.getItem("authtoken");
-  console.log("api team id"+" "+teamId+teamIndex);
+ //  console.log("api team id"+" "+teamId+teamIndex);
   return await fetch(`${SERVER}/teams/${teamId}/`, {
     method: "DELETE",
     headers: {
       "x-access-token": authtoken,
     },
   }).then(() => {
-   console.log("sucess");
+  //  console.log("sucess");
   });
 }
 
@@ -260,14 +260,14 @@ export async function deleteTeamId({ teamId, teamIndex }) {
   localStorage.removeItem("teamId")
   const teamIndexx = localStorage.getItem("teamIndex");
   localStorage.removeItem("teamIndex")
-  console.log("api team id"+" "+teamId+teamIndex);
+ //  console.log("api team id"+" "+teamId+teamIndex);
   return await fetch(`${SERVER}/teams/${teamIdd}/`, {
     method: "DELETE",
     headers: {
       "x-access-token": authtoken,
     },
   }).then(() => {
-   console.log("sucess");
+  //  console.log("sucess");
   });
 }
 
@@ -339,7 +339,7 @@ export async function checkAvailableUsername(name) {
 }
 
 export async function changeUserName(name) {
-  console.log(name.toString());
+ //  console.log(name.toString());
   const authtoken = localStorage.getItem("authtoken");
   return await fetch(`${SERVER}/user/username/`, {
     method: "PUT",

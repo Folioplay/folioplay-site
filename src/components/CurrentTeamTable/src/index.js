@@ -21,7 +21,7 @@ function CurrentTeamTable() {
   const [coinsData, setCoinsData] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState([]);
   useEffect(() => {
-    console.log("current view")
+   //  console.log("current view")
     const fetchData = async () => {
       const response = await getCoinsTableData(tournamentId, teamId).then(
         (response) => {
@@ -29,8 +29,8 @@ function CurrentTeamTable() {
           const data = response;
         
           setCoinsData(response);
-          console.log("coin data response oreginal")
-          console.log(response)
+         //  console.log("coin data response oreginal")
+         //  console.log(response)
         }
       );
     };

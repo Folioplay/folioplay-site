@@ -274,6 +274,13 @@ const LeftTournamentView = () => {
    }
   }
 
+  async function checkState(){
+    if(state && state.comingFrom == "/transaction_history") {
+       navigate(`/transaction_history` , {state:{comingFrom:"/tournament",}});
+     }else{
+      navigate("/tournaments");
+     }
+  }
   return (
     <div className="fullpage">
     {tournament === undefined || tournament.length === 0  || teams === undefined ? (
@@ -286,7 +293,7 @@ const LeftTournamentView = () => {
           <ArrowBackIosIcon
             fontSize="medium"
             className="go-back-button"
-            onClick={() => navigate("/tournaments", {})}
+            onClick={() => checkState()}
           />
           <span className="ml-20 font-size-20 font-weight-700">
             {tournament?.name}

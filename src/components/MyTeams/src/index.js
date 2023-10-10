@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import FolioplayBar from "../../FolioplayBar/src";
+
 import "../style/index.css";
 import "../common/ActivityTabs";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import ActivityTabs from "../common/ActivityTabs";
 import {
   getAllUserTeams,
@@ -13,19 +14,23 @@ import {
 } from "../../../APIS/apis";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 export default function MyTeams() {
+  const { state } = useLocation();
+  //  //  //  console.log(state)
+  //  console.log("state called from index activity")
   const navigate = useNavigate();
   const [teams, setTeams] = useState(undefined);
   const [tournaments, setTournaments] = useState(undefined);
   async function fetchTeams() {
     // setTeams(await getAllUserTeams());
     setTeams(await getMyTeamActivities());
-    console.log(getAllUserTeams());
-    console.log("get all user");
-    console.log(getMyTeamActivities());
-    console.log("get my team");
+    //  console.log(getAllUserTeams());
+    //  console.log("get all user");
+    //  console.log(getMyTeamActivities());
+    //  console.log("get my team");
 
   }
   async function fetchUserTournaments() {
+
     setTournaments(await getPreviousUserTournaments());
   }
   useEffect(() => {
@@ -56,7 +61,7 @@ export default function MyTeams() {
             />
           </div> */}
           <div id="activity-tabs-wrapper">
-            <ActivityTabs  tournaments={tournaments} />
+            <ActivityTabs  tournaments={tournaments} state={state} />
             {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
            
           </div>
@@ -65,7 +70,11 @@ export default function MyTeams() {
               className="circle-add-team-button"
               onClick={() => {
                 removeCoinsFromLocalStorage();
-                navigate("/teams/createteam/");
+                navigate("/teams/createteam/", {
+                  state: {
+                    comingFrom: window.location.pathname,                   
+                  },
+                });
               }}
             />
           </div>
