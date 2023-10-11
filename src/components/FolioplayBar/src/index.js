@@ -174,7 +174,7 @@ const [balance, setBalance] = useState("")
           { name: "Activity", link: "/activity" },
           { name: "Histroy", link: "/user/profile" },
           { name: "Profile", link: "/user/profile" },
-          { name: "Leader Board", link: "/user/profile" },
+          { name: "Leader Board", link: "/globalleaderboard" },
         ].map((text, index) => (
           <ListItem
             button

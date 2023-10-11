@@ -1,152 +1,112 @@
-import React, { useEffect, useState } from "react";
-import MuiAlert from "@mui/material/Alert";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-// import { useMoralis } from "react-moralis";
-import { scrollTo } from "../../../CommonFunctions/functions.js";
-import {
-  getAllUserTeams,
-  getAmountWon,
-  getRank,
-  getTournamentById,
-} from "../../../APIS/apis";
-import ReactLoading from "react-loading";
-import TimerIcon from "@mui/icons-material/Timer";
+import React, { useEffect, useState } from 'react';
+import FolioplayBar from "../../FolioplayBar/src";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, LinearProgress } from "@mui/material";
-import { chooseTeamOpen } from "../common/chooseTeamAnimations";
-import LeaderBoardTabs from "../../LeaderboardTabs/src";
-import Countdown from "react-countdown";
-import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
-import Snackbar from "@mui/material/Snackbar";
-import { motion } from "framer-motion/dist/framer-motion";
-import { SERVER } from "../../../APIS/apis";
-import selectTeam from "../common/selectTeam";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getLeaderboardAsync,
-  getWinnersAsync,
-  getTournamentByIdAsync
-} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
-import folioPlayLogo from "../../../images/folioplay-manifest.jpg"
+import { Link, useNavigate ,useLocation} from "react-router-dom";
+import { getTransactionHistory} from "../../../APIS/apis";
+import {getGlobalLeaderBoardData} from "../../../APIS/apis";
+import moment from "moment";
+import AccordionComponent from "../../../Common/Accordion";
+import { AccordionDetails, AccordionSummary } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Typography from "@mui/material/Typography";
+import { styled } from '@mui/material/styles';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import winnerGif from "../../../images/cups-winner.png"
+
 const LeftTournamentView = () => {
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
- 
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-  const dispatch = useDispatch();
-  var navigate = useNavigate();
+    const { state } = useLocation();
+   const navigate = useNavigate();
+   const [userData,setUserData] = useState([]);
+   
+    useEffect(() => {
+       
+      async function setTransactionHistoryFunction() {
+        const data = await getGlobalLeaderBoardData();
+        setUserData(data);
+        console.log(data);
+    }
+    setTransactionHistoryFunction();
+    }, [])
 
-  const [user, setUser] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState("");
+    async function checkState(){
+        if(state && state.comingFrom == "/tournament") {
+           navigate("/tournaments" , {state:{comingFrom:""}});
+         }else{
+            navigate(-1);
+         }
+      }
+    const currentUser= localStorage.getItem("walletAddress");
 
-  const localStoritems = async () => {
-    const userr = await localStorage.getItem("user");
-    await setUser(userr);
-    const isLoggedIn = await localStorage.getItem("isLoggedIn");
-    await setIsAuthenticated(isLoggedIn);
-  }
-  // const { user } = useMoralis();
-  const { state } = useLocation();
-  // let account = user.get("ethAddress");
-  const [balance, setBalance] = useState("");
-  const [balanceSnackOpen, setBalanceSnackOpen] = useState(false);
-  const [errorMessageSnackOpen, setErrorMessageSnackOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({
-    message: "",
-    variant: "error",
-  });
-  // const [tournament, setTournament] = useState(undefined);
-  // const tournament = useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
-  const [amountWon, setAmountWon] = useState(0);
-  const [rank, setRank] = useState(undefined);
-  const params = useParams();
-  const _id = params.tournamentId;
-  const [teams, setTeams] = useState(undefined);
-  const [userImg, setUserImg] = useState(null);
-  const defaultImage = require("../../../images/profilepic.jpeg").default;
-  var seatsFilled = 0;
-  const getPresentUser = async () => {
-    const authToken = localStorage.getItem("authtoken");
-    const res = await fetch(`${SERVER}/user`, {
-      method: "GET",
-      headers: {
-        "x-access-token": authToken,
-      },
-    }).then((res) => res.json());
-    // setPresentUser(res);
-    if (res.imageURL) setUserImg(res.imageURL);
-    else setUserImg(defaultImage);
-  };
-  async function fetchTournament() {
-  //  await setTournament(await getTournamentById({ _id: _id }));
- await  dispatch(getTournamentByIdAsync(_id));
+    return (
+        <div className="globalLeaderBoard__fullPage">
+            <div className="globalLeaderBoard__header">
+                <ArrowBackIosIcon
+                    fontSize="medium"
+                    className="go-back-button"
+                    onClick={() => checkState()}
+                />
+                <span className="ml-20 font-size-20 font-weight-700">
+                    {"Global Leader Board"}
+                </span>
+            </div>
+            <div className="globalLeaderBoard__body">
+            <div className="globalLeaderBoard-entry ml-auto mr-auto mb-20" style={{ display: "flex", maxWidth: "100%", width: "100%", textAlign: "start" }}>
+                <div style={{ maxWidth: "15%", width: "100%" }}>Rank</div>
+                <div style={{ maxWidth: "35%", width: "100%", textAlign: "start" }}>User</div>
+                <div style={{ maxWidth: "25%", width: "100%" }}></div>
+                <div style={{ maxWidth: "25%", width: "100%",textAlign:"end" }}>Points</div>
+                {/* <span className='ml-auto'>Team</span> */}
 
-  }
-  async function fetchAmountWon() {
-    setAmountWon(await getAmountWon({ _id: _id }));
-    await console.log("ammounttt from line 118");
-   await console.log(await getAmountWon({ _id: _id }));
-  }
+              </div>
+              {userData?.map((user, index) => (
+                user.data.walletAddress===currentUser? (<div className={"globalLeaderBoard-Main-Controller"} key={index} style={{fontWeight:"bold"}} >
+                <div className={"globalLeaderBoard-Main-Controller-Rank"}  style={{fontWeight:"bold"}}>
+                  {/* {entry.rank} */}{user.rank}
+                </div>
+                <div className={"globalLeaderBoard-Main-Controller-UserName"} style={{fontWeight:"bold"}}>
+                  {/* {entry.user.username}{" "} */} {user.data.username}
+                </div>
+                <div className={"globalLeaderBoard-Main-Controller-Winner-Trophy"}  style={{fontWeight:"bold"}}>
+               { user.rank===1 &&  <img src={winnerGif} alt="winnerGif" style={{width:"58%",height:"46px"}} />}
+               
+                  
+                </div>
+                <div className={"globalLeaderBoard-Main-Controller-Porfolio"} style={{fontWeight:"bold"}}>
+                  {/* {entry.portfolio} */}{user.points}
+                </div>
+              </div>):(null)
+              
+                    
+                    ))}
 
-  async function fetchTeams() {
-    setTeams(await getAllUserTeams());
 
-  }
-  async function fetchRank() {
-    const data = await getRank({ tournamentId: _id });
-    setRank(data);
-    await console.log("rank data")
-    await console.log(data)
-  }
-  useEffect(() => {
 
-    localStoritems();
- 
-    
-  }, []);
+              {userData?.map((user, index) => (
+                user.data.walletAddress===currentUser? (null) :(  <div className={"globalLeaderBoard-Main-Controller"} key={index} >
+                <div className={"globalLeaderBoard-Main-Controller-Rank"} >
+                  {/* {entry.rank} */}{user.rank}
+                </div>
+                <div className={"globalLeaderBoard-Main-Controller-UserName"}>
+                  {/* {entry.user.username}{" "} */} {user.data.username}
+                </div>
+                <div className={"globalLeaderBoard-Main-Controller-Winner-Trophy"} >
+               { user.rank===1 &&  <img src={winnerGif} alt="winnerGif" style={{width:"58%",height:"46px"}} />}
+               
+                  
+                </div>
+                <div className={"globalLeaderBoard-Main-Controller-Porfolio"} >
+                  {/* {entry.portfolio} */}{user.points}
+                </div>
+              </div>)
+            ))}
 
-const loading =true;
 
-  return (
-    <div className="fullpage">
-    
-        {/* <div className="loading-component">
-          <ReactLoading type={"spin"} color="var(--white)" />{" "}
-        </div> */}
-    
-        {!loading ? (<>
-        <div className="loginverfiyPageBlink">
-<img src={folioPlayLogo} alt="folioplayLogo" className="bli"/>
+            </div>
         </div>
-        </>):( <div className="tournament-view-bar">
-            <ArrowBackIosIcon
-              fontSize="medium"
-              className="go-back-button"
-              onClick={() => navigate("/tournaments", {})}
-            />
-           
-          </div>)}
-         
-         
-        
-
-          </div>     
-  
-  );
+    );
 };
 
 export default LeftTournamentView;
