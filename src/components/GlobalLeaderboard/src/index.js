@@ -12,7 +12,7 @@ export default function TournamentView() {
   const loading =true;
   return (
     <>
-      {loading ? (<>
+      {!loading ? (<>
       {/* <div style={{height:"100vh",width:"100vw",backgroundColor:"blue"}}>
 
      <div className="loginverfiyPageBlink">

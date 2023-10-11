@@ -430,3 +430,15 @@ export async function getTransactionHistory() {
   ).then((res) => res.json());
 }
 
+
+
+export async function getGlobalLeaderBoardData() {
+  const authToken = localStorage.getItem("authtoken");
+  return await fetch(
+      `${SERVER}/user/global-leaderboard`,
+      {
+        method: "GET",
+       
+      }
+  ).then((res) => res.json());
+}
