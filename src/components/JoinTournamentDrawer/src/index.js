@@ -52,6 +52,11 @@ export default function JoinTournamentDrawer({
     )
   }
 
+  async function featchtournament(tournamentId){
+    setTimeout(async () => {
+      await dispatch(getTournamentByIdAsync(tournamentId));
+    }, 4500);
+  }
   return (
     <div key={"enter-tournament"} id="choose-team-div" className="display-none">
       <div className="choose-team-bar"></div>
@@ -203,10 +208,14 @@ export default function JoinTournamentDrawer({
                 setErrorMessageSnackOpen,
                 tournaments
               );
+              
+        
               dispatch(getTournamentAsync());
               dispatch(getLeaderboardAsync(tournamentId));
               dispatch(getTransactionsAsync());
-              dispatch(getTournamentByIdAsync(tournamentId));
+            
+              await dispatch(getTournamentByIdAsync(tournamentId));
+              await featchtournament(tournamentId);
             }}
           >
             Join Now
