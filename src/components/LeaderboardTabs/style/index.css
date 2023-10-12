@@ -97,6 +97,8 @@ height: 100%;
     text-overflow: ellipsis; */
     transition: 0.2s all ease-in-out;
     /* margin-left: 3rem; */
+    max-width: 40%;
+    width: 100%;
 }
 
 .leaderboard-username:hover {
