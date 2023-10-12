@@ -59,11 +59,11 @@ height: 100%;
 }
 
 .leaderboard-Main-Controller-UserName{   
-    /* max-width: 45%; */
-    width: auto;
+    max-width: 45%;
+    width: 100%;
     transition: 0.2s all ease-in-out;
     text-align: start;
-    display: flex;
+ 
 }
 .leaderboard-Main-Controller-TeamCount{   
     max-width: 15%;

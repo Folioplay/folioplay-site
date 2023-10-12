@@ -70,7 +70,7 @@ const LeftTournamentView = () => {
       return <></>}
     return (
       <>
-       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Starting in
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",display:"flex"}}>Starting in
       
         <TimerIcon style={{ color: "var(--golden)" }} />
         <span className={"tournamentCard__countdownTimer"}>
