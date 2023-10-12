@@ -472,7 +472,7 @@ export default function LeaderBoardTabs({
               {/*<span className='ml-auto'>Team</span> */}
               <div style={{ maxWidth: "25%", width: "100%" }}></div>
 
-              {tournamentStatus === 3 && getLeaderBoardRedux.length ? (<div style={{ maxWidth: "25%", width: "100%", textAlign: "end" }}>Prizes</div>) : (
+              {tournamentStatus === 3 && getLeaderBoardRedux.length ? (<div style={{ maxWidth: "25%", width: "100%", textAlign: "center" }}>Prizes</div>) : (
                 <div style={{ maxWidth: "60%", width: "100%", textAlign: "end" }}>Prizes</div>
               )
 
@@ -524,16 +524,16 @@ export default function LeaderBoardTabs({
                         <div className={"leaderboard-Main-Controller-Rank"} >
                           {entry.rank}
                         </div>
-                        <div style={{maxWidth:"60%",display:"flex",width:"100%"}}>
+                       
                         <div className={"leaderboard-Main-Controller-UserName"}>
                           {localStorage.getItem("folioUsername")}{" "}
                         </div>
                         <div className={"leaderboard-Main-Controller-TeamCount"} >
-                          <div className={"teamCounttemp"} style={{ maxWidth: "100%", width: "auto" }}>
+                          <div className={"teamCounttemp"} style={{ maxWidth: "30%", width: "auto" }}>
                             T{entry.user_team_count}
                           
                           </div>
-                          </div>
+                      
                         </div>
                         <div className={"leaderboard-Main-Controller-Porfolio"} >
                           {entry.amount_won} FPC
@@ -703,15 +703,15 @@ export default function LeaderBoardTabs({
                     <div className={"leaderboard-Main-Controller-Rank"} >
                       {entry.rank}
                     </div>
-                    <div style={{maxWidth:"60%",width:"100%",display:"flex"}}>
+                  
                     <div className={"leaderboard-Main-Controller-UserName"}>
                       {localStorage.getItem("folioUsername")}{" "}
                     </div>
                     <div className={"leaderboard-Main-Controller-TeamCount"} >
-                      <div className={"teamCounttemp"} style={{ maxWidth: "30%", width: "100%" }}>
-                        J{entry.user_team_count}
+                      <div className={"teamCounttemp"} style={{ maxWidth: "30%", width: "auto" }}>
+                        T{entry.user_team_count}
                       </div>
-                    </div>
+                  
                     </div>
                     <div className={"leaderboard-Main-Controller-Porfolio"} >
                       {entry.portfolio}
@@ -751,7 +751,7 @@ export default function LeaderBoardTabs({
                       <div className={"leaderboard-Main-Controller-Rank"} >
                         {entry.rank}
                       </div>
-                      <div style={{maxWidth:"60%",width:"100%",display:"flex"}}>
+                     
                       <div className={"leaderboard-Main-Controller-UserName"}>
                         {entry.user.username}{" "}
                       </div>
@@ -760,7 +760,7 @@ export default function LeaderBoardTabs({
                         <div className={"teamCounttemp"} style={{ maxWidth: "30%", width: "auto" }}>
                           T{entry.user_team_count}
                         </div>
-                      </div>
+                     
                       </div>
                       <div className={"leaderboard-Main-Controller-Porfolio"} >
                         {entry.portfolio}
