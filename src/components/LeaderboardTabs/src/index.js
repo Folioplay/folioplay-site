@@ -642,10 +642,11 @@ export default function LeaderBoardTabs({
                     <span className="leaderboard-points">{"  "}-</span>
                     <span className={"leaderboard-username"}>
                       {entry.user.username}{" "}
-                      <span className={"teamCount"}>
+                    
+                    </span>
+                    <span className={"teamCount"}>
                         T{entry.user_team_count}
                       </span>
-                    </span>
                     <span className="ml-auto">{entry.portfolio}</span>
                   </motion.div>
                 );
@@ -665,10 +666,11 @@ export default function LeaderBoardTabs({
                     <span className="leaderboard-points">{"  "}-</span>
                     <span className={"leaderboard-username"}>
                       {entry.user.username}{" "}
-                      <span className={"teamCount"}>
+                      
+                    </span>
+                    <span className={"teamCount"}>
                         T{entry.user_team_count}
                       </span>
-                    </span>
                     <span className="ml-auto">{entry.portfolio}</span>
                   </motion.div>
                 );
