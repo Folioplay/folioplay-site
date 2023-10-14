@@ -100,7 +100,7 @@ const LeftTransactionHistoryComponent = () => {
                         <div className={"summaryTab__dataHeading"}>
                             Tournament Name
                         </div>
-                        <div className={"summaryTab__dataBody"} style={{ cursor:"pointer"}} onClick={() => {
+                        <div className={"summaryTab__dataBody"} style={{ cursor:"pointer",color:"blue",textDecoration:"underline"}} onClick={() => {
                             navigate(`/tournament/${item.data.fromId}`, {
                                 state: {
                                     comingFrom: window.location.pathname,
