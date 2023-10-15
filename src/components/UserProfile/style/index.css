@@ -9,7 +9,7 @@
 }
 .profile-info-wrapper {
   width: 100%;
-  min-height: calc(100% - 186px);
+  /* min-height: calc(100% - 186px); */
   display: flex;
   /* justify-content: center; */
   align-items: center;
@@ -22,6 +22,9 @@
   color: black;
   /*display: flex;*/
   /*flex-wrap: wrap;*/
+max-height: 100vh !important;
+height: auto !important;
+padding-bottom: 5%;
 }
 
 .headingPersonalInfo {
