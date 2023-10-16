@@ -98,7 +98,7 @@ export default function CurrentTeamPreview() {
                           className="font-size-12"
                           style={{ color: "var(--dark-dim-white)" }}
                         >
-                          Points {coin.current_points}
+                          Po{coin.current_points}
                         </span>
                       </motion.div>
                     </Grid>

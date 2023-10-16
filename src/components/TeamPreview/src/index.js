@@ -107,7 +107,7 @@ export default function TeamPreview() {
                           className="font-size-12"
                           style={{ color: "var(--dark-dim-white)" }}
                         >
-                          Points{" "}
+                          Pois{" "}
                           {coin.rank == -1 ? <>10000</> : <>{pointNumber}</>}
                         </span>
                       </motion.div>
