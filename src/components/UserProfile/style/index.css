@@ -30,6 +30,7 @@ padding-bottom: 5%;
 .headingPersonalInfo {
   font-size: 1.3rem;
   font-weight: 700;
+  padding: 15px 0 5px  0;
 }
 
 .personalDetails {
@@ -231,11 +232,12 @@ padding-bottom: 5%;
 
 .nameTextField {
   margin-right: 10px;
-  height: 2.5rem;
+ 
   width: 80%;
-  padding-left: 0.5rem;
+ 
   font-size: 1rem;
   border: 0;
+  color:black
 }
 
 input.errorNameTextField:focus-visible {

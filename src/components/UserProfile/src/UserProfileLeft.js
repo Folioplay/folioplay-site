@@ -318,6 +318,7 @@ function UserProfileLeft() {
                   onClick={changeDisabledButton}
                   fontSize="1.15rem"
                   className="editIcon"
+                  style={{color:"black"}}
                 />):(null)
                 
               ) : (
@@ -358,7 +359,7 @@ function UserProfileLeft() {
                 onClick={copytoClipboard}
               />
             </div>
-            <div className="tapToOpenButton">
+            <div className="tapToOpenButton" style={{marginBottom:"0.8rem"}}>
               {tapToOpenDisabled ? (
                 <Button
                   onClick={() => setTapToOpenDisabled(!tapToOpenDisabled)}

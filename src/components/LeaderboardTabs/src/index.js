@@ -291,24 +291,24 @@ export default function LeaderBoardTabs({
         <Box className={"tournamentView__leaderboardTabsStyle"} sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ width: "100%" }}>
             <Tab
-              label="Tournament Info"
+              label="Info"
               value="3"
-              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth: window.innerWidth <= 420 ? "30vw" : "" }}
+              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth:"25%",width:"100%" }}
              
 
             />
             <Tab
               label="Prizes"
               value="1"
-              style={{ textTransform: "capitalize", fontFamily: "poppins" }}
+              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth:"25%",width:"100%" }}
             />
             <Tab
-              label="Leader Board"
+              label="Leaderboard"
               value="2"
-              style={{ textTransform: "capitalize", fontFamily: "poppins" }}
+              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth:"35%",width:"100%" }}
             />
 
-            <span className={"refreshLeaderboard"} style={{ marginLeft: "auto", marginRight: "20px" }}>
+            <span className={"refreshLeaderboard"} style={{ marginLeft: "auto",  maxWidth:"15%",width:"100%"}}>
               {/* <RefreshIcon /> */}
               <Button
                 style={{ color: "var(--grey-shade)", textTransform: "capitalize" }}

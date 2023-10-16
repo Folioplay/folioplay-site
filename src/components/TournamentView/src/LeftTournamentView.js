@@ -650,7 +650,7 @@ const LeftTournamentView = () => {
           id="team-creation-message"
           onClose={handleSnackClose}
           severity="error"
-          sx={{ width: "100%", fontFamily: "poppins" }}
+          sx={{ width: "95%", fontFamily: "poppins" }}
         >
           Not sufficient balance
         </Alert>
@@ -658,7 +658,7 @@ const LeftTournamentView = () => {
     </Snackbar>
     <Snackbar
       open={errorMessageSnackOpen}
-      autoHideDuration={3000}
+      autoHideDuration={3500}
       onClose={handleErrorMessageSnackClose}
     >
       <motion.div
@@ -669,7 +669,8 @@ const LeftTournamentView = () => {
         <Alert
           onClose={handleErrorMessageSnackClose}
           severity={errorMessage.variant}
-          sx={{ width: "100%", fontFamily: "poppins" }}
+          sx={{ width: "95%", fontFamily: "poppins" }}
+          
         >
           {errorMessage.message}
         </Alert>
