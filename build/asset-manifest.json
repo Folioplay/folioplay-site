@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.bf9adfe8.chunk.css",
+    "main.css": "/static/css/main.69f8a516.chunk.css",
     "main.js": "/static/js/main.b8e294a3.chunk.js",
     "main.js.map": "/static/js/main.b8e294a3.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.01f73760.js",
@@ -12,7 +12,7 @@
     "static/js/3.21b4c22b.chunk.js.map": "/static/js/3.21b4c22b.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.3eb07a12.chunk.css.map": "/static/css/2.3eb07a12.chunk.css.map",
-    "static/css/main.bf9adfe8.chunk.css.map": "/static/css/main.bf9adfe8.chunk.css.map",
+    "static/css/main.69f8a516.chunk.css.map": "/static/css/main.69f8a516.chunk.css.map",
     "static/js/2.f0211709.chunk.js.LICENSE.txt": "/static/js/2.f0211709.chunk.js.LICENSE.txt",
     "static/media/FPLogoManifest.5168b5d8.png": "/static/media/FPLogoManifest.5168b5d8.png",
     "static/media/FolioPlaySmall.svg": "/static/media/FolioPlaySmall.546f1cc8.svg",
@@ -31,7 +31,7 @@
     "static/js/runtime-main.01f73760.js",
     "static/css/2.3eb07a12.chunk.css",
     "static/js/2.f0211709.chunk.js",
-    "static/css/main.bf9adfe8.chunk.css",
+    "static/css/main.69f8a516.chunk.css",
     "static/js/main.b8e294a3.chunk.js"
   ]
 }
