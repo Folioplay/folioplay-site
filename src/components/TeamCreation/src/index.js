@@ -78,6 +78,8 @@ export function TeamCreation() {
     // localStorage.removeItem("superstars");
     // localStorage.removeItem("mooning");
     // localStorage.removeItem("rekt");
+    console.log("line 81 create team");
+    console.log(state);
     fetchCoins();
   }, []);
   useEffect(() => {
@@ -113,6 +115,9 @@ export function TeamCreation() {
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
     }
     }
+
+    console.log("line 120 create team");
+    console.log(state);
   },[coins])
   for (var i = 0; i < coins.length; i++) {
     if (
