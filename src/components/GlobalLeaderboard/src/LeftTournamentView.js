@@ -15,6 +15,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import winnerGif from "../../../images/cups-winner.png"
+import SingleTrophy from "../../../images/single_trophy_cup.png"
 
 const LeftTournamentView = () => {
   const { state } = useLocation();
@@ -105,7 +106,7 @@ const LeftTournamentView = () => {
               {/* {entry.user.username}{" "} */} {user.data.username}
             </div>
             <div className={"globalLeaderBoard-Main-Controller-Winner-Trophy"} >
-              {user.rank === 1 && <img src={winnerGif} alt="winnerGif" style={{ width: "58%", height: "46px" }} />}
+              {user.rank === 1 && <img src={SingleTrophy} alt="winnerGif" style={{ width: "58%", height: "52px" }} />}
 
 
             </div>
