@@ -1,0 +1,27 @@
+.team-preview-wrapper{
+    width: 100%;
+    border-top-left-radius:20px;
+    border-top-right-radius:20px;
+    background-color: var(--white);
+    transition: all 0.3s ease-in-out;
+    color:var(--black);
+    max-height: 180vh !important;
+height: auto !important;
+}
+
+.role-button2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#assign-role-button2{
+    border-radius: 8px;
+     background-color: var(--golden);
+     position: fixed;
+     bottom: 1.5em;
+     text-transform: capitalize;
+     font-family: "poppins";
+     font-weight: 500;
+  }
