@@ -296,6 +296,7 @@ import LoginGif from "./components/LoginPage/common/LoginGif";
 import ReactLoading from "react-loading";
 import LoginVerify from "./components/LoginPage/src/LoginVerify";
 import ReactGA from "react-ga4";
+import SelectedCoinTeamPreview from "./components/SelectedCoinTeamPreview/src";
 
 
 
@@ -425,6 +426,16 @@ const [token, setToken] =useState("");
             element={
               <AuthenticatedRoute>
                   <TeamCreation />
+              </AuthenticatedRoute>
+            }
+          />
+
+<Route
+            exact
+            path="/teams/createteam/selectedCoins"
+            element={
+              <AuthenticatedRoute>
+                  <SelectedCoinTeamPreview />
               </AuthenticatedRoute>
             }
           />

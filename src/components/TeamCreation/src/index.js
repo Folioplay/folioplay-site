@@ -27,13 +27,16 @@ export function TeamCreation() {
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
   const {state} = useLocation();
+  const [temp, setTemp] = useState(0);
   // console.log(state);
   var superstars = [];
   var mooning = [];
   var rekt = [];
+  var allCoins = [...rekt,...mooning,...superstars];
   var localSuperstars = JSON.parse(window.localStorage.getItem("superstars"));
   var localMooning = JSON.parse(window.localStorage.getItem("mooning"));
   var localRekt = JSON.parse(window.localStorage.getItem("rekt"));
+  var localallCoins = JSON.parse(window.localStorage.getItem("allCoins"));
   const style = {
     position: "absolute",
     transform: "translate(-30%, -50%)",
@@ -115,9 +118,9 @@ export function TeamCreation() {
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
     }
     }
-
-    console.log("line 120 create team");
-    console.log(state);
+    var ac = [...rekt,...mooning,...superstars];
+    localStorage.setItem("allCoins", JSON.stringify(ac));
+    
   },[coins])
   for (var i = 0; i < coins.length; i++) {
     if (
@@ -390,6 +393,7 @@ export function TeamCreation() {
   const LeftComponent = () => {
     return (
       <div className="fullpage">
+       {temp===0 && <>
         <div className="sticky-top">
           <div className="teamcreate-bar pl-20 pt-10 mb-20">
             <ArrowBackIosIcon
@@ -435,6 +439,24 @@ export function TeamCreation() {
             </span>
           </div>
         </div>
+       </>}
+       {temp===1 && <>
+        <div className="sticky-top">
+          <div className="teamcreate-bar pl-20 pt-10 mb-20">
+            <ArrowBackIosIcon
+              fontSize="medium"
+              className="go-back-button"
+              onClick={() => navigate(prevRoute)}
+            />
+            <span className="ml-20 font-size-20 font-weight-700">
+              Choose 11 Coins
+            </span>
+          </div>
+          <br />
+        
+        </div>
+       </>}
+       
 
         <div className="coins">
           <div className="tip-div">
@@ -468,6 +490,19 @@ export function TeamCreation() {
             <Superstars />  
             <div className="assign-roles-div mt-20">
             <Button
+              id="assign-role-button1"
+              variant="contained"
+              className="role-button1 ml-auto"
+              onClick={() =>
+               navigate("selectedCoins")
+                
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+             Preview Team
+            </Button>
+
+            <Button
               id="assign-role-button"
               variant="contained"
               className="role-button ml-auto"
@@ -486,6 +521,29 @@ export function TeamCreation() {
          <div className="mooning_Height_Controll">
             <Mooning />
             <div className="assign-roles-div mt-20">
+            <Button
+              id="assign-role-button1"
+              variant="contained"
+              className="role-button1 ml-auto"
+              onClick={() =>
+               navigate("selectedCoins")
+                
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+             Preview Team
+            </Button>
+            <Button
+              id="assign-role-button"
+              variant="contained"
+              className=""
+              onClick={() =>
+                assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+              Select top 3 Coins
+            </Button>
             <Button
               id="assign-role-button"
               variant="contained"
@@ -509,6 +567,18 @@ export function TeamCreation() {
             <Rekt />
             <div className="assign-roles-div mt-20">
             <Button
+              id="assign-role-button1"
+              variant="contained"
+              className="role-button1 ml-auto"
+              onClick={() =>
+               navigate("selectedCoins")
+                
+              }
+              // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+            >
+             Preview Team
+            </Button>
+            <Button
               id="assign-role-button"
               variant="contained"
               className="role-button ml-auto"
@@ -520,6 +590,20 @@ export function TeamCreation() {
               Select top 3 Coins
             </Button>
           </div>
+          <div className="assign-roles-div mt-20">
+              
+              <Button
+                id="assign-role-button"
+                variant="contained"
+                className="role-button ml-auto"
+                onClick={() =>
+                  assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state)
+                }
+                // style={document.getElementsByClassName('coin-added-button').length !== 11?{background:"var(--grey-shade)"}:{}}
+              >
+                Select top 3 Coins
+              </Button>
+            </div>
           <br/>
           <br/>
           </div>
