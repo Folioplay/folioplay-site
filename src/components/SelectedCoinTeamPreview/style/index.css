@@ -6,6 +6,7 @@
     transition: all 0.3s ease-in-out;
     color:var(--black);
     max-height: 180vh !important;
+    min-height: 100vh;
 height: auto !important;
 }
 

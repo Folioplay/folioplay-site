@@ -153,5 +153,11 @@ export default function addCoin(
     window.localStorage.setItem(wasActiveTab, JSON.stringify(checkArray));
     event.target.innerText = prevVal === "ADD" ? "ADDED" : "ADD";
   }
+
+  localStorage.removeItem("allCoins");
+  var ac = [...rekt,...mooning,...superstars];
+  localStorage.setItem("allCoins", JSON.stringify(ac));
+  
+
 // }
 }
