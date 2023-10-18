@@ -118,9 +118,7 @@ export function TeamCreation() {
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
     }
     }
-    var ac = [...rekt,...mooning,...superstars];
-    localStorage.setItem("allCoins", JSON.stringify(ac));
-    
+  
   },[coins])
   for (var i = 0; i < coins.length; i++) {
     if (
@@ -187,8 +185,13 @@ export function TeamCreation() {
       document.getElementById("rekt" + "-selected-number").innerText =
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
     }
+    // localStorage.removeItem("allCoins");
+    // var ac = [...rekt,...mooning,...superstars];
+    // localStorage.setItem("allCoins", JSON.stringify(ac));
+    
   }, [wasActiveTab, graphCoin, snackOpen]);
 
+ 
   const Superstars = () => {
     return (
       <Grid
