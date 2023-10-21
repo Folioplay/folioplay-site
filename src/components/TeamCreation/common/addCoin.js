@@ -1,6 +1,7 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import updateSelectedCoins from "./updateSelectedCoins";
 import { S3_URL } from "../../../APIS/apis";
+
 export default function addCoin(
   event,
   wasActiveTab,
@@ -8,6 +9,8 @@ export default function addCoin(
   mooning,
   rekt
 ) {
+  
+ 
   var checkArray =
     wasActiveTab === "superstars"
       ? superstars
@@ -158,6 +161,10 @@ export default function addCoin(
   var ac = [...rekt,...mooning,...superstars];
   localStorage.setItem("allCoins", JSON.stringify(ac));
   
+  const selectedCoins = ac.filter((coin) => coin.selected === true);
+const numberOfSelectedCoins = selectedCoins.length;
 
+
+localStorage.setItem("SelectedCoinCount", numberOfSelectedCoins);
 // }
 }

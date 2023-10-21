@@ -752,7 +752,7 @@ function LoginLeft() {
       </div>
 
 
-      <div className="folioplay-connect">
+      {/* <div className="folioplay-connect">
         <Button
           style={{
             width: "min(320px,100%)",
@@ -766,16 +766,10 @@ function LoginLeft() {
           }}
         >
           <FcGoogle size={"1.5rem"} /> &nbsp;
-          {/* <img
-            className="mr-8"
-            alt="metamask-icon"
-            src={web4authLogo}
-            width={"24px"}
-            height={"24px"}
-          />{" "} */}
+       
          Login/Register with Google
         </Button>
-      </div>
+      </div> */}
       {snackBarChangeWalletComponent()}
       {snackBarChangeChainComponent()}
       {snackBarNoMetamaskComponent()}

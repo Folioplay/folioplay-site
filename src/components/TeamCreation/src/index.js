@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Button, Grid } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import ReactLoading from "react-loading";
 import Modal from "@mui/material/Modal";
@@ -28,7 +28,8 @@ export function TeamCreation() {
   const [snackOpen, setSnackOpen] = useState(false);
   const {state} = useLocation();
   const [temp, setTemp] = useState(0);
-  // console.log(state);
+  const [selectedCoinCount, setSelectedCoinCount] =useState(localStorage.getItem("SelectedCoinCount") || 0);
+  
   var superstars = [];
   var mooning = [];
   var rekt = [];
@@ -61,7 +62,6 @@ export function TeamCreation() {
   
 
   const handleOpen = (coin_name) => {
-    // setGraphCoin(event.target.innerText.toLowerCase());
     setGraphCoin(coin_name.toLowerCase());
     setSnackOpen(false);
     setOpen(true);
@@ -77,15 +77,10 @@ export function TeamCreation() {
   async function fetchCoins() {
     setCoins(await getAllCoins());
   }
-  useEffect(() => {
-    // localStorage.removeItem("superstars");
-    // localStorage.removeItem("mooning");
-    // localStorage.removeItem("rekt");
-    console.log("line 81 create team");
-    console.log(state);
+  useEffect(() => {  
     fetchCoins();
   }, []);
-  useEffect(() => {
+  useEffect(() => {   
     if(localSuperstars || localMooning || localRekt){
       preservedView(wasActiveTab,localSuperstars,localMooning,localRekt);
       var coinsLimit =
@@ -116,9 +111,9 @@ export function TeamCreation() {
         ).length;
       document.getElementById("rekt" + "-selected-number").innerText =
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
+      }
     }
-    }
-  
+   
   },[coins])
   for (var i = 0; i < coins.length; i++) {
     if (
@@ -184,14 +179,20 @@ export function TeamCreation() {
         ).length;
       document.getElementById("rekt" + "-selected-number").innerText =
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
-    }
-    // localStorage.removeItem("allCoins");
-    // var ac = [...rekt,...mooning,...superstars];
-    // localStorage.setItem("allCoins", JSON.stringify(ac));
-    
+      }
   }, [wasActiveTab, graphCoin, snackOpen]);
 
- 
+  const county = 11;
+  const selected = 6;
+    const CoinsCounterCircle = Array.from({ length: county }).map((_, index) => (
+      <div key={index}>
+        {/* <img src={coinRound} alt="Image" style={{ width: "50px" }} /> */}
+          {index+1 <= selectedCoinCount && selectedCoinCount !==undefined &&  selectedCoinCount >0 ? ( <div style={{width:"20px",height:"20px",backgroundColor:"white",borderRadius:"50%",color:"#fea31b",border:"2px solid #fea31b",textAlign:"center",fontSize:"0.9rem",alignItems:"center",fontWeight:"bold"}}>{`${index+1}`}</div>
+  ) : ( <div style={{width:"20px",height:"20px",backgroundColor:"white",borderRadius:"50%",color:"black",textAlign:"center",fontSize:"0.9rem",alignItems:"center"}}>{`${index+1}`}</div>
+  )
+        }
+      </div>
+    ));
   const Superstars = () => {
     return (
       <Grid
@@ -389,6 +390,7 @@ export function TeamCreation() {
     );
   };
   const changeTabs = (event) => {
+  setSelectedCoinCount(localStorage.getItem("SelectedCoinCount") || 0); 
     setSnackOpen(false);
     setWasActiveTab(event.target.firstChild.nodeValue.toLowerCase());
   };
@@ -397,7 +399,7 @@ export function TeamCreation() {
     return (
       <div className="fullpage">
        {temp===0 && <>
-        <div className="sticky-top">
+        <div className="sticky-top1">
           <div className="teamcreate-bar pl-20 pt-10 mb-20">
             <ArrowBackIosIcon
               fontSize="medium"
@@ -408,6 +410,10 @@ export function TeamCreation() {
               Choose 11 Coins
             </span>
           </div>
+          
+          <Container sx={{display:"flex",flexWrap:"wrap",justifyContent:"space-evenly"}}> 
+        {CoinsCounterCircle}
+            </Container>
           <br />
           <div className="coin-classes mb-10">
             <span
