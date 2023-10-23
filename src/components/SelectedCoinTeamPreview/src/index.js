@@ -136,7 +136,7 @@ export default function SelectedCoinTeamPreview() {
                               className="font-size-12"
                               style={{ color: "var(--dark-dim-white)" }}
                             >
-                              Pois{" "}
+                              Selected{" "}
                               {coin.rank == -1 ? <>10000</> : <>{pointNumber}</>}
                             </span>
                           </motion.div>

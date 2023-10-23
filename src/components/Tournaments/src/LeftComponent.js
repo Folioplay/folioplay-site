@@ -125,7 +125,7 @@ const LeftComponent = () => {
     1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
-   "-2": { value: "Cancelled", color: "#FFCC00" },
+    "-2": { value: "Cancelled", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
   const tournaments = useSelector((state) => state.tournamentSlice.tournament);
@@ -223,22 +223,22 @@ const LeftComponent = () => {
     var leftMargin = -1 * currImage * 100;
     var buffer = -1 * currImage * 20;
     if (currImage !== len) {
-    try{
-      allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
-    }catch(e){
-console.log(e);
-    }
-    
+      try {
+        allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
+      } catch (e) {
+        console.log(e);
+      }
+
       if (!paused) currImage++;
     } else {
-      try{
-      
+      try {
+
         allImages[0].style = `margin-left:0px`;
-      currImage = 1;
-      }catch(e){
-  console.log(e);
+        currImage = 1;
+      } catch (e) {
+        console.log(e);
       }
-    
+
     }
   }
 
@@ -700,10 +700,13 @@ console.log(e);
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
-      <span className={"no-tournamnet-text"} >No Tournaments...</span>
+      <span className={"no-tournamnet-text"} ></span>
     ) : (
+
+
       tournaments
         .filter((tournament) => filterToFunctionMap[filter](tournament))
+        .filter((tournament) => tournament.isPinned) // Filter out tournaments that are not pinned
         .map((tournament, index) => {
           const seatsFilled =
             (100 * tournament.filled_spots) / tournament.total_spots;
@@ -723,7 +726,7 @@ console.log(e);
           // const completedTournament = tournament.status === 3;
 
           return (
-            <motion.div
+            <> <motion.div
               id={"tournament-" + tournament._id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -946,7 +949,267 @@ console.log(e);
 
                 {/* : null} */}
               </div>
-            </motion.div>
+            </motion.div> </>
+          );
+        })
+    )
+  ) : (
+    <></>
+  );
+
+  const tournamentsListNotPinned = tournaments ? (
+    tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
+      .length === 0 ? (
+      <span className={"no-tournamnet-text"} >No Tournaments...</span>
+    ) : (
+
+
+      tournaments
+        .filter((tournament) => filterToFunctionMap[filter](tournament))
+        .filter((tournament) => !tournament.isPinned) // Filter out tournaments that are not pinned
+        .map((tournament, index) => {
+          const seatsFilled =
+            (100 * tournament.filled_spots) / tournament.total_spots;
+          const startDate = new Date(tournament.start_time);
+          const finishDate = new Date(tournament.end_time);
+          // const disabledClass =
+          //   tournament.status !== 0 ? " disable-join-button" : "";
+
+          const disabledClass =
+            tournament.status !== 0 ? " disable-join-button" : "";
+          const disabledTournament = tournament.status !== 0;
+
+          // const openTournament = tournament.status === 0;
+          // const liveTournament = tournament.status === 2;
+          // const closedTournament = tournament.status === 1;
+          // const cancelledTournament = tournament.status === -2;
+          // const completedTournament = tournament.status === 3;
+
+          return (
+            <> <motion.div
+              id={"tournament-" + tournament._id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 * (index + 1) }}
+              key={"tournament__" + index}
+              className="tournament"
+              onClick={() => {
+                clearInterval(intervalId);
+                navigate(`/tournament/${tournament._id}`, {
+                  state: {
+                    transactionId: tournament.transaction_hash,
+                  },
+                });
+              }}
+            >
+
+              {tournament.isPinned ? (
+                <div style={{ position: "relative" }}>
+                  <div style={{ justifyContent: "end" }}>
+                    <div className="pinned1 pinned-top-right">
+                      <PushPinOutlinedIcon style={{ color: "#fea31b", fontWeight: "bold", }} />
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+
+              {tournament.user_joined ? (
+                <div style={{ position: "relative" }}>
+                  <div className="ribbon1 ribbon1-top-left">
+                    <span>Joined</span>
+                  </div>
+                </div>
+              ) : null}
+
+              {/* <div className="ribbon1">  
+              <span className="ribbon12">Joined</span>
+            </div> */}
+              <div className="tournament-info">
+                <span
+                  className="tournament-image"
+                  style={{ borderRadius: "100%" }}
+                >
+                  <img
+                    style={{ borderRadius: "100%" }}
+                    src={tournament.imageURL}
+                    loading={"lazy"}
+                    width="60px"
+                    height={"60px"}
+                  />
+                </span>
+                <span style={{ textAlign: "left" }}>
+                  <span style={{ color: "#071F36", fontWeight: "700" }}>
+                    {tournament.name}
+                  </span>
+                  {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
+                  {/*  {tournament.name}*/}
+                  {/*</span>*/}
+                  <br />
+                  <span className="tournaments-spots">
+                    <div className="tournamentPage__startTime">
+                      {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                      {startDate.getFullYear() % 100} |{" "}
+                      {startDate.getHours() / 10 < 1
+                        ? "0" + startDate.getHours()
+                        : startDate.getHours()}
+                      :
+                      {startDate.getMinutes() / 10 < 1
+                        ? "0" + startDate.getMinutes()
+                        : startDate.getMinutes()}{" "}
+                      GMT <br />
+                      Duration : {`${formatDuration(startDate, finishDate)}`}
+                    </div>
+                  </span>
+                </span>
+                <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                  {/* {tournament.status=== -2 ? <> {tournament.entryFee} FPC</> : <> {tournament.entryFee} FPC</> } */}
+                  {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined &&  <> Join @{tournament.entryFee} FPC</>} */}
+                  {tournament.entryFee} FPC
+
+                </Button>
+              </div>
+              <div>
+                <LinearProgress
+                  variant="determinate"
+                  style={{ backgroundColor: "var(--dim-white)" }}
+                  value={seatsFilled}
+                />
+                <div className="spots-wrapper">
+                  <span
+                    className="font-size-12 font-weight-500 mt-5"
+                    style={{ color: "var(--golden)" }}
+                  >
+                    {tournament.status === 0 ? (
+                      <>{tournament.available_spots} spots left</>
+                    ) : (
+                      <>
+                        {tournament.total_spots - tournament.available_spots}{" "}
+                        users joined
+                      </>
+                    )}
+                  </span>
+                  <span
+                    className="font-size-12 font-weight-500 mt-5"
+                    style={{ color: "var(--dark-dim-white)" }}
+                  >
+                    {tournament.total_spots} spots
+                  </span>
+
+
+                </div>
+
+                {/*<div className="tournamentPage__transactionHash">*/}
+                {/*  {tournament.transaction_hash !== undefined && (*/}
+                {/*    <span*/}
+                {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+                {/*      onClick={() => {*/}
+                {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+                {/*      }}*/}
+                {/*    >*/}
+                {/*      Transaction Hash(Polygon):{" "}*/}
+                {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+                {/*      {tournament.transaction_hash.slice(-10)}*/}
+                {/*    </span>*/}
+                {/*  )}*/}
+                {/*</div>*/}
+              </div>
+              {tournament.status === 1 ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Starting in{" "}</div>
+              ) : (null)}
+              {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration closing in{" "}</div>
+              ) : (null)}
+              <div className="tournament-reward">
+                {status[tournament.status].value !== "Open" ? (
+                  <span
+                    className="font-size-12"
+                    style={{
+                      color: status[tournament.status].color,
+                      padding: "0 10px",
+                      border: "1px solid " + status[tournament.status].color,
+                      borderRadius: "30px",
+                    }}
+                  >
+                    {status[tournament.status].value}
+                  </span>
+                ) : <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>}
+                <div className="tournamentPage__countdown">
+                  <span id="timeRemaining" className="font-size-12">
+                    {/* {startDate - 300000 > Date.now() ? (
+                      <Countdown
+                        date={startDate - 300000}
+                        renderer={renderer}
+                      />
+                    ) : null} */}
+
+                    {tournament.status === 1 ? (<Countdown
+                      date={startDate}
+                      renderer={rendererBuffer}
+                      onComplete={() => bufferRefresh(tournament.status)}
+                    />
+                    ) : (null)}
+
+                    {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate > Date.now() ? (
+                      <Countdown
+                        date={startDate - 60000}
+                        renderer={renderer}
+                        onComplete={() => openRefresh(tournament.status)}
+                      />
+                    ) : (
+                      <>
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
+                          <Countdown
+                            date={finishDate}
+                            renderer={RendererEnd}
+                            onComplete={() => completeRefresh(tournament.status)}
+                          />
+                        ) : null}
+                      </>
+                    )}
+
+                  </span>
+                </div>
+                <span className="font-size-12">
+                  <EmojiEventsOutlinedIcon />
+                  <span>{tournament.rewards.prize_pool} FPC</span>
+                </span>
+                {/* {tournament.user_joined ?  */}
+
+                {/* : null} */}
+              </div>
+            </motion.div> </>
           );
         })
     )
@@ -1105,6 +1368,7 @@ console.log(e);
               ) : (
                 <>
                   {tournamentsList}
+                  {tournamentsListNotPinned}
                   <JoinTournamentDrawer
                     teams={teams}
                     tournamentId={tournamentId}
