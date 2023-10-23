@@ -66,6 +66,13 @@ export function TeamCreation() {
     setSnackOpen(false);
     setOpen(true);
   };
+
+  async function updateTotalCoinCount(){
+    if(localStorage.getItem("SelectedCoinCount") !== selectedCoinCount){
+
+      await setSelectedCoinCount(localStorage.getItem("SelectedCoinCount"));
+    }
+  }
   const handleClose = () => {
     document.getElementById("modal-view").classList.add("animate-modal");
     setTimeout(function () {
@@ -187,7 +194,7 @@ export function TeamCreation() {
     const CoinsCounterCircle = Array.from({ length: county }).map((_, index) => (
       <div key={index}>
         {/* <img src={coinRound} alt="Image" style={{ width: "50px" }} /> */}
-          {index+1 <= selectedCoinCount && selectedCoinCount !==undefined &&  selectedCoinCount >0 ? ( <div style={{width:"20px",height:"20px",backgroundColor:"white",borderRadius:"50%",color:"#fea31b",border:"2px solid #fea31b",textAlign:"center",fontSize:"0.9rem",alignItems:"center",fontWeight:"bold"}}>{`${index+1}`}</div>
+          {index+1 <= selectedCoinCount && selectedCoinCount !==undefined &&  selectedCoinCount >0 ? ( <div style={{width:"20px",height:"20px",backgroundColor:"#fea31b",borderRadius:"50%",color:"#fea31b",border:"2px solid #fea31b",textAlign:"center",fontSize:"0.9rem",alignItems:"center",fontWeight:"bold"}}>{`${index+1}`}</div>
   ) : ( <div style={{width:"20px",height:"20px",backgroundColor:"white",borderRadius:"50%",color:"black",textAlign:"center",fontSize:"0.9rem",alignItems:"center"}}>{`${index+1}`}</div>
   )
         }
@@ -200,6 +207,8 @@ export function TeamCreation() {
         container
         rowSpacing={"1em"}
         // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+    
+        onMouseLeave={() => updateTotalCoinCount()}
       >
         {superstars.map((coin, index) => {
           return (
@@ -265,6 +274,8 @@ export function TeamCreation() {
         style={{ color: "var(--black)" }}
         container
         rowSpacing={"1em"}
+   
+        onMouseLeave={() => updateTotalCoinCount()}
         // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {mooning.map((coin, index) => {
@@ -331,6 +342,7 @@ export function TeamCreation() {
         container
         rowSpacing={"1em"}
         // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        onMouseLeave={() => updateTotalCoinCount()}
       >
         {rekt.map((coin, index) => {
           return (
@@ -390,7 +402,7 @@ export function TeamCreation() {
     );
   };
   const changeTabs = (event) => {
-  setSelectedCoinCount(localStorage.getItem("SelectedCoinCount") || 0); 
+  // setSelectedCoinCount(localStorage.getItem("SelectedCoinCount") || 0); 
     setSnackOpen(false);
     setWasActiveTab(event.target.firstChild.nodeValue.toLowerCase());
   };

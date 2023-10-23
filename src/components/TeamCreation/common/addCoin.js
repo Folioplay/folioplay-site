@@ -9,6 +9,8 @@ export default function addCoin(
   mooning,
   rekt
 ) {
+  try{
+
   
  
   var checkArray =
@@ -167,4 +169,7 @@ const numberOfSelectedCoins = selectedCoins.length;
 
 localStorage.setItem("SelectedCoinCount", numberOfSelectedCoins);
 // }
-}
+  }catch(e){
+    console.log(e);
+  }
+} 
