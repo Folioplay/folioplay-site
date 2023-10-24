@@ -149,6 +149,12 @@ height: auto;
     align-items: center;
 
 }
+.role-button2 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
 .role-button1 {
     display: flex;
     justify-content: center;
@@ -327,6 +333,8 @@ height: auto;
      text-transform: capitalize;
      font-family: "poppins";
      font-weight: 500;
+     /*  pehle margin left ni tha parellel krne me kia */
+     margin-left: 200px;
   }
   #assign-role-button1{
     border-radius: 8px;
@@ -336,6 +344,16 @@ height: auto;
      text-transform: capitalize;
      font-family: "poppins";
      font-weight: 500;
+  }
+  #assign-role-button2{
+    border-radius: 8px;
+     background-color: var(--golden);
+     position: fixed;
+     bottom: 1.5em;
+     text-transform: capitalize;
+     font-family: "poppins";
+     font-weight: 500;
+     margin-left: -200px;
   }
   .sticky-top{
     position: sticky;
