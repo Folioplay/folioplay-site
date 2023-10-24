@@ -71,6 +71,7 @@ export default function LeaderBoardTabs({
     setUser(userwallet);
   }
 
+
   const userWalletAddress = user
     ? user
     : "";
@@ -84,23 +85,24 @@ export default function LeaderBoardTabs({
 
   const getLeaderBoardRedux = useSelector((state) => state.LeaderBoardSlice.leaderBoard);
   const getPersonalLeaderBoardRedux = useSelector((state) => state.LeaderBoardSlice.personalLeaderboard);
-
+  async function getPersonalLeader() {
+    const data = await getPersonalLeaderboard(tournamentId);
+    setPersonalLeaderBoard(data);
+  }
+  async function getRewardsDetails() {
+    const data = await getRewardDetailsAPI(tournamentId);
+    setRewardsList(data);
+  }
   useEffect(() => {
     localStoritems();
+    
    //  console.log("tournament prop passed")
    //  console.log(tournament);
     dispatch(getLeaderboardAsync(tournamentId));
     dispatch(getPersonalLeaderBoardAsync(tournamentId));
-    async function getPersonalLeader() {
-      const data = await getPersonalLeaderboard(tournamentId);
-      setPersonalLeaderBoard(data);
-    }
-    async function getRewardsDetails() {
-      const data = await getRewardDetailsAPI(tournamentId);
-      setRewardsList(data);
-    }
     getPersonalLeader();
     getRewardsDetails();
+  
 
     // if(state && state.tounamentViewTab){
     //  //  console.log("tab value 104")
@@ -316,7 +318,9 @@ export default function LeaderBoardTabs({
                   showLoding();
                   dispatch(getLeaderboardAsync(tournamentId));
                   dispatch(getWinnersAsync(tournamentId));
-                  dispatch(getPersonalLeaderBoardAsync(tournamentId));
+                  dispatch(getPersonalLeaderBoardAsync(tournamentId));                  
+                  getPersonalLeader();
+                  getRewardsDetails();
                 }}><img src={RefreshIcon} alt="refresh" style={{ width: "42%" }} /></Button>
             </span>
           </TabList>
@@ -403,9 +407,14 @@ export default function LeaderBoardTabs({
                             T{entry.user_team_count}
                           </div>
                         </div>
-                        <div className={"leaderboard-Main-Controller-Porfolio"} >
+                        {tournament.rewards.reward_type === "TEXT" ? (<div className={"leaderboard-Main-Controller-Porfolio"} >
+                          {entry.amount_won}
+                        </div>
+                        ) : (<div className={"leaderboard-Main-Controller-Porfolio"} >
                           {entry.amount_won} FPC
                         </div>
+                        )}
+                     
 
                       </div>
                     </motion.div>
@@ -448,9 +457,15 @@ export default function LeaderBoardTabs({
                             T{entry.user_team_count}
                           </div>
                         </div>
-                        <div className={"leaderboard-Main-Controller-Porfolio"} >
-                          {entry.amount_won} FPC
+
+                        {tournament.rewards.reward_type === "TEXT" ? (<div className={"leaderboard-Main-Controller-Porfolio"} >
+                          {entry.amount_won} 
                         </div>
+                        ) : (<div className={"leaderboard-Main-Controller-Porfolio"} >
+                        {entry.amount_won} FPC
+                      </div>
+                        )}
+                       
                       </div>
                     </motion.div>
                   );
@@ -535,9 +550,15 @@ export default function LeaderBoardTabs({
                           </div>
                       
                         </div>
-                        <div className={"leaderboard-Main-Controller-Porfolio"} >
-                          {entry.amount_won} FPC
+
+                        {tournament.rewards.reward_type === "TEXT" ? ( <div className={"leaderboard-Main-Controller-Porfolio"} >
+                          {entry.amount_won} 
                         </div>
+                        ) : ( <div className={"leaderboard-Main-Controller-Porfolio"} >
+                        {entry.amount_won} FPC
+                      </div>
+                        )}
+                       
                       </div>
                     </motion.div>
                   );
@@ -580,9 +601,14 @@ export default function LeaderBoardTabs({
                             T{entry.user_team_count}
                           </div>
                         </div>
-                        <div className={"leaderboard-Main-Controller-Porfolio"} >
-                          {entry.amount_won} FPC
+                        {tournament.rewards.reward_type === "TEXT" ? ( <div className={"leaderboard-Main-Controller-Porfolio"} >
+                          {entry.amount_won} 
                         </div>
+                        ) : ( <div className={"leaderboard-Main-Controller-Porfolio"} >
+                        {entry.amount_won} FPC
+                      </div>
+                        )}
+                       
                       </div>
                     </motion.div>
                   );
