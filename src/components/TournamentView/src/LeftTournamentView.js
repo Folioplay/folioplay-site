@@ -324,7 +324,8 @@ const LeftTournamentView = () => {
           <>
             <div className={"empty-area-completed "}>
               <div className={"empity-area-text"} style={{ maxWidth: "100%", display: "flex", justifyContent: "space-evenly", width: "100%", textAlign: "center" }}>
-                <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool - <b>{tournament?.rewards.prize_pool} FPC </b></div>
+                <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool -   { tournament.rewards.reward_type === "TEXT" ? (  <b>{tournament?.rewards.prize_pool}  </b>) :(  <b>{tournament?.rewards.prize_pool} FPC </b>)}
+</div>
                 <div style={{ maxWidth: "50%", width: "100%" }}> Spots - <b>{tournament?.total_spots}</b></div>
               </div>
               <div className="" style={{ maxWidth: "100%", display: "flex", justifyContent: "center", marginTop: "20px" }}> <span
@@ -400,10 +401,12 @@ const LeftTournamentView = () => {
                     Prize Pool
                   </span>
                   <br />
-                  <span className="font-size-20 font-weight-500">
-                    {/* {tournament?.total_reward} MGT */}
+                  { tournament.rewards.reward_type === "TEXT" ? (    <span className="font-size-20 font-weight-500">                
+                    {tournament?.rewards.prize_pool} 
+                  </span>) :(   <span className="font-size-20 font-weight-500">                
                     {tournament?.rewards.prize_pool} FPC
-                  </span>
+                  </span>)}
+                 
                 </span>
                 <span className="ml-auto" style={{ textAlign: "right" }}>
                   <span
@@ -593,7 +596,8 @@ const LeftTournamentView = () => {
                   {winnersRedux.length > 0 && (
                     <span className="winner-span font-weight-500" style={{}}>
                       <b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;
-                      <b>{winnersRedux[0].amount_won} FPC</b>&nbsp; in this
+                      { tournament.rewards.reward_type === "TEXT" ? (    <b>{winnersRedux[0].amount_won} </b>) :(  <b>{winnersRedux[0].amount_won} FPC</b>)}
+                     &nbsp; in this
                       tournament
                     </span>
                   )}
