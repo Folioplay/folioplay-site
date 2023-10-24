@@ -511,9 +511,10 @@ export function TeamCreation() {
             <Superstars />  
             <div className="assign-roles-div mt-20">
             <Button
-              id="assign-role-button1"
+              id="assign-role-button2"
               variant="contained"
-              className="role-button1 ml-auto"
+              // className="role-button1 ml-auto"
+              className="role-button2 ml-auto"
               onClick={() =>
                navigate("selectedCoins")
                 
@@ -543,9 +544,9 @@ export function TeamCreation() {
             <Mooning />
             <div className="assign-roles-div mt-20">
             <Button
-              id="assign-role-button1"
+              id="assign-role-button2"
               variant="contained"
-              className="role-button1 ml-auto"
+              className="role-button2 ml-auto"
               onClick={() =>
                navigate("selectedCoins")
                 
@@ -588,9 +589,9 @@ export function TeamCreation() {
             <Rekt />
             <div className="assign-roles-div mt-20">
             <Button
-              id="assign-role-button1"
+              id="assign-role-button2"
               variant="contained"
-              className="role-button1 ml-auto"
+              className="role-button2 ml-auto"
               onClick={() =>
                navigate("selectedCoins")
                 
