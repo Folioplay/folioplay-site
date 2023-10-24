@@ -91,7 +91,9 @@ const LeftTransactionHistoryComponent = () => {
                     id="panel1a-header"
                 >
                     <div className="dateBlock__accordionList__summaryTab">
-                        <div className="summaryTab__amount">{item.type === "PAID" ? "-" : "+"}{item.data.amount} FPC</div>
+                      
+                        {parseFloat(item.data.amount) ?  (<div className="summaryTab__amount">{item.type === "PAID" ? "-" : "+"}{item.data.amount} FPC </div>):(<div className="summaryTab__amount">{item.type === "PAID" ? "-" : "+"}{item.data.amount} </div>)}
+                       
                         <div className={"summaryTab__helperText"} style={{ marginLeft: "20px", marginRight: "auto" }}>{item.type === "RECEIVED" ? "Reward" : "Joined Tournament"}</div>
                     </div>
                 </AccordionSummary>

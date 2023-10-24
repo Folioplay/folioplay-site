@@ -129,7 +129,7 @@ const LeftComponent = () => {
   };
   // const [tournaments, setTournaments] = useState(undefined);
   const tournaments = useSelector((state) => state.tournamentSlice.tournament);
-  console.log(tournaments);
+
   const [teams, setTeams] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState({
     message: "",

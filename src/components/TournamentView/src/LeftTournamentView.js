@@ -552,7 +552,7 @@ const LeftTournamentView = () => {
                   : "tournament-view-card-completed-red"
               }
             >
-              {amountWon !== -2 ? (
+              {tournament.user_joined ? (
                 <>
                   <div className="profileHeaderTP">
                     <div className="profilePicture">
@@ -569,8 +569,10 @@ const LeftTournamentView = () => {
                       <div className="userNameTP">
                         {localStorage.getItem("folioUsername")}
                       </div>
+                      
                       <div className="tview__rewardDisplay">
-                        <span>You won {amountWon} FPC</span>
+                     { tournament.rewards.reward_type === "TEXT" ? (   <span>You won {amountWon} </span>) :(  <span>You won {amountWon} FPC</span>)
+}
                       </div>
                     </div>
                   </div>
