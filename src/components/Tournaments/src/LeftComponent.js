@@ -1389,6 +1389,7 @@ const LeftComponent = () => {
           open={errorMessageSnackOpen}
           autoHideDuration={3000}
           onClose={handleErrorMessageSnackClose}
+         xs={12}
         >
           <motion.div
             initial={{ y: 200 }}
@@ -1398,7 +1399,8 @@ const LeftComponent = () => {
             <Alert
               onClose={handleErrorMessageSnackClose}
               severity={errorMessage.variant}
-              sx={{ width: "100%", fontFamily: "poppins" }}
+              sx={{ width: "95%", fontFamily: "poppins" }}
+              
             >
               {errorMessage.message}
             </Alert>
