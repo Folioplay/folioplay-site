@@ -238,9 +238,9 @@ const LeftTournamentView = () => {
     tournament && tournament?.status !== 0 ? " disable-join-button" : "";
   var disabledTournament = tournament && tournament?.status !== 0 ? true : false;
   // disabledTournament = false;
-  // let tournament_info_contain  er_completed = (tournament && tournament?.status === 3) ? "tournament-info-container-completed-bgc" : "";
+  // let tournament_info_contain  er_completed = (tournament && tournament?.status === 4) ? "tournament-info-container-completed-bgc" : "";
   let empty_header =
-    tournament && tournament?.status === 3 ? "empty-area-completed" : "";
+    tournament && tournament?.status === 4 ? "empty-area-completed" : "";
   const startTime = tournament ? new Date(tournament?.start_time) : undefined;
   const endTime = tournament ? new Date(tournament?.end_time) : undefined;
 
@@ -320,7 +320,7 @@ const LeftTournamentView = () => {
 
 
 
-        {tournament?.status === 3 ? (
+        {tournament?.status === 4 ? (
           <>
             <div className={"empty-area-completed "}>
               <div className={"empity-area-text"} style={{ maxWidth: "100%", display: "flex", justifyContent: "space-evenly", width: "100%", textAlign: "center" }}>
@@ -385,7 +385,7 @@ const LeftTournamentView = () => {
 
 
         <div className={"tournament-info-container "}>
-          {tournament?.status !== 3 ? (
+          {tournament?.status !== 4 ? (
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1, y: -90 }}

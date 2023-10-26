@@ -212,7 +212,7 @@ export default function LeaderBoardTabs({
       {tournament.status === 0 && "Open"}
       {tournament.status === 1 && "Closed"}
       {tournament.status === 2 && "Running"}
-      {tournament.status === 3 && "Completed"}
+      {tournament.status === 4 && "Completed"}
     </>
   },
   {
@@ -245,7 +245,7 @@ export default function LeaderBoardTabs({
     id: 5,
     Title: <>
       {tournament.status === 0 && "Registration Closing"}
-      {tournament.status === 1 || tournament.status === 2 || tournament.status === 3 && "Registration Closed"}
+      {tournament.status === 1 || tournament.status === 2 || tournament.status === 4 && "Registration Closed"}
 
     </>,
     Value: <div>{startTime.getDate()} {monthNames[startTime.getMonth()]}'
@@ -355,7 +355,7 @@ export default function LeaderBoardTabs({
             No Data
 
             {/*// Show rewards when the Tournament is not completed*/}
-            {tournamentStatus !== 3 &&
+            {tournamentStatus !== 4 &&
               amounts.map((value, index) => {
                 let leaderboardActive = tournamentStatus !== 0 ? "leaderboard-active" : "";
                 return (
@@ -371,7 +371,7 @@ export default function LeaderBoardTabs({
                 );
               })}
 
-            {tournamentStatus === 3 &&
+            {tournamentStatus === 4 &&
               rewardsList.length !== 0 &&
               rewardsList.map((entry, index) => {
                 if (entry.user.walletAddress === userWalletAddress) {
@@ -423,7 +423,7 @@ export default function LeaderBoardTabs({
               })}
 
             {/*// Show all points when tournament is closed*/}
-            {tournamentStatus === 3 &&
+            {tournamentStatus === 4 &&
               rewardsList.length !== 0 &&
               rewardsList.map((entry, index) => {
                 if (entry.user.walletAddress !== userWalletAddress)
@@ -481,13 +481,13 @@ export default function LeaderBoardTabs({
             <div className="leaderboard-entry ml-auto mr-auto mb-20 pb-10" style={{ display: "flex", maxWidth: "100%", width: "100%", textAlign: "start" }}>
               <div style={{ maxWidth: "15%", width: "100%" }}>Rank</div>
 
-              {tournamentStatus === 3 && getLeaderBoardRedux.length && (
+              {tournamentStatus === 4 && getLeaderBoardRedux.length && (
                 <div style={{ maxWidth: "35%", width: "100%", textAlign: "start" }}>User</div>
               )}
               {/*<span className='ml-auto'>Team</span> */}
               <div style={{ maxWidth: "25%", width: "100%" }}></div>
 
-              {tournamentStatus === 3 && getLeaderBoardRedux.length ? (<div style={{ maxWidth: "25%", width: "100%", textAlign: "center" }}>Prizes</div>) : (
+              {tournamentStatus === 4 && getLeaderBoardRedux.length ? (<div style={{ maxWidth: "25%", width: "100%", textAlign: "center" }}>Prizes</div>) : (
                 <div style={{ maxWidth: "60%", width: "100%", textAlign: "end" }}>Prizes</div>
               )
 
@@ -496,7 +496,7 @@ export default function LeaderBoardTabs({
             </div>
 
             {/*// Show rewards when the Tournament is not completed*/}
-            {tournamentStatus !== 3 &&
+            {tournamentStatus !== 4 &&
               amounts.map((value, index) => {
                 let leaderboardActive = tournamentStatus !== 0 ? "leaderboard-active" : "";
                 return (
@@ -512,7 +512,7 @@ export default function LeaderBoardTabs({
                 );
               })}
 
-            {tournamentStatus === 3 &&
+            {tournamentStatus === 4 &&
               rewardsList.length !== 0 &&
               rewardsList.map((entry, index) => {
                 if (entry.user.walletAddress === userWalletAddress) {
@@ -566,7 +566,7 @@ export default function LeaderBoardTabs({
               })}
 
             {/*// Show all points when tournament is closed*/}
-            {tournamentStatus === 3 &&
+            {tournamentStatus === 4 &&
               rewardsList.length !== 0 &&
               rewardsList.map((entry, index) => {
                 if (entry.user.walletAddress !== userWalletAddress)
