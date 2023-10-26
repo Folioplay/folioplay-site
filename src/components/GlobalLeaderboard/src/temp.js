@@ -1,5 +1,5 @@
 <div className={"tournament-info-container "}>
-{tournament.status !== 3 ? (
+{tournament.status !== 4 ? (
   <motion.div
     initial={{ scale: 0 }}
     animate={{ scale: 1, y: -90 }}

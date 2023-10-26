@@ -131,7 +131,7 @@ export default function ContestTabs({
         {tournamentUpdatedOpen.length ? (
           <>
             {tournamentUpdatedOpen.map((tournament, index) => {
-              const disabledTournament = tournament.status === 3;
+              const disabledTournament = tournament.status === 4;
               const startDate = new Date(tournament.tournament.start_time);
               const finishDate = new Date(tournament.tournament.end_time);
               const status = {
@@ -280,7 +280,7 @@ export default function ContestTabs({
         {tournamentUpdatedRunning.length ? (
           <>
             {tournamentUpdatedRunning.map((tournament, index) => {
-              const disabledTournament = tournament.status === 3;
+              const disabledTournament = tournament.status === 4;
               const startDate = new Date(tournament.tournament.start_time);
               const finishDate = new Date(tournament.tournament.end_time);
               const status = {
@@ -431,7 +431,7 @@ export default function ContestTabs({
             {tournamentUpdatedCompleted.map((tournament, index) => {
               const startDate = new Date(tournament.tournament.start_time);
               const finishDate = new Date(tournament.tournament.end_time);
-              const disabledTournament = tournament.status === 3;
+              const disabledTournament = tournament.status === 4;
               const status = {
                 3: { value: "Completed", color: "#ff000096" },
                 1: { value: "Closed", color: "#FFCC00" },
@@ -692,7 +692,7 @@ export default function ContestTabs({
           {tournamentUpdatedOpen.length ? (
             <>
               {tournamentUpdatedOpen.map((tournament, index) => {
-                const disabledTournament = tournament.status === 3;
+                const disabledTournament = tournament.status === 4;
                 const status = {
                   3: { value: "Completed", color: "#ff000096" },
                   1: { value: "Closed", color: "#FFCC00" },
@@ -775,7 +775,7 @@ export default function ContestTabs({
           {tournamentUpdatedRunning.length ? (
             <>
               {tournamentUpdatedRunning.map((tournament, index) => {
-                const disabledTournament = tournament.status === 3;
+                const disabledTournament = tournament.status === 4;
                 const status = {
                   3: { value: "Completed", color: "#ff000096" },
                   1: { value: "Closed", color: "#FFCC00" },
@@ -858,7 +858,7 @@ export default function ContestTabs({
           {tournamentUpdatedCompleted.length ? (
             <>
               {tournamentUpdatedCompleted.map((tournament, index) => {
-                const disabledTournament = tournament.status === 3;
+                const disabledTournament = tournament.status === 4;
                 const status = {
                   3: { value: "Completed", color: "#ff000096" },
                   1: { value: "Closed", color: "#FFCC00" },
@@ -943,7 +943,7 @@ export default function ContestTabs({
         {/*    return(*/}
         {/*        <TabPanel  className="contestTab__valueItem"  value={indexInner+1}>*/}
         {/*            {item.map( (tournament, index) => {*/}
-        {/*                const disabledTournament = tournament.status === 3;*/}
+        {/*                const disabledTournament = tournament.status === 4;*/}
         {/*                const status = {*/}
         {/*                    3: { value: "Completed", color: "#ff000096" },*/}
         {/*                    1: { value: "Closed", color: "#FFCC00" },*/}

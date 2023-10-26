@@ -44,7 +44,7 @@ export default function ActivityTabs({ tournaments }) {
   const tournamentUpdatedCompleted =
     tournaments &&
     tournaments.filter(
-      (item) => item.tournament !== null && item.tournament.status === 3
+      (item) => item.tournament !== null && item.tournament.status === 4
     );
   const handleChange = (event, newValue) => {
     setValue(newValue);

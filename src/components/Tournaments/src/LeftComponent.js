@@ -121,7 +121,7 @@ const LeftComponent = () => {
   };
 
   const status = {
-    3: { value: "Completed", color: "#ff000096" },
+    4: { value: "Completed", color: "#ff000096" },
     1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
@@ -723,7 +723,7 @@ const LeftComponent = () => {
           // const liveTournament = tournament.status === 2;
           // const closedTournament = tournament.status === 1;
           // const cancelledTournament = tournament.status === -2;
-          // const completedTournament = tournament.status === 3;
+          // const completedTournament = tournament.status === 4;
 
           return (
             <> <motion.div
@@ -983,7 +983,7 @@ const LeftComponent = () => {
           // const liveTournament = tournament.status === 2;
           // const closedTournament = tournament.status === 1;
           // const cancelledTournament = tournament.status === -2;
-          // const completedTournament = tournament.status === 3;
+          // const completedTournament = tournament.status === 4;
 
           return (
             <> <motion.div
