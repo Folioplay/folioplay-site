@@ -212,6 +212,7 @@ export default function LeaderBoardTabs({
       {tournament.status === 0 && "Open"}
       {tournament.status === 1 && "Closed"}
       {tournament.status === 2 && "Running"}
+      {tournament.status === 3 && "Completed"}
       {tournament.status === 4 && "Completed"}
     </>
   },
@@ -295,9 +296,7 @@ export default function LeaderBoardTabs({
             <Tab
               label="Info"
               value="3"
-              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth:"25%",width:"100%" }}
-             
-
+              style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth:"25%",width:"100%" }}            
             />
             <Tab
               label="Prizes"
@@ -371,7 +370,7 @@ export default function LeaderBoardTabs({
                 );
               })}
 
-            {tournamentStatus === 4 &&
+            {tournamentStatus === 4  &&
               rewardsList.length !== 0 &&
               rewardsList.map((entry, index) => {
                 if (entry.user.walletAddress === userWalletAddress) {
@@ -613,6 +612,20 @@ export default function LeaderBoardTabs({
                     </motion.div>
                   );
               })}
+{tournamentStatus === 3 &&           
+                     <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className={
+                        "leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10"
+                      }
+                    >
+result will be declared soon...                     
+                       
+                      
+                    </motion.div>
+}                                      
 
 
 
