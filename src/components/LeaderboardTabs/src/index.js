@@ -212,7 +212,7 @@ export default function LeaderBoardTabs({
       {tournament.status === 0 && "Open"}
       {tournament.status === 1 && "Closed"}
       {tournament.status === 2 && "Running"}
-      {tournament.status === 3 && "Completed"}
+      {tournament.status === 3 && "Buffer"}
       {tournament.status === 4 && "Completed"}
     </>
   },
@@ -246,7 +246,7 @@ export default function LeaderBoardTabs({
     id: 5,
     Title: <>
       {tournament.status === 0 && "Registration Closing"}
-      {tournament.status === 1 || tournament.status === 2 || tournament.status === 4 && "Registration Closed"}
+      {tournament.status === 1 || tournament.status === 2 || tournament.status === 3 || tournament.status === 4 && "Registration Closed"}
 
     </>,
     Value: <div>{startTime.getDate()} {monthNames[startTime.getMonth()]}'
