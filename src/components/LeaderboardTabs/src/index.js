@@ -612,20 +612,6 @@ export default function LeaderBoardTabs({
                     </motion.div>
                   );
               })}
-{tournamentStatus === 3 &&           
-                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className={
-                        "leaderboard-entry pointer-available ml-auto mr-auto mb-20 pb-10"
-                      }
-                    >
-result will be declared soon...                     
-                       
-                      
-                    </motion.div>
-}                                      
 
 
 

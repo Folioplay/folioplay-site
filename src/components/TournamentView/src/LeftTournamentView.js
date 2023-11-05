@@ -216,7 +216,7 @@ const LeftTournamentView = () => {
     (state) => state.LeaderBoardSlice.leaderBoard
   );
   const winnersRedux = useSelector((state) => state.LeaderBoardSlice.winners);
-
+console.log(winnersRedux);
   if (tournament !== undefined) {
     seatsFilled = (100 * tournament?.filled_spots) / tournament?.total_spots;
   }
@@ -468,7 +468,7 @@ const LeftTournamentView = () => {
                     </span>
                   </div>
                 </div>}
-              {tournament?.status !== -2 &&
+              {/* {tournament?.status !== -2 &&
                 <div>
                   <LinearProgress
                     variant="determinate"
@@ -483,6 +483,7 @@ const LeftTournamentView = () => {
                       <span id={tournament?.id + "-left-spots"}>
                         {tournament?.total_spots - tournament?.filled_spots}
                       </span>{" "}
+                      
                       spots left
                     </span>
                     <span
@@ -492,7 +493,52 @@ const LeftTournamentView = () => {
                       {tournament?.total_spots} spots
                     </span>
                   </div>
-                </div>}
+                </div>} */}
+                {tournament.status !== -2 && tournament.status === 0 && tournament.status === 1 && tournament.status !== 2  ? (<div>
+                  <LinearProgress
+                    variant="determinate"
+                    style={{ backgroundColor: "var(--dim-white)" }}
+                    value={seatsFilled}
+                  />
+                  <div className="spots-wrapper">
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--golden)" }}
+                    >
+                      <span id={tournament?.id + "-left-spots"}>
+                        {tournament?.total_spots - tournament?.filled_spots}
+                      </span>{" "}
+                      
+                      spots left
+                    </span>
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--dark-dim-white)" }}
+                    >
+                      {tournament?.total_spots} spots
+                    </span>
+                  </div>
+                </div>) : (<div>
+                  <LinearProgress
+                    variant="determinate"
+                    style={{ backgroundColor: "var(--dim-white)" }}
+                    value={seatsFilled}
+                  />
+                  <div className="spots-wrapper">
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--golden)" }}
+                    >
+                      
+                      <span id={tournament?.id + "-left-spots"}>
+                        { tournament?.filled_spots}
+                      </span>{" "}
+                      Teams Joined
+                      </span>
+                  </div>
+                </div>)
+}
+
               <div
                 className="tournamentPage__countdown"
                 style={{
@@ -522,7 +568,12 @@ const LeftTournamentView = () => {
                     />
 ):(null) }
 
-                 
+{tournament?.status === 3 ? ( 
+  <><span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",display:"flex"}}>Result will declear soon </span>
+      
+  </>
+):(null) }
+
                   {startTime > Date.now() ? (
                     <Countdown
                       date={startTime - 60000}
@@ -555,7 +606,7 @@ const LeftTournamentView = () => {
                   : "tournament-view-card-completed-red"
               }
             >
-              {tournament.user_joined ? (
+              {tournament.user_joined && winnersRedux[0].user.walletAddress === localStorage.getItem("walletAddress")  ? (
                 <>
                   <div className="profileHeaderTP">
                     <div className="profilePicture">
