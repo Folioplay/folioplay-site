@@ -125,7 +125,7 @@ const LeftComponent = () => {
     1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
-    3: { value: "Buffer", color: "#FFCC00" },
+    3: { value: "Computing Results", color: "#FFCC00" },
     "-2": { value: "Cancelled", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
