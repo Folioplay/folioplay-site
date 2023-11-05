@@ -494,7 +494,7 @@ console.log(winnersRedux);
                     </span>
                   </div>
                 </div>} */}
-                {tournament.status !== -2 && tournament.status === 0 && tournament.status === 1 && tournament.status !== 2  ? (<div>
+                { tournament.status === 0 || tournament.status === 1   ? (<div>
                   <LinearProgress
                     variant="determinate"
                     style={{ backgroundColor: "var(--dim-white)" }}
