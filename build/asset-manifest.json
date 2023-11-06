@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.cf1c0006.chunk.css",
+    "main.js": "/static/js/main.ccd167c0.chunk.js",
+    "main.js.map": "/static/js/main.ccd167c0.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.975060b6.js",
+    "runtime-main.js.map": "/static/js/runtime-main.975060b6.js.map",
+    "static/css/2.3eb07a12.chunk.css": "/static/css/2.3eb07a12.chunk.css",
+    "static/js/2.d48bb215.chunk.js": "/static/js/2.d48bb215.chunk.js",
+    "static/js/2.d48bb215.chunk.js.map": "/static/js/2.d48bb215.chunk.js.map",
+    "static/js/3.bc560f67.chunk.js": "/static/js/3.bc560f67.chunk.js",
+    "static/js/3.bc560f67.chunk.js.map": "/static/js/3.bc560f67.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.3eb07a12.chunk.css.map": "/static/css/2.3eb07a12.chunk.css.map",
+    "static/css/main.cf1c0006.chunk.css.map": "/static/css/main.cf1c0006.chunk.css.map",
+    "static/js/2.d48bb215.chunk.js.LICENSE.txt": "/static/js/2.d48bb215.chunk.js.LICENSE.txt",
+    "static/media/FPLogoManifest.5168b5d8.png": "/static/media/FPLogoManifest.5168b5d8.png",
+    "static/media/FolioPlaySmall.svg": "/static/media/FolioPlaySmall.546f1cc8.svg",
+    "static/media/cups-winner.png": "/static/media/cups-winner.cb505176.png",
+    "static/media/emailIcon.a2f2146f.png": "/static/media/emailIcon.a2f2146f.png",
+    "static/media/foliobanner1.jpg": "/static/media/foliobanner1.bcf8cd38.jpg",
+    "static/media/foliobanner2.jpg": "/static/media/foliobanner2.5aee3aea.jpg",
+    "static/media/index.css": "/static/media/tournamentView.956206bd.png",
+    "static/media/howtoplay.jpg": "/static/media/howtoplay.62a6acdc.jpg",
+    "static/media/polygon_logo.png": "/static/media/polygon_logo.7b592615.png",
+    "static/media/ranks.png": "/static/media/ranks.f84c7fce.png",
+    "static/media/single_trophy_cup.e8072a62.png": "/static/media/single_trophy_cup.e8072a62.png",
+    "static/media/visitfolio.jpg": "/static/media/visitfolio.4812ea3a.jpg",
+    "static/media/white_folioplay.svg": "/static/media/white_folioplay.1fdb13e7.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.975060b6.js",
+    "static/css/2.3eb07a12.chunk.css",
+    "static/js/2.d48bb215.chunk.js",
+    "static/css/main.cf1c0006.chunk.css",
+    "static/js/main.ccd167c0.chunk.js"
+  ]
+}
