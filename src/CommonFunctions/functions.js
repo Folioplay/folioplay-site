@@ -3,6 +3,9 @@ export function removeCoinsFromLocalStorage(){
     localStorage.removeItem("mooning");
     localStorage.removeItem("rekt");
     localStorage.removeItem("allCoins");
+  localStorage.removeItem("SelectedRekt");
+  localStorage.removeItem("Selectedsuperstar");
+  localStorage.removeItem("Selectedmooning");
     localStorage.removeItem("SelectedCoinCount");
 }
 export function scrollTo(element, to, duration) {
