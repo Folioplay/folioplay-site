@@ -15,6 +15,7 @@ export default function ContestTabs({
   tournamentUpdatedOpen,
   tournamentUpdatedRunning,
   tournamentUpdatedCompleted,
+  tournamentUpdatedBuffer
 }) {
   const monthNames = [
     "Jan",
@@ -58,9 +59,13 @@ export default function ContestTabs({
           var closed = document.getElementsByClassName(
             "completed-tournament"
           )[0];
+          var buffer = document.getElementsByClassName(
+            "buffer-tournament"
+          )[0];
           open.classList.add("display-none");
           running.classList.add("display-none");
           closed.classList.add("display-none");
+          buffer.classList.add("display-none");
           document
             .getElementsByClassName("MuiChip-root")[0]
             .classList.add("active-chip");
@@ -69,6 +74,9 @@ export default function ContestTabs({
             .classList.remove("active-chip");
           document
             .getElementsByClassName("MuiChip-root")[2]
+            .classList.remove("active-chip");
+          document
+            .getElementsByClassName("MuiChip-root")[3]
             .classList.remove("active-chip");
           open.classList.remove("display-none");
         }}
@@ -85,9 +93,13 @@ export default function ContestTabs({
           var closed = document.getElementsByClassName(
             "completed-tournament"
           )[0];
+          var buffer = document.getElementsByClassName(
+            "buffer-tournament"
+          )[0];
           open.classList.add("display-none");
           running.classList.add("display-none");
           closed.classList.add("display-none");
+          buffer.classList.add("display-none");
           document
             .getElementsByClassName("MuiChip-root")[0]
             .classList.remove("active-chip");
@@ -97,12 +109,15 @@ export default function ContestTabs({
           document
             .getElementsByClassName("MuiChip-root")[2]
             .classList.remove("active-chip");
+          document
+            .getElementsByClassName("MuiChip-root")[3]
+            .classList.remove("active-chip");
           running.classList.remove("display-none");
         }}
       />
       <Chip
         className=""
-        style={{ fontFamily: "poppins" }}
+        style={{ marginRight: "10px",fontFamily: "poppins" }}
         label="Completed"
         variant="outlined"
         onClick={() => {
@@ -112,9 +127,13 @@ export default function ContestTabs({
           var closed = document.getElementsByClassName(
             "completed-tournament"
           )[0];
+          var buffer = document.getElementsByClassName(
+            "buffer-tournament"
+          )[0];
           open.classList.add("display-none");
           running.classList.add("display-none");
           closed.classList.add("display-none");
+          buffer.classList.add("display-none");
           document
             .getElementsByClassName("MuiChip-root")[0]
             .classList.remove("active-chip");
@@ -124,7 +143,44 @@ export default function ContestTabs({
           document
             .getElementsByClassName("MuiChip-root")[2]
             .classList.add("active-chip");
+          document
+            .getElementsByClassName("MuiChip-root")[3]
+            .classList.remove("active-chip");
           closed.classList.remove("display-none");
+        }}
+      />
+      <Chip
+        className=""
+        style={{ marginRight: "10px",fontFamily: "poppins" }}
+        label="Buffer"
+        variant="outlined"
+        onClick={() => {
+          var open = document.getElementsByClassName("open-tournament")[0];
+          var running =
+            document.getElementsByClassName("running-tournament")[0];
+          var closed = document.getElementsByClassName(
+            "completed-tournament"
+          )[0];
+          var buffer = document.getElementsByClassName(
+            "buffer-tournament"
+          )[0];
+          open.classList.add("display-none");
+          running.classList.add("display-none");
+          closed.classList.add("display-none");
+          buffer.classList.add("display-none");
+          document
+            .getElementsByClassName("MuiChip-root")[0]
+            .classList.remove("active-chip");
+          document
+            .getElementsByClassName("MuiChip-root")[1]
+            .classList.remove("active-chip");
+          document
+            .getElementsByClassName("MuiChip-root")[2]
+            .classList.remove("active-chip");
+          document
+            .getElementsByClassName("MuiChip-root")[3]            
+            .classList.add("active-chip");
+          buffer.classList.remove("display-none");
         }}
       />
       <div className="mt-20 open-tournament">
@@ -135,7 +191,8 @@ export default function ContestTabs({
               const startDate = new Date(tournament.tournament.start_time);
               const finishDate = new Date(tournament.tournament.end_time);
               const status = {
-                3: { value: "Completed", color: "#ff000096" },
+                 4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
                 1: { value: "Closed", color: "#FFCC00" },
                 0: { value: "Open", color: "#00ff00d6" },
                 2: { value: "Running", color: "#FFCC00" },
@@ -284,7 +341,8 @@ export default function ContestTabs({
               const startDate = new Date(tournament.tournament.start_time);
               const finishDate = new Date(tournament.tournament.end_time);
               const status = {
-                3: { value: "Completed", color: "#ff000096" },
+                 4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
                 1: { value: "Closed", color: "#FFCC00" },
                 0: { value: "Open", color: "#00ff00d6" },
                 2: { value: "Running", color: "#FFCC00" },
@@ -425,7 +483,159 @@ export default function ContestTabs({
           </div>
         )}
       </div>
-      <div className="mt-20 completed-tournament display-none">
+      
+      <div className="mt-20 buffer-tournament display-none">
+        {tournamentUpdatedBuffer.length ? (
+          <>
+            {tournamentUpdatedBuffer.map((tournament, index) => {
+              const disabledTournament = tournament.status === 4;
+              const startDate = new Date(tournament.tournament.start_time);
+              const finishDate = new Date(tournament.tournament.end_time);
+              const status = {
+                 4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
+                1: { value: "Closed", color: "#FFCC00" },
+                0: { value: "Open", color: "#00ff00d6" },
+                2: { value: "Running", color: "#FFCC00" },
+              };
+
+              return (
+                <motion.div
+                  id={"tournament-" + tournament._id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 * (index + 1) }}
+                  key={"tournament__" + index}
+                  className="tournament"
+                  style={{
+                    minHeight: "100px",
+                    padding: "20px 20px 0px 20px",
+                    width: "90%",
+                  }}
+                  onClick={() => {
+                    navigate(`/tournament/${tournament.tournament._id}`, {
+                      state: {
+                        transactionId: tournament.transaction_hash,
+                      },
+                    });
+                  }}
+                >
+                  <div className="tournament-info">
+                    <span
+                      className="tournament-image"
+                      style={{ borderRadius: "100%" }}
+                    >
+                      <img
+                        style={{ borderRadius: "100%" }}
+                        src={tournament.tournament.imageURL}
+                        width="60px"
+                        height={"60px"}
+                      />
+                    </span>
+                    <span style={{ textAlign: "left" }}>
+                      <span
+                        className="font-size-20"
+                        style={{ color: "#071F36", fontWeight: "700" }}
+                      >
+                        {tournament.tournament.name}
+                      </span>
+                      {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
+                      {/*  {tournament.name}*/}
+                      {/*</span>*/}
+                      <br />
+                      <span className="tournaments-spots">
+                      <div className="tournamentPage__startTime">
+                          {startDate.getDate()}{" "}
+                          {monthNames[startDate.getMonth()]}'
+                          {startDate.getFullYear() % 100} |{" "}
+                          {startDate.getHours() / 10 < 1
+                            ? "0" + startDate.getHours()
+                            : startDate.getHours()}
+                          :
+                          {startDate.getMinutes() / 10 < 1
+                            ? "0" + startDate.getMinutes()
+                            : startDate.getMinutes()}{" "}
+                          GMT <br />
+                          Duration : {(finishDate - startDate) / 60000} mins
+                        </div>
+                      </span>
+                    </span>
+                  </div>
+                  <div>
+                    {/*<div className="tournamentPage__transactionHash">*/}
+                    {/*  {tournament.transaction_hash !== undefined && (*/}
+                    {/*    <span*/}
+                    {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+                    {/*      onClick={() => {*/}
+                    {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+                    {/*      }}*/}
+                    {/*    >*/}
+                    {/*      Transaction Hash(Polygon):{" "}*/}
+                    {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+                    {/*      {tournament.transaction_hash.slice(-10)}*/}
+                    {/*    </span>*/}
+                    {/*  )}*/}
+                    {/*</div>*/}
+                  </div>
+                  <div
+                    className="tournament-reward"
+                    style={{ marginTop: "10px" }}
+                  >
+                    <span
+                      className="font-size-12"
+                      style={{
+                        color: status[tournament.tournament.status].color,
+                        padding: "0 10px",
+                        border:
+                          "1px solid " +
+                          status[tournament.tournament.status].color,
+                        borderRadius: "30px",
+                      }}
+                    >
+                      {status[tournament.tournament.status].value}
+                    </span>
+                    <span className={"activityTabs__teamLength"}>
+                      {tournament.teams.length} Teams
+                    </span>
+                    <span className="font-size-12">
+                      <EmojiEventsOutlinedIcon />
+                      <span>{tournament.amount_won} FPC</span>
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </>
+        ) : (
+          <div
+            className="contestTab__valueItem"
+            style={{ margin: "0px", display: "flex", flexDirection: "column" }}
+          >
+            You haven't joined any tournaments that are in buffer
+            {/* <img
+              src={require("../../images/activityPage1.jpg").default}
+              width="100%"
+            /> */}
+            <Button
+            className="mt-20"
+              variant="contained"
+              style={{
+                backgroundColor: "var(--violet-blue)",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop:"20px",
+                textTransform:"capitalize",
+                fontFamily:"poppins"
+              }}
+              onClick={() => navigate("/tournaments")}
+            >
+              View Tournaments
+            </Button>
+          </div>
+        )}
+      </div>
+      
+     <div className="mt-20 completed-tournament display-none">
         {tournamentUpdatedCompleted.length ? (
           <>
             {tournamentUpdatedCompleted.map((tournament, index) => {
@@ -433,11 +643,12 @@ export default function ContestTabs({
               const finishDate = new Date(tournament.tournament.end_time);
               const disabledTournament = tournament.status === 4;
               const status = {
-                3: { value: "Completed", color: "#ff000096" },
+                 4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
                 1: { value: "Closed", color: "#FFCC00" },
                 0: { value: "Open", color: "#00ff00d6" },
                 2: { value: "Running", color: "#FFCC00" },
-              };
+               };
               return (
                 <motion.div
                   id={"tournament-" + tournament._id}
@@ -686,6 +897,16 @@ export default function ContestTabs({
               }}
               tabItemContainerStyle={{ width: "100px" }}
             />
+             <Tab
+              label="Buffer"
+              value="4"
+              style={{
+                textTransform: "capitalize",
+                fontFamily: "poppins",
+                fontSize: "12px",
+              }}
+              tabItemContainerStyle={{ width: "100px" }}
+            />
           </TabList>
         </Box>
         <TabPanel className="contestTab__valueItem" value="1">
@@ -694,7 +915,8 @@ export default function ContestTabs({
               {tournamentUpdatedOpen.map((tournament, index) => {
                 const disabledTournament = tournament.status === 4;
                 const status = {
-                  3: { value: "Completed", color: "#ff000096" },
+                   4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
                   1: { value: "Closed", color: "#FFCC00" },
                   0: { value: "Open", color: "#00ff00d6" },
                   2: { value: "Running", color: "#FFCC00" },
@@ -777,7 +999,8 @@ export default function ContestTabs({
               {tournamentUpdatedRunning.map((tournament, index) => {
                 const disabledTournament = tournament.status === 4;
                 const status = {
-                  3: { value: "Completed", color: "#ff000096" },
+                   4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
                   1: { value: "Closed", color: "#FFCC00" },
                   0: { value: "Open", color: "#00ff00d6" },
                   2: { value: "Running", color: "#FFCC00" },
@@ -860,7 +1083,8 @@ export default function ContestTabs({
               {tournamentUpdatedCompleted.map((tournament, index) => {
                 const disabledTournament = tournament.status === 4;
                 const status = {
-                  3: { value: "Completed", color: "#ff000096" },
+                   4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },
                   1: { value: "Closed", color: "#FFCC00" },
                   0: { value: "Open", color: "#00ff00d6" },
                   2: { value: "Running", color: "#FFCC00" },
@@ -945,7 +1169,8 @@ export default function ContestTabs({
         {/*            {item.map( (tournament, index) => {*/}
         {/*                const disabledTournament = tournament.status === 4;*/}
         {/*                const status = {*/}
-        {/*                    3: { value: "Completed", color: "#ff000096" },*/}
+        {/*                     4: { value: "Completed", color: "#ff000096" },
+                  3: { value: "Buffer", color: "#ff000096" },*/}
         {/*                    1: { value: "Closed", color: "#FFCC00" },*/}
         {/*                    0: { value: "Open", color: "#00ff00d6" },*/}
         {/*                    2: { value: "Running", color: "#FFCC00" },*/}
