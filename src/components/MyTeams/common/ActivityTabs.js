@@ -22,15 +22,14 @@ import {getMyTeamActivities} from "../../../APIS/apis"
 // import LabTabs from "../../../Common/TabComponent";
 export default function ActivityTabs({ tournaments }) {
   const { state } = useLocation();
-  console.log(state);
-  console.log("activity tab state called")
-  console.log("line 26 activity page")
+  console.log("line 26");
+  console.log(tournaments);
+
   const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
   const [value, setValue] = React.useState("");
   const [teamsLength, setTeamsLength] = useState(0);
-  const [participatedContestsLength, setParticipatedContestsLength] =
-    useState(0);
+  const [participatedContestsLength, setParticipatedContestsLength] = useState(0);
   const tournamentUpdatedOpen =
     tournaments &&
     tournaments.filter(
@@ -40,6 +39,11 @@ export default function ActivityTabs({ tournaments }) {
     tournaments &&
     tournaments.filter(
       (item) => item.tournament !== null && item.tournament.status === 2
+    );
+    const tournamentUpdatedBuffer =
+    tournaments &&
+    tournaments.filter(
+      (item) => item.tournament !== null && item.tournament.status === 3
     );
   const tournamentUpdatedCompleted =
     tournaments &&
@@ -58,6 +62,7 @@ export default function ActivityTabs({ tournaments }) {
     // setTeams(await getAllUserTeams());
     const teamData = await getMyTeamActivities()
    await setTeams(teamData); 
+  
    setTeamsLength(teamData.length);
    
   }
@@ -94,13 +99,17 @@ async function deleteTeamById(teamid,teamIndex){
 
 
   const tournamentsList = tournaments ? (
+   <>
     <LabTabs
       tournamentUpdatedOpen={tournamentUpdatedOpen}
-      tournamentUpdatedRunning={tournamentUpdatedRunning}
+      tournamentUpdatedRunning={tournamentUpdatedRunning}      
       tournamentUpdatedCompleted={tournamentUpdatedCompleted}
+      tournamentUpdatedBuffer={tournamentUpdatedBuffer}
     />
+   </>
   ) : (
-    <div></div>
+   <>
+   </>
   );
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -128,7 +137,7 @@ async function deleteTeamById(teamid,teamIndex){
         </TabPanel>
         <TabPanel value="1">
           <div className="activity-space">
-            {teams !== undefined && tournaments !== undefined ? (
+            {teams !== undefined && tournaments !== undefined ? (  
               <>
                 {teams.map((team, index) => {
                   return (
@@ -212,7 +221,7 @@ async function deleteTeamById(teamid,teamIndex){
                 })}
               </>
             ) : (
-              <></>
+              <> hey</>
             )}
           </div>
         </TabPanel>

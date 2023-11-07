@@ -15,24 +15,20 @@ import {
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 export default function MyTeams() {
   const { state } = useLocation();
-  //  //  //  console.log(state)
-  //  console.log("state called from index activity")
+
   const navigate = useNavigate();
   const [teams, setTeams] = useState(undefined);
   const [tournaments, setTournaments] = useState(undefined);
-  async function fetchTeams() {
-    // setTeams(await getAllUserTeams());
+  async function fetchTeams() { 
     setTeams(await getMyTeamActivities());
-    //  console.log(getAllUserTeams());
-    //  console.log("get all user");
-    //  console.log(getMyTeamActivities());
-    //  console.log("get my team");
 
   }
   async function fetchUserTournaments() {
-
+    console.log("line 29 declear tournament");
+console.log(await getPreviousUserTournaments());
     setTournaments(await getPreviousUserTournaments());
   }
+  
   useEffect(() => {
     fetchTeams();
     fetchUserTournaments();

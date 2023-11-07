@@ -199,7 +199,6 @@ const LeftComponent = () => {
         }
       });
     // fetchTournaments();
-    console.log(dispatch(getTournamentAsync()));
     dispatch(getTournamentAsync());
     fetchTeams();
     setIntervalId(setInterval(nextImage, 2000));
