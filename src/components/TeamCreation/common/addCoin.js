@@ -164,23 +164,23 @@ export default function addCoin(
   localStorage.removeItem("Selectedsuperstar");
   localStorage.removeItem("Selectedmooning");
   localStorage.removeItem("SelectedCoinCount");
-  var ac = [...rekt,...mooning,...superstars];
-  localStorage.setItem("allCoins", JSON.stringify(ac));
+  // var ac = [...rekt,...mooning,...superstars];
+  // localStorage.setItem("allCoins", JSON.stringify(ac));
   
-  const selectedCoins = ac.filter((coin) => coin.selected === true);
-const numberOfSelectedCoins = selectedCoins.length;
+//   const selectedCoins = ac.filter((coin) => coin.selected === true);
+// const numberOfSelectedCoins = selectedCoins.length;
 
-const rektselectedCoins = rekt.filter((coin) => coin.selected === true);
-const numberOfRektSelectedCoins = rektselectedCoins.length;
-const mooningselectedCoins = mooning.filter((coin) => coin.selected === true);
-const numberOfmooningSelectedCoins = mooningselectedCoins.length;
-const superstarsselectedCoins = superstars.filter((coin) => coin.selected === true);
-const numberOfsuperstarsSelectedCoins = superstarsselectedCoins.length;
+// const rektselectedCoins = rekt.filter((coin) => coin.selected === true);
+// const numberOfRektSelectedCoins = rektselectedCoins.length;
+// const mooningselectedCoins = mooning.filter((coin) => coin.selected === true);
+// const numberOfmooningSelectedCoins = mooningselectedCoins.length;
+// const superstarsselectedCoins = superstars.filter((coin) => coin.selected === true);
+// const numberOfsuperstarsSelectedCoins = superstarsselectedCoins.length;
 
-localStorage.setItem("SelectedRekt", numberOfRektSelectedCoins);
-localStorage.setItem("Selectedmooning", numberOfmooningSelectedCoins);
-localStorage.setItem("Selectedsuperstar", numberOfsuperstarsSelectedCoins);
-localStorage.setItem("SelectedCoinCount", numberOfSelectedCoins);
+// localStorage.setItem("SelectedRekt", numberOfRektSelectedCoins);
+// localStorage.setItem("Selectedmooning", numberOfmooningSelectedCoins);
+// localStorage.setItem("Selectedsuperstar", numberOfsuperstarsSelectedCoins);
+// localStorage.setItem("SelectedCoinCount", numberOfSelectedCoins);
 // }
   }catch(e){
     console.log(e);
