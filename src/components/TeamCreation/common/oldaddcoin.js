@@ -165,6 +165,9 @@ export default function addCoin(
   }
 
   localStorage.removeItem("allCoins");
+  localStorage.removeItem("SelectedRekt");
+  localStorage.removeItem("Selectedsuperstar");
+  localStorage.removeItem("Selectedmooning");
   var ac = [...rekt,...mooning,...superstars];
   localStorage.setItem("allCoins", JSON.stringify(ac));
   
