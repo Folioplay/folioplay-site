@@ -21,14 +21,14 @@ import TeamPreview from "../common/TeamPreview";
 import "../style/index.css";
 export function TeamCreation() {
   const navigate = useNavigate();
-  const [wasActiveTab, setWasActiveTab] = useState("superstars");
+  const [wasActiveTab, setWasActiveTab] = useState(localStorage.getItem("wasActiveTabeState") || "superstars");
   const [graphCoin, setGraphCoin] = useState("");
   const [open, setOpen] = useState(false);
   const [coins, setCoins] = useState([]);
   const [snackOpen, setSnackOpen] = useState(false);
   const {state} = useLocation();
   const [temp, setTemp] = useState(0);
-  const [selectedCoinCount, setSelectedCoinCount] =useState(localStorage.getItem("SelectedCoinCount") || 0);
+  // const [selectedCoinCount, setSelectedCoinCount] =useState(localStorage.getItem("SelectedCoinCount") || 0);
  
   var superstars = [];
   var mooning = [];
@@ -69,12 +69,12 @@ export function TeamCreation() {
     setOpen(true);
   };
 
-  async function updateTotalCoinCount(){
-    if(localStorage.getItem("SelectedCoinCount") !== selectedCoinCount){
+  // async function updateTotalCoinCount(){
+  //   if(localStorage.getItem("SelectedCoinCount") !== selectedCoinCount){
 
-      await setSelectedCoinCount(localStorage.getItem("SelectedCoinCount"));
-    }
-  }
+  //     await setSelectedCoinCount(localStorage.getItem("SelectedCoinCount"));
+  //   }
+  // }
   const handleClose = () => {
     document.getElementById("modal-view").classList.add("animate-modal");
     setTimeout(function () {
@@ -124,6 +124,14 @@ export function TeamCreation() {
         document.querySelectorAll("#" + "rekt" + " .coin-added-button").length;
       }
     }
+
+    console.log((document.querySelectorAll(
+      "#" + "superstars" + " .coin-added-button"
+    ).length)+( document.querySelectorAll(
+      "#" + "mooning" + " .coin-added-button"
+    ).length)+( document.querySelectorAll(
+      "#" + "rekt" + " .coin-added-button"
+    ).length));
    
   },[coins])
   for (var i = 0; i < coins.length; i++) {
@@ -220,7 +228,7 @@ export function TeamCreation() {
         rowSpacing={"1em"}
         // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
     
-        onMouseLeave={() => updateTotalCoinCount()}
+        // onMouseLeave={() => updateTotalCoinCount()}
       >
         {superstars.map((coin, index) => {
           return (
@@ -287,7 +295,7 @@ export function TeamCreation() {
         container
         rowSpacing={"1em"}
    
-        onMouseLeave={() => updateTotalCoinCount()}
+        // onMouseLeave={() => updateTotalCoinCount()}
         // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {mooning.map((coin, index) => {
@@ -354,7 +362,7 @@ export function TeamCreation() {
         container
         rowSpacing={"1em"}
         // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        onMouseLeave={() => updateTotalCoinCount()}
+        // onMouseLeave={() => updateTotalCoinCount()}
       >
         {rekt.map((coin, index) => {
           return (
@@ -415,7 +423,11 @@ export function TeamCreation() {
   };
   const changeTabs = (event) => {
   // setSelectedCoinCount(localStorage.getItem("SelectedCoinCount") || 0); 
+  // localStorage.setItem("wasActiveTabeState")
+  event.stopPropagation();
+  // console.log(event);
     setSnackOpen(false);
+    localStorage.setItem("wasActiveTabeState",event.target.firstChild.nodeValue.toLowerCase())
     setWasActiveTab(event.target.firstChild.nodeValue.toLowerCase());
   };
   var prevRoute = state && state.comingFrom ? state.comingFrom : "/activity";
