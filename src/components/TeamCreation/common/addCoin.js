@@ -159,7 +159,8 @@ export default function addCoin(
     event.target.innerText = prevVal === "ADD" ? "ADDED" : "ADD";
   }
 
-  localStorage.removeItem("allCoins");
+localStorage.removeItem("allCoins"); 
+localStorage.removeItem("wasActiveTabeState"); 
   localStorage.removeItem("SelectedRekt");
   localStorage.removeItem("Selectedsuperstar");
   localStorage.removeItem("Selectedmooning");
