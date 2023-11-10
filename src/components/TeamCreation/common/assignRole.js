@@ -1,20 +1,20 @@
-export default function assignRoles(superstars, mooning, rekt, setSnackOpen, navigate,state) {
+export default function assignRoles(superstarfilter, mooningfilter, rektfilter, setSnackOpen, navigate,state) {
   var selectedSuperstars = [];
   var selectedMooning = [];
   var selectedRekt = [];
-  for (var i = 0; i < superstars.length; i++) {
-    if (superstars[i].selected === true) {
-      selectedSuperstars.push(superstars[i]);
+  for (var i = 0; i < superstarfilter.length; i++) {
+    if (superstarfilter[i].selected === true) {
+      selectedSuperstars.push(superstarfilter[i]);
     }
   }
-  for (var i = 0; i < mooning.length; i++) {
-    if (mooning[i].selected === true) {
-      selectedMooning.push(mooning[i]);
+  for (var i = 0; i < mooningfilter.length; i++) {
+    if (mooningfilter[i].selected === true) {
+      selectedMooning.push(mooningfilter[i]);
     }
   }
-  for (var i = 0; i < rekt.length; i++) {
-    if (rekt[i].selected === true) {
-      selectedRekt.push(rekt[i]);
+  for (var i = 0; i < rektfilter.length; i++) {
+    if (rektfilter[i].selected === true) {
+      selectedRekt.push(rektfilter[i]);
     }
   }
   if (
@@ -25,7 +25,7 @@ export default function assignRoles(superstars, mooning, rekt, setSnackOpen, nav
     selectedRekt.length < 3 ||
     selectedRekt.length > 6 || selectedSuperstars.length + selectedMooning.length + selectedRekt.length !== 11
   ) {
-    setSnackOpen(true);
+    setSnackOpen({ isOpen: true, message: "You can't select more than 2 coins" });
     return;
   }
 console.log(state);

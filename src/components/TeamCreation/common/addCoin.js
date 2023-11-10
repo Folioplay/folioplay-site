@@ -9,6 +9,7 @@ export default function addCoin(
   mooning,
   rekt
 ) {
+ 
   try{
 
   
@@ -25,12 +26,13 @@ export default function addCoin(
   const updateCoin = prevVal === "ADD" ? true : false;
   var allButtons = document.getElementsByClassName("coin-add-button");
   var totalAddedCoins = document.getElementsByClassName('coin-added-button').length;
+ 
   var maxSelected = 0;
   for (var i = 0; i < checkArray.length; i++) {
     if (checkArray[i].selected) maxSelected++;
   }
   totalAddedCoins = updateCoin ? totalAddedCoins + 1 :totalAddedCoins-1;
-  
+  localStorage.setItem("totalAddedCoins",totalAddedCoins); 
   // else{
   if ((maxSelected >= coinsLimit || totalAddedCoins > 11) && updateCoin) {
     document
@@ -159,12 +161,17 @@ export default function addCoin(
     event.target.innerText = prevVal === "ADD" ? "ADDED" : "ADD";
   }
 
+// 
 localStorage.removeItem("allCoins"); 
 localStorage.removeItem("wasActiveTabeState"); 
-  localStorage.removeItem("SelectedRekt");
-  localStorage.removeItem("Selectedsuperstar");
-  localStorage.removeItem("Selectedmooning");
-  localStorage.removeItem("SelectedCoinCount");
+localStorage.removeItem("RektSelected"); 
+localStorage.removeItem("SuperStarSelected"); 
+localStorage.removeItem("MooningSelected"); 
+// localStorage.removeItem("wasActiveTabeState"); 
+//   localStorage.removeItem("SelectedRekt");
+//   localStorage.removeItem("Selectedsuperstar");
+//   localStorage.removeItem("Selectedmooning");
+//   localStorage.removeItem("SelectedCoinCount");
   // var ac = [...rekt,...mooning,...superstars];
   // localStorage.setItem("allCoins", JSON.stringify(ac));
   

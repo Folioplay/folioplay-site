@@ -52,7 +52,11 @@ export default function SelectedCoinTeamPreview() {
   }
   useEffect(() => {
     async function abc() {
-      await setSelectedAllCoins(JSON.parse(localStorage.getItem("allCoins")))
+      const superstart = JSON.parse(localStorage.getItem("SuperStarSelected"));
+      const mooning = JSON.parse(localStorage.getItem("MooningSelected"));
+      const rekt = JSON.parse(localStorage.getItem("RektSelected"));
+      const all = [...superstart, ...mooning,...rekt]
+      await setSelectedAllCoins(all)
 
       console.log(JSON.parse(localStorage.getItem("allCoins")));
 
@@ -87,7 +91,7 @@ export default function SelectedCoinTeamPreview() {
               // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 {selectedAllCoins
-                  ?.filter((coin) => coin.selected === true)
+                  ?.filter((coin) => coin.selected)
                   .map((coin, index) => {
                     const coin_card =
                       coin.category === "Superstar"
