@@ -2,7 +2,12 @@ export function removeCoinsFromLocalStorage(){
     localStorage.removeItem("superstars");
     localStorage.removeItem("mooning");
     localStorage.removeItem("rekt");
-  localStorage.removeItem("allCoins"); 
+  
+localStorage.removeItem("allCoins"); 
+localStorage.removeItem("wasActiveTabeState"); 
+localStorage.removeItem("RektSelected"); 
+localStorage.removeItem("SuperStarSelected"); 
+localStorage.removeItem("MooningSelected"); 
 localStorage.removeItem("wasActiveTabeState"); 
   localStorage.removeItem("SelectedRekt");
   localStorage.removeItem("Selectedsuperstar");

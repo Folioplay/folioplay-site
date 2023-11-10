@@ -60,9 +60,9 @@ export function AssignRole() {
     setSuccessSnackOpen(false);
   };
   
-  superstars = JSON.parse(window.localStorage.getItem("superstars")) ? JSON.parse(window.localStorage.getItem("superstars")) : [];
-  mooning = JSON.parse(window.localStorage.getItem("mooning")) ? JSON.parse(window.localStorage.getItem("mooning")) : [];
-  rekt = JSON.parse(window.localStorage.getItem("rekt")) ? JSON.parse(window.localStorage.getItem("rekt")) : [];
+  superstars = JSON.parse(window.localStorage.getItem("SuperStarSelected")) ? JSON.parse(window.localStorage.getItem("SuperStarSelected")) : [];
+  mooning = JSON.parse(window.localStorage.getItem("MooningSelected")) ? JSON.parse(window.localStorage.getItem("MooningSelected")) : [];
+  rekt = JSON.parse(window.localStorage.getItem("RektSelected")) ? JSON.parse(window.localStorage.getItem("RektSelected")) : [];
   for (var i = 0; i < superstars.length; i++) {
     if (superstars[i].selected) coins.push(superstars[i]);
   }
