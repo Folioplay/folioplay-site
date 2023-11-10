@@ -1225,7 +1225,7 @@ if(superstartSelectedCoins+mooningSelectedCoins+rektSelectedCoins === 11){
             </span>
           </div>
           
-          <Container sx={{display:"flex",flexWrap:"wrap",justifyContent:"space-evenly"}}> 
+          <Container sx={{display:"flex",flexWrap:"wrap",justifyContent:"space-evenly",width:"100%",height:"26px"}}> 
         {/* {CoinsCounterCircle} */}
 
         <SelectedCoinIcons/>
