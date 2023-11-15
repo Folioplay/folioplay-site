@@ -52,9 +52,9 @@ export default function SelectedCoinTeamPreview() {
   }
   useEffect(() => {
     async function abc() {
-      const superstart = JSON.parse(localStorage.getItem("SuperStarSelected"));
-      const mooning = JSON.parse(localStorage.getItem("MooningSelected"));
-      const rekt = JSON.parse(localStorage.getItem("RektSelected"));
+      const superstart = JSON.parse(localStorage.getItem("SuperStarSelected")) || [];
+      const mooning = JSON.parse(localStorage.getItem("MooningSelected")) || [];
+      const rekt = JSON.parse(localStorage.getItem("RektSelected")) || [];
       const all = [...superstart, ...mooning,...rekt]
       await setSelectedAllCoins(all)
 
@@ -152,7 +152,7 @@ export default function SelectedCoinTeamPreview() {
 
 <div style={{width:"100%",display:"flex",justifyContent:"center"}}>
 <Button
-              id="assign-role-button2"
+              id="team-preview-button"
               variant="contained"
               className="role-button2 ml-auto"
               onClick={() =>

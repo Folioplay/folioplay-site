@@ -779,7 +779,7 @@ export function TeamCreation() {
   const [snackOpen, setSnackOpen] = useState({ isOpen: false, message: '' });
    const {state} = useLocation();
   const [temp, setTemp] = useState(0);
-  const [mooningfilter, setMooningfilter] =useState(JSON.parse(localStorage.getItem("MooningSelected")) || []);
+  const [mooningfilter, setMooningfilter] = useState(JSON.parse(localStorage.getItem("MooningSelected")) || []);
   const [superstarfilter, setSuperstarfilter] =useState(JSON.parse(localStorage.getItem("SuperStarSelected")) || []); 
   const [rektfilter, setRektfilter] =useState(JSON.parse(localStorage.getItem("RektSelected")) || []);  
   const [rektSelectedCoins, setRektSelectedCoins] =useState(0);
@@ -827,16 +827,17 @@ export function TeamCreation() {
 
   async function fetchCoins() {
     const AllCoins = await getAllCoins()
+    console.log(AllCoins)
     const updatedCoins = AllCoins.map(coin => ({ ...coin, selected: false }));
     console.log(updatedCoins);
 
     setCoins(updatedCoins);
 
-    if(!localStorage.getItem("SuperStarSelected")){
+    if(!localStorage.getItem("MooningSelected")){
       const mooningCoins = await updatedCoins.filter((coinn) => coinn.category === "Mooning");
       setMooningfilter(mooningCoins);
     }
-    if(!localStorage.getItem("MooningSelected")){
+    if(!localStorage.getItem("SuperStarSelected")){
       const superstarCoins = await updatedCoins.filter((coinn) => coinn.category === "Superstar");
       setSuperstarfilter(superstarCoins);
     }
