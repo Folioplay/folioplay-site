@@ -45,6 +45,10 @@ function UserProfileLeft() {
     navigator.clipboard.writeText(walletAdd);
     setSnackMessage("Wallet Address Copied!");
     handleClick();
+    setTimeout(() => {
+      setOpen(false);
+     
+    }, 4000);
   }
   function copytoClipboardReferral() {
     navigator.clipboard.writeText(referralCode);
@@ -161,7 +165,7 @@ function UserProfileLeft() {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen();
+    setOpen(true);
   };
 
   const handleClose = (event, reason) => {
