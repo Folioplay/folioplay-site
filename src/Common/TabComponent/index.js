@@ -258,6 +258,8 @@ export default function ContestTabs({
                     <span className="font-size-12">
                       <EmojiEventsOutlinedIcon />
                       <span>{tournament.amount_won} FPC</span>
+
+                      
                     </span>
                   </div>
                 </motion.div>
@@ -571,7 +573,7 @@ export default function ContestTabs({
                     >
                       {status[tournament.tournament.status].value}
                     </span>
-                    {tournament.amount_won === 0 ? (null) :(  <span className="font-size-12">               
+                    {tournament.amount_won === 0 ? (null) :(  <span className="font-size-12" style={{maxWidth:"33%"}}>               
                     <img src={SingleTrophy} alt="winnerGif" style={{ width: "58%", height: "52px" }} />
                     </span> )}
                   
