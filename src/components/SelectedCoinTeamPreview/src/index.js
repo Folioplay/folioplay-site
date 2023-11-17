@@ -118,7 +118,7 @@ export default function SelectedCoinTeamPreview() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.07 * index }}
-                            className={"coin-card-current-team " + coin_card}
+                            className={"coin-card-current-team-team-preview " + coin_card}
                           >
                             <div className="coinCategory">{coin.category === 'Defi' ? "Rekt" : coin.category}</div>
 
@@ -136,13 +136,7 @@ export default function SelectedCoinTeamPreview() {
                             <span className="graph font-size-15 font-weight-500 mt-5 mb-10">
                               {coin.name}
                             </span>
-                            <span
-                              className="font-size-12"
-                              style={{ color: "var(--dark-dim-white)" }}
-                            >
-                              Selected{" "}
-                              {coin.rank == -1 ? <>10000</> : <>{pointNumber}</>}
-                            </span>
+                    
                           </motion.div>
                         </>) : ("")
                         }

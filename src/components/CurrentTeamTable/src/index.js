@@ -92,7 +92,8 @@ function CurrentTeamTable() {
   });
 
   const columns = [
-    { field: "id", headerName: "Id", width: 20, headerAlign: "center" },
+    { field: "id", headerName: "Id", width: 100,  headerAlign: "center",
+    align: "center"  },
     {
       field: "coinName",
       headerName: "Coin Name",
@@ -140,7 +141,8 @@ function CurrentTeamTable() {
 
 
   const RunningTournamentColumns = [
-    { field: "id", headerName: "Id", width: 20, headerAlign: "center" },
+    { field: "id", headerName: "Id", width: 100,  headerAlign: "center",
+    align: "center"},
     {
       field: "coinName",
       headerName: "Coin Name",
@@ -188,9 +190,9 @@ function CurrentTeamTable() {
   const runningColumns = [
     {
       field: "id",
-      headerName: "Id",
-      width: 100,
-      headerAlign: "center",
+      headerName: "Id"
+      , width: 100,  headerAlign: "center",
+      align: "center"
     },
     {
       field: "coinName",

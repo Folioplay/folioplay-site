@@ -313,7 +313,7 @@ console.log(winnersRedux);
             {startTime.getMinutes() / 10 < 1
               ? "0" + startTime.getMinutes()
               : startTime.getMinutes()}{" "}
-            GMT
+            IST
           </div>
         </div>
 
@@ -569,7 +569,7 @@ console.log(winnersRedux);
 ):(null) }
 
 {tournament?.status === 3 ? ( 
-  <><span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",display:"flex"}}>Result will declear soon </span>
+  <><span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",display:"flex"}}>Computing Results </span>
       
   </>
 ):(null) }
