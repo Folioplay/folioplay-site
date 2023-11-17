@@ -943,7 +943,7 @@ const LeftComponent = () => {
                 </div>
                 <span className="font-size-12">
                   <EmojiEventsOutlinedIcon />
-                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.distribution[0]}</span>)}
+                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
                   
                 </span>
                 {/* {tournament.user_joined ?  */}
@@ -1204,7 +1204,7 @@ const LeftComponent = () => {
                 </div>
                 <span className="font-size-12">
                   <EmojiEventsOutlinedIcon />
-                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.distribution[0]}</span>)}
+                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
                   
                 </span>
                 {/* {tournament.user_joined ?  */}
