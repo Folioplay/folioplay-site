@@ -86,7 +86,7 @@ const LeftComponent = () => {
     return true;
   }
   function filterLive(tournament) {
-    return tournament.status === 2;
+    return tournament.status === 2 || tournament.status === 3;
   }
   function filterUpcoming(tournament) {
     return tournament.status === 0;
@@ -95,7 +95,7 @@ const LeftComponent = () => {
     return tournament.status === -2;
   }
   function filterJoined(tournament) {
-    return tournament.user_joined;
+    return tournament.user_joined ;
   }
   const monthNames = [
     "Jan",
@@ -796,7 +796,7 @@ const LeftComponent = () => {
                       {startDate.getMinutes() / 10 < 1
                         ? "0" + startDate.getMinutes()
                         : startDate.getMinutes()}{" "}
-                      GMT <br />
+                      IST <br />
                       Duration : {`${formatDuration(startDate, finishDate)}`}
                     </div>
                   </span>
@@ -943,7 +943,8 @@ const LeftComponent = () => {
                 </div>
                 <span className="font-size-12">
                   <EmojiEventsOutlinedIcon />
-                  <span>{tournament.rewards.prize_pool} FPC</span>
+                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.distribution[0]}</span>)}
+                  
                 </span>
                 {/* {tournament.user_joined ?  */}
 
@@ -1056,7 +1057,7 @@ const LeftComponent = () => {
                       {startDate.getMinutes() / 10 < 1
                         ? "0" + startDate.getMinutes()
                         : startDate.getMinutes()}{" "}
-                      GMT <br />
+                      IST <br />
                       Duration : {`${formatDuration(startDate, finishDate)}`}
                     </div>
                   </span>
@@ -1203,7 +1204,8 @@ const LeftComponent = () => {
                 </div>
                 <span className="font-size-12">
                   <EmojiEventsOutlinedIcon />
-                  <span>{tournament.rewards.prize_pool} FPC</span>
+                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.distribution[0]}</span>)}
+                  
                 </span>
                 {/* {tournament.user_joined ?  */}
 

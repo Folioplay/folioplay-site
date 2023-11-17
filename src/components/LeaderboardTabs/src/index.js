@@ -181,7 +181,7 @@ export default function LeaderBoardTabs({
       :
       {startTime.getMinutes() / 10 < 1
         ? "0" + startTime.getMinutes()
-        : startTime.getMinutes()}{" "}GMT</div>
+        : startTime.getMinutes()}{" "}IST</div>
 
   },
   {
@@ -194,7 +194,7 @@ export default function LeaderBoardTabs({
       :
       {endTime.getMinutes() / 10 < 1
         ? "0" + endTime.getMinutes()
-        : endTime.getMinutes()}{" "}GMT</div>
+        : endTime.getMinutes()}{" "}IST</div>
 
   }
 
@@ -226,7 +226,7 @@ export default function LeaderBoardTabs({
       :
       {startTime.getMinutes() / 10 < 1
         ? "0" + startTime.getMinutes()
-        : startTime.getMinutes()}{" "}GMT</div>
+        : startTime.getMinutes()}{" "}IST</div>
 
   },
   {
@@ -239,7 +239,7 @@ export default function LeaderBoardTabs({
       :
       {endTime.getMinutes() / 10 < 1
         ? "0" + endTime.getMinutes()
-        : endTime.getMinutes()}{" "}GMT</div>
+        : endTime.getMinutes()}{" "}IST</div>
 
   },
   {
@@ -256,7 +256,7 @@ export default function LeaderBoardTabs({
       :
       {startTime.getMinutes() / 10 < 1
         ? "0" + startTime.getMinutes()
-        : startTime.getMinutes() - 1}{" "}GMT</div>
+        : startTime.getMinutes() - 1}{" "}IST</div>
   },
   {
     id: 6,

@@ -10,6 +10,7 @@ import { Box, Button } from "@mui/material";
 import "./style.css";
 import { Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import SingleTrophy from "../../images/single_trophy_cup.png"
 
 export default function ContestTabs({
   tournamentUpdatedOpen,
@@ -74,10 +75,7 @@ export default function ContestTabs({
             .classList.remove("active-chip");
           document
             .getElementsByClassName("MuiChip-root")[2]
-            .classList.remove("active-chip");
-          document
-            .getElementsByClassName("MuiChip-root")[3]
-            .classList.remove("active-chip");
+            .classList.remove("active-chip");          
           open.classList.remove("display-none");
         }}
       />
@@ -108,10 +106,7 @@ export default function ContestTabs({
             .classList.add("active-chip");
           document
             .getElementsByClassName("MuiChip-root")[2]
-            .classList.remove("active-chip");
-          document
-            .getElementsByClassName("MuiChip-root")[3]
-            .classList.remove("active-chip");
+            .classList.remove("active-chip");          
           running.classList.remove("display-none");
         }}
       />
@@ -142,47 +137,11 @@ export default function ContestTabs({
             .classList.remove("active-chip");
           document
             .getElementsByClassName("MuiChip-root")[2]
-            .classList.add("active-chip");
-          document
-            .getElementsByClassName("MuiChip-root")[3]
-            .classList.remove("active-chip");
+            .classList.add("active-chip");          
           closed.classList.remove("display-none");
         }}
       />
-      <Chip
-        className=""
-        style={{ marginRight: "10px",fontFamily: "poppins" }}
-        label="Buffer"
-        variant="outlined"
-        onClick={() => {
-          var open = document.getElementsByClassName("open-tournament")[0];
-          var running =
-            document.getElementsByClassName("running-tournament")[0];
-          var closed = document.getElementsByClassName(
-            "completed-tournament"
-          )[0];
-          var buffer = document.getElementsByClassName(
-            "buffer-tournament"
-          )[0];
-          open.classList.add("display-none");
-          running.classList.add("display-none");
-          closed.classList.add("display-none");
-          buffer.classList.add("display-none");
-          document
-            .getElementsByClassName("MuiChip-root")[0]
-            .classList.remove("active-chip");
-          document
-            .getElementsByClassName("MuiChip-root")[1]
-            .classList.remove("active-chip");
-          document
-            .getElementsByClassName("MuiChip-root")[2]
-            .classList.remove("active-chip");
-          document
-            .getElementsByClassName("MuiChip-root")[3]            
-            .classList.add("active-chip");
-          buffer.classList.remove("display-none");
-        }}
-      />
+     
       <div className="mt-20 open-tournament">
         {tournamentUpdatedOpen.length ? (
           <>
@@ -219,7 +178,7 @@ export default function ContestTabs({
                     });
                   }}
                 >
-                  <div className="tournament-info">
+                  <div className="tournament-info-myActivity">
                     <span
                       className="tournament-image"
                       style={{ borderRadius: "100%" }}
@@ -254,7 +213,7 @@ export default function ContestTabs({
                           {startDate.getMinutes() / 10 < 1
                             ? "0" + startDate.getMinutes()
                             : startDate.getMinutes()}{" "}
-                          GMT <br />
+                          IST <br />
                           Duration : {(finishDate - startDate) / 60000} mins
                         </div>
                       </span>
@@ -277,7 +236,7 @@ export default function ContestTabs({
                     {/*</div>*/}
                   </div>
                   <div
-                    className="tournament-reward"
+                    className="tournament-reward1"
                     style={{ marginTop: "10px" }}
                   >
                     <span
@@ -369,7 +328,7 @@ export default function ContestTabs({
                     });
                   }}
                 >
-                  <div className="tournament-info">
+                  <div className="tournament-info-myActivity">
                     <span
                       className="tournament-image"
                       style={{ borderRadius: "100%" }}
@@ -404,7 +363,7 @@ export default function ContestTabs({
                           {startDate.getMinutes() / 10 < 1
                             ? "0" + startDate.getMinutes()
                             : startDate.getMinutes()}{" "}
-                          GMT <br />
+                          IST <br />
                           Duration : {(finishDate - startDate) / 60000} mins
                         </div>
                       </span>
@@ -427,7 +386,7 @@ export default function ContestTabs({
                     {/*</div>*/}
                   </div>
                   <div
-                    className="tournament-reward"
+                    className="tournament-reward1"
                     style={{ marginTop: "10px" }}
                   >
                     <span
@@ -487,124 +446,6 @@ export default function ContestTabs({
       <div className="mt-20 buffer-tournament display-none">
         {tournamentUpdatedBuffer.length ? (
           <>
-            {tournamentUpdatedBuffer.map((tournament, index) => {
-              const disabledTournament = tournament.status === 4;
-              const startDate = new Date(tournament.tournament.start_time);
-              const finishDate = new Date(tournament.tournament.end_time);
-              const status = {
-                 4: { value: "Completed", color: "#ff000096" },
-                  3: { value: "Buffer", color: "#ff000096" },
-                1: { value: "Closed", color: "#FFCC00" },
-                0: { value: "Open", color: "#00ff00d6" },
-                2: { value: "Running", color: "#FFCC00" },
-              };
-
-              return (
-                <motion.div
-                  id={"tournament-" + tournament._id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 * (index + 1) }}
-                  key={"tournament__" + index}
-                  className="tournament"
-                  style={{
-                    minHeight: "100px",
-                    padding: "20px 20px 0px 20px",
-                    width: "90%",
-                  }}
-                  onClick={() => {
-                    navigate(`/tournament/${tournament.tournament._id}`, {
-                      state: {
-                        transactionId: tournament.transaction_hash,
-                      },
-                    });
-                  }}
-                >
-                  <div className="tournament-info">
-                    <span
-                      className="tournament-image"
-                      style={{ borderRadius: "100%" }}
-                    >
-                      <img
-                        style={{ borderRadius: "100%" }}
-                        src={tournament.tournament.imageURL}
-                        width="60px"
-                        height={"60px"}
-                      />
-                    </span>
-                    <span style={{ textAlign: "left" }}>
-                      <span
-                        className="font-size-20"
-                        style={{ color: "#071F36", fontWeight: "700" }}
-                      >
-                        {tournament.tournament.name}
-                      </span>
-                      {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
-                      {/*  {tournament.name}*/}
-                      {/*</span>*/}
-                      <br />
-                      <span className="tournaments-spots">
-                      <div className="tournamentPage__startTime">
-                          {startDate.getDate()}{" "}
-                          {monthNames[startDate.getMonth()]}'
-                          {startDate.getFullYear() % 100} |{" "}
-                          {startDate.getHours() / 10 < 1
-                            ? "0" + startDate.getHours()
-                            : startDate.getHours()}
-                          :
-                          {startDate.getMinutes() / 10 < 1
-                            ? "0" + startDate.getMinutes()
-                            : startDate.getMinutes()}{" "}
-                          GMT <br />
-                          Duration : {(finishDate - startDate) / 60000} mins
-                        </div>
-                      </span>
-                    </span>
-                  </div>
-                  <div>
-                    {/*<div className="tournamentPage__transactionHash">*/}
-                    {/*  {tournament.transaction_hash !== undefined && (*/}
-                    {/*    <span*/}
-                    {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
-                    {/*      onClick={() => {*/}
-                    {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
-                    {/*      }}*/}
-                    {/*    >*/}
-                    {/*      Transaction Hash(Polygon):{" "}*/}
-                    {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
-                    {/*      {tournament.transaction_hash.slice(-10)}*/}
-                    {/*    </span>*/}
-                    {/*  )}*/}
-                    {/*</div>*/}
-                  </div>
-                  <div
-                    className="tournament-reward"
-                    style={{ marginTop: "10px" }}
-                  >
-                    <span
-                      className="font-size-12"
-                      style={{
-                        color: status[tournament.tournament.status].color,
-                        padding: "0 10px",
-                        border:
-                          "1px solid " +
-                          status[tournament.tournament.status].color,
-                        borderRadius: "30px",
-                      }}
-                    >
-                      {status[tournament.tournament.status].value}
-                    </span>
-                    <span className={"activityTabs__teamLength"}>
-                      {tournament.teams.length} Teams
-                    </span>
-                    <span className="font-size-12">
-                      <EmojiEventsOutlinedIcon />
-                      <span>{tournament.amount_won} FPC</span>
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
           </>
         ) : (
           <div
@@ -616,21 +457,7 @@ export default function ContestTabs({
               src={require("../../images/activityPage1.jpg").default}
               width="100%"
             /> */}
-            <Button
-            className="mt-20"
-              variant="contained"
-              style={{
-                backgroundColor: "var(--violet-blue)",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop:"20px",
-                textTransform:"capitalize",
-                fontFamily:"poppins"
-              }}
-              onClick={() => navigate("/tournaments")}
-            >
-              View Tournaments
-            </Button>
+          
           </div>
         )}
       </div>
@@ -670,7 +497,7 @@ export default function ContestTabs({
                     });
                   }}
                 >
-                  <div className="tournament-info">
+                  <div className="tournament-info-myActivity">
                     <span
                       className="tournament-image"
                       style={{ borderRadius: "100%" }}
@@ -705,7 +532,7 @@ export default function ContestTabs({
                           {startDate.getMinutes() / 10 < 1
                             ? "0" + startDate.getMinutes()
                             : startDate.getMinutes()}{" "}
-                          GMT <br />
+                          IST <br />
                           Duration : {(finishDate - startDate) / 60000} mins
                         </div>
                       </span>
@@ -728,7 +555,7 @@ export default function ContestTabs({
                     {/*</div>*/}
                   </div>
                   <div
-                    className="tournament-reward"
+                    className="tournament-reward1"
                     style={{ marginTop: "10px" }}
                   >
                     <span
@@ -744,14 +571,25 @@ export default function ContestTabs({
                     >
                       {status[tournament.tournament.status].value}
                     </span>
+                    {tournament.amount_won === 0 ? (null) :(  <span className="font-size-12">               
+                    <img src={SingleTrophy} alt="winnerGif" style={{ width: "58%", height: "52px" }} />
+                    </span> )}
+                  
                     <span className={"activityTabs__teamLength"}>
                       {tournament.teams.length} Teams
                     </span>
-                    <span className="font-size-12">
-                      <EmojiEventsOutlinedIcon />
-                      <span>{tournament.amount_won} FPC</span>
-                    </span>
+                    {/* <span className="font-size-12">
+                    <EmojiEventsOutlinedIcon />
+                  {tournament.tournament.rewards.reward_type === "FPC" ? (<span>{tournament.amount_won} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.amount_won}</span>)}
+                  
+                    </span> */}
                   </div>
+                  {tournament.amount_won === 0 ? (null) : (
+                  <div className="font-size-12" style={{textAlign:"center",color: "var(--grey-shade)",fontFamily: "poppins",letterSpacing: "0.5px",fontWeight:"500",paddingBottom:"5px"}} >
+                    You won {" "}                  
+                  {tournament.tournament.rewards.reward_type === "FPC" ? (<span>{tournament.amount_won} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.amount_won}</span>)}
+                  
+                    </div>)}
                 </motion.div>
               );
               return (
@@ -767,7 +605,7 @@ export default function ContestTabs({
                       navigate(`/tournament/${tournament.tournament._id}`);
                     }}
                   >
-                    <div className="tournament-info">
+                    <div className="tournament-info-myActivity">
                       <span
                         className="tournament-image"
                         style={{ borderRadius: "100%" }}
@@ -935,7 +773,7 @@ export default function ContestTabs({
                         navigate(`/tournament/${tournament.tournament._id}`);
                       }}
                     >
-                      <div className="tournament-info">
+                      <div className="tournament-info-myActivity">
                         <span
                           className="tournament-image"
                           style={{ borderRadius: "100%" }}
@@ -1019,7 +857,7 @@ export default function ContestTabs({
                         navigate(`/tournament/${tournament.tournament._id}`);
                       }}
                     >
-                      <div className="tournament-info">
+                      <div className="tournament-info-myActivity">
                         <span
                           className="tournament-image"
                           style={{ borderRadius: "100%" }}
@@ -1103,7 +941,7 @@ export default function ContestTabs({
                         navigate(`/tournament/${tournament.tournament._id}`);
                       }}
                     >
-                      <div className="tournament-info">
+                      <div className="tournament-info-myActivity">
                         <span
                           className="tournament-image"
                           style={{ borderRadius: "100%" }}
@@ -1189,7 +1027,7 @@ export default function ContestTabs({
         {/*                                navigate(`/tournament/${tournament.tournament._id}`);*/}
         {/*                            }}*/}
         {/*                        >*/}
-        {/*                            <div className="tournament-info">*/}
+        {/*                            <div className="tournament-info-myActivity">*/}
         {/*                        <span className="tournament-image" style={{borderRadius: "100%"}}>*/}
         {/*                            <img*/}
         {/*                                style={{ borderRadius: "100%" }}*/}

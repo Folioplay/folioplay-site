@@ -38,7 +38,7 @@ export default function ActivityTabs({ tournaments }) {
   const tournamentUpdatedRunning =
     tournaments &&
     tournaments.filter(
-      (item) => item.tournament !== null && item.tournament.status === 2
+      (item) => item.tournament !== null && item.tournament.status === 2 || item.tournament.status === 3
     );
     const tournamentUpdatedBuffer =
     tournaments &&

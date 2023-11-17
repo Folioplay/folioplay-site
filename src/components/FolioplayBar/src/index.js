@@ -172,7 +172,7 @@ const [balance, setBalance] = useState("")
         {[
           { name: "Home", link: "/tournaments" },
           { name: "Activity", link: "/activity" },
-          { name: "Histroy", link: "/user/profile" },
+          { name: "History", link: "/user/profile" },
           { name: "Profile", link: "/user/profile" },
           { name: "Leader Board", link: "/globalleaderboard" },
         ].map((text, index) => (
