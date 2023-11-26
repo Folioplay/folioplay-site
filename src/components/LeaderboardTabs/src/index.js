@@ -212,7 +212,7 @@ export default function LeaderBoardTabs({
       {tournament.status === 0 && "Open"}
       {tournament.status === 1 && "Closed"}
       {tournament.status === 2 && "Running"}
-      {tournament.status === 3 && "Buffer"}
+      {tournament.status === 3 && "Finalizing"}
       {tournament.status === 4 && "Completed"}
     </>
   },
@@ -261,7 +261,7 @@ export default function LeaderBoardTabs({
   {
     id: 6,
     Title: "Prize Money",
-    Value: tournament.rewards.prize_pool
+    Value:   tournament.rewards.reward_type === "TEXT" ? ( tournament?.rewards.display_text) :( tournament?.rewards.prize_pool)
   },
   {
     id: 7,

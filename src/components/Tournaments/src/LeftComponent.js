@@ -125,7 +125,7 @@ const LeftComponent = () => {
     1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
-    3: { value: "Computing Results", color: "#FFCC00" },
+    3: { value: "Finalizing", color: "#FFCC00" },
     "-2": { value: "Cancelled", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
@@ -961,7 +961,7 @@ const LeftComponent = () => {
   const tournamentsListNotPinned = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
-      <span className={"no-tournamnet-text"} >No Tournaments...</span>
+      <span className={"no-tournamnet-text"} >Currently no tournaments are live. <br/> Stay tune for new tournaments...</span>
     ) : (
 
 
@@ -1366,7 +1366,7 @@ const LeftComponent = () => {
           ) : (
             <>
               {tournaments.length === 0 ? (
-                <span className={"no-tournamnet-text"}>No Tournaments...</span>
+                <span className={"no-tournamnet-text"}>Currently no tournaments are live. !! <br/> Stay tune for new tournaments...</span>
               ) : (
                 <>
                   {tournamentsList}

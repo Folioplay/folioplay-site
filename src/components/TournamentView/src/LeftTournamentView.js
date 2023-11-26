@@ -284,7 +284,7 @@ console.log(winnersRedux);
   }
   return (
     <div className="fullpage">
-    {tournament === undefined || tournament.length === 0  || teams === undefined ? (
+    {tournament === undefined || tournament?.length === 0  || teams === undefined ? (
       <div className="loading-component">
         <ReactLoading type={"spin"} color="var(--white)" />{" "}
       </div>
@@ -324,7 +324,7 @@ console.log(winnersRedux);
           <>
             <div className={"empty-area-completed "}>
               <div className={"empity-area-text"} style={{ maxWidth: "100%", display: "flex", justifyContent: "space-evenly", width: "100%", textAlign: "center" }}>
-                <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool -   { tournament.rewards.reward_type === "TEXT" ? (  <b>{tournament?.rewards.prize_pool}  </b>) :(  <b>{tournament?.rewards.prize_pool} FPC </b>)}
+                <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool -   { tournament?.rewards.reward_type === "TEXT" ? (  <b>{tournament?.rewards.display_text}  </b>) :(  <b>{tournament?.rewards.prize_pool} FPC </b>)}
 </div>
                 <div style={{ maxWidth: "50%", width: "100%" }}> Spots - <b>{tournament?.total_spots}</b></div>
               </div>
@@ -401,7 +401,7 @@ console.log(winnersRedux);
                     Prize Pool
                   </span>
                   <br />
-                  { tournament.rewards.reward_type === "TEXT" ? (    <span className="font-size-20 font-weight-500">                
+                  { tournament?.rewards.reward_type === "TEXT" ? (    <span className="font-size-20 font-weight-500">                
                     {tournament?.rewards.prize_pool} 
                   </span>) :(   <span className="font-size-20 font-weight-500">                
                     {tournament?.rewards.prize_pool} FPC
@@ -494,7 +494,7 @@ console.log(winnersRedux);
                     </span>
                   </div>
                 </div>} */}
-                { tournament.status === 0 || tournament.status === 1   ? (<div>
+                { tournament?.status === 0 || tournament?.status === 1   ? (<div>
                   <LinearProgress
                     variant="determinate"
                     style={{ backgroundColor: "var(--dim-white)" }}
@@ -606,7 +606,7 @@ console.log(winnersRedux);
                   : "tournament-view-card-completed-red"
               }
             >
-              {tournament.user_joined && winnersRedux[0].user.walletAddress === localStorage.getItem("walletAddress")  ? (
+              {tournament?.user_joined && winnersRedux[0]?.user.walletAddress === localStorage.getItem("walletAddress")  ? (
                 <>
                   <div className="profileHeaderTP">
                     <div className="profilePicture">
@@ -625,7 +625,7 @@ console.log(winnersRedux);
                       </div>
                       
                       <div className="tview__rewardDisplay">
-                     { tournament.rewards.reward_type === "TEXT" ? (   <span>You won {amountWon} </span>) :(  <span>You won {amountWon} FPC</span>)
+                     { tournament?.rewards.reward_type === "TEXT" ? (   <span>You won {amountWon} </span>) :(  <span>You won {amountWon} FPC</span>)
 }
                       </div>
                     </div>
@@ -638,35 +638,59 @@ console.log(winnersRedux);
                   />
                 </>
               ) : (
-                <div className="profileHeaderNP">
-                  <img
-                    className="winner-cups-img"
-                    src={require("../../../images/cups-winner.png").default}
-                    width="200px"
-                  />
-                  {winnersRedux.length > 0 && (
-                    <span className="winner-span font-weight-500" style={{}}>
-                      <b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;
-                      { tournament.rewards.reward_type === "TEXT" ? (    <b>{winnersRedux[0].amount_won} </b>) :(  <b>{winnersRedux[0].amount_won} FPC</b>)}
-                     &nbsp; in this
-                      tournament
-                    </span>
-                  )}
-                  <span
-                    className="font-size-12"
-                    style={{ letterSpacing: "0.5px" }}
-                  >
-                    You didn't participated in this tournament?.
-                  </span>
-                  <span
-                    className="font-size-12 join-tourna-span"
-                    onClick={() => {
-                      navigate("/tournaments");
-                    }}
-                  >
-                    Join new tournaments
-                  </span>
-                </div>
+
+                 tournament?.user_joined && winnersRedux[0]?.user.walletAddress != localStorage.getItem("walletAddress")  ? (<div className="profileHeaderNP">
+                 <img
+                   className="winner-cups-img"
+                   src={require("../../../images/cups-winner.png").default}
+                   width="200px"
+                 />
+                 
+                 <span
+                   className="font-size-12 font-weight-500"
+                   style={{ letterSpacing: "0.5px" }}
+                 >
+                   You won nothing. Better luck next time...
+                 </span>
+                 <span
+                   className="font-size-12 join-tourna-span"
+                   onClick={() => {
+                     navigate("/tournaments");
+                   }}
+                 >
+                   Join new tournaments
+                 </span>
+               </div>):(<div className="profileHeaderNP">
+                 <img
+                   className="winner-cups-img"
+                   src={require("../../../images/cups-winner.png").default}
+                   width="200px"
+                 />
+                 {/* {winnersRedux.length > 0 && (
+                   <span className="winner-span font-weight-500" style={{}}>
+                     <b>{winnersRedux[0]?.user.username}</b>&nbsp; won &nbsp;
+                     { tournament?.rewards.reward_type === "TEXT" ? (    <b>{winnersRedux[0]?.amount_won} </b>) :(  <b>{winnersRedux[0]?.amount_won} FPC</b>)}
+                    &nbsp; in this
+                     tournament
+                   </span>
+                 )} */}
+                 <span
+                   className="font-size-12 font-weight-500"
+                   style={{ letterSpacing: "0.5px" }}
+                 >
+                   You didn't participated in this tournament?.
+                 </span>
+                 <span
+                   className="font-size-12 join-tourna-span"
+                   onClick={() => {
+                     navigate("/tournaments");
+                   }}
+                 >
+                   Join new tournaments
+                 </span>
+               </div>)
+             
+                
               )}
             </motion.div>
           )}
