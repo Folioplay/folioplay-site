@@ -307,6 +307,14 @@ export default function LeaderBoardTabs({
               label="Leaderboard"
               value="2"
               style={{ textTransform: "capitalize", fontFamily: "poppins", maxWidth:"35%",width:"100%" }}
+              onClick={() => {
+              
+                dispatch(getLeaderboardAsync(tournamentId));
+                dispatch(getWinnersAsync(tournamentId));
+                dispatch(getPersonalLeaderBoardAsync(tournamentId));                  
+                getPersonalLeader();
+                getRewardsDetails();
+              }}
             />
 
             <span className={"refreshLeaderboard"} style={{ marginLeft: "auto",  maxWidth:"15%",width:"100%"}}>

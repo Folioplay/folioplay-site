@@ -176,6 +176,8 @@ function UserProfileLeft() {
   };
 
   const changeDisabledButton = () => {
+    setHelperTextNameField("Type your username");
+    setErrorInputForm(false);
     if (presentUser.usernameChanged) {
       setUsernameSnackOpen(true);
       setSnackMessageFail("Username can be changed only once")
@@ -185,6 +187,7 @@ function UserProfileLeft() {
     setTimeout(() => {
       setOpen(false);
       setUsernameSnackOpen(false);
+      
     }, 4000);
   };
   const inputFile = useRef(null);
