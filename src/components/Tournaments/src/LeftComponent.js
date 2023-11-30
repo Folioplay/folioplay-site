@@ -607,14 +607,16 @@ const LeftComponent = () => {
     }
     return (
       <>
-        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Ends in{" "}</span>
-        <TimerIcon style={{ color: "red" }} fontSize="small" />
-        <span className={"tournamentCard__countdownTimer"} style={{ color: "red" }}>
+      <div style={{display:"flex",marginTop:"7px"}}>
+        <div  className="font-weight-500" style={{ color: "var(--grey-shade)", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}>Ending in{" "}</div>
+        {/* <div style={{width:"5%",textAlign:"center"}} > <TimerIcon style={{ color: "red" }} fontSize="small" /></div> */}
+        <div className={"tournamentCard__countdownTimer"} style={{ color: "red",width:"45%",fontWeight:"bold" }}>
 
-          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
-          {minutes < 10 ? "0" + minutes : minutes} :{" "}
-          {seconds < 10 ? "0" + seconds : seconds}
-        </span>
+          {days < 10 ? "0" + days : days}d: {hours < 10 ? "0" + hours : hours}hr:{" "}
+          {minutes < 10 ? "0" + minutes : minutes}m:{" "}
+          {seconds < 10 ? "0" + seconds : seconds}s
+        </div>
+        </div>
       </>
     )
   }
@@ -623,7 +625,9 @@ const LeftComponent = () => {
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
       // dispatch(getTournamentAsync());
-      return <> <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>{" "}
+      return <> 
+      
+      <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Starting in{" "}
 
         <Countdown
           date={Date.now() + 60000}
@@ -636,14 +640,17 @@ const LeftComponent = () => {
 
     return (
       <>
-        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}></span>
-
-        <TimerIcon style={{ color: "var(--golden)" }} />
-        <span className={"tournamentCard__countdownTimer"}>
-          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
-          {minutes < 10 ? "0" + minutes : minutes} :{" "}
-          {seconds < 10 ? "0" + seconds : seconds}
-        </span>
+        <div style={{display:"flex",marginTop:"7px"}}>
+        <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}>Registration closing in {" "}</div>
+        {/* <div style={{width:"5%",textAlign:"center"}} >
+        <TimerIcon style={{ color: "var(--golden)" }} /> 
+        </div> */}
+        <div className={"tournamentCard__countdownTimer"} style={{ width:"45%",fontWeight:"bold" }}>
+          {days < 10 ? "0" + days : days}d: {hours < 10 ? "0" + hours : hours}hr:{" "}
+          {minutes < 10 ? "0" + minutes : minutes}m:{" "}
+          {seconds < 10 ? "0" + seconds : seconds}s
+        </div>
+        </div>
       </>
     );
   };
@@ -684,14 +691,15 @@ const LeftComponent = () => {
       return <></>
     }
     return (
-      <>
-        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>
-          <TimerIcon style={{ color: "var(--golden)" }} />
-          <span className={"tournamentCard__countdownTimer"}>
-            {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
-            {minutes < 10 ? "0" + minutes : minutes} :{" "}
-            {seconds < 10 ? "0" + seconds : seconds}
-          </span></span>
+      <>   <div style={{display:"flex",marginTop:"7px"}}>
+        <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px",fontWeight:"bold" }}>Registration closing in {" "}</div>
+             {/* <TimerIcon style={{ color: "var(--golden)" }} /> */}
+          <div className={"tournamentCard__countdownTimer"} style={{fontWeight:"bold" }}>
+            {days < 10 ? "0" + days : days}d: {hours < 10 ? "0" + hours : hours}hr:{" "}
+            {minutes < 10 ? "0" + minutes : minutes}m:{" "}
+            {seconds < 10 ? "0" + seconds : seconds}s
+          </div>
+          </div>
       </>
     );
   };
@@ -873,40 +881,19 @@ const LeftComponent = () => {
                 {/*  )}*/}
                 {/*</div>*/}
               </div>
-              {tournament.status === 1 ? (
+              {/* {tournament.status === 1 ? (
 
                 <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Starting in{" "}</div>
-              ) : (null)}
-              {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
+              ) : (null)} */}
+              {/* {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
 
                 <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration closing in{" "}</div>
-              ) : (null)}
-              <div className="tournament-reward">
-                {status[tournament.status].value !== "Open" ? (
-                  <span
-                    className="font-size-12"
-                    style={{
-                      color: status[tournament.status].color,
-                      padding: "0 10px",
-                      border: "1px solid " + status[tournament.status].color,
-                      borderRadius: "30px",
-                    }}
-                  >
-                    {status[tournament.status].value}
-                  </span>
-                ) : <span
-                  className="font-size-12"
-                  style={{
-                    color: status[tournament.status].color,
-                    padding: "0 10px",
-                    border: "1px solid " + status[tournament.status].color,
-                    borderRadius: "30px",
-                  }}
-                >
-                  {status[tournament.status].value}
-                </span>}
-                <div className="tournamentPage__countdown">
-                  <span id="timeRemaining" className="font-size-12">
+              ) : (null)} */}
+
+
+
+<div className="tournamentPage__countdown" >
+                  <span id="timeRemaining" className="font-size-12" style={{}}>
                     {/* {startDate - 300000 > Date.now() ? (
                       <Countdown
                         date={startDate - 300000}
@@ -941,11 +928,68 @@ const LeftComponent = () => {
 
                   </span>
                 </div>
-                <span className="font-size-12">
+
+              <div className="tournament-reward">
+              <span className="font-size-12">
                   <EmojiEventsOutlinedIcon />
                   {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
                   
                 </span>
+                {status[tournament.status].value !== "Open" ? (
+                  <span
+                    className="font-size-12"
+                    style={{
+                      color: status[tournament.status].color,
+                      padding: "0 10px",
+                      border: "1px solid " + status[tournament.status].color,
+                      borderRadius: "30px",
+                    }}
+                  >
+                    {status[tournament.status].value}
+                  </span>
+                ) : <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>}
+                {/* <div className="tournamentPage__countdown">
+                  <span id="timeRemaining" className="font-size-12">
+                 
+
+                    {tournament.status === 1 ? (<Countdown
+                      date={startDate}
+                      renderer={rendererBuffer}
+                      onComplete={() => bufferRefresh(tournament.status)}
+                    />
+                    ) : (null)}
+
+                    {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate > Date.now() ? (
+                      <Countdown
+                        date={startDate - 60000}
+                        renderer={renderer}
+                        onComplete={() => openRefresh(tournament.status)}
+                      />
+                    ) : (
+                      <>
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
+                          <Countdown
+                            date={finishDate}
+                            renderer={RendererEnd}
+                            onComplete={() => completeRefresh(tournament.status)}
+                          />
+                        ) : null}
+                      </>
+                    )}
+
+                  </span>
+                </div> */}
+              
                 {/* {tournament.user_joined ?  */}
 
                 {/* : null} */}
@@ -1142,31 +1186,8 @@ const LeftComponent = () => {
 
                 <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration closing in{" "}</div>
               ) : (null)}
-              <div className="tournament-reward">
-                {status[tournament.status].value !== "Open" ? (
-                  <span
-                    className="font-size-12"
-                    style={{
-                      color: status[tournament.status].color,
-                      padding: "0 10px",
-                      border: "1px solid " + status[tournament.status].color,
-                      borderRadius: "30px",
-                    }}
-                  >
-                    {status[tournament.status].value}
-                  </span>
-                ) : <span
-                  className="font-size-12"
-                  style={{
-                    color: status[tournament.status].color,
-                    padding: "0 10px",
-                    border: "1px solid " + status[tournament.status].color,
-                    borderRadius: "30px",
-                  }}
-                >
-                  {status[tournament.status].value}
-                </span>}
-                <div className="tournamentPage__countdown">
+              
+              <div className="tournamentPage__countdown">
                   <span id="timeRemaining" className="font-size-12">
                     {/* {startDate - 300000 > Date.now() ? (
                       <Countdown
@@ -1202,11 +1223,38 @@ const LeftComponent = () => {
 
                   </span>
                 </div>
-                <span className="font-size-12">
+
+              <div className="tournament-reward">
+              <span className="font-size-12">
                   <EmojiEventsOutlinedIcon />
                   {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
                   
                 </span>
+                {status[tournament.status].value !== "Open" ? (
+                  <span
+                    className="font-size-12"
+                    style={{
+                      color: status[tournament.status].color,
+                      padding: "0 10px",
+                      border: "1px solid " + status[tournament.status].color,
+                      borderRadius: "30px",
+                    }}
+                  >
+                    {status[tournament.status].value}
+                  </span>
+                ) : <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>}
+               
+               
                 {/* {tournament.user_joined ?  */}
 
                 {/* : null} */}
