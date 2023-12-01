@@ -676,9 +676,9 @@ console.log(winnersRedux);
                  )} */}
                  <span
                    className="font-size-12 font-weight-500"
-                   style={{ letterSpacing: "0.5px" }}
+                   style={{ letterSpacing: "0.5px",fontWeight:"bold" }}
                  >
-                   You didn't participated in this tournament?.
+                   You didn't participate in this tournament.
                  </span>
                  <span
                    className="font-size-12 join-tourna-span"

@@ -608,11 +608,11 @@ const LeftComponent = () => {
     return (
       <>
       <div style={{display:"flex",marginTop:"7px"}}>
-        <div  className="font-weight-500" style={{ color: "var(--grey-shade)", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}>Ending in{" "}</div>
+        <div  className="font-weight-500" style={{ color: "var(--grey-shade)", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}>Tournament ending in{" "}</div>
         {/* <div style={{width:"5%",textAlign:"center"}} > <TimerIcon style={{ color: "red" }} fontSize="small" /></div> */}
         <div className={"tournamentCard__countdownTimer"} style={{ color: "red",width:"45%",fontWeight:"bold" }}>
 
-          {days < 10 ? "0" + days : days}d: {hours < 10 ? "0" + hours : hours}hr:{" "}
+        {days >0 ? (<>   {days < 10 ? "0" + days : days}d:</>): (null)} {hours < 10 ? "0" + hours : hours}hr:{" "}
           {minutes < 10 ? "0" + minutes : minutes}m:{" "}
           {seconds < 10 ? "0" + seconds : seconds}s
         </div>
@@ -627,12 +627,6 @@ const LeftComponent = () => {
       // dispatch(getTournamentAsync());
       return <> 
       
-      <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Starting in{" "}
-
-        <Countdown
-          date={Date.now() + 60000}
-          renderer={rendererBuffer}
-        /></span>
 
       </>
     }
@@ -646,7 +640,7 @@ const LeftComponent = () => {
         <TimerIcon style={{ color: "var(--golden)" }} /> 
         </div> */}
         <div className={"tournamentCard__countdownTimer"} style={{ width:"45%",fontWeight:"bold" }}>
-          {days < 10 ? "0" + days : days}d: {hours < 10 ? "0" + hours : hours}hr:{" "}
+       {days >0 ? (<>   {days < 10 ? "0" + days : days}d:</>): (null)} {hours < 10 ? "0" + hours : hours}hr:{" "}
           {minutes < 10 ? "0" + minutes : minutes}m:{" "}
           {seconds < 10 ? "0" + seconds : seconds}s
         </div>
@@ -691,11 +685,12 @@ const LeftComponent = () => {
       return <></>
     }
     return (
-      <>   <div style={{display:"flex",marginTop:"7px"}}>
-        <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px",fontWeight:"bold" }}>Registration closing in {" "}</div>
+      <>  
+      <div style={{display:"flex",marginTop:"7px"}}>
+        <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}> Starting in {" "}</div>
              {/* <TimerIcon style={{ color: "var(--golden)" }} /> */}
           <div className={"tournamentCard__countdownTimer"} style={{fontWeight:"bold" }}>
-            {days < 10 ? "0" + days : days}d: {hours < 10 ? "0" + hours : hours}hr:{" "}
+          {days >0 ? (<>   {days < 10 ? "0" + days : days}d:</>): (null)} {hours < 10 ? "0" + hours : hours}hr:{" "}
             {minutes < 10 ? "0" + minutes : minutes}m:{" "}
             {seconds < 10 ? "0" + seconds : seconds}s
           </div>
@@ -930,7 +925,7 @@ const LeftComponent = () => {
                 </div>
 
               <div className="tournament-reward">
-              <span className="font-size-12">
+              <span className="font-size-12" style={{color:"#fea31b",fontWeight:"bold"}}>
                   <EmojiEventsOutlinedIcon />
                   {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
                   
@@ -943,6 +938,8 @@ const LeftComponent = () => {
                       padding: "0 10px",
                       border: "1px solid " + status[tournament.status].color,
                       borderRadius: "30px",
+                      fontWeight:"bold",
+                      letterSpacing:"1px"
                     }}
                   >
                     {status[tournament.status].value}
@@ -954,6 +951,8 @@ const LeftComponent = () => {
                     padding: "0 10px",
                     border: "1px solid " + status[tournament.status].color,
                     borderRadius: "30px",
+                    fontWeight:"bold",
+                      letterSpacing:"1px"
                   }}
                 >
                   {status[tournament.status].value}
@@ -1178,14 +1177,14 @@ const LeftComponent = () => {
                 {/*  )}*/}
                 {/*</div>*/}
               </div>
-              {tournament.status === 1 ? (
+              {/* {tournament.status === 1 ? (
 
                 <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Starting in{" "}</div>
               ) : (null)}
               {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
 
-                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration closing in{" "}</div>
-              ) : (null)}
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration bhclosing in{" "}</div>
+              ) : (null)} */}
               
               <div className="tournamentPage__countdown">
                   <span id="timeRemaining" className="font-size-12">
@@ -1225,7 +1224,7 @@ const LeftComponent = () => {
                 </div>
 
               <div className="tournament-reward">
-              <span className="font-size-12">
+              <span className="font-size-12" style={{color:"#fea31b",fontWeight:"bold"}}>
                   <EmojiEventsOutlinedIcon />
                   {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
                   
@@ -1238,6 +1237,8 @@ const LeftComponent = () => {
                       padding: "0 10px",
                       border: "1px solid " + status[tournament.status].color,
                       borderRadius: "30px",
+                      fontWeight:"bold",
+                      letterSpacing:"1px"
                     }}
                   >
                     {status[tournament.status].value}
@@ -1249,6 +1250,8 @@ const LeftComponent = () => {
                     padding: "0 10px",
                     border: "1px solid " + status[tournament.status].color,
                     borderRadius: "30px",
+                    fontWeight:"bold",
+                    letterSpacing:"1px"
                   }}
                 >
                   {status[tournament.status].value}
