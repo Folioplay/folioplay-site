@@ -252,15 +252,19 @@ export default function ContestTabs({
                     >
                       {status[tournament.tournament.status].value}
                     </span>
-                    <span className={"activityTabs__teamLength"}>
-                      {tournament.teams.length} Teams
-                    </span>
-                    <span className="font-size-12">
+                    <span className="font-size-12" style={{display:"flex",alignItems:"center"}}>
                       <EmojiEventsOutlinedIcon />
-                      <span>{tournament.amount_won} FPC</span>
+
+                      {tournament.tournament.rewards.reward_type === "FPC" ? (<span>{tournament.tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.tournament.rewards.prize_pool}</span>)}
+                  
+                      {/* <span>{tournament.amount_won} FPC</span> */}
 
                       
                     </span>
+                    <span className={"activityTabs__teamLength"}>
+                      {tournament.teams.length} Teams
+                    </span>
+                   
                   </div>
                 </motion.div>
               );
@@ -404,13 +408,16 @@ export default function ContestTabs({
                     >
                       {status[tournament.tournament.status].value}
                     </span>
+                    <span className="font-size-12" style={{display:"flex",alignItems:"center"}}>
+                    <EmojiEventsOutlinedIcon />
+
+{tournament.tournament.rewards.reward_type === "FPC" ? (<span>{tournament.tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.tournament.rewards.prize_pool}</span>)}
+
+                    </span>
                     <span className={"activityTabs__teamLength"}>
                       {tournament.teams.length} Teams
                     </span>
-                    <span className="font-size-12">
-                      <EmojiEventsOutlinedIcon />
-                      <span>{tournament.amount_won} FPC</span>
-                    </span>
+                    
                   </div>
                 </motion.div>
               );

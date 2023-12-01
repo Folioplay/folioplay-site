@@ -74,11 +74,15 @@
   align-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 17px;
 }
 .join-tourna-span{
   color: var(--dim-violet-blue);
   letter-spacing: 0.5px;
   transition: 0.2s all ease-in-out;
+  font-weight: bold;
+  margin-top: 2px;
+ 
 }
 .join-tourna-span:hover{
   cursor: pointer;

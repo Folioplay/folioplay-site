@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.d2be5c5d.chunk.css",
-    "main.js": "/static/js/main.8e1cde99.chunk.js",
-    "main.js.map": "/static/js/main.8e1cde99.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.b61608f2.js",
-    "runtime-main.js.map": "/static/js/runtime-main.b61608f2.js.map",
+    "main.css": "/static/css/main.76411bf8.chunk.css",
+    "main.js": "/static/js/main.df0f1b23.chunk.js",
+    "main.js.map": "/static/js/main.df0f1b23.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1f0e1c93.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1f0e1c93.js.map",
     "static/css/2.3eb07a12.chunk.css": "/static/css/2.3eb07a12.chunk.css",
-    "static/js/2.a604b25b.chunk.js": "/static/js/2.a604b25b.chunk.js",
-    "static/js/2.a604b25b.chunk.js.map": "/static/js/2.a604b25b.chunk.js.map",
-    "static/js/3.69f91964.chunk.js": "/static/js/3.69f91964.chunk.js",
-    "static/js/3.69f91964.chunk.js.map": "/static/js/3.69f91964.chunk.js.map",
+    "static/js/2.080c5c68.chunk.js": "/static/js/2.080c5c68.chunk.js",
+    "static/js/2.080c5c68.chunk.js.map": "/static/js/2.080c5c68.chunk.js.map",
+    "static/js/3.6f0974d9.chunk.js": "/static/js/3.6f0974d9.chunk.js",
+    "static/js/3.6f0974d9.chunk.js.map": "/static/js/3.6f0974d9.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.3eb07a12.chunk.css.map": "/static/css/2.3eb07a12.chunk.css.map",
-    "static/css/main.d2be5c5d.chunk.css.map": "/static/css/main.d2be5c5d.chunk.css.map",
-    "static/js/2.a604b25b.chunk.js.LICENSE.txt": "/static/js/2.a604b25b.chunk.js.LICENSE.txt",
+    "static/css/main.76411bf8.chunk.css.map": "/static/css/main.76411bf8.chunk.css.map",
+    "static/js/2.080c5c68.chunk.js.LICENSE.txt": "/static/js/2.080c5c68.chunk.js.LICENSE.txt",
     "static/media/FPLogoManifest.5168b5d8.png": "/static/media/FPLogoManifest.5168b5d8.png",
     "static/media/FolioPlaySmall.svg": "/static/media/FolioPlaySmall.546f1cc8.svg",
     "static/media/cups-winner.png": "/static/media/cups-winner.cb505176.png",
@@ -29,10 +29,10 @@
     "static/media/white_folioplay.svg": "/static/media/white_folioplay.1fdb13e7.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.b61608f2.js",
+    "static/js/runtime-main.1f0e1c93.js",
     "static/css/2.3eb07a12.chunk.css",
-    "static/js/2.a604b25b.chunk.js",
-    "static/css/main.d2be5c5d.chunk.css",
-    "static/js/main.8e1cde99.chunk.js"
+    "static/js/2.080c5c68.chunk.js",
+    "static/css/main.76411bf8.chunk.css",
+    "static/js/main.df0f1b23.chunk.js"
   ]
 }

@@ -38,7 +38,7 @@ import transactionSlice, {
   getTransactionsAsync,
 } from "../../../Redux/Transaction/TransactionSlice";
 import { openReferralModal } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
-
+import SlideshowOutlinedIcon from '@mui/icons-material/SlideshowOutlined';
 export default function FolioplayBar({ intervalId }) {
   const [user, setUser] =useState("");
   // const { logout } = useMoralis();
@@ -62,6 +62,7 @@ export default function FolioplayBar({ intervalId }) {
     <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <LeaderboardOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <SlideshowOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />
   ];
 
   // const provider = new ethers.providers.JsonRpcProvider(
@@ -175,6 +176,7 @@ const [balance, setBalance] = useState("")
           { name: "History", link: "/user/profile" },
           { name: "Profile", link: "/user/profile" },
           { name: "Leader Board", link: "/globalleaderboard" },
+          { name: "How To Play", link: "/howtoplay" },
         ].map((text, index) => (
           <ListItem
             button

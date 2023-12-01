@@ -289,6 +289,7 @@ import CurrentTeamPreview from "./components/CurrentTeam/src";
 import CurrentTeamTable from "./components/CurrentTeamTable/src";
 import ComingSoon from "./components/AddMoney/src/ComingSoon";
 import GlobalLeaderboard from "./components/GlobalLeaderboard/src";
+
 import {CircularProgress} from "@mui/material";
 import AccordionComponent from "./Common/Accordion";
 import TransactionHistory from "./components/TransactionHistory/src";
@@ -297,6 +298,7 @@ import ReactLoading from "react-loading";
 import LoginVerify from "./components/LoginPage/src/LoginVerify";
 import ReactGA from "react-ga4";
 import SelectedCoinTeamPreview from "./components/SelectedCoinTeamPreview/src";
+import HowToPlay from "./components/HowToPlay/src";
 
 
 
@@ -495,6 +497,16 @@ const [token, setToken] =useState("");
             element={
               <AuthenticatedRoute>
                   <GlobalLeaderboard />
+
+              </AuthenticatedRoute>
+            }
+          />
+              <Route
+            exact
+            path="/howtoplay"
+            element={
+              <AuthenticatedRoute>
+                  <HowToPlay />
 
               </AuthenticatedRoute>
             }
