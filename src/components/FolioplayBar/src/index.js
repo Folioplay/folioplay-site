@@ -62,7 +62,8 @@ export default function FolioplayBar({ intervalId }) {
     <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <LeaderboardOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
-    <SlideshowOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />
+    <SlideshowOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
   ];
 
   // const provider = new ethers.providers.JsonRpcProvider(
@@ -177,6 +178,7 @@ const [balance, setBalance] = useState("")
           { name: "Profile", link: "/user/profile" },
           { name: "Leader Board", link: "/globalleaderboard" },
           { name: "How To Play", link: "/howtoplay" },
+          { name: "Privacy Policy", link: "/privacypolicypage" },
         ].map((text, index) => (
           <ListItem
             button
@@ -193,7 +195,7 @@ const [balance, setBalance] = useState("")
             />
           </ListItem>
         ))}
-        <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
+        {/* <ListItem button key={"policies"} onClick={openPrivacyPolicies}>
           <ListItemIcon>
             <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
           </ListItemIcon>
@@ -201,7 +203,7 @@ const [balance, setBalance] = useState("")
             style={{ fontFamily: "poppins" }}
             primary={"Privacy Policy"}
           />
-        </ListItem>
+        </ListItem> */}
         <ListItem
           button
           key={"enter-referral"}
