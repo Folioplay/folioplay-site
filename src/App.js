@@ -299,6 +299,7 @@ import LoginVerify from "./components/LoginPage/src/LoginVerify";
 import ReactGA from "react-ga4";
 import SelectedCoinTeamPreview from "./components/SelectedCoinTeamPreview/src";
 import HowToPlay from "./components/HowToPlay/src";
+import PrivacyPolicyPage from "./components/PrivacyPolicyPage/src";
 
 
 
@@ -507,6 +508,17 @@ const [token, setToken] =useState("");
             element={
               <AuthenticatedRoute>
                   <HowToPlay />
+
+              </AuthenticatedRoute>
+            }
+          />
+
+<Route
+            exact
+            path="/privacypolicypage"
+            element={
+              <AuthenticatedRoute>
+                  <PrivacyPolicyPage />
 
               </AuthenticatedRoute>
             }
