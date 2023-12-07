@@ -13,6 +13,7 @@ localStorage.removeItem("wasActiveTabeState");
   localStorage.removeItem("Selectedsuperstar");
   localStorage.removeItem("Selectedmooning");
     localStorage.removeItem("SelectedCoinCount");
+    localStorage.removeItem("selectedCoins");
 }
 export function scrollTo(element, to, duration) {
     if (duration <= 0) return;

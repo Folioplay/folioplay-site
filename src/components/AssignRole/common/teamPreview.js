@@ -1,109 +1,65 @@
-import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
-import { S3_URL } from "../../../APIS/apis";
-export default function teamPreview({ superstars, mooning, rekt }) {
-  for (var j = 0; j < superstars.length; j++) {
-    var bucketPreview = document.getElementsByClassName("superstars-preview");
-    if (superstars[j].selected) {
-      var emptySpot = false;
-      for (var i = 0; i < bucketPreview.length; i++) {
-        if (bucketPreview[i].childElementCount === 0) {
-          var coinImage = document.createElement("img");
-          coinImage.src = S3_URL +
-            coinTosymbol[superstars[j].name.toLowerCase()].toLowerCase() +
-            ".png";
-          coinImage.width = "75";
-          coinImage.height = "75";
-          coinImage.id = superstars[j].name + "-preview";
-          bucketPreview[i].appendChild(coinImage);
-          emptySpot = true;
-          break;
-        }
-      }
-      if (!emptySpot) {
-        var newSpot = document.createElement("div");
-        var buckets = document.getElementsByClassName("superstars-cover");
-        newSpot.classList.add("superstars-preview", "coin-preview", "ml-20");
-        var coinImage = document.createElement("img");
-        coinImage.src = S3_URL +
-          coinTosymbol[superstars[j].name.toLowerCase()].toLowerCase() +
-          ".png";
-        coinImage.width = "75";
-        coinImage.height = "75";
-        coinImage.id = superstars[j].name + "-preview";
-        newSpot.appendChild(coinImage);
-        newSpot.classList.add("mt-20");
-        buckets[0].appendChild(newSpot);
-      }
-    }
-  }
-  for (var j = 0; j < mooning.length; j++) {
-    var bucketPreview = document.getElementsByClassName("mooning-preview");
-    if (mooning[j].selected) {
-      var emptySpot = false;
-      for (var i = 0; i < bucketPreview.length; i++) {
-        if (bucketPreview[i].childElementCount === 0) {
-          var coinImage = document.createElement("img");
-          coinImage.src = S3_URL +
-            coinTosymbol[mooning[j].name.toLowerCase()].toLowerCase() +
-            ".png";
-          coinImage.width = "75";
-          coinImage.height = "75";
-          coinImage.id = mooning[j].name + "-preview";
-          bucketPreview[i].appendChild(coinImage);
-          emptySpot = true;
-          break;
-        }
-      }
-      if (!emptySpot) {
-        var newSpot = document.createElement("div");
-        var buckets = document.getElementsByClassName("mooning-cover");
-        newSpot.classList.add("mooning-preview", "coin-preview", "ml-20");
-        var coinImage = document.createElement("img");
-        coinImage.src = S3_URL +
-          coinTosymbol[mooning[j].name.toLowerCase()].toLowerCase() +
-          ".png";
-        coinImage.width = "75";
-        coinImage.height = "75";
-        coinImage.id = mooning[j].name + "-preview";
-        newSpot.appendChild(coinImage);
-        newSpot.classList.add("mt-20");
-        buckets[0].appendChild(newSpot);
-      }
-    }
-  }
-  for (var j = 0; j < rekt.length; j++) {
-    var bucketPreview = document.getElementsByClassName("rekt-preview");
-    if (rekt[j].selected) {
-      var emptySpot = false;
-      for (var i = 0; i < bucketPreview.length; i++) {
-        if (bucketPreview[i].childElementCount === 0) {
-          var coinImage = document.createElement("img");
-          coinImage.src = S3_URL +
-            coinTosymbol[rekt[j].name.toLowerCase()].toLowerCase() +
-            ".png";
-          coinImage.width = "75";
-          coinImage.height = "75";
-          coinImage.id = rekt[j].name + "-preview";
-          bucketPreview[i].appendChild(coinImage);
-          emptySpot = true;
-          break;
-        }
-      }
-      if (!emptySpot) {
-        var newSpot = document.createElement("div");
-        var buckets = document.getElementsByClassName("rekt-cover");
-        newSpot.classList.add("rekt-preview", "coin-preview", "ml-20");
-        var coinImage = document.createElement("img");
-        coinImage.src = S3_URL +
-          coinTosymbol[rekt[j].name.toLowerCase()].toLowerCase() +
-          ".png";
-        coinImage.width = "75";
-        coinImage.height = "75";
-        coinImage.id = rekt[j].name + "-preview";
-        newSpot.appendChild(coinImage);
-        newSpot.classList.add("mt-20");
-        buckets[0].appendChild(newSpot);
-      }
-    }
-  }
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCoinsAsync,toggleSelected } from "../../../Redux/Coins/CoinsSlice";
+
+export default function TeamPreview() {
+  const dispatch = useDispatch();
+  const coinsRedux = useSelector((state) => state.coinsSlice.coins);
+  const mooningfilter = coinsRedux.filter((coinn) => coinn.category === "Mooning");
+const rektfilter = coinsRedux.filter((coinn) => coinn.category === "Defi");
+const superstarfilter = coinsRedux.filter((coinn) => coinn.category === "Superstar");
+
+  // superstars = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
+  // mooning = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
+  // rekt = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
+  var superstars = [{ name: "default" }];
+  var mooning = [{ name: "default" }, { name: "default" }, { name: "default" }];
+  var rekt = [{ name: "default" }, { name: "default" }, { name: "default" }];
+  return (
+    <div className="team-preview">
+      <div className="bucket-preview mb-20">
+        <span className="font-size-20" style={{ display: "inline" }}>
+          Superstar
+        </span>
+        <div className="superstars-cover bucket-cover">
+          
+        {superstarfilter?.filter(coin => coin.selected).map((coin, index) => {
+          return (
+            <div className="superstars-preview coin-preview mt-20">
+              <img src={coin.imageUrl} width="80" height="80" />
+            </div>
+          );
+        })}
+        </div>
+      </div>
+      <div className="bucket-preview mb-20 mt-10">
+        <span className="font-size-20" style={{ display: "inline" }}>
+          Mooning
+        </span>
+        <div className="mooning-cover bucket-cover">
+        {mooningfilter?.filter(coin => coin.selected).map((coin, index) => {
+          return (
+            <div className="mooning-preview coin-preview mt-20 ml-20">
+              <img src={coin.imageUrl} width="80" height="80" />
+            </div>
+          );
+        })}
+        </div>
+      </div>
+      <div className="bucket-preview mb-20 mt-10">
+        <span className="font-size-20" style={{ display: "inline" }}>
+          Rekt
+        </span>
+        <div className="rekt-cover bucket-cover">
+        {rektfilter?.filter(coin => coin.selected).map((coin, index) => {
+          return (
+            <div className="rekt-preview coin-preview mt-20 ml-20">
+              <img src={coin.imageUrl} width="80" height="80" />
+            </div>
+          );
+        })}
+        </div>
+      </div>
+    </div>
+  );
 }

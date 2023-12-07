@@ -37,7 +37,8 @@ export default async function saveTeam(event,coins,finalRanks,setError,setNameSn
         if ("mooning" in window.localStorage)
           window.localStorage.removeItem("mooning");
         if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
-        
+        if ("SuperStarSelected" in window.localStorage) window.localStorage.removeItem("SuperStarSelected");
+        if ("selectedCoins" in window.localStorage) window.localStorage.removeItem("selectedCoins");
         
         if(state && state.comingFrom == "/activity") {
          //  console.log("save team activity called 44");
