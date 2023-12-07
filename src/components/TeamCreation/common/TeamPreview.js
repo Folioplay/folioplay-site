@@ -1,6 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCoinsAsync,toggleSelected } from "../../../Redux/Coins/CoinsSlice";
 
-export default function TeamPreview({mooningfilter,superstarfilter,rektfilter}) {
+export default function TeamPreview() {
+  const dispatch = useDispatch();
+  const coinsRedux = useSelector((state) => state.coinsSlice.coins);
+  const mooningfilter = coinsRedux.filter((coinn) => coinn.category === "Mooning");
+const rektfilter = coinsRedux.filter((coinn) => coinn.category === "Defi");
+const superstarfilter = coinsRedux.filter((coinn) => coinn.category === "Superstar");
+
   // superstars = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
   // mooning = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
   // rekt = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];

@@ -8,14 +8,19 @@ import MuiAlert from "@mui/material/Alert";
 import saveTeam from "../common/saveTeam";
 import selectRank from "../common/selectRank";
 import { createTeam } from "../../../APIS/apis";
-import TeamPreview from "../../TeamCreation/common/TeamPreview";
-import teamPreview from "../common/teamPreview";
+import TeamPreview from "../common/teamPreview";
+
 import { getAllUserTeams } from "../../../APIS/apis";
 // import { useMoralis } from "react-moralis";
 import { S3_URL } from "../../../APIS/apis";
 import { ArrowBackIosNewSharp } from "@mui/icons-material";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import "../style/index.css";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getCoinsAsync, toggleSelected } from "../../../Redux/Coins/CoinsSlice";
+
+
 export function AssignRole() {
   const navigate = useNavigate();
   const [nameSnackOpen, setNameSnackOpen] = useState(false);
@@ -29,7 +34,16 @@ export function AssignRole() {
     await setUser(userr);
    
   }
+  
+const coinsRedux = useSelector((state) => state.coinsSlice.coins);
+  
+const mooningfilter = coinsRedux
+.filter((coinn) => coinn.category === "Mooning" && coinn.selected === true)
+.map(({ category, name, symbol }) => ({ category, name, symbol, Rank: -1 }));
+const rektfilter = coinsRedux.filter((coinn) => coinn.category === "Defi" && coinn.selected === true).map(({ category, name, symbol }) => ({ category, name, symbol, Rank: -1 }));
+const superstarfilterr = coinsRedux.filter((coinn) => coinn.category === "Superstar" && coinn.selected === true).map(({ category, name, symbol }) => ({ category, name, symbol, Rank: -1 }));
 
+console.log(mooningfilter);
   const { state } = useLocation();
   var superstars = [];
   var mooning = [];
@@ -60,18 +74,23 @@ export function AssignRole() {
     setSuccessSnackOpen(false);
   };
   
-  superstars = JSON.parse(window.localStorage.getItem("SuperStarSelected")) ? JSON.parse(window.localStorage.getItem("SuperStarSelected")) : [];
-  mooning = JSON.parse(window.localStorage.getItem("MooningSelected")) ? JSON.parse(window.localStorage.getItem("MooningSelected")) : [];
-  rekt = JSON.parse(window.localStorage.getItem("RektSelected")) ? JSON.parse(window.localStorage.getItem("RektSelected")) : [];
-  for (var i = 0; i < superstars.length; i++) {
-    if (superstars[i].selected) coins.push(superstars[i]);
-  }
-  for (var i = 0; i < mooning.length; i++) {
-    if (mooning[i].selected) coins.push(mooning[i]);
-  }
-  for (var i = 0; i < rekt.length; i++) {
-    if (rekt[i].selected) coins.push(rekt[i]);
-  }
+  // superstars = JSON.parse(window.localStorage.getItem("SuperStarSelected")) ? JSON.parse(window.localStorage.getItem("SuperStarSelected")) : [];
+  // mooning = JSON.parse(window.localStorage.getItem("MooningSelected")) ? JSON.parse(window.localStorage.getItem("MooningSelected")) : [];
+  // rekt = JSON.parse(window.localStorage.getItem("RektSelected")) ? JSON.parse(window.localStorage.getItem("RektSelected")) : [];
+  superstars = superstarfilterr ? superstarfilterr : [];
+  mooning = mooningfilter ? mooningfilter : [];
+  rekt = rektfilter ? rektfilter : [];
+  coins = [...superstars,...mooning,...rekt]
+  // for (var i = 0; i < superstars.length; i++) {
+
+  //   if (superstars[i].selected) coins.push(superstars[i]);
+  // }
+  // for (var i = 0; i < mooning.length; i++) {
+  //   if (mooning[i].selected) coins.push(mooning[i]);
+  // }
+  // for (var i = 0; i < rekt.length; i++) {
+  //   if (rekt[i].selected) coins.push(rekt[i]);
+  // }
   for (var i = 0; i < coins.length; i++) {
     finalRanks.set("" + coins[i].name.toLowerCase(), -1);
   }
@@ -90,24 +109,24 @@ export function AssignRole() {
       selectedRekt.push(rekt[i]);
     }
   }
-  if (
-    selectedSuperstars.length < 1 ||
-    selectedSuperstars.length > 2 ||
-    selectedMooning.length < 3 ||
-    selectedMooning.length > 6 ||
-    selectedRekt.length < 3 ||
-    selectedRekt.length > 6 || coins.length !== 11
-  ) {
-    // navigate('/teams/createteam');
-    window.location.pathname = '/tournaments'
-    // return ;
-  }
+  // if (
+  //   selectedSuperstars.length < 1 ||
+  //   selectedSuperstars.length > 2 ||
+  //   selectedMooning.length < 3 ||
+  //   selectedMooning.length > 6 ||
+  //   selectedRekt.length < 3 ||
+  //   selectedRekt.length > 6 || coins.length !== 11
+  // ) {
+  //   // navigate('/teams/createteam');
+  //   window.location.pathname = '/tournaments'
+  //   // return ;
+  // }
   useEffect(() => {
     localStoritems();
     fetchTeams();
   }, []);
   useEffect(() => {
-    if (teams !== undefined) teamPreview({ superstars, mooning, rekt });
+     // if (teams !== undefined) teamPreview({ superstars, mooning, rekt });
   }, [teams, nameSnackOpen]);
   
   const LeftComponent = () => {

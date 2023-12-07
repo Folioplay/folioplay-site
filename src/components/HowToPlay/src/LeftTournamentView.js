@@ -3,6 +3,7 @@ import FolioplayBar from "../../FolioplayBar/src";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {  Box } from "@mui/material";
+import folioplay_intro from "../../../images/Folioplay_Intro.mp4"
 
 const LeftTournamentView = () => {
   const { state } = useLocation();
@@ -38,7 +39,7 @@ const LeftTournamentView = () => {
       <div className="globalLeaderBoard__body">
         
         <Box sx={{maxWidth:"100%", marginTop:"1vh"}}>
-<video src="https://assets.mixkit.co/videos/preview/mixkit-people-pouring-a-warm-drink-around-a-campfire-513-large.mp4" alt="howtoplay" style={{width:"100%"}} autoPlay controls />
+<video src={folioplay_intro} alt="howtoplay" style={{width:"100%"}} autoPlay controls />
         </Box>
    
         
