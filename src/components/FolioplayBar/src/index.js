@@ -32,6 +32,7 @@ import { getWalletBalance } from "../../../APIS/apis";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LeaderboardOutlinedIcon from '@mui/icons-material/LeaderboardOutlined';
+import FeedbackOutlinedIcon from '@mui/icons-material/FeedbackOutlined';
 import BookIcon from "@mui/icons-material/Book";
 import { useDispatch, useSelector } from "react-redux";
 import transactionSlice, {
@@ -61,9 +62,12 @@ export default function FolioplayBar({ intervalId }) {
     <EmojiEventsIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <HistoryIcon size="medium" style={{ color: "var(--dim-white)" }} />,
     <AccountCircleIcon size="medium" style={{ color: "var(--dim-white)" }} />,
-    <LeaderboardOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <FeedbackOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    
     <SlideshowOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
-    <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />
+    <LeaderboardOutlinedIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    <SecurityIcon size="medium" style={{ color: "var(--dim-white)" }} />,
+    
   ];
 
   // const provider = new ethers.providers.JsonRpcProvider(
@@ -176,9 +180,11 @@ const [balance, setBalance] = useState("")
           { name: "Activity", link: "/activity" },
           { name: "History", link: "/user/profile" },
           { name: "Profile", link: "/user/profile" },
-          { name: "Leader Board", link: "/globalleaderboard" },
+          { name: "Feedback", link: "/feedback" },          
           { name: "How To Play", link: "/howtoplay" },
+          { name: "Leader Board", link: "/globalleaderboard" },
           { name: "Privacy Policy", link: "/privacypolicypage" },
+          
         ].map((text, index) => (
           <ListItem
             button

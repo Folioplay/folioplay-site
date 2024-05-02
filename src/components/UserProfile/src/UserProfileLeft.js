@@ -11,8 +11,10 @@ import InlineEdit from "../common/InlineEditComponent";
 import { LinearProgress, TextField } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ReactSpeedometer from "react-d3-speedometer";
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+
+import MuiAlert from "@mui/material/Alert";
 import {
   changeProfilePicture,
   changeUserName,
@@ -29,25 +31,33 @@ function UserProfileLeft() {
   const [user, setUser] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState("");
 
+  const [nameSnackOpen, setNameSnackOpen] = useState(false);
+  const [successSnackOpen, setSuccessSnackOpen] = useState(false);
+  const [error, setError] = useState(null);
   const localStoritems = async () => {
     const userr = await localStorage.getItem("user");
     await setUser(userr);
     const isLoggedIn = await localStorage.getItem("isLoggedIn");
     await setIsAuthenticated(isLoggedIn);
-  }
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
   // const { user } = useMoralis();
   const walletAdd = localStorage.getItem("walletAddress");
   const [snackMessage, setSnackMessage] = useState("");
   const [snackMessageFail, setSnackMessageFail] = useState("");
   const referralCode = localStorage.getItem("folioReferralCode");
-  const referralCodeLink = `${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`;
+  const referralCodeLink = `${
+    window.location.origin
+  }/?code=${localStorage.getItem("folioReferralCode")}`;
   function copytoClipboard() {
     navigator.clipboard.writeText(walletAdd);
     setSnackMessage("Wallet Address Copied!");
     handleClick();
     setTimeout(() => {
       setOpen(false);
-     
     }, 4000);
   }
   function copytoClipboardReferral() {
@@ -103,17 +113,15 @@ function UserProfileLeft() {
         setHelperTextNameField("Username Changed");
         setDisabledNameField(true);
       }
-      if (response === true) {     
+      if (response === true) {
         getPresentUser();
         setSnackMessage("Username Updated");
-        setOpen(true)
-        
+        setOpen(true);
       }
       if (response === false) {
         setSnackMessageFail("Username Can't be changed!");
         setUsernameSnackOpen(true);
       }
-
     } else {
       setHelperTextNameField("Username Can't be changed!");
       setSnackMessageFail("Username Can't be changed!");
@@ -133,19 +141,15 @@ function UserProfileLeft() {
         setErrorNameField(availableName);
         setHelperTextNameField("Username already taken");
         setErrorInputForm(true);
-
       } else {
-
         setHelperTextNameField("Username is available!");
         setErrorInputForm(false);
-
       }
     }
     if (currentName === data) {
       setHelperTextNameField("Its your current user name!");
       setErrorInputForm(false);
     }
-
   };
   const [currentUserName, setCurrentUserName] = useState("");
 
@@ -180,14 +184,13 @@ function UserProfileLeft() {
     setErrorInputForm(false);
     if (presentUser.usernameChanged) {
       setUsernameSnackOpen(true);
-      setSnackMessageFail("Username can be changed only once")
+      setSnackMessageFail("Username can be changed only once");
     } else {
       setDisabledNameField(!disabledNameField);
     }
     setTimeout(() => {
       setOpen(false);
       setUsernameSnackOpen(false);
-      
     }, 4000);
   };
   const inputFile = useRef(null);
@@ -200,17 +203,32 @@ function UserProfileLeft() {
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) return;
 
+    // Check if the selected file is not of the accepted types
+    if (![".jpg", ".png", ".jpeg"].includes(fileObj.name.slice(-4))) {
+      setError("Please select a .jpg, .png, or .jpeg file");
+      setNameSnackOpen(true);
+      setTimeout(() => {
+        setNameSnackOpen(true);
+      }, 3000);
+      return;
+    }
+
     setFile(event.target.files[0]);
   };
 
   useEffect(() => {
-
     localStoritems();
     if (file) {
       handleSubmit();
       return;
     }
   }, [file]);
+  const handleNameSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setNameSnackOpen(false);
+  };
 
   const handleSubmit = async () => {
     const fileToUpload = file;
@@ -227,6 +245,7 @@ function UserProfileLeft() {
   return (
     <div className="fullpage">
       <FolioplayBar />
+
       <div className="wallet-add-space">
         <div className="profileHeader">
           <div className="profilePicture">
@@ -257,6 +276,22 @@ function UserProfileLeft() {
             <div className="userName">{presentUser.username}</div>
           </div>
         </div>
+        {nameSnackOpen && (
+          <>
+            <div style={{ position: "absolute", zIndex: "999", bottom: "5%" }}>
+              {" "}
+              <Alert
+                id="team-creation-message"
+                onClose={handleNameSnackClose}
+                severity="error"
+                sx={{ width: "100%", color: "white" }}
+              >
+                {error}
+              </Alert>
+            </div>
+          </>
+        )}
+
         {/*<span className="wallet-info font-size-25 font-weight-800">*/}
         {/*<AccountBalanceWalletIcon*/}
         {/*  fontSize="large"*/}
@@ -278,8 +313,15 @@ function UserProfileLeft() {
       </div>
       <div className="profile-info-wrapper">
         <div className="headingPersonalInfo">Journey Stats</div>
-        <div className="personalDetails" >
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", }}>
+        <div className="personalDetails">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <div style={{ width: "200px", height: "111px" }}>
               <ReactSpeedometer
                 ringWidth={20}
@@ -294,7 +336,7 @@ function UserProfileLeft() {
                 value={winRate}
                 maxSegmentLabels={5}
                 segments={1000}
-              // height={"180px"}
+                // height={"180px"}
               />
             </div>
             <span>Win Rate {winRate} %</span>
@@ -318,34 +360,44 @@ function UserProfileLeft() {
                 disabled={disabledNameField}
                 onChange={handleChange}
                 maxLength={17}
-                className={errorInputForm ? "errorNameTextField" : "nameTextField"}
+                className={
+                  errorInputForm ? "errorNameTextField" : "nameTextField"
+                }
               />
               {disabledNameField ? (
-                !presentUser.usernameChanged ? (<EditIcon
-                  onClick={changeDisabledButton}
-                  fontSize="1.15rem"
-                  className="editIcon"
-                  style={{color:"black"}}
-                />):(null)
-                
-              ) : (
-
-                errorInputForm ? (<ErrorOutlineOutlinedIcon
+                !presentUser.usernameChanged ? (
+                  <EditIcon
+                    onClick={changeDisabledButton}
+                    fontSize="1.15rem"
+                    className="editIcon"
+                    style={{ color: "black" }}
+                  />
+                ) : null
+              ) : errorInputForm ? (
+                <ErrorOutlineOutlinedIcon
                   color="red"
                   fontSize="medium"
                   className="editIcon"
                   style={{ color: "red" }}
-                />) : (<CheckCircleOutlineOutlinedIcon
+                />
+              ) : (
+                <CheckCircleOutlineOutlinedIcon
                   onClick={setValueNameField}
                   fontSize="medium"
                   className="editIcon"
                   style={{ color: "green" }}
-                />)
-
+                />
               )}
             </div>
-            {errorInputForm ? (<div className="errorText" style={{ color: "red" }}>{helperTextNameField}</div>)
-              : (<div className="errorText" style={{ color: "green" }}>{helperTextNameField}</div>)}
+            {errorInputForm ? (
+              <div className="errorText" style={{ color: "red" }}>
+                {helperTextNameField}
+              </div>
+            ) : (
+              <div className="errorText" style={{ color: "green" }}>
+                {helperTextNameField}
+              </div>
+            )}
 
             <div className="sectionHeading">Wallet Address</div>
             <div className="sectionDetails">
@@ -366,7 +418,7 @@ function UserProfileLeft() {
                 onClick={copytoClipboard}
               />
             </div>
-            <div className="tapToOpenButton" style={{marginBottom:"0.8rem"}}>
+            <div className="tapToOpenButton" style={{ marginBottom: "0.8rem" }}>
               {tapToOpenDisabled ? (
                 <Button
                   onClick={() => setTapToOpenDisabled(!tapToOpenDisabled)}
@@ -404,7 +456,9 @@ function UserProfileLeft() {
             <div className="sectionDetails">
               Share this referral code and earn rewards &nbsp;
               <span className="profilePage__referralCode">
-                {`${window.location.origin}/?code=${localStorage.getItem("folioReferralCode")}`}
+                {`${window.location.origin}/?code=${localStorage.getItem(
+                  "folioReferralCode"
+                )}`}
               </span>{" "}
               &nbsp;
               <ContentCopyIcon
