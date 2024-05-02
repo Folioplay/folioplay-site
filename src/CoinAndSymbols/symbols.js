@@ -16,6 +16,7 @@ export const coinTosymbol = {
     litecoin: "ltc",
     maker: "MKR",
     monero: "xmr",
+    matic:"matic",
     neo: "neo",
     polkadot: "dot",
     stellar: "XLM",

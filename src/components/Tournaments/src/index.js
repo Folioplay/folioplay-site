@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { getAuthToken, referralCodePost } from "../../../APIS/apis";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import "../style/index.css";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import {chooseTeamOpen} from "../common/chooseTeamAnimations";
 import LeftComponent from "./LeftComponent";
 import RightComponent from "./RightComponent";
+
 
 const style = {
   position: "absolute",
@@ -19,15 +20,31 @@ const style = {
   p: 4,
 };
 
+
+
 export default function Tournaments() {
-  const { user, isAuthenticated, logout } = useMoralis();
+  const [user, setUser] =useState("");
+  const [isAuthenticated, setIsAuthenticated] =useState("");
+
+  const localStoritems = async () => {
+    const userr = await localStorage.getItem("user");
+    await setUser(userr);
+    const isLoggedIn = await localStorage.getItem("isLoggedIn");
+    await setIsAuthenticated(isLoggedIn);
+  }
+
+  // const { user, isAuthenticated, logout } = useMoralis();
   useEffect(() => {
+    localStoritems();
     async function authTokenGet() {
+      const isAuthenticated = localStorage.getItem("isLoggedIn")
       if (isAuthenticated && localStorage.getItem("authtoken") == null) {
         await getAuthToken(user);
+      
       }
     }
     authTokenGet();
+   
     localStorage.removeItem("user_referral");
   }, []);
 

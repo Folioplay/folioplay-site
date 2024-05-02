@@ -10,8 +10,8 @@ jobs:
     - name: Pull latest code
       uses: D3rHase/ssh-command-action@v0.2.1
       with:
-        HOST: 65.0.179.30
+        HOST: ${{ secrets.SERVER_IP }}
         PORT: 22
         USER: ubuntu
         PRIVATE_SSH_KEY: ${{ secrets.SSH_DEV_PRIVATE_KEY }}
-        COMMAND: cd /usr/share/nginx/folioplay ; git pull
+        COMMAND: cd /usr/share/nginx/folioplay-site ; git pull origin dev

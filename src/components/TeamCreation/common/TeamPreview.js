@@ -1,6 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCoinsAsync,toggleSelected } from "../../../Redux/Coins/CoinsSlice";
 
-export default function TeamPreview({}) {
+export default function TeamPreview() {
+  const dispatch = useDispatch();
+  const coinsRedux = useSelector((state) => state.coinsSlice.coins);
+  const mooningfilter = coinsRedux.filter((coinn) => coinn.category === "Mooning");
+const rektfilter = coinsRedux.filter((coinn) => coinn.category === "Defi");
+const superstarfilter = coinsRedux.filter((coinn) => coinn.category === "Superstar");
+
   // superstars = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
   // mooning = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
   // rekt = [{ "name": "Bitcoin", "symbol": "btc", "isSelected": true }, { "name": "Ethereum", "symbol": "eth", "isSelected": true }];
@@ -14,10 +22,11 @@ export default function TeamPreview({}) {
           Superstar
         </span>
         <div className="superstars-cover bucket-cover">
-        {superstars.map((coin, index) => {
+          
+        {superstarfilter?.filter(coin => coin.selected).map((coin, index) => {
           return (
             <div className="superstars-preview coin-preview mt-20">
-              {/* <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="80" height="80" /> */}
+              <img src={coin.imageUrl} width="80" height="80" />
             </div>
           );
         })}
@@ -28,10 +37,10 @@ export default function TeamPreview({}) {
           Mooning
         </span>
         <div className="mooning-cover bucket-cover">
-        {mooning.map((coin, index) => {
+        {mooningfilter?.filter(coin => coin.selected).map((coin, index) => {
           return (
             <div className="mooning-preview coin-preview mt-20 ml-20">
-              {/* <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="80" height="80" /> */}
+              <img src={coin.imageUrl} width="80" height="80" />
             </div>
           );
         })}
@@ -42,10 +51,10 @@ export default function TeamPreview({}) {
           Rekt
         </span>
         <div className="rekt-cover bucket-cover">
-        {rekt.map((coin, index) => {
+        {rektfilter?.filter(coin => coin.selected).map((coin, index) => {
           return (
             <div className="rekt-preview coin-preview mt-20 ml-20">
-              {/* <img src={require('../../../images/coinLogos/' + coin.symbol.toLowerCase() + '.png').default} width="80" height="80" /> */}
+              <img src={coin.imageUrl} width="80" height="80" />
             </div>
           );
         })}

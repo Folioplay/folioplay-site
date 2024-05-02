@@ -1,6 +1,7 @@
 import { coinTosymbol } from "../../../CoinAndSymbols/symbols";
 import updateSelectedCoins from "./updateSelectedCoins";
 import { S3_URL } from "../../../APIS/apis";
+
 export default function addCoin(
   event,
   wasActiveTab,
@@ -8,6 +9,11 @@ export default function addCoin(
   mooning,
   rekt
 ) {
+ 
+  try{
+
+  
+ 
   var checkArray =
     wasActiveTab === "superstars"
       ? superstars
@@ -15,17 +21,18 @@ export default function addCoin(
       ? mooning
       : rekt;
   var coinsLimit = wasActiveTab === "superstars" ? 2 : 6;
-  const prevVal = event.target.innerText;
+  const prevVal = event.target.innerText.replace("\n","");
   const clickedCoin = event.target.previousSibling.innerText;
   const updateCoin = prevVal === "ADD" ? true : false;
   var allButtons = document.getElementsByClassName("coin-add-button");
   var totalAddedCoins = document.getElementsByClassName('coin-added-button').length;
+ 
   var maxSelected = 0;
   for (var i = 0; i < checkArray.length; i++) {
     if (checkArray[i].selected) maxSelected++;
   }
   totalAddedCoins = updateCoin ? totalAddedCoins + 1 :totalAddedCoins-1;
-  
+  localStorage.setItem("totalAddedCoins",totalAddedCoins); 
   // else{
   if ((maxSelected >= coinsLimit || totalAddedCoins > 11) && updateCoin) {
     document
@@ -153,5 +160,37 @@ export default function addCoin(
     window.localStorage.setItem(wasActiveTab, JSON.stringify(checkArray));
     event.target.innerText = prevVal === "ADD" ? "ADDED" : "ADD";
   }
+
+// 
+localStorage.removeItem("allCoins"); 
+localStorage.removeItem("wasActiveTabeState"); 
+localStorage.removeItem("RektSelected"); 
+localStorage.removeItem("SuperStarSelected"); 
+localStorage.removeItem("MooningSelected"); 
+// localStorage.removeItem("wasActiveTabeState"); 
+//   localStorage.removeItem("SelectedRekt");
+//   localStorage.removeItem("Selectedsuperstar");
+//   localStorage.removeItem("Selectedmooning");
+//   localStorage.removeItem("SelectedCoinCount");
+  // var ac = [...rekt,...mooning,...superstars];
+  // localStorage.setItem("allCoins", JSON.stringify(ac));
+  
+//   const selectedCoins = ac.filter((coin) => coin.selected === true);
+// const numberOfSelectedCoins = selectedCoins.length;
+
+// const rektselectedCoins = rekt.filter((coin) => coin.selected === true);
+// const numberOfRektSelectedCoins = rektselectedCoins.length;
+// const mooningselectedCoins = mooning.filter((coin) => coin.selected === true);
+// const numberOfmooningSelectedCoins = mooningselectedCoins.length;
+// const superstarsselectedCoins = superstars.filter((coin) => coin.selected === true);
+// const numberOfsuperstarsSelectedCoins = superstarsselectedCoins.length;
+
+// localStorage.setItem("SelectedRekt", numberOfRektSelectedCoins);
+// localStorage.setItem("Selectedmooning", numberOfmooningSelectedCoins);
+// localStorage.setItem("Selectedsuperstar", numberOfsuperstarsSelectedCoins);
+// localStorage.setItem("SelectedCoinCount", numberOfSelectedCoins);
 // }
-}
+  }catch(e){
+    console.log(e);
+  }
+} 

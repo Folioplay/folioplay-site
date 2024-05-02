@@ -16,6 +16,7 @@ import {
 } from "../common/chooseTeamAnimations";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 import {getLeaderboardAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
+import {getTournamentByIdAsync} from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 import {useDispatch} from "react-redux";
 import {getTransactionsAsync} from "../../../Redux/Transaction/TransactionSlice";
 import {getTournamentAsync} from "../../../Redux/Tournaments/TournamentSlice";
@@ -51,6 +52,11 @@ export default function JoinTournamentDrawer({
     )
   }
 
+  async function featchtournament(tournamentId){
+    setTimeout(async () => {
+      await dispatch(getTournamentByIdAsync(tournamentId));
+    }, 4500);
+  }
   return (
     <div key={"enter-tournament"} id="choose-team-div" className="display-none">
       <div className="choose-team-bar"></div>
@@ -202,9 +208,14 @@ export default function JoinTournamentDrawer({
                 setErrorMessageSnackOpen,
                 tournaments
               );
+              
+        
               dispatch(getTournamentAsync());
               dispatch(getLeaderboardAsync(tournamentId));
               dispatch(getTransactionsAsync());
+            
+              await dispatch(getTournamentByIdAsync(tournamentId));
+              await featchtournament(tournamentId);
             }}
           >
             Join Now

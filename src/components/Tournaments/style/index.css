@@ -1,7 +1,8 @@
 .fullpage {
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     scrollbar-width: none;
 }
 .fullpage::-webkit-scrollbar{
@@ -22,12 +23,28 @@
     padding-top: 2.75em;
 }
 
+@media only screen  and (max-width: 800px){
+  .ChipsScrollController{
+     max-width: 85vw;
+     display: flex;
+     overflow-x: scroll;
+   
+  }
+}
+
 .css-5xe99f-MuiLinearProgress-bar1 , .css-t752vm {
     background-color: var(--golden) !important;
 }
+::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+::-webkit-scrollbar-track {
+  display: none !important;
+}
 
 .tournament {
-    width: 85%;
+    width: 89%;
     min-height: 9.375em;
     box-shadow: var(--tournament-card-shadow);
     border-radius: 8px;
@@ -77,7 +94,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 11px;
     width: 100%;
     height: 2.5em;
     border-top: 1px solid var(--dim-white);
@@ -99,6 +116,7 @@
 
 .tournamentPage__startTime{
     margin-right: 1rem;
+    padding: 3px 0 0 0;
 }
 
 #tournament-page-image {
@@ -139,6 +157,7 @@
     flex-direction: column;
     /*padding: 0.5rem;*/
 }
+
 
 .referralModal__modalButton{
     margin-left: 0.5rem;
@@ -230,7 +249,37 @@
     transform: rotate(45deg);
   }
 
+  /* top right*/
+.pinned-top-right {
+  top: -20px;
+  right: -112px;
+}
 
+.pinned-top-right::before,
+.pinned-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.pinned-top-right::before {
+  top: 0;
+  left: 0;
+}
+.pinned-top-right::after {
+  bottom: 0;
+  right: 0;
+}
+.pinned-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+
+.pinned1{
+  width: 133px;
+  height: 100px;
+  overflow: hidden;
+  position: absolute;
+}
   /* top left*/
 .ribbon1-top-left {
     top: -10px;
@@ -308,3 +357,9 @@
   }.shepherd-button{
     /* background-color: var(--golden) !important; */
   }
+
+  
+.no-tournamnet-text{
+  color: black;
+  font-weight: 700;
+}

@@ -1,8 +1,12 @@
+
 export const SERVER = process.env.REACT_APP_API_SERVER;
+
 export const S3_URL = process.env.REACT_APP_S3_URL
 
 export async function getAllTournaments() {
-  return await fetch(`${SERVER}/tournament/`, {
+console.log(SERVER);
+  const authtoken = await localStorage.getItem("authtoken");
+  return await fetch(`${SERVER}/tournament`, {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("authtoken"),
@@ -13,6 +17,9 @@ export async function getAllTournaments() {
 export async function getTournamentById({ _id }) {
   return await fetch(`${SERVER}/tournament/` + _id, {
     method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("authtoken"),
+    },
   }).then((res) => res.json());
 }
 
@@ -35,7 +42,37 @@ export async function getAllCoins() {
   }).then((res) => res.json());
 }
 
-export async function getAuthToken(walletAddress, walletSignature, email) {
+// export async function getAuthToken(walletAddress, walletSignature, email) {
+//   return await fetch(`${SERVER}/user/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       walletAddress: walletAddress,
+//       signature: walletSignature,
+//       email: email
+//     }),
+//   })
+//     .then((res) => {
+//       if (!res.ok) throw "Invalid user";
+//       else return res.json();
+//     })
+//     .then((data) => {
+//       localStorage.removeItem("authtoken");
+//       localStorage.setItem("authtoken", data.accessToken);
+//       return {
+//         "userdata": data.user,
+//         "new_user": data.newUser
+//       };
+//     });
+// }
+
+export async function getAuthToken(walletAddresss, walletSignaturee, emaill) {
+ 
+  const didToken =  await  localStorage.getItem("didToken");;
+  const walletAddress =   await  localStorage.getItem("walletAddress");
+ 
   return await fetch(`${SERVER}/user/login`, {
     method: "POST",
     headers: {
@@ -43,8 +80,7 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
     },
     body: JSON.stringify({
       walletAddress: walletAddress,
-      signature: walletSignature,
-      email: email
+      didToken: didToken,
     }),
   })
     .then((res) => {
@@ -58,8 +94,48 @@ export async function getAuthToken(walletAddress, walletSignature, email) {
         "userdata": data.user,
         "new_user": data.newUser
       };
+    }) .catch(err => {
+     
+          localStorage.clear();
+          window.location.pathname = "/";
+      });
+}
+
+
+// Magic Auth Funtion
+export async function getMagicAuthToken(diidToken,walleetAddress) {
+  ////  console.log("user from apis export folder");
+  //  //  console.log(user);
+  //  //  console.log("user from apis export folder");
+    const didToken =  diidToken;
+    const walletAddress = walleetAddress;
+
+   //  console.log("final data didtoekn & walletaddress" +" "+didToken+" "+ walletAddress)
+    return await fetch(`${SERVER}/user/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+       walletAddress: walletAddress,
+       didToken: didToken,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw "Invalid user";
+        else return res.json();
+      })
+    .then((data) => {
+      localStorage.removeItem("authtoken");
+      localStorage.setItem("authtoken", data.accessToken);
+      return {
+        "userdata": data.user,
+        "new_user": data.newUser
+      };
     });
 }
+
+
 export async function getAllUserTeams() {
   return await fetch(`${SERVER}/teams/`, {
     method: "GET",
@@ -68,6 +144,19 @@ export async function getAllUserTeams() {
     },
   }).then((res) => res.json());
 }
+
+
+// // My team activity
+
+// export async function getMyTeamActivities() {
+//   const authtoken = localStorage.getItem("authtoken");
+//   return await fetch(`${SERVER}/user/activity/teams`, {
+//     method: "GET",
+//     headers: {
+//       "x-access-token": authtoken,
+//     },
+//   }).then((res) => res.json());
+// }
 
 export async function joinTournamentAPI(tournamentId, teamId) {
   return await fetch(`${SERVER}/tournament/join`, {
@@ -95,7 +184,7 @@ export async function getLeaderboard(tournament_id) {
 }
 
 export async function getWinRateAPI() {
-  return await fetch(`${SERVER}/user/activity?win-rate`, {
+  return await fetch(`${SERVER}/user/activity/tournaments?win-rate`, {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("authtoken"),
@@ -140,20 +229,47 @@ export async function createTeam({ selectedCoins, name }) {
   }).then((res) => res.json());
 }
 
+// export async function deleteTeam({ teamId, teamIndex }) {
+//   const authtoken = localStorage.getItem("authtoken");
+//   return await fetch(`${SERVER}/teams/` + teamId + "/", {
+//     method: "DELETE",
+//     headers: {
+//       "x-access-token": authtoken,
+//     },
+//   }).then(() => {
+//     document.getElementById("team-" + teamIndex).classList.add("display-none");
+//     document.getElementById("jointournament-button").style.display = "none";
+//   });
+// }
 export async function deleteTeam({ teamId, teamIndex }) {
   const authtoken = localStorage.getItem("authtoken");
-
-  return await fetch(`${SERVER}/teams/` + teamId + "/", {
+ //  console.log("api team id"+" "+teamId+teamIndex);
+  return await fetch(`${SERVER}/teams/${teamId}/`, {
     method: "DELETE",
     headers: {
       "x-access-token": authtoken,
     },
   }).then(() => {
-    document.getElementById("team-" + teamIndex).classList.add("display-none");
-    document.getElementById("jointournament-button").style.display = "none";
+  //  console.log("sucess");
   });
 }
 
+export async function deleteTeamId({ teamId, teamIndex }) {
+  const authtoken = localStorage.getItem("authtoken");
+  const teamIdd = localStorage.getItem("teamId");
+  localStorage.removeItem("teamId")
+  const teamIndexx = localStorage.getItem("teamIndex");
+  localStorage.removeItem("teamIndex")
+ //  console.log("api team id"+" "+teamId+teamIndex);
+  return await fetch(`${SERVER}/teams/${teamIdd}/`, {
+    method: "DELETE",
+    headers: {
+      "x-access-token": authtoken,
+    },
+  }).then(() => {
+  //  console.log("sucess");
+  });
+}
 
 export async function validUser() {
   return await fetch(`${SERVER}/user/is-valid`, {
@@ -180,7 +296,7 @@ export async function getRank({ tournamentId }) {
 
 export async function getPreviousUserTournaments() {
   const authtoken = localStorage.getItem("authtoken");
-  return await fetch(`${SERVER}/user/activity/`, {
+  return await fetch(`${SERVER}/user/activity/tournaments`, {
     method: "GET",
     headers: {
       "x-access-token": authtoken,
@@ -197,6 +313,19 @@ export async function getTeamByid({ teamId }) {
   }).then((res) => res.json());
 }
 
+// My team activity
+
+export async function getMyTeamActivities() {
+  const authtoken = localStorage.getItem("authtoken");
+  return await fetch(`${SERVER}/user/activity/teams`, {
+    method: "GET",
+    headers: {
+      "x-access-token": authtoken,
+    },
+  }).then((res) => res.json());
+}
+
+
 export async function checkAvailableUsername(name) {
   const authtoken = localStorage.getItem("authtoken");
   return await fetch(`${SERVER}/user/username/available?username=${name}`, {
@@ -210,6 +339,7 @@ export async function checkAvailableUsername(name) {
 }
 
 export async function changeUserName(name) {
+ //  console.log(name.toString());
   const authtoken = localStorage.getItem("authtoken");
   return await fetch(`${SERVER}/user/username/`, {
     method: "PUT",
@@ -300,3 +430,15 @@ export async function getTransactionHistory() {
   ).then((res) => res.json());
 }
 
+
+
+export async function getGlobalLeaderBoardData() {
+  const authToken = localStorage.getItem("authtoken");
+  return await fetch(
+      `${SERVER}/user/global-leaderboard`,
+      {
+        method: "GET",
+       
+      }
+  ).then((res) => res.json());
+}

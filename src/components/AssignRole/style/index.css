@@ -11,7 +11,7 @@
   justify-content: end;
   align-items: center;
   width: 100%;
-  height: 390px;
+  height: 380px;
   position: sticky;
   top:0%;
   z-index: 1; 
@@ -24,12 +24,26 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
-  min-height: 65%;
+  /* min-height: 65%; */
   width: 100%;
   background-color: #fff4e2;
   color: var(--black);
   /* clip-path: polygon(0 0, 100% 16%, 100% 100%, 0 100%); */
 }
+
+
+@media only screen and (min-width: 370px)  and (max-width: 600px) {
+ 
+.lower-half {
+
+  max-height: 200vh !important;
+  height: auto;
+  margin-bottom: auto !important;
+
+
+}
+}
+
 
 #rank-info {
   max-height: 1.875em;
@@ -133,7 +147,7 @@
 }
 
 #save-team-button button {
-  margin-left: 65%;
+  margin-left: 35%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -141,6 +155,24 @@
     width: 100%;
   }
 }
+/* 
+@media only screen and (min-width: 380px) and (max-width: 425px) {
+  
+#save-team-button button {
+  margin-left: 0% !important;
+  
+}
+
+#save-team-button {
+  position: unset !important;
+  display: flex;
+  justify-content: center;
+ 
+}
+.save-team-button{
+  position: unset !important;
+}
+} */
 
 #crown {
   transform: translate(1.8rem, 0.1rem);

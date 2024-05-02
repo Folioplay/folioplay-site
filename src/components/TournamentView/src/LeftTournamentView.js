@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MuiAlert from "@mui/material/Alert";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import { scrollTo } from "../../../CommonFunctions/functions.js";
 import {
   getAllUserTeams,
@@ -25,13 +25,34 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getLeaderboardAsync,
   getWinnersAsync,
+  getTournamentByIdAsync
 } from "../../../Redux/LeaderBoard/LeaderBoardSlice";
 const LeftTournamentView = () => {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <span className="font-weight-500" style={{color:"var(--grey-shade"}}>Pushing data to blockchain ... </span>
+    if (completed) {
+
+      return (
+     <></>
+      )
+  
+    }
     return (
       <>
-      <span style={{color:"var(--dark-dim-white"}}>Starting in </span>
+        <span style={{ color: "var(--dark-dim-white" }}>Registration closing in </span>
         <TimerIcon style={{ color: "var(--golden)" }} fontSize="small" />
         <span className={"tournamentCard__countdownTimer"}>
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
@@ -41,14 +62,36 @@ const LeftTournamentView = () => {
       </>
     );
   };
-  const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
-    if(completed)return <>Ended</>
+
+  const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
+    if(completed) {
+      
+      // dispatch(getTournamentAsync());
+      return <></>}
     return (
       <>
-      <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px"}}>Ends in{" "}</span>
+       <span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",display:"flex"}}>Starting in
+      
+        <TimerIcon style={{ color: "var(--golden)" }} />
+        <span className={"tournamentCard__countdownTimer"}>
+          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
+          {minutes < 10 ? "0" + minutes : minutes} :{" "}
+          {seconds < 10 ? "0" + seconds : seconds}
+        </span></span>
+      </>
+    );
+  };
+  const rendererEnd = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+
+      return <></>
+    }
+    return (
+      <>
+        <span className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px" }}>Ends in{" "}</span>
         <TimerIcon style={{ color: "red" }} fontSize="small" />
-        <span className={"tournamentCard__countdownTimer"} style={{color:"red"}}>
-          
+        <span className={"tournamentCard__countdownTimer"} style={{ color: "red" }}>
+
           {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
           {minutes < 10 ? "0" + minutes : minutes} :{" "}
           {seconds < 10 ? "0" + seconds : seconds}
@@ -61,7 +104,17 @@ const LeftTournamentView = () => {
   });
   const dispatch = useDispatch();
   var navigate = useNavigate();
-  const { user } = useMoralis();
+
+  const [user, setUser] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState("");
+
+  const localStoritems = async () => {
+    const userr = await localStorage.getItem("user");
+    await setUser(userr);
+    const isLoggedIn = await localStorage.getItem("isLoggedIn");
+    await setIsAuthenticated(isLoggedIn);
+  }
+  // const { user } = useMoralis();
   const { state } = useLocation();
   // let account = user.get("ethAddress");
   const [balance, setBalance] = useState("");
@@ -71,9 +124,9 @@ const LeftTournamentView = () => {
     message: "",
     variant: "error",
   });
-  const [tournament, setTournament] = useState(undefined);
+  // const [tournament, setTournament] = useState(undefined);
   // const tournament = useSelector((state)=>state.LeaderBoardSlice.leaderBoard);
-  const [amountWon, setAmountWon] = useState(-1);
+  const [amountWon, setAmountWon] = useState(0);
   const [rank, setRank] = useState(undefined);
   const params = useParams();
   const _id = params.tournamentId;
@@ -94,20 +147,28 @@ const LeftTournamentView = () => {
     else setUserImg(defaultImage);
   };
   async function fetchTournament() {
-    setTournament(await getTournamentById({ _id: _id }));
-  }
+  //  await setTournament(await getTournamentById({ _id: _id }));
+   dispatch(getTournamentByIdAsync(_id));
+   }
+
   async function fetchAmountWon() {
     setAmountWon(await getAmountWon({ _id: _id }));
+  
   }
+
 
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
+
   }
   async function fetchRank() {
     const data = await getRank({ tournamentId: _id });
     setRank(data);
+   
   }
+ 
   useEffect(() => {
+    localStoritems();
     if (document.getElementById("choose-team-div")) {
       if (state && state.openDrawer) {
         delete state.openDrawer;
@@ -129,8 +190,9 @@ const LeftTournamentView = () => {
         });
       }
     }
-  }, [tournament, teams]);
+  }, [ teams,tournament]);
   useEffect(() => {
+    
     if ("superstars" in window.localStorage)
       window.localStorage.removeItem("superstars");
     if ("mooning" in window.localStorage)
@@ -138,20 +200,25 @@ const LeftTournamentView = () => {
     if ("rekt" in window.localStorage) window.localStorage.removeItem("rekt");
     dispatch(getLeaderboardAsync(_id));
     dispatch(getWinnersAsync(_id));
-    fetchTournament();
+    dispatch(getTournamentByIdAsync(_id));
+  
     fetchTeams();
     fetchRank();
     fetchAmountWon();
     getPresentUser();
   }, []);
 
+  const tournament = useSelector(
+    (state) => state.LeaderBoardSlice.tournamentByIdData
+  );
+  
   const leaderBoardRedux = useSelector(
     (state) => state.LeaderBoardSlice.leaderBoard
   );
   const winnersRedux = useSelector((state) => state.LeaderBoardSlice.winners);
-
+console.log(winnersRedux);
   if (tournament !== undefined) {
-    seatsFilled = (100 * tournament.filled_spots) / tournament.total_spots;
+    seatsFilled = (100 * tournament?.filled_spots) / tournament?.total_spots;
   }
   const [snackOpen, setSnackOpen] = useState(false);
   const handleSnackClose = (event, reason) => {
@@ -168,80 +235,127 @@ const LeftTournamentView = () => {
     setErrorMessageSnackOpen(false);
   };
   var disabledClass =
-    tournament && tournament.status !== 0 ? " disable-join-button" : "";
-  var disabledTournament = tournament && tournament.status !== 0 ? true : false;
+    tournament && tournament?.status !== 0 ? " disable-join-button" : "";
+  var disabledTournament = tournament && tournament?.status !== 0 ? true : false;
   // disabledTournament = false;
-  // let tournament_info_contain  er_completed = (tournament && tournament.status === 3) ? "tournament-info-container-completed-bgc" : "";
+  // let tournament_info_contain  er_completed = (tournament && tournament?.status === 4) ? "tournament-info-container-completed-bgc" : "";
   let empty_header =
-    tournament && tournament.status === 3 ? "empty-area-completed" : "";
-  const startTime = tournament ? new Date(tournament.start_time) : undefined;
-  const endTime = tournament ? new Date(tournament.end_time) : undefined;
+    tournament && tournament?.status === 4 ? "empty-area-completed" : "";
+  const startTime = tournament ? new Date(tournament?.start_time) : undefined;
+  const endTime = tournament ? new Date(tournament?.end_time) : undefined;
+
+  const openRefresh = (tournamentStatus) => {
+    if(tournamentStatus === 0){
+      fetchTournament(); 
+       setTimeout(() => {
+        fetchTournament();
+     }, 4000);   
+   return;
+ }
+  }
+
+  const completeRefresh = (tournamentStatus) => {  
+   if(tournamentStatus === 2){
+    fetchTournament();
+        setTimeout(() => {
+          fetchTournament();
+      }, 4000);   
+    return;
+  }
+}
+
+    const bufferRefresh = (tournamentStatus) => {
+      if(tournamentStatus === 1){
+        fetchTournament();
+         setTimeout(() => {
+          fetchTournament();
+       }, 4000);   
+     return;
+   }
+  }
+
+  async function checkState(){
+    localStorage.removeItem("tounamentViewTabValue");
+    if(state && state.comingFrom == "/transaction_history") {
+       navigate(`/transaction_history` , {state:{comingFrom:"/tournament",}});
+     }else{
+      navigate("/tournaments");
+     }
+  }
   return (
     <div className="fullpage">
-      {tournament === undefined || teams === undefined ? (
-        <div className="loading-component">
-          <ReactLoading type={"spin"} color="var(--white)" />{" "}
-        </div>
-      ) : (
-        <>
-          <div className="tournament-view-bar">
-            <ArrowBackIosIcon
-              fontSize="medium"
-              className="go-back-button"
-              onClick={() => navigate("/tournaments", {})}
-            />
-            <span className="ml-20 font-size-20 font-weight-700">
-              {tournament.name}
-            </span>
-          </div>
-          <div className={"empty-area-completed "}>
-            {tournament.status === 3 ? (
-              <>
-                <div
-                // style={{
-                //   alignItems: "center",
-                //   display: "flex",
-                //   flexDirection: "column",
-                //   justifyContent: "center",
-                // }}
-                >
-                  Prize Pool -{" "}
-                  <b>{tournament.rewards.prize_pool} FPC</b>
-                  <br />
-                  <span
-                    className=""
-                    style={{
-                      fontSize: "12px",
-                      marginLeft: "100px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      window.open(
-                        `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
-                      );
-                    }}
-                  >
-                    {/*<u>Click here to view on Polygon.</u>*/}
-                    {/*<span className="tournamentView__transactionIdCompleted">*/}
-                    <u>
-                      Tournament ID: {tournament.transaction_hash.slice(-5)}
-                    </u>
-                    <img
-                      className="ml-5"
-                      src={require("../../../images/polygon_logo.png").default}
-                      height={"20"}
-                      width={"20"}
-                      alt={"polygon"}
-                    />
-                    {/*</span>*/}
-                  </span>
-                </div>
+    {tournament === undefined || tournament?.length === 0  || teams === undefined ? (
+      <div className="loading-component">
+        <ReactLoading type={"spin"} color="var(--white)" />{" "}
+      </div>
+    ) : (
+      <>
+        <div className="tournament-view-bar">
+          <ArrowBackIosIcon
+            fontSize="medium"
+            className="go-back-button"
+            onClick={() => checkState()}
+          />
+          <span className="ml-20 font-size-20 font-weight-700">
+            {tournament?.name}
+          </span>
 
-                <div>
-                  Spots - <b>{tournament.total_spots}</b>
-                </div>
-              </>
-            ) : (
+        </div>
+        <div className="tournaments-spots_White">
+          <div>    Date : {startTime.getDate()} {monthNames[startTime.getMonth()]}'
+            {startTime.getFullYear() % 100}</div>
+
+          <div>
+            Time :  {startTime.getHours() / 10 < 1
+              ? "0" + startTime.getHours()
+              : startTime.getHours()}
+            :
+            {startTime.getMinutes() / 10 < 1
+              ? "0" + startTime.getMinutes()
+              : startTime.getMinutes()}{" "}
+            IST
+          </div>
+        </div>
+
+
+
+
+        {tournament?.status === 4 ? (
+          <>
+            <div className={"empty-area-completed "}>
+              <div className={"empity-area-text"} style={{ maxWidth: "100%", display: "flex", justifyContent: "space-evenly", width: "100%", textAlign: "center" }}>
+                <div style={{ maxWidth: "50%", width: "100%" }}>  Prize Pool -   { tournament?.rewards.reward_type === "TEXT" ? (  <b>{tournament?.rewards.display_text}  </b>) :(  <b>{tournament?.rewards.prize_pool} FPC </b>)}
+</div>
+                <div style={{ maxWidth: "50%", width: "100%" }}> Spots - <b>{tournament?.total_spots}</b></div>
+              </div>
+              <div className="" style={{ maxWidth: "100%", display: "flex", justifyContent: "center", marginTop: "20px" }}> <span
+                style={{
+                  fontSize: "15px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  window.open(
+                    `https://mumbai.polygonscan.com/tx/${tournament?.transaction_hash}`
+                  );
+                }}
+              >
+                {/*<u>Click here to view on Polygon.</u>*/}
+                <span className="tournamentView__transactionId">
+                  <u>Tournament ID: {tournament?.transaction_hash.slice(-5)}</u>
+                  <img
+                    className="ml-5"
+                    src={require("../../../images/polygon_logo.png").default}
+                    height={"20"}
+                    width={"20"}
+                    alt={"polygon"}
+                  />
+                </span>
+              </span></div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={"empty-area-incompleted "}>
               <span
                 style={{
                   fontSize: "15px",
@@ -249,13 +363,13 @@ const LeftTournamentView = () => {
                 }}
                 onClick={() => {
                   window.open(
-                    `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`
+                    `https://mumbai.polygonscan.com/tx/${tournament?.transaction_hash}`
                   );
                 }}
               >
                 {/*<u>Click here to view on Polygon.</u>*/}
                 <span className="tournamentView__transactionId">
-                  <u>Tournament ID: {tournament.transaction_hash.slice(-5)}</u>
+                  <u>Tournament ID: {tournament?.transaction_hash.slice(-5)}</u>
                   <img
                     className="ml-5"
                     src={require("../../../images/polygon_logo.png").default}
@@ -265,39 +379,45 @@ const LeftTournamentView = () => {
                   />
                 </span>
               </span>
-            )}
-          </div>
+            </div>
+          </>
+        )}
 
-          <div className={"tournament-info-container "}>
-            {tournament.status !== 3 ? (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1, y: -90 }}
-                transition={{ duration: 0.3 }}
-                className="tournament-view-card"
-              >
-                <div className="tournament-view-info">
-                  <span style={{ textAlign: "left" }}>
-                    <span
-                      className="font-size-12 font-weight-500"
-                      style={{ color: "var(--grey-shade)" }}
-                    >
-                      Prize Pool
-                    </span>
-                    <br />
-                    <span className="font-size-20 font-weight-500">
-                      {/* {tournament.total_reward} MGT */}
-                      {tournament.rewards.prize_pool} FPC
-                    </span>
+
+        <div className={"tournament-info-container "}>
+          {tournament?.status !== 4 ? (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1, y: -90 }}
+              transition={{ duration: 0.3 }}
+              className="tournament-view-card"
+            >
+              <div className="tournament-view-info">
+                <span style={{ textAlign: "left" }}>
+                  <span
+                    className="font-size-12 font-weight-500"
+                    style={{ color: "var(--grey-shade)" }}
+                  >
+                    Prize Pool
                   </span>
-                  <span className="ml-auto" style={{ textAlign: "right" }}>
-                    <span
-                      className="font-size-12 font-weight-500"
-                      style={{ color: "var(--grey-shade)" }}
-                    >
-                      Entry Fee
-                    </span>
-                    <br />
+                  <br />
+                  { tournament?.rewards.reward_type === "TEXT" ? (    <span className="font-size-20 font-weight-500">                
+                    {tournament?.rewards.prize_pool} 
+                  </span>) :(   <span className="font-size-20 font-weight-500">                
+                    {tournament?.rewards.prize_pool} FPC
+                  </span>)}
+                 
+                </span>
+                <span className="ml-auto" style={{ textAlign: "right" }}>
+                  <span
+                    className="font-size-12 font-weight-500"
+                    style={{ color: "var(--grey-shade)" }}
+                  >
+                    Entry Fee
+                  </span>
+                  <br />
+
+                  {startTime - 300000 > Date.now() ? (
                     <Button
                       className={disabledClass + " tournament-fee"}
                       size="small"
@@ -308,13 +428,47 @@ const LeftTournamentView = () => {
                       }
                       onClick={() => {
                         chooseTeamOpen();
+                        fetchTournament();
                       }}
                       disabled={disabledTournament}
                     >
-                      {tournament.entryFee} FPC
+                      {tournament?.entryFee} FPC
+                    </Button>) : (<Button
+                      className={disabledClass + " tournament-fee"}
+                      size="small"
+                      style={
+                        disabledTournament
+                          ? {}
+                          : { backgroundColor: "var(--golden)" }
+                      }
+                      onClick={() => {
+                        chooseTeamOpen();
+                       
+                      }}
+                      disabled={disabledTournament}
+                    >
+                      {/* {tournament?.entryFee} FPC */}
+                      {tournament?.entryFee} FPC
                     </Button>
-                  </span>
-                </div>
+                    )}
+                </span>
+              </div>
+              {tournament?.status === -2 &&
+                <div>
+                  <LinearProgress
+                    variant="determinate"
+                    style={{ backgroundColor: "var(--dim-white)" }}
+                    value={seatsFilled}
+                  />
+                  <div className="spots-wrapper">
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--golden)" }}
+                    >Cancelled
+                    </span>
+                  </div>
+                </div>}
+              {/* {tournament?.status !== -2 &&
                 <div>
                   <LinearProgress
                     variant="determinate"
@@ -326,192 +480,284 @@ const LeftTournamentView = () => {
                       className="font-size-12 font-weight-500 mt-5"
                       style={{ color: "var(--golden)" }}
                     >
-                      <span id={tournament.id + "-left-spots"}>
-                        {tournament.total_spots - tournament.filled_spots}
+                      <span id={tournament?.id + "-left-spots"}>
+                        {tournament?.total_spots - tournament?.filled_spots}
                       </span>{" "}
+                      
                       spots left
                     </span>
                     <span
                       className="font-size-12 font-weight-500 mt-5"
                       style={{ color: "var(--dark-dim-white)" }}
                     >
-                      {tournament.total_spots} spots
+                      {tournament?.total_spots} spots
                     </span>
                   </div>
-                </div>
-                <div
-                  className="tournamentPage__countdown"
+                </div>} */}
+                { tournament?.status === 0 || tournament?.status === 1   ? (<div>
+                  <LinearProgress
+                    variant="determinate"
+                    style={{ backgroundColor: "var(--dim-white)" }}
+                    value={seatsFilled}
+                  />
+                  <div className="spots-wrapper">
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--golden)" }}
+                    >
+                      <span id={tournament?.id + "-left-spots"}>
+                        {tournament?.total_spots - tournament?.filled_spots}
+                      </span>{" "}
+                      
+                      spots left
+                    </span>
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--dark-dim-white)" }}
+                    >
+                      {tournament?.total_spots} spots
+                    </span>
+                  </div>
+                </div>) : (<div>
+                  <LinearProgress
+                    variant="determinate"
+                    style={{ backgroundColor: "var(--dim-white)" }}
+                    value={seatsFilled}
+                  />
+                  <div className="spots-wrapper">
+                    <span
+                      className="font-size-12 font-weight-500 mt-5"
+                      style={{ color: "var(--golden)" }}
+                    >
+                      
+                      <span id={tournament?.id + "-left-spots"}>
+                        { tournament?.filled_spots}
+                      </span>{" "}
+                      Teams Joined
+                      </span>
+                  </div>
+                </div>)
+}
+
+              <div
+                className="tournamentPage__countdown"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                  padding:"5px 0 0 0"
+                }}
+              >
+                <span
+                  id="timeRemaining"
+                  className="font-size-12"
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignContent: "center",
                     alignItems: "center",
+                    transform: "translateY(-10px)",
                   }}
                 >
-                  <span
-                    id="timeRemaining"
-                    className="font-size-12"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignContent: "center",
-                      alignItems: "center",
-                      transform: "translateY(-10px)",
-                    }}
-                  >
-                    {startTime > Date.now() ? (
-                      <Countdown
-                        date={startTime -300000 }
-                        renderer={renderer}
-                      />
-                    ) : (
-                      <>
-                        {endTime > Date.now() ? (
-                          <Countdown
-                            date={endTime}
-                            renderer={rendererEnd}
-                          />
-                        ) : null}
-                      </>
-                    )}
-                  </span>
-                  {/* const startDate = new Date(tournament.start_time); */}
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1, y: -90 }}
-                transition={{ duration: 0.3 }}
-                className={
-                  tournament.status === 0
-                    ? "tournament-view-card-completed"
-                    : "tournament-view-card-completed-red"
-                }
-              >
-                {amountWon !== -1 ? (
-                  <>
-                    <div className="profileHeaderTP">
-                      <div className="profilePicture">
-                        <img
-                          src={userImg}
-                          alt="profilePic"
-                          height="64px"
-                          width=" 64px"
-                          className="profilepic__image"
-                        />
-                      </div>
 
-                      <div className="userDetails">
-                        <div className="userNameTP">
-                          {localStorage.getItem("folioUsername")}
-                        </div>
-                        <div className="tview__rewardDisplay">
-                          <span>You won {amountWon} FPC</span>
-                        </div>
+{tournament?.status === 1 ? ( <Countdown
+                     date={startTime}
+                      renderer={rendererBuffer}
+                      onComplete={() => bufferRefresh(tournament?.status)}
+                    />
+):(null) }
+
+{tournament?.status === 3 ? ( 
+  <><span className="font-weight-500" style={{color:"var(--grey-shade)",fontFamily:"poppins",letterSpacing:"0.5px",display:"flex"}}>Computing Results </span>
+      
+  </>
+):(null) }
+
+                  {startTime > Date.now() ? (
+                    <Countdown
+                      date={startTime - 60000}
+                      renderer={renderer}
+                      onComplete={() => openRefresh(tournament?.status)}
+                    />
+                  ) : (
+                    <>
+                      {tournament?.status !== -2 && endTime > Date.now() ? (
+                        <Countdown
+                          date={endTime}
+                          renderer={rendererEnd}
+                          onComplete={() => completeRefresh(tournament?.status)}
+                        />
+                      ) : null}
+                    </>
+                  )}
+                </span>
+                {/* const startDate = new Date(tournament?.start_time); */}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1, y: -90 }}
+              transition={{ duration: 0.3 }}
+              className={
+                tournament?.status === 0
+                  ? "tournament-view-card-completed"
+                  : "tournament-view-card-completed-red"
+              }
+            >
+              {tournament?.user_joined && winnersRedux[0]?.user.walletAddress === localStorage.getItem("walletAddress")  ? (
+                <>
+                  <div className="profileHeaderTP">
+                    <div className="profilePicture">
+                      <img
+                        src={userImg}
+                        alt="profilePic"
+                        height="64px"
+                        width=" 64px"
+                        className="profilepic__image"
+                      />
+                    </div>
+
+                    <div className="userDetails">
+                      <div className="userNameTP">
+                        {localStorage.getItem("folioUsername")}
+                      </div>
+                      
+                      <div className="tview__rewardDisplay">
+                     { tournament?.rewards.reward_type === "TEXT" ? (   <span>You won {amountWon} </span>) :(  <span>You won {amountWon} FPC</span>)
+}
                       </div>
                     </div>
-                    <img
-                      className="winner-cups-img"
-                      src={require("../../../images/cups-winner.png").default}
-                      width="200px"
-                      style={{ transform: "translate(115%,-5%)" }}
-                    />
-                  </>
-                ) : (
-                  <div className="profileHeaderNP">
-                    <img
-                      className="winner-cups-img"
-                      src={require("../../../images/cups-winner.png").default}
-                      width="200px"
-                    />
-                    {winnersRedux.length > 0 && (
-                      <span className="winner-span font-weight-500" style={{}}>
-                        <b>{winnersRedux[0].user.username}</b>&nbsp; won &nbsp;
-                        <b>{winnersRedux[0].amount_won} FPC</b>&nbsp; in this
-                        tournament
-                      </span>
-                    )}
-                    <span
-                      className="font-size-12"
-                      style={{ letterSpacing: "0.5px" }}
-                    >
-                      You didn't participated in this tournament.
-                    </span>
-                    <span
-                      className="font-size-12 join-tourna-span"
-                      onClick={() => {
-                        navigate("/tournaments");
-                      }}
-                    >
-                      Join new tournaments
-                    </span>
                   </div>
-                )}
-              </motion.div>
-            )}
+                  <img
+                    className="winner-cups-img"
+                    src={require("../../../images/cups-winner.png").default}
+                    width="200px"
+                    style={{ transform: "translate(115%,-5%)" }}
+                  />
+                </>
+              ) : (
 
-            <div className="folioplay-tabs">
-              <LeaderBoardTabs
-                tournamentId={tournament.id}
-                tournamentStatus={tournament.status}
-                tournamentPrizes={tournament.rewards.distribution}
-                rewardSize={tournament.rewards.places_paid}
-              />
-            </div>
-            <JoinTournamentDrawer
-              teams={teams}
-              tournamentId={tournament.id}
-              tournaments={[]}
-              setErrorMessage={setErrorMessage}
-              setErrorMessageSnackOpen={setErrorMessageSnackOpen}
-              navigate={navigate}
-              changeTournament={true}
+                 tournament?.user_joined && winnersRedux[0]?.user.walletAddress != localStorage.getItem("walletAddress")  ? (<div className="profileHeaderNP">
+                 <img
+                   className="winner-cups-img"
+                   src={require("../../../images/cups-winner.png").default}
+                   width="200px"
+                 />
+                 
+                 <span
+                   className="font-size-12 font-weight-500"
+                   style={{ letterSpacing: "0.5px" }}
+                 >
+                   You won nothing. Better luck next time...
+                 </span>
+                 <span
+                   className="font-size-12 join-tourna-span"
+                   onClick={() => {
+                     navigate("/tournaments");
+                   }}
+                 >
+                   Join new tournaments
+                 </span>
+               </div>):(<div className="profileHeaderNP">
+                 <img
+                   className="winner-cups-img"
+                   src={require("../../../images/cups-winner.png").default}
+                   width="200px"
+                 />
+                 {/* {winnersRedux.length > 0 && (
+                   <span className="winner-span font-weight-500" style={{}}>
+                     <b>{winnersRedux[0]?.user.username}</b>&nbsp; won &nbsp;
+                     { tournament?.rewards.reward_type === "TEXT" ? (    <b>{winnersRedux[0]?.amount_won} </b>) :(  <b>{winnersRedux[0]?.amount_won} FPC</b>)}
+                    &nbsp; in this
+                     tournament
+                   </span>
+                 )} */}
+                 <span
+                   className="font-size-12 font-weight-500"
+                   style={{ letterSpacing: "0.5px",fontWeight:"bold" }}
+                 >
+                   You didn't participate in this tournament.
+                 </span>
+                 <span
+                   className="font-size-12 join-tourna-span"
+                   onClick={() => {
+                     navigate("/tournaments");
+                   }}
+                 >
+                   Join new tournaments
+                 </span>
+               </div>)
+             
+                
+              )}
+            </motion.div>
+          )}
+
+          <div className="folioplay-tabs">
+            <LeaderBoardTabs
+              tournamentId={tournament?.id}
+              tournamentStatus={tournament?.status}
+              tournamentPrizes={tournament?.rewards.distribution}
+              rewardSize={tournament?.rewards.places_paid}
+              tournament={tournament}
             />
           </div>
-        </>
-      )}
-      <Snackbar
-        open={balanceSnackOpen}
-        autoHideDuration={3500}
-        onClose={handleSnackClose}
+          <JoinTournamentDrawer
+            teams={teams}
+            tournamentId={tournament?.id}
+            tournaments={[]}
+            setErrorMessage={setErrorMessage}
+            setErrorMessageSnackOpen={setErrorMessageSnackOpen}
+            navigate={navigate}
+            changeTournament={true}
+          />
+        </div>
+      </>
+    )}
+    <Snackbar
+      open={balanceSnackOpen}
+      autoHideDuration={3500}
+      onClose={handleSnackClose}
+    >
+      <motion.div
+        id="snack-bar-div"
+        initial={{ y: 200 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.3 }}
       >
-        <motion.div
-          id="snack-bar-div"
-          initial={{ y: 200 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.3 }}
+        <Alert
+          id="team-creation-message"
+          onClose={handleSnackClose}
+          severity="error"
+          sx={{ width: "95%", fontFamily: "poppins" }}
         >
-          <Alert
-            id="team-creation-message"
-            onClose={handleSnackClose}
-            severity="error"
-            sx={{ width: "100%", fontFamily: "poppins" }}
-          >
-            Not sufficient balance
-          </Alert>
-        </motion.div>
-      </Snackbar>
-      <Snackbar
-        open={errorMessageSnackOpen}
-        autoHideDuration={3000}
-        onClose={handleErrorMessageSnackClose}
+          Not sufficient balance
+        </Alert>
+      </motion.div>
+    </Snackbar>
+    <Snackbar
+      open={errorMessageSnackOpen}
+      autoHideDuration={3500}
+      onClose={handleErrorMessageSnackClose}
+    >
+      <motion.div
+        initial={{ y: 200 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.3 }}
       >
-        <motion.div
-          initial={{ y: 200 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.3 }}
+        <Alert
+          onClose={handleErrorMessageSnackClose}
+          severity={errorMessage.variant}
+          sx={{ width: "95%", fontFamily: "poppins" }}
+          
         >
-          <Alert
-            onClose={handleErrorMessageSnackClose}
-            severity={errorMessage.variant}
-            sx={{ width: "100%", fontFamily: "poppins" }}
-          >
-            {errorMessage.message}
-          </Alert>
-        </motion.div>
-      </Snackbar>
-    </div>
+          {errorMessage.message}
+        </Alert>
+      </motion.div>
+    </Snackbar>
+  </div>
   );
 };
 

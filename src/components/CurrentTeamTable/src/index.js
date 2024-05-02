@@ -16,24 +16,30 @@ function CurrentTeamTable() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { leaderBoardData } = state;
-  const tournamentId = state.tournament_id;
-  const teamId = leaderBoardData.team.id;
-
+  const tournamentId = state.leaderBoardData.tournamentId;
+  const teamId = state.leaderBoardData.team.id;
   const [coinsData, setCoinsData] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState([]);
   useEffect(() => {
+   //  console.log("current view")
     const fetchData = async () => {
       const response = await getCoinsTableData(tournamentId, teamId).then(
         (response) => {
+
+          const data = response;
+        
           setCoinsData(response);
+         //  console.log("coin data response oreginal")
+         //  console.log(response)
         }
       );
     };
     const fetchTournament = async () => {
       const responseTournament = await getTournamentById({
         _id: tournamentId,
-      }).then((response) => {
+      }).then((response) => {    
         setTournamentDetails(response);
+
       });
     };
     fetchData();
@@ -45,30 +51,49 @@ function CurrentTeamTable() {
   // DATA TABLE IMPLEMENTATION
   const rows = [];
   const runningRows = [];
+  const runningTournamentRows = [];
   coinsFlattendedData?.forEach((element) => {
     var parser = {
       id: rows.length + 1,
       coinName: element.coin_name,
+      coinCategory: element.coin_category === "Defi" ? "Rekt" : element.coin_category,
       initialAllocation: element.coin_allocation,
       priceStart: element.coin_price_start,
       priceEnd: element.coin_price_end,
       allocatedCoins: element.coin_start_allocation,
-      price: element.coin_price,
       points: element.coin_current_points,
     };
     rows.push(parser);
   });
+ 
+  coinsFlattendedData?.forEach((element) => {
+    var parser = {
+      id: runningTournamentRows.length + 1,
+      coinName: element.coin_name,
+      coinCategory: element.coin_category === "Defi" ? "Rekt" : element.coin_category,
+      initialAllocation: element.coin_allocation,
+      priceStart: element.coin_price_start,
+      currentPrice: element.coin_price_end,
+      allocatedCoins: element.coin_start_allocation,    
+      points: element.coin_current_points,
+    };
+    runningTournamentRows.push(parser);
+  });
+
+
   coinsFlattendedData?.forEach((element) => {
     var parser = {
       id: runningRows.length + 1,
       coinName: element.coin_name,
+      coinCategory: element.coin_category === "Defi" ? "Rekt" : element.coin_category, 
       allocatedCoins: element.coin_allocation,
     };
     runningRows.push(parser);
   });
 
   const columns = [
-    { field: "id", headerName: "Id", width: 50, headerAlign: "center" },
+    { field: "id", headerName: "Id", width: 100,  headerAlign: "center",
+    align: "center"  },
     {
       field: "coinName",
       headerName: "Coin Name",
@@ -76,9 +101,15 @@ function CurrentTeamTable() {
       headerAlign: "center",
     },
     {
+      field: "coinCategory",
+      headerName: "Coin Category",
+      width: 110,
+      headerAlign: "center",
+    },
+    {
       field: "initialAllocation",
       headerName: "Initial Allocation",
-      width: 100,
+      width: 115,
       headerAlign: "center",
     },
     {
@@ -96,10 +127,58 @@ function CurrentTeamTable() {
     {
       field: "allocatedCoins",
       headerName: "Allocated Coins",
+      width: 115,
+      headerAlign: "center",
+    },
+    {
+      field: "points",
+      headerName: "Points",
       width: 100,
       headerAlign: "center",
     },
-    { field: "price", headerName: "Price", width: 100, headerAlign: "center" },
+  ];
+
+
+
+  const RunningTournamentColumns = [
+    { field: "id", headerName: "Id", width: 100,  headerAlign: "center",
+    align: "center"},
+    {
+      field: "coinName",
+      headerName: "Coin Name",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "coinCategory",
+      headerName: "Coin Category",
+      width: 110,
+      headerAlign: "center",
+    },
+    {
+      field: "initialAllocation",
+      headerName: "Initial Allocation",
+      width: 115,
+      headerAlign: "center",
+    },
+    {
+      field: "priceStart",
+      headerName: "Price at start",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "currentPrice",
+      headerName: "Current Price",
+      width: 100,
+      headerAlign: "center",
+    },
+    {
+      field: "allocatedCoins",
+      headerName: "Allocated Coins",
+      width: 115,
+      headerAlign: "center",
+    },
     {
       field: "points",
       headerName: "Points",
@@ -111,9 +190,9 @@ function CurrentTeamTable() {
   const runningColumns = [
     {
       field: "id",
-      headerName: "Id",
-      width: 100,
-      headerAlign: "center",
+      headerName: "Id"
+      , width: 100,  headerAlign: "center",
+      align: "center"
     },
     {
       field: "coinName",
@@ -122,14 +201,20 @@ function CurrentTeamTable() {
       headerAlign: "center",
     },
     {
+      field: "coinCategory",
+      headerName: "Category",
+      width: 110,
+      headerAlign: "center",
+    },
+    {
       field: "allocatedCoins",
       headerName: "Allocated Coins",
-      width: 150,
+      width: 115,
       headerAlign: "center",
     },
   ];
 
-  /////////////////
+  
 
   const LeftComponent = () => {
     return (
@@ -153,8 +238,18 @@ function CurrentTeamTable() {
           Total Points:&nbsp;<b>{leaderBoardData.portfolio}</b>
         </div>
         <div className="team-preview-wrapper1 mt-20">
-          {tournamentDetails.status === 3 ? (
-            <DataGrid rows={rows} columns={columns} pageSize={12} />
+          {tournamentDetails.status === 4 || tournamentDetails.status === 2 ||  tournamentDetails.status === 3 ? (
+          <>
+          {tournamentDetails.status === 4 && <DataGrid rows={rows} columns={columns} pageSize={12}            
+           /> }
+
+           {tournamentDetails.status === 2 || tournamentDetails.status === 3 && 
+           <> 
+           <DataGrid rows={runningTournamentRows} columns={RunningTournamentColumns} pageSize={12}            
+           />
+           </>            }
+         
+          </>
           ) : (
             <DataGrid
               rows={runningRows}
@@ -162,6 +257,7 @@ function CurrentTeamTable() {
               pageSize={12}
             />
           )}
+
         </div>
       </div>
     );

@@ -9,7 +9,7 @@
 }
 .profile-info-wrapper {
   width: 100%;
-  min-height: calc(100% - 186px);
+  /* min-height: calc(100% - 186px); */
   display: flex;
   /* justify-content: center; */
   align-items: center;
@@ -22,11 +22,15 @@
   color: black;
   /*display: flex;*/
   /*flex-wrap: wrap;*/
+max-height: 95vh !important;
+height: 100%;
+padding-bottom: 5%;
 }
 
 .headingPersonalInfo {
   font-size: 1.3rem;
   font-weight: 700;
+  padding: 15px 0 5px  0;
 }
 
 .personalDetails {
@@ -228,12 +232,29 @@
 
 .nameTextField {
   margin-right: 10px;
+ 
+  width: 80%;
+ 
+  font-size: 1rem;
+  border: 0;
+  color:black
+}
+
+input.errorNameTextField:focus-visible {
+  border: 2px solid red !important;
+  outline: red !important;
+ }
+.errorNameTextField {
+  margin-right: 10px;
   height: 2.5rem;
   width: 80%;
   padding-left: 0.5rem;
   font-size: 1rem;
   border: 0;
+  border: 2px solid red;
+  border-radius: 6px;
 }
+
 
 .section__journeyStats {
   display: flex;

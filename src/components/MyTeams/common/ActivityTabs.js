@@ -7,20 +7,29 @@ import TabPanel from "@mui/lab/TabPanel";
 import { motion } from "framer-motion/dist/framer-motion";
 import "../style/index.css";
 import { useEffect, useState } from "react";
-import { useMoralis } from "react-moralis";
+import DeleteIcon from "@mui/icons-material/Delete";
+// import deleteClickedTeam from "../common/deleteCLickedTeam";
+// import { useMoralis } from "react-moralis";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { Chip, LinearProgress } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LabTabs from "../../../Common/TabComponent";
 import { S3_URL } from "../../../APIS/apis";
+import { deleteTeamId } from "../../../APIS/apis";
+import {fetchTeams} from "../src/index"
+import {getMyTeamActivities} from "../../../APIS/apis"
 // import LabTabs from "../../../Common/TabComponent";
-export default function ActivityTabs({ teams, tournaments }) {
+export default function ActivityTabs({ tournaments }) {
+  const { state } = useLocation();
+  console.log("line 26");
+  console.log(tournaments);
+
+  const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
-  const [value, setValue] = React.useState("2");
+  const [value, setValue] = React.useState("");
   const [teamsLength, setTeamsLength] = useState(0);
-  const [participatedContestsLength, setParticipatedContestsLength] =
-    useState(0);
+  const [participatedContestsLength, setParticipatedContestsLength] = useState(0);
   const tournamentUpdatedOpen =
     tournaments &&
     tournaments.filter(
@@ -29,37 +38,78 @@ export default function ActivityTabs({ teams, tournaments }) {
   const tournamentUpdatedRunning =
     tournaments &&
     tournaments.filter(
-      (item) => item.tournament !== null && item.tournament.status === 2
+      (item) => item.tournament !== null && item.tournament.status === 2 || item.tournament.status === 3
     );
-  const tournamentUpdatedCompleted =
+    const tournamentUpdatedBuffer =
     tournaments &&
     tournaments.filter(
       (item) => item.tournament !== null && item.tournament.status === 3
     );
+  const tournamentUpdatedCompleted =
+    tournaments &&
+    tournaments.filter(
+      (item) => item.tournament !== null && item.tournament.status === 4
+    );
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    
   };
   const handleClick = () => {
     console.info("You clicked the Chip.");
   };
+
+   async function fetchTeams() {
+    // setTeams(await getAllUserTeams());
+    const teamData = await getMyTeamActivities()
+   await setTeams(teamData); 
+  
+   setTeamsLength(teamData.length);
+   
+  }
+
+async function deleteTeamById(teamid,teamIndex){
+  await localStorage.setItem("teamId",teamid)
+  await localStorage.setItem("teamIndex",teamIndex)
+  await deleteTeamId(teamid,teamIndex);
+  // window.location.reload();
+  fetchTeams();
+  
+}
+
   useEffect(() => {
-    if (teams) setTeamsLength(teams.length);
-    if (tournaments) {
+    fetchTeams();
+    
+    if (tournaments) {      
       const actualTournaments = tournaments.filter(
         (item) => item.tournament !== null
       );
       setParticipatedContestsLength(actualTournaments.length);
     }
+    if(state && state.tabValue){
+      setValue(state.tabValue);
+      
+    }else{
+      setValue("2");
+    }
+
+    
   }, []);
 
+  
+
+
   const tournamentsList = tournaments ? (
+   <>
     <LabTabs
       tournamentUpdatedOpen={tournamentUpdatedOpen}
-      tournamentUpdatedRunning={tournamentUpdatedRunning}
+      tournamentUpdatedRunning={tournamentUpdatedRunning}      
       tournamentUpdatedCompleted={tournamentUpdatedCompleted}
+      tournamentUpdatedBuffer={tournamentUpdatedBuffer}
     />
+   </>
   ) : (
-    <div></div>
+   <>
+   </>
   );
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -87,38 +137,48 @@ export default function ActivityTabs({ teams, tournaments }) {
         </TabPanel>
         <TabPanel value="1">
           <div className="activity-space">
-            {teams !== undefined && tournaments !== undefined ? (
+            {teams !== undefined && tournaments !== undefined ? (  
               <>
                 {teams.map((team, index) => {
                   return (
-                    <motion.div
-                      id={"team-" + index}
-                      onClick={(event) => {
-                        navigate("/activity/team/" + team.id);
-                      }}
+                    <motion.div                     
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.35 }}
                       className="activity-team-card mb-15"
                     >
                       <span className="activity-team-info">
-                        <span className="activity-team-name font-size-20 font-weight-600">
-                          {team.name}
+                        <span className="activity-team-name font-size-20 font-weight-600"  id={"team-" + index}
+                      onClick={(event) => {
+                        navigate("/activity/team/" + team.teamData.id);
+                      }}>
+                          {team.teamData.name}
                         </span>
                         <span>
                           <span className="activity-team-winnings font-weight-500">
-                            4 Winnings
+                          {`${team.totalWinnings} Winnings`}
                           </span>
                           <span className="activity-team-contests font-weight-500 ml-10">
-                            10 Contests
+                            {`${team.totalTournamentsPlayed} Contests`}
                           </span>
                         </span>
                       </span>
+                      {/* <span className="image-wrappers image-1">
+                           <DeleteIcon
+                        className="delete-team-button team-buttons ml-5"
+                        id={"team-" + index}
+                      onClick={(event) => {
+                        deleteTeamById(team.teamData.id,index);
+                      }}
+                        fontSize="large"
+                      />
+                        </span> */}
                       <div className="activity-team-coins-preview">
+                      
                         <span className="image-wrappers image-1">
                           <img
                             className="activity-team-coin-image image-1"
-                            src={S3_URL + team.selectedCoins[1].symbol + ".png"}
+                            src={S3_URL + team.teamData.selectedCoins[1].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -126,7 +186,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-2">
                           <img
                             className="activity-team-coin-image image-2"
-                            src={S3_URL + team.selectedCoins[4].symbol + ".png"}
+                            src={S3_URL + team.teamData.selectedCoins[4].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -134,7 +194,7 @@ export default function ActivityTabs({ teams, tournaments }) {
                         <span className="image-wrappers image-3">
                           <img
                             className="activity-team-coin-image image-3"
-                            src={S3_URL + team.selectedCoins[8].symbol + ".png"}
+                            src={S3_URL + team.teamData.selectedCoins[8].symbol + ".png"}
                             width="45px"
                             height="45px"
                           />
@@ -143,14 +203,25 @@ export default function ActivityTabs({ teams, tournaments }) {
                           <span className="font-size-12 font-weight-600">
                             +8
                           </span>
-                        </span>
+                        </span>                       
                       </div>
+                      <span >
+                           <DeleteIcon
+                        className="delete-team-button team-buttons ml-5"
+                        id={"team-" + index}
+                      onClick={(event) => {
+                        deleteTeamById(team.teamData.id,index);
+                      }}
+                        fontSize="large"
+                        style={{marginTop:"50px",fontSize:"1.1rem"}}
+                      />
+                        </span>
                     </motion.div>
                   );
                 })}
               </>
             ) : (
-              <></>
+              <> hey</>
             )}
           </div>
         </TabPanel>

@@ -12,6 +12,8 @@ import { TableRowsOutlined } from "@mui/icons-material";
 export default function CurrentTeamPreview() {
   const navigate = useNavigate();
   const { state } = useLocation();
+ //  console.log("state from line 13");
+ //  console.log(state);
   const { leaderBoardData } = state;
   const LeftComponent = () => {
     return (
@@ -20,7 +22,12 @@ export default function CurrentTeamPreview() {
           <ArrowBackIosIcon
             fontSize="medium"
             className="go-back-button"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(-1, {
+              state: {
+                tounamentViewTab:"2"
+              },
+            })
+          }
           />
           <span className="ml-20 font-size-20 font-weight-700">
             {leaderBoardData.team !== undefined ? (
@@ -32,7 +39,7 @@ export default function CurrentTeamPreview() {
         </div>
         <br />
         <div className="totalPoints">
-          Total Points:&nbsp;<b>{leaderBoardData.portfolio.toFixed(2)}</b>
+          Total Points:&nbsp;<b>{leaderBoardData.portfolio}</b>
           <TableRowsOutlined
             style={{ cursor: "pointer", marginLeft: "10px" }}
             onClick={() =>
@@ -91,7 +98,7 @@ export default function CurrentTeamPreview() {
                           className="font-size-12"
                           style={{ color: "var(--dark-dim-white)" }}
                         >
-                          Points {coin.current_points}
+                          Points {" "}{coin.current_points}
                         </span>
                       </motion.div>
                     </Grid>

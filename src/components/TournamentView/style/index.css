@@ -3,6 +3,19 @@
   height: 8.125em;
 }
 
+.tournaments-spots_White {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+  font-size: 1rem;
+  color: white;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+
 #tournament-view-page-image {
   width: 100%;
   height: 100%;
@@ -61,11 +74,15 @@
   align-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 17px;
 }
 .join-tourna-span{
   color: var(--dim-violet-blue);
   letter-spacing: 0.5px;
   transition: 0.2s all ease-in-out;
+  font-weight: bold;
+  margin-top: 2px;
+ 
 }
 .join-tourna-span:hover{
   cursor: pointer;
@@ -105,7 +122,7 @@
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 1.25em;
-  padding-bottom: 1.25em;
+  padding-bottom: 2.5em;
   margin-left: auto;
   margin-right: auto;
   background-color: var(--white);
@@ -115,16 +132,79 @@
   box-shadow: var(--tournament-card-shadow);
 }
 
-.empty-area-completed {
+/* .empty-area-completed {
   width: 100%;
   height: 9.125em;
   display: flex;
-  margin-top: 1rem;
   flex-direction: row;
   flex-wrap: wrap;
   font-weight: 500;
   font-size: 1rem;
   justify-content: space-evenly;
+} */
+
+/* 
+@media screen and (max-width: 418px) { 
+  .empty-area-completed {
+    width: 100%;
+    height: 19%;  
+    font-weight: 500;
+    font-size: 1rem;
+   
+  } 
+} */
+
+
+@media screen and (max-width: 418px) { 
+  
+.empty-area-completed {
+  width: 100%;
+  height: 19%;  
+  font-weight: 500;
+  font-size: 1rem;
+ 
+}
+}
+
+@media screen and (max-width: 387px) { 
+  
+  .empty-area-completed {
+    width: 100%;
+    height: 24%;  
+    font-weight: 500;
+    font-size: 1rem;
+   
+  }
+  }
+
+  
+@media screen and (min-width: 420px) { 
+  
+  .empty-area-completed {
+    width: 100%;
+    height: 24%;  
+    font-weight: 500;
+    font-size: 1rem;
+   
+  }
+  }
+
+
+
+.empty-area-incompleted {
+  width: 100%;
+  height: 18%;  
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 2%;
+ 
+}
+.empity-area-text{
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+   width: 100%;
+  height: auto;
 }
 
 .tournament-view-card-completed {
@@ -137,7 +217,7 @@
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 1.25em;
-  padding-bottom: 1.25em;
+  padding-bottom: 2.5em;
   margin-left: auto;
   margin-right: auto;
   background-color: var(--white);
@@ -158,7 +238,7 @@
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 1.25em;
-  padding-bottom: 1.25em;
+  padding-bottom: 2.5em;
   margin-left: auto;
   margin-right: auto;
   /*background-color: var(--white);*/

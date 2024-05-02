@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from "react";
 import FolioPlayLayout from "../../../layout/FolioPlayLayout";
 import FolioplayBar from "../../FolioplayBar/src";
+
 import "../style/index.css";
 import "../common/ActivityTabs";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import ActivityTabs from "../common/ActivityTabs";
 import {
   getAllUserTeams,
   getPreviousUserTournaments,
+  getMyTeamActivities
 } from "../../../APIS/apis";
 import { removeCoinsFromLocalStorage } from "../../../CommonFunctions/functions";
 export default function MyTeams() {
+  const { state } = useLocation();
+
   const navigate = useNavigate();
   const [teams, setTeams] = useState(undefined);
   const [tournaments, setTournaments] = useState(undefined);
-  async function fetchTeams() {
-    setTeams(await getAllUserTeams());
+  async function fetchTeams() { 
+    setTeams(await getMyTeamActivities());
+
   }
   async function fetchUserTournaments() {
+    console.log("line 29 declear tournament");
+console.log(await getPreviousUserTournaments());
     setTournaments(await getPreviousUserTournaments());
   }
+  
   useEffect(() => {
     fetchTeams();
     fetchUserTournaments();
@@ -38,7 +46,7 @@ export default function MyTeams() {
         <br />
         <br />
         <div className="activity-content-wrapper mt-20">
-        <div className="activity-add-team-buttton">
+        {/* <div className="activity-add-team-buttton">
             <AddCircleIcon
               className="mr-10"
               id="circle-add-team-button"
@@ -47,10 +55,24 @@ export default function MyTeams() {
                 navigate("/teams/createteam/");
               }}
             />
-          </div>
+          </div> */}
           <div id="activity-tabs-wrapper">
-            <ActivityTabs teams={teams} tournaments={tournaments} />
+            <ActivityTabs  tournaments={tournaments} state={state} />
             {/* <div className="activity-add-team-buttton"><AddCircleIcon id="circle-add-team-button" /></div> */}
+           
+          </div>
+          <div className="activity-add-team-buttton">
+            <AddCircleIcon
+              className="circle-add-team-button"
+              onClick={() => {
+                removeCoinsFromLocalStorage();
+                navigate("/teams/createteam/", {
+                  state: {
+                    comingFrom: window.location.pathname,                   
+                  },
+                });
+              }}
+            />
           </div>
         </div>
       </div>

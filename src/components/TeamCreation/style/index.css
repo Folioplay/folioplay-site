@@ -10,7 +10,66 @@
     /* padding-top: 1.25em; */
     padding-bottom: 1.25em;
     /* overflow-y: scroll; */
-    scrollbar-width: none;  
+    scrollbar-width: none;
+     
+    height: fit-content;
+}
+
+/* @media only screen and (max-width: 379px) {
+
+    .mooning_Height_Controll{
+height:193vh !important;
+    }
+    .rekt_Height_Controll{
+        height:111vh !important;   
+    } */
+
+  
+
+/* } */
+/* @media only screen and(min-height: 730px) {
+   
+    .mooning_Height_Controll{
+        height:147vh !important;
+            } 
+
+  } */
+
+  
+/* 
+@media only screen and (min-width: 380px)and (max-width: 400px) {
+
+    .mooning_Height_Controll{
+height:183vh !important;
+    }
+    .rekt_Height_Controll{
+        height:111vh !important;   
+    }
+
+} */
+
+
+
+@media only screen and (max-width: 600px) {
+
+    .mooning_Height_Controll{
+max-height: 200vh ;
+height: auto;
+    }
+
+    .rekt_Height_Controll{
+        max-height: 170vh ;
+        height: auto;
+    }
+
+    
+    .superstars_Height_Controll{
+        max-height: 100vh ;
+        height: auto;
+    }
+
+   
+
 }
 
 .coin-card-wrapper {
@@ -81,7 +140,7 @@
 .assign-roles-div {
     width: 94%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .role-button {
@@ -90,7 +149,18 @@
     align-items: center;
 
 }
+.role-button2 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 
+}
+.role-button1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
 .coin-add-button {
     color: var(--golden) !important;
     border: 1px solid var(--golden) !important;
@@ -138,11 +208,19 @@
     }
 }
 
+
+@media only screen and (max-width: 600px) {
+    .tip-div span {
+        margin-top: 2%;
+        padding: 0px 0 6px 0;
+    }
+}
+
 .tip-div {
     color: var(--golden);
     padding: 0.9em;
-    height: 30px;
-    margin-bottom: 25px;
+    height: 36px;
+    margin: 8px 0 25px 0;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -255,6 +333,27 @@
      text-transform: capitalize;
      font-family: "poppins";
      font-weight: 500;
+     /*  pehle margin left ni tha parellel krne me kia */
+     margin-left: 200px;
+  }
+  #assign-role-button1{
+    border-radius: 8px;
+     background-color: var(--golden);
+     position: fixed;
+     bottom: 6.5em;
+     text-transform: capitalize;
+     font-family: "poppins";
+     font-weight: 500;
+  }
+  #assign-role-button2{
+    border-radius: 8px;
+     background-color: var(--golden);
+     position: fixed;
+     bottom: 1.5em;
+     text-transform: capitalize;
+     font-family: "poppins";
+     font-weight: 500;
+     margin-left: -200px;
   }
   .sticky-top{
     position: sticky;
@@ -262,4 +361,11 @@
     z-index: 1;
     background-color: var(--violet-blue);
     height: 115px;
+  }
+  .sticky-top1{
+    position: sticky;
+    top:0;
+    z-index: 1;
+    background-color: var(--violet-blue);
+    height: 130px;
   }

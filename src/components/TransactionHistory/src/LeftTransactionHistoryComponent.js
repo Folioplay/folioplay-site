@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import FolioplayBar from "../../FolioplayBar/src";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import {useNavigate} from "react-router-dom";
-import {getTransactionHistory} from "../../../APIS/apis";
+import { Link, useNavigate ,useLocation} from "react-router-dom";
+import { getTransactionHistory } from "../../../APIS/apis";
 import moment from "moment";
 import AccordionComponent from "../../../Common/Accordion";
-import {AccordionDetails, AccordionSummary} from "@mui/material";
+import { AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
@@ -13,10 +13,10 @@ import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-
+import { SERVER } from '../../../APIS/apis';
 
 const LeftTransactionHistoryComponent = () => {
-
+    const { state } = useLocation();
     const AccordionSummary = styled((props) => (
         <MuiAccordionSummary
             expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
@@ -38,20 +38,20 @@ const LeftTransactionHistoryComponent = () => {
 
     const [transactionHistory, setTransactionHistory] = useState([]);
 
-    function parseTransactionData (data){
+    function parseTransactionData(data) {
         let parsedData = {};
-        for (let i=0; i < data.length; i++){
-            let dateKey = moment(data[i].date).format('Do MMMM YYYY')   ;
-            if(!parsedData.hasOwnProperty(`${dateKey}`)){
-                parsedData[`${dateKey}`]=[data[i]];
+        for (let i = 0; i < data.length; i++) {
+            let dateKey = moment(data[i].date).format('Do MMMM YYYY');
+            if (!parsedData.hasOwnProperty(`${dateKey}`)) {
+                parsedData[`${dateKey}`] = [data[i]];
             }
-            else{
+            else {
                 parsedData[`${dateKey}`].push(data[i]);
             }
         }
         const keyArray = Object.keys(parsedData);
         let arr = []
-        for(let i=0; i< keyArray.length ; i++){
+        for (let i = 0; i < keyArray.length; i++) {
             arr.push({
                 "date": keyArray[i],
                 "data": parsedData[keyArray[i]]
@@ -60,16 +60,30 @@ const LeftTransactionHistoryComponent = () => {
         setTransactionHistory(arr);
     }
 
-    useEffect(()=>{
+    const NavigateTournament = (TournamentId) => {
+
+
+        console.log("TournamentId" + TournamentId)
+    }
+
+    useEffect(() => {
         async function setTransactionHistoryFunction() {
             const data = await getTransactionHistory();
             parseTransactionData(data);
+            console.log(data);
         }
         setTransactionHistoryFunction();
-    },[])
+    }, [])
 
+    async function checkState(){
+        if(state && state.comingFrom == "/tournament") {
+           navigate("/tournaments" , {state:{comingFrom:""}});
+         }else{
+            navigate(-1);
+         }
+      }
     const localAccordionComponent = (item) => {
-        return(
+        return (
             <AccordionComponent>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -77,28 +91,43 @@ const LeftTransactionHistoryComponent = () => {
                     id="panel1a-header"
                 >
                     <div className="dateBlock__accordionList__summaryTab">
-                        <div className="summaryTab__amount">{item.type==="PAID"? "-" : "+"}{item.data.amount} FPC</div>
-                        <div className={"summaryTab__helperText"} style={{marginLeft:"20px",marginRight:"auto"}}>{item.type === "RECEIVED" ? "Reward":"Joined Tournament"}</div>
+                      
+                        {parseFloat(item.data.amount) ?  (<div className="summaryTab__amount">{item.type === "PAID" ? "-" : "+"}{item.data.amount} FPC </div>):(<div className="summaryTab__amount">{item.type === "PAID" ? "-" : "+"}{item.data.amount} </div>)}
+                       
+                        <div className={"summaryTab__helperText"} style={{ marginLeft: "20px", marginRight: "auto" }}>{item.type === "RECEIVED" ? "Reward" : "Joined Tournament"}</div>
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className={"summaryTab__extendedDetails"}>
                         <div className={"summaryTab__dataHeading"}>
+                            Tournament Name
+                        </div>
+                        <div className={"summaryTab__dataBody"} style={{ cursor:"pointer",color:"blue",textDecoration:"underline"}} onClick={() => {
+                            navigate(`/tournament/${item.data.fromId}`, {
+                                state: {
+                                    comingFrom: window.location.pathname,
+                                },
+                            })
+                        }
+                        }>
+                            {item.data.tournamentName}
+                        </div>
+                        <div className={"summaryTab__dataHeading"}>
                             Transaction ID
                         </div>
-                        <div  className={"summaryTab__dataBody"}>
+                        <div className={"summaryTab__dataBody"}>
                             {item._id}
                         </div>
                         <div className={"summaryTab__dataHeading"}>
                             Transaction Date
-                        </div>  
-                        <div  className={"summaryTab__dataBody"}>
+                        </div>
+                        <div className={"summaryTab__dataBody"}>
                             {moment(item.date).format('Do MMMM YYYY, h:mm:ss a')}
                         </div>
                         <div className={"summaryTab__dataHeading"}>
                             Team Name
                         </div>
-                        <div  className={"summaryTab__dataBody"}>
+                        <div className={"summaryTab__dataBody"}>
                             {item.data.teamName}
                         </div>
                     </div>
@@ -113,23 +142,23 @@ const LeftTransactionHistoryComponent = () => {
                 <ArrowBackIosIcon
                     fontSize="medium"
                     className="go-back-button"
-                    onClick={() => navigate(-1)}
+                    onClick={() => checkState()}
                 />
                 <span className="ml-20 font-size-20 font-weight-700">
                     {"Transaction History"}
                 </span>
             </div>
             <div className="transactionHistory__body">
-                {transactionHistory.length!==0 ?
-                    transactionHistory.map((data, index)=>{
-                        return(
+                {transactionHistory.length !== 0 ?
+                    transactionHistory.map((data, index) => {
+                        return (
                             <div className="transactionHistory__dateBlock">
                                 <div className="dateBlock__date">
                                     {data.date}
                                 </div>
                                 <div className="dateBlock__transactionAccordion">
-                                    {data.data.map((item, innerIndex)=>{
-                                        return(
+                                    {data.data.map((item, innerIndex) => {
+                                        return (
                                             <div className={"dateBlock__accordionList"}>
                                                 {localAccordionComponent(item)}
                                             </div>
@@ -138,7 +167,7 @@ const LeftTransactionHistoryComponent = () => {
                                 </div>
                             </div>
                         )
-                }) : <h3>No transactions yet.</h3>}
+                    }) : <h3>No transactions yet.</h3>}
             </div>
         </div>
     );

@@ -96,13 +96,13 @@ const ReferralModal = () => {
                                 variant={"contained"}
                                 onClick={async () => {
                                     const referralResponse = await referralCodePost(referral);
-                                    console.log("referralResponse", referralResponse);
+                                    //console.log("referralResponse", referralResponse);
                                     if (referralResponse.statusCode === 200) {
                                         setSnackMessage("Referral successful");
                                         setSnackSeverityType("success");
                                     } else {
                                         if ((referralResponse.statusCode/10) === 40) {
-                                            console.log(referralResponse.statusCode/10);
+                                            //console.log(referralResponse.statusCode/10);
                                             setSnackMessage(referralResponse.message);
                                             setSnackSeverityType("error");
                                         }

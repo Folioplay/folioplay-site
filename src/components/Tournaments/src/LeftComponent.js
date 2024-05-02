@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import FolioplayBar from "../../FolioplayBar/src";
 import ImageSlider from "../../ImageSlider/src";
 import ReactLoading from "react-loading";
@@ -11,6 +11,9 @@ import JoinTournamentDrawer from "../../JoinTournamentDrawer/src";
 import { scrollTo } from "../../../CommonFunctions/functions.js";
 import { Chip } from "@mui/material";
 import TimerIcon from "@mui/icons-material/Timer";
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+
 import {
   deleteTeam,
   getAllTournaments,
@@ -20,7 +23,7 @@ import {
 } from "../../../APIS/apis";
 import { Button, LinearProgress, Snackbar } from "@mui/material";
 import joinTournament from "../common/joinTournament";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import MuiAlert from "@mui/material/Alert";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -39,8 +42,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTournamentAsync } from "../../../Redux/Tournaments/TournamentSlice";
 import { FilterAltOutlined } from "@mui/icons-material";
 
+
 const LeftComponent = () => {
-  const { user, isAuthenticated, logout } = useMoralis();
+
+  // const { user, isAuthenticated,  } = useMoralis();
+  const formatDuration = (startDate, finishDate) => {
+    const diffInMs = finishDate - startDate;
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMs / (60000 * 60));
+    const diffInDays = Math.floor(diffInMs / (60000 * 60 * 24));
+
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} minutes`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hours`;
+    } else {
+      return `${diffInDays} days`;
+    }
+  };
+  const [user, setUser] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState("");
+
+  const localStoritems = async () => {
+    const userr = await localStorage.getItem("user");
+    await setUser(userr);
+    const isLoggedIn = await localStorage.getItem("isLoggedIn");
+    await setIsAuthenticated(isLoggedIn);
+  }
+
   const { state } = useLocation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -51,18 +80,22 @@ const LeftComponent = () => {
     live: filterLive,
     upcoming: filterUpcoming,
     joined: filterJoined,
+    cancelled: filterCancelled,
   };
   function filterAll(tournament) {
     return true;
   }
   function filterLive(tournament) {
-    return tournament.status === 2;
+    return tournament.status === 2 || tournament.status === 3;
   }
   function filterUpcoming(tournament) {
     return tournament.status === 0;
   }
+  function filterCancelled(tournament) {
+    return tournament.status === -2;
+  }
   function filterJoined(tournament) {
-    return tournament.user_joined;
+    return tournament.user_joined ;
   }
   const monthNames = [
     "Jan",
@@ -84,17 +117,20 @@ const LeftComponent = () => {
   const logOut = async () => {
     localStorage.setItem("authtoken", null);
     localStorage.removeItem("walletconnect");
-    await logout();
+    // await logOut();
   };
 
   const status = {
-    3: { value: "Completed", color: "#ff000096" },
-    1: { value: "Closed", color: "#FFCC00" },
+    4: { value: "Completed", color: "#ff000096" },
+    1: { value: `Closed`, color: "#FFCC00" },
     0: { value: "Open", color: "#00ff00d6" },
     2: { value: "Running", color: "#FFCC00" },
+    3: { value: "Finalizing", color: "#FFCC00" },
+    "-2": { value: "Cancelled", color: "#FFCC00" },
   };
   // const [tournaments, setTournaments] = useState(undefined);
   const tournaments = useSelector((state) => state.tournamentSlice.tournament);
+
   const [teams, setTeams] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState({
     message: "",
@@ -112,12 +148,15 @@ const LeftComponent = () => {
 
   const [intervalId, setIntervalId] = useState(undefined);
   const [referral, setReferral] = useState("");
-  useEffect(() => {
-    async function authTokenGet() {
-      if (isAuthenticated && localStorage.getItem("authtoken") == null) {
-        await getAuthToken(user);
-      }
+
+  async function authTokenGet() {
+    if (isAuthenticated && localStorage.getItem("authtoken") == null) {
+      await getAuthToken(user);
     }
+  }
+
+  useEffect(() => {
+    localStoritems();
     authTokenGet();
   }, []);
   useEffect(() => {
@@ -139,17 +178,8 @@ const LeftComponent = () => {
         window.history.replaceState(null, "");
         chooseTeamOpen().then(() => {
           setTimeout(() => {
-            // console.log("i am in the scoll part ..............")
             var objDiv = document.getElementsByClassName("all-teams")[0];
-            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
-            // objDiv.scrollTop = objDiv.scrollHeight;
-            // console.log(objDiv.scrollHeight , objDiv.scrollTop);
-            // const element = $(`.all-teams`)[0];
-            // element.animate({
-            //     scrollTop: element.prop("scrollHeight")
-            // }, 500);
             scrollTo(objDiv, objDiv.scrollHeight, 400);
-
             selectTeam("team-" + (teams.length - 1), teams);
           }, 600);
         });
@@ -175,9 +205,9 @@ const LeftComponent = () => {
     setL(len);
     // chooseTeamOpen();
   }, []);
-  // async function fetchTournaments() {
-  //   setTournaments(await getAllTournaments());
-  // }
+
+
+
   async function fetchTeams() {
     setTeams(await getAllUserTeams());
   }
@@ -193,11 +223,22 @@ const LeftComponent = () => {
     var leftMargin = -1 * currImage * 100;
     var buffer = -1 * currImage * 20;
     if (currImage !== len) {
-      allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
+      try {
+        allImages[0].style = `margin-left:calc( ${leftMargin}% + ${buffer}px )`;
+      } catch (e) {
+        console.log(e);
+      }
+
       if (!paused) currImage++;
     } else {
-      allImages[0].style = `margin-left:0px`;
-      currImage = 1;
+      try {
+
+        allImages[0].style = `margin-left:0px`;
+        currImage = 1;
+      } catch (e) {
+        console.log(e);
+      }
+
     }
   }
 
@@ -229,6 +270,8 @@ const LeftComponent = () => {
       minHeight: 420,
     },
   };
+
+
 
   function TourModal() {
     const [open1, setOpen1] = useState(
@@ -337,8 +380,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can view the tournament info"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -378,8 +421,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["By Clicking on this you can play the game"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -419,8 +462,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can see the reward of the tournament"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -460,8 +503,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access the sidebar"],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -501,8 +544,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access your profile."],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     {
@@ -532,8 +575,8 @@ const LeftComponent = () => {
       title: "Welcome to FolioPlay!",
       text: ["Here you can access your total coins and transaction history."],
       when: {
-        show: () => {},
-        hide: () => {},
+        show: () => { },
+        hide: () => { },
       },
     },
     // ...
@@ -552,38 +595,141 @@ const LeftComponent = () => {
     return timeLeft;
   };
 
-  const [expire, setExpire] = useState(false);
-  const renderer = ({ days, hours, minutes, seconds, completed }) => {
+
+
+
+  const RendererEnd = ({ days, hours, minutes, seconds, completed }) => {
+
+
+
+    if (completed) {
+      return <></>
+    }
     return (
       <>
-        <span>Starting in </span>
-        <TimerIcon style={{ color: "var(--golden)" }} />
-        <span className={"tournamentCard__countdownTimer"}>
-          {days < 10 ? "0" + days : days} : {hours < 10 ? "0" + hours : hours} :{" "}
-          {minutes < 10 ? "0" + minutes : minutes} :{" "}
-          {seconds < 10 ? "0" + seconds : seconds}
-        </span>
+      <div style={{display:"flex",marginTop:"7px"}}>
+        <div  className="font-weight-500" style={{ color: "var(--grey-shade)", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}>Tournament ending in{" "}</div>
+        {/* <div style={{width:"5%",textAlign:"center"}} > <TimerIcon style={{ color: "red" }} fontSize="small" /></div> */}
+        <div className={"tournamentCard__countdownTimer"} style={{ color: "red",width:"45%",fontWeight:"bold" }}>
+
+        {days >0 ? (<>   {days < 10 ? "0" + days : days}d:</>): (null)} {hours < 10 ? "0" + hours : hours}hr:{" "}
+          {minutes < 10 ? "0" + minutes : minutes}m:{" "}
+          {seconds < 10 ? "0" + seconds : seconds}s
+        </div>
+        </div>
+      </>
+    )
+  }
+
+  const [expire, setExpire] = useState(false);
+  const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // dispatch(getTournamentAsync());
+      return <> 
+      
+
+      </>
+    }
+
+
+    return (
+      <>
+        <div style={{display:"flex",marginTop:"7px"}}>
+        <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}>Registration closing in {" "}</div>
+        {/* <div style={{width:"5%",textAlign:"center"}} >
+        <TimerIcon style={{ color: "var(--golden)" }} /> 
+        </div> */}
+        <div className={"tournamentCard__countdownTimer"} style={{ width:"45%",fontWeight:"bold" }}>
+       {days >0 ? (<>   {days < 10 ? "0" + days : days}d:</>): (null)} {hours < 10 ? "0" + hours : hours}hr:{" "}
+          {minutes < 10 ? "0" + minutes : minutes}m:{" "}
+          {seconds < 10 ? "0" + seconds : seconds}s
+        </div>
+        </div>
       </>
     );
   };
+  //  Thsese 3 funtions from  662 Line to  694 is controlling the auto refresh of tournaments
+  const openRefresh = (tournamentStatus) => {
+    if (tournamentStatus === 0) {
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+      return;
+    }
+  }
+
+  const completeRefresh = (tournamentStatus) => {
+    if (tournamentStatus === 2) {
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+      return;
+    }
+  }
+
+  const bufferRefresh = (tournamentStatus) => {
+    if (tournamentStatus === 1) {
+      dispatch(getTournamentAsync());
+      setTimeout(() => {
+        dispatch(getTournamentAsync());
+      }, 4000);
+      return;
+    }
+  }
+
+
+  const rendererBuffer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+      return <></>
+    }
+    return (
+      <>  
+      <div style={{display:"flex",marginTop:"7px"}}>
+        <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", width:"50%",fontFamily: "poppins", letterSpacing: "0.5px",textAlign:"end" }}> Starting in {" "}</div>
+             {/* <TimerIcon style={{ color: "var(--golden)" }} /> */}
+          <div className={"tournamentCard__countdownTimer"} style={{fontWeight:"bold" }}>
+          {days >0 ? (<>   {days < 10 ? "0" + days : days}d:</>): (null)} {hours < 10 ? "0" + hours : hours}hr:{" "}
+            {minutes < 10 ? "0" + minutes : minutes}m:{" "}
+            {seconds < 10 ? "0" + seconds : seconds}s
+          </div>
+          </div>
+      </>
+    );
+  };
+
+
   const tournamentsList = tournaments ? (
     tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
       .length === 0 ? (
-      <span className={"no-tournamnet-text"}>No Tournaments</span>
+      <span className={"no-tournamnet-text"} ></span>
     ) : (
+
+
       tournaments
         .filter((tournament) => filterToFunctionMap[filter](tournament))
+        .filter((tournament) => tournament.isPinned) // Filter out tournaments that are not pinned
         .map((tournament, index) => {
           const seatsFilled =
             (100 * tournament.filled_spots) / tournament.total_spots;
           const startDate = new Date(tournament.start_time);
           const finishDate = new Date(tournament.end_time);
+          // const disabledClass =
+          //   tournament.status !== 0 ? " disable-join-button" : "";
+
           const disabledClass =
             tournament.status !== 0 ? " disable-join-button" : "";
           const disabledTournament = tournament.status !== 0;
 
+          // const openTournament = tournament.status === 0;
+          // const liveTournament = tournament.status === 2;
+          // const closedTournament = tournament.status === 1;
+          // const cancelledTournament = tournament.status === -2;
+          // const completedTournament = tournament.status === 4;
+
           return (
-            <motion.div
+            <> <motion.div
               id={"tournament-" + tournament._id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -592,13 +738,24 @@ const LeftComponent = () => {
               className="tournament"
               onClick={() => {
                 clearInterval(intervalId);
-                navigate(`/tournaments/${tournament._id}`, {
+                navigate(`/tournament/${tournament._id}`, {
                   state: {
                     transactionId: tournament.transaction_hash,
                   },
                 });
               }}
             >
+
+              {tournament.isPinned ? (
+                <div style={{ position: "relative" }}>
+                  <div style={{ justifyContent: "end" }}>
+                    <div className="pinned1 pinned-top-right">
+                      <PushPinOutlinedIcon style={{ color: "#fea31b", fontWeight: "bold", }} />
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+
               {tournament.user_joined ? (
                 <div style={{ position: "relative" }}>
                   <div className="ribbon1 ribbon1-top-left">
@@ -606,6 +763,7 @@ const LeftComponent = () => {
                   </div>
                 </div>
               ) : null}
+
               {/* <div className="ribbon1">  
               <span className="ribbon12">Joined</span>
             </div> */}
@@ -641,8 +799,8 @@ const LeftComponent = () => {
                       {startDate.getMinutes() / 10 < 1
                         ? "0" + startDate.getMinutes()
                         : startDate.getMinutes()}{" "}
-                      GMT <br />
-                      Duration : {(finishDate - startDate) / 60000} mins
+                      IST <br />
+                      Duration : {`${formatDuration(startDate, finishDate)}`}
                     </div>
                   </span>
                 </span>
@@ -665,7 +823,12 @@ const LeftComponent = () => {
                   }}
                   disabled={disabledTournament}
                 >
+                  {/* {tournament.status=== -2 ? <> {tournament.entryFee} FPC</> : <> {tournament.entryFee} FPC</> } */}
+                  {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined &&  <> Join @{tournament.entryFee} FPC</>} */}
                   {tournament.entryFee} FPC
+
                 </Button>
               </div>
               <div>
@@ -694,7 +857,10 @@ const LeftComponent = () => {
                   >
                     {tournament.total_spots} spots
                   </span>
+
+
                 </div>
+
                 {/*<div className="tournamentPage__transactionHash">*/}
                 {/*  {tournament.transaction_hash !== undefined && (*/}
                 {/*    <span*/}
@@ -710,7 +876,60 @@ const LeftComponent = () => {
                 {/*  )}*/}
                 {/*</div>*/}
               </div>
+              {/* {tournament.status === 1 ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Starting in{" "}</div>
+              ) : (null)} */}
+              {/* {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration closing in{" "}</div>
+              ) : (null)} */}
+
+
+
+<div className="tournamentPage__countdown" >
+                  <span id="timeRemaining" className="font-size-12" style={{}}>
+                    {/* {startDate - 300000 > Date.now() ? (
+                      <Countdown
+                        date={startDate - 300000}
+                        renderer={renderer}
+                      />
+                    ) : null} */}
+
+                    {tournament.status === 1 ? (<Countdown
+                      date={startDate}
+                      renderer={rendererBuffer}
+                      onComplete={() => bufferRefresh(tournament.status)}
+                    />
+                    ) : (null)}
+
+                    {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate > Date.now() ? (
+                      <Countdown
+                        date={startDate - 60000}
+                        renderer={renderer}
+                        onComplete={() => openRefresh(tournament.status)}
+                      />
+                    ) : (
+                      <>
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
+                          <Countdown
+                            date={finishDate}
+                            renderer={RendererEnd}
+                            onComplete={() => completeRefresh(tournament.status)}
+                          />
+                        ) : null}
+                      </>
+                    )}
+
+                  </span>
+                </div>
+
               <div className="tournament-reward">
+              <span className="font-size-12" style={{color:"#fea31b",fontWeight:"bold"}}>
+                  <EmojiEventsOutlinedIcon />
+                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
+                  
+                </span>
                 {status[tournament.status].value !== "Open" ? (
                   <span
                     className="font-size-12"
@@ -719,30 +938,331 @@ const LeftComponent = () => {
                       padding: "0 10px",
                       border: "1px solid " + status[tournament.status].color,
                       borderRadius: "30px",
+                      fontWeight:"bold",
+                      letterSpacing:"1px"
                     }}
                   >
                     {status[tournament.status].value}
                   </span>
-                ) : null}
-                <div className="tournamentPage__countdown">
+                ) : <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                    fontWeight:"bold",
+                      letterSpacing:"1px"
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>}
+                {/* <div className="tournamentPage__countdown">
                   <span id="timeRemaining" className="font-size-12">
-                    {startDate - 300000 > Date.now() ? (
+                 
+
+                    {tournament.status === 1 ? (<Countdown
+                      date={startDate}
+                      renderer={rendererBuffer}
+                      onComplete={() => bufferRefresh(tournament.status)}
+                    />
+                    ) : (null)}
+
+                    {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate > Date.now() ? (
                       <Countdown
-                        date={startDate - 300000}
+                        date={startDate - 60000}
                         renderer={renderer}
+                        onComplete={() => openRefresh(tournament.status)}
                       />
-                    ) : null}
+                    ) : (
+                      <>
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
+                          <Countdown
+                            date={finishDate}
+                            renderer={RendererEnd}
+                            onComplete={() => completeRefresh(tournament.status)}
+                          />
+                        ) : null}
+                      </>
+                    )}
+
                   </span>
-                </div>
-                <span className="font-size-12">
-                  <EmojiEventsOutlinedIcon />
-                  <span>{tournament.rewards.prize_pool} FPC</span>
-                </span>
+                </div> */}
+              
                 {/* {tournament.user_joined ?  */}
 
                 {/* : null} */}
               </div>
-            </motion.div>
+            </motion.div> </>
+          );
+        })
+    )
+  ) : (
+    <></>
+  );
+
+  const tournamentsListNotPinned = tournaments ? (
+    tournaments.filter((tournament) => filterToFunctionMap[filter](tournament))
+      .length === 0 ? (
+      <span className={"no-tournamnet-text"} >Currently no tournaments are live. <br/> Stay tune for new tournaments...</span>
+    ) : (
+
+
+      tournaments
+        .filter((tournament) => filterToFunctionMap[filter](tournament))
+        .filter((tournament) => !tournament.isPinned) // Filter out tournaments that are not pinned
+        .map((tournament, index) => {
+          const seatsFilled =
+            (100 * tournament.filled_spots) / tournament.total_spots;
+          const startDate = new Date(tournament.start_time);
+          const finishDate = new Date(tournament.end_time);
+          // const disabledClass =
+          //   tournament.status !== 0 ? " disable-join-button" : "";
+
+          const disabledClass =
+            tournament.status !== 0 ? " disable-join-button" : "";
+          const disabledTournament = tournament.status !== 0;
+
+          // const openTournament = tournament.status === 0;
+          // const liveTournament = tournament.status === 2;
+          // const closedTournament = tournament.status === 1;
+          // const cancelledTournament = tournament.status === -2;
+          // const completedTournament = tournament.status === 4;
+
+          return (
+            <> <motion.div
+              id={"tournament-" + tournament._id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 * (index + 1) }}
+              key={"tournament__" + index}
+              className="tournament"
+              onClick={() => {
+                clearInterval(intervalId);
+                navigate(`/tournament/${tournament._id}`, {
+                  state: {
+                    transactionId: tournament.transaction_hash,
+                  },
+                });
+              }}
+            >
+
+              {tournament.isPinned ? (
+                <div style={{ position: "relative" }}>
+                  <div style={{ justifyContent: "end" }}>
+                    <div className="pinned1 pinned-top-right">
+                      <PushPinOutlinedIcon style={{ color: "#fea31b", fontWeight: "bold", }} />
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+
+              {tournament.user_joined ? (
+                <div style={{ position: "relative" }}>
+                  <div className="ribbon1 ribbon1-top-left">
+                    <span>Joined</span>
+                  </div>
+                </div>
+              ) : null}
+
+              {/* <div className="ribbon1">  
+              <span className="ribbon12">Joined</span>
+            </div> */}
+              <div className="tournament-info">
+                <span
+                  className="tournament-image"
+                  style={{ borderRadius: "100%" }}
+                >
+                  <img
+                    style={{ borderRadius: "100%" }}
+                    src={tournament.imageURL}
+                    loading={"lazy"}
+                    width="60px"
+                    height={"60px"}
+                  />
+                </span>
+                <span style={{ textAlign: "left" }}>
+                  <span style={{ color: "#071F36", fontWeight: "700" }}>
+                    {tournament.name}
+                  </span>
+                  {/*<span style={{ color: "#071F36", fontWeight: "700" }}>*/}
+                  {/*  {tournament.name}*/}
+                  {/*</span>*/}
+                  <br />
+                  <span className="tournaments-spots">
+                    <div className="tournamentPage__startTime">
+                      {startDate.getDate()} {monthNames[startDate.getMonth()]}'
+                      {startDate.getFullYear() % 100} |{" "}
+                      {startDate.getHours() / 10 < 1
+                        ? "0" + startDate.getHours()
+                        : startDate.getHours()}
+                      :
+                      {startDate.getMinutes() / 10 < 1
+                        ? "0" + startDate.getMinutes()
+                        : startDate.getMinutes()}{" "}
+                      IST <br />
+                      Duration : {`${formatDuration(startDate, finishDate)}`}
+                    </div>
+                  </span>
+                </span>
+                <Button
+                  className={disabledClass + " tournament-fee"}
+                  style={
+                    disabledTournament
+                      ? {}
+                      : { backgroundColor: "var(--golden)" }
+                  }
+                  size="small"
+                  onClick={(event) => {
+                    event.cancelBubble = true;
+                    if (event.stopPropagation) event.stopPropagation();
+                    var tmp =
+                      event.target.parentNode.parentNode.getAttribute("id");
+                    setTournamentId(tmp.split("-")[1]);
+                    // tournamentId = tournamentId.split("-")[1];
+                    chooseTeamOpen();
+                  }}
+                  disabled={disabledTournament}
+                >
+                  {/* {tournament.status=== -2 ? <> {tournament.entryFee} FPC</> : <> {tournament.entryFee} FPC</> } */}
+                  {/* {tournament.user_joined && <> {tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined && tournament.status===0 && <> Join @{tournament.entryFee} FPC</>} */}
+                  {/* {!tournament.user_joined &&  <> Join @{tournament.entryFee} FPC</>} */}
+                  {tournament.entryFee} FPC
+
+                </Button>
+              </div>
+              <div>
+                <LinearProgress
+                  variant="determinate"
+                  style={{ backgroundColor: "var(--dim-white)" }}
+                  value={seatsFilled}
+                />
+                <div className="spots-wrapper">
+                  <span
+                    className="font-size-12 font-weight-500 mt-5"
+                    style={{ color: "var(--golden)" }}
+                  >
+                    {tournament.status === 0 ? (
+                      <>{tournament.available_spots} spots left</>
+                    ) : (
+                      <>
+                        {tournament.total_spots - tournament.available_spots}{" "}
+                        users joined
+                      </>
+                    )}
+                  </span>
+                  <span
+                    className="font-size-12 font-weight-500 mt-5"
+                    style={{ color: "var(--dark-dim-white)" }}
+                  >
+                    {tournament.total_spots} spots
+                  </span>
+
+
+                </div>
+
+                {/*<div className="tournamentPage__transactionHash">*/}
+                {/*  {tournament.transaction_hash !== undefined && (*/}
+                {/*    <span*/}
+                {/*      className="font-size-12 tournamentPage__transactionHashLink"*/}
+                {/*      onClick={() => {*/}
+                {/*        window.location.href = `https://mumbai.polygonscan.com/tx/${tournament.transaction_hash}`;*/}
+                {/*      }}*/}
+                {/*    >*/}
+                {/*      Transaction Hash(Polygon):{" "}*/}
+                {/*      {tournament.transaction_hash.substring(0, 10)}XXXX*/}
+                {/*      {tournament.transaction_hash.slice(-10)}*/}
+                {/*    </span>*/}
+                {/*  )}*/}
+                {/*</div>*/}
+              </div>
+              {/* {tournament.status === 1 ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Starting in{" "}</div>
+              ) : (null)}
+              {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate.getTime() - 60000 > Date.now() ? (
+
+                <div className="font-weight-500" style={{ color: "var(--grey-shade)", fontFamily: "poppins", letterSpacing: "0.5px", textAlign: "center", fontSize: "0.8rem", marginBottom: "-1%" }}>Registration bhclosing in{" "}</div>
+              ) : (null)} */}
+              
+              <div className="tournamentPage__countdown">
+                  <span id="timeRemaining" className="font-size-12">
+                    {/* {startDate - 300000 > Date.now() ? (
+                      <Countdown
+                        date={startDate - 300000}
+                        renderer={renderer}
+                      />
+                    ) : null} */}
+
+                    {tournament.status === 1 ? (<Countdown
+                      date={startDate}
+                      renderer={rendererBuffer}
+                      onComplete={() => bufferRefresh(tournament.status)}
+                    />
+                    ) : (null)}
+
+                    {tournament.status !== -2 && tournament.status !== 1 && tournament.status === 0 && startDate > Date.now() ? (
+                      <Countdown
+                        date={startDate - 60000}
+                        renderer={renderer}
+                        onComplete={() => openRefresh(tournament.status)}
+                      />
+                    ) : (
+                      <>
+                        {tournament.status !== -2 && startDate <= Date.now() ? (
+                          <Countdown
+                            date={finishDate}
+                            renderer={RendererEnd}
+                            onComplete={() => completeRefresh(tournament.status)}
+                          />
+                        ) : null}
+                      </>
+                    )}
+
+                  </span>
+                </div>
+
+              <div className="tournament-reward">
+              <span className="font-size-12" style={{color:"#fea31b",fontWeight:"bold"}}>
+                  <EmojiEventsOutlinedIcon />
+                  {tournament.rewards.reward_type === "FPC" ? (<span>{tournament.rewards.prize_pool} FPC</span>) : (<span style={{paddingLeft:"1px"}}> {tournament.rewards.display_text}</span>)}
+                  
+                </span>
+                {status[tournament.status].value !== "Open" ? (
+                  <span
+                    className="font-size-12"
+                    style={{
+                      color: status[tournament.status].color,
+                      padding: "0 10px",
+                      border: "1px solid " + status[tournament.status].color,
+                      borderRadius: "30px",
+                      fontWeight:"bold",
+                      letterSpacing:"1px"
+                    }}
+                  >
+                    {status[tournament.status].value}
+                  </span>
+                ) : <span
+                  className="font-size-12"
+                  style={{
+                    color: status[tournament.status].color,
+                    padding: "0 10px",
+                    border: "1px solid " + status[tournament.status].color,
+                    borderRadius: "30px",
+                    fontWeight:"bold",
+                    letterSpacing:"1px"
+                  }}
+                >
+                  {status[tournament.status].value}
+                </span>}
+               
+               
+                {/* {tournament.user_joined ?  */}
+
+                {/* : null} */}
+              </div>
+            </motion.div> </>
           );
         })
     )
@@ -761,106 +1281,147 @@ const LeftComponent = () => {
             className="font-size-15 font-weight-500 mr-auto ml-20 mb-20"
             style={{ marginTop: "-30px", color: "var(--dark-dim-white)" }}
           >
-            {/* Filters */}
-            <Chip
-              className="active-chip"
-              style={{ fontFamily: "poppins" }}
-              label="All"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                setFilter("all");
-              }}
-            />
-            <Chip
-              className="ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Live"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                setFilter("live");
-              }}
-            />
-            <Chip
-              className="ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Joined"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.add("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.remove("active-chip");
-                setFilter("joined");
-              }}
-            />
-            <Chip
-              className="ml-10"
-              style={{ marginLeft: "10px", fontFamily: "poppins" }}
-              label="Upcoming"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .getElementsByClassName("MuiChip-root")[0]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[1]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[2]
-                  .classList.remove("active-chip");
-                document
-                  .getElementsByClassName("MuiChip-root")[3]
-                  .classList.add("active-chip");
-                setFilter("upcoming");
-              }}
-            />
+            <div className="ChipsScrollController">
+              {/* hey */}
+              {/* Filters */}
+              <Chip
+                className="active-chip"
+                style={{ fontFamily: "poppins" }}
+                label="All"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+                  setFilter("all");
+                }}
+              />
+              <Chip
+                className="ml-10"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Live"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+
+                  setFilter("live");
+                }}
+              />
+              <Chip
+                className="ml-10"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Joined"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+                  setFilter("joined");
+                }}
+              />
+              <Chip
+                className="ml-10"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Upcoming"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.add("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.remove("active-chip");
+                  setFilter("upcoming");
+                }}
+              />
+              <Chip
+                className="cancelled-Tournament-chip"
+                style={{ marginLeft: "10px", fontFamily: "poppins" }}
+                label="Cancelled"
+                variant="outlined"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("MuiChip-root")[0]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[1]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[2]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[3]
+                    .classList.remove("active-chip");
+                  document
+                    .getElementsByClassName("MuiChip-root")[4]
+                    .classList.add("active-chip");
+                  setFilter("cancelled");
+                }}
+              />
+            </div>
           </span>
           {tournaments === undefined ||
-          tournaments === null ||
-          teams === undefined ||
-          teams === null ? (
+            tournaments === null ||
+            teams === undefined ||
+            teams === null ? (
             <div className="loading-component">
               <ReactLoading type={"spin"} color="var(--violet-blue)" />{" "}
             </div>
           ) : (
             <>
               {tournaments.length === 0 ? (
-                <span>No Tournaments</span>
+                <span className={"no-tournamnet-text"}>Currently no tournaments are live. !! <br/> Stay tune for new tournaments...</span>
               ) : (
                 <>
                   {tournamentsList}
+                  {tournamentsListNotPinned}
                   <JoinTournamentDrawer
                     teams={teams}
                     tournamentId={tournamentId}
@@ -881,6 +1442,7 @@ const LeftComponent = () => {
           open={errorMessageSnackOpen}
           autoHideDuration={3000}
           onClose={handleErrorMessageSnackClose}
+         xs={12}
         >
           <motion.div
             initial={{ y: 200 }}
@@ -890,7 +1452,8 @@ const LeftComponent = () => {
             <Alert
               onClose={handleErrorMessageSnackClose}
               severity={errorMessage.variant}
-              sx={{ width: "100%", fontFamily: "poppins" }}
+              sx={{ width: "95%", fontFamily: "poppins" }}
+              
             >
               {errorMessage.message}
             </Alert>
