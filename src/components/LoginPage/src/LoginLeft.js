@@ -22,6 +22,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import emailIcon from "../../../images/emailIcon.png"
 
+import { SolanaExtension } from "@magic-ext/solana";
 // Naman dependency
 import { FcGoogle } from "react-icons/fc";
 import { Magic, } from 'magic-sdk/';
@@ -29,14 +30,39 @@ import { OAuthExtension } from "@magic-ext/oauth";
 
 
 
+const rpcUrl = "https://api.devnet.solana.com";
 
+const magic = new Magic("pk_live_3CE84BD39270E181" , {
+  extensions: {
+    solana: new SolanaExtension({
+      rpcUrl,
+    }),
+  },
+});
 
 
 function LoginLeft() {
 
-  const magic = new Magic(process.env.REACT_APP_MAGIC_LINK_API_KEY, {
-    extensions: [new OAuthExtension()],
-  });
+  
+const rpcUrl = "https://api.devnet.solana.com";
+
+const magic = new Magic("pk_live_3CE84BD39270E181" , {
+  extensions: {
+    solana: new SolanaExtension({
+      rpcUrl,
+    }),
+  },
+});
+  // magic link solana
+  const [publicAddress, setPublicAddress] = useState("");
+  const [destinationAddress, setDestinationAddress] = useState("");
+  const [sendAmount, setSendAmount] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userMetadata, setUserMetadata] = useState({});
+  const [txHash, setTxHash] = useState("");
+  const [sendingTransaction, setSendingTransaction] = useState(false);
+  const [user, setUser] = useState("");
+ 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -51,8 +77,6 @@ function LoginLeft() {
     const isLoggedIn = await localStorage.getItem("isLoggedIn");
     await setIsAuthenticated(isLoggedIn);
     await setAuthenticate(isLoggedIn);
-
-
 
   }
 
@@ -94,71 +118,71 @@ function LoginLeft() {
   };
 
   // For policy
-  const loginWithMail = async () => {
-    if (!policiesAccepted) {
-      document
-        .getElementsByClassName("policies-error")[0]
-        .classList.remove("show");
-      document
-        .getElementsByClassName("policies-error")[0]
-        .classList.add("show");
-      setTimeout(() => {
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.remove("show");
-      }, 2000);
-      return;
-    }
-    const emailValue = document.getElementById("email-field").value;
-    const user = await authenticate({
-      provider: "magicLink",
-      email: emailValue,
-      apiKey: "pk_live_3CE84BD39270E181",
-      network: "mainnet",
-    })
-      .then(async (user) => {
-        // setLoadingTrue();
-        await getAuthTokenFunctionEmail(user, emailValue);
-      })
-      .then(function () {
-        localStorage.setItem("walletType", "magicLink");
-        // setLoadingFalse();
-        window.location.pathname = "tournaments";
-      });
-  };
+  // const loginWithMail = async () => {
+  //   if (!policiesAccepted) {
+  //     document
+  //       .getElementsByClassName("policies-error")[0]
+  //       .classList.remove("show");
+  //     document
+  //       .getElementsByClassName("policies-error")[0]
+  //       .classList.add("show");
+  //     setTimeout(() => {
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.remove("show");
+  //     }, 2000);
+  //     return;
+  //   }
+  //   const emailValue = document.getElementById("email-field").value;
+  //   const user = await authenticate({
+  //     provider: "magicLink",
+  //     email: emailValue,
+  //     apiKey: "pk_live_3CE84BD39270E181",
+  //     network: "mainnet",
+  //   })
+  //     .then(async (user) => {
+  //       // setLoadingTrue();
+  //       await getAuthTokenFunctionEmail(user, emailValue);
+  //     })
+  //     .then(function () {
+  //       localStorage.setItem("walletType", "magicLink");
+  //       // setLoadingFalse();
+  //       window.location.pathname = "tournaments";
+  //     });
+  // };
 
-  const walletConnectLogin = async () => {
-    localStorage.removeItem("authtoken");
-    await logout();
-    if (!isAuthenticated) {
-      if (!policiesAccepted) {
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.remove("show");
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.add("show");
-        setTimeout(() => {
-          document
-            .getElementsByClassName("policies-error")[0]
-            .classList.remove("show");
-        }, 2000);
-        return;
-      }
-      localStorage.clear();
-      await authenticate({ provider: "walletconnect", chainId: 137 })
-        .then(async (user) => {
-          await getAuthTokenFunction(user);
-        })
-        .then(async function () {
-          localStorage.setItem("walletType", "walletConnect");
-          window.location.pathname = "tournaments";
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
+  // const walletConnectLogin = async () => {
+  //   localStorage.removeItem("authtoken");
+  //   await logout();
+  //   if (!isAuthenticated) {
+  //     if (!policiesAccepted) {
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.remove("show");
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.add("show");
+  //       setTimeout(() => {
+  //         document
+  //           .getElementsByClassName("policies-error")[0]
+  //           .classList.remove("show");
+  //       }, 2000);
+  //       return;
+  //     }
+  //     localStorage.clear();
+  //     await authenticate({ provider: "walletconnect", chainId: 137 })
+  //       .then(async (user) => {
+  //         await getAuthTokenFunction(user);
+  //       })
+  //       .then(async function () {
+  //         localStorage.setItem("walletType", "walletConnect");
+  //         window.location.pathname = "tournaments";
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
   //Snackbar Wallet component
   const handleWalletClick = () => {
@@ -305,51 +329,51 @@ function LoginLeft() {
     );
   };
 
-  const web3Login = async () => {
-    localStorage.removeItem("authtoken");
-    await logout();
-    if (!isAuthenticated) {
-      if (!policiesAccepted) {
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.remove("show");
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.add("show");
-        setTimeout(() => {
-          document
-            .getElementsByClassName("policies-error")[0]
-            .classList.remove("show");
-        }, 2000);
-        return;
-      }
-      document
-        .getElementsByClassName("overlay-div")[0]
-        .classList.add("overlay-login");
-      await authenticate({
-        provider: "web3Auth",
-        clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
-        loginMethodsOrder: ["google", "facebook"]
-      })     //ye ho
-        .then(async (user) => {
-          if (user === undefined) {
-            document
-              .getElementsByClassName("overlay-div")[0]
-              .classList.remove("overlay-login");
-            throw new Error("User Not Found");
-          }
-          await getAuthTokenFunction(user);
-        })
-        .then(async function () {
-          localStorage.setItem("walletType", "web3Auth");
-          window.location.pathname = "tournaments";
-          // navigate("tournaments");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+  // const web3Login = async () => {
+  //   localStorage.removeItem("authtoken");
+  //   await logout();
+  //   if (!isAuthenticated) {
+  //     if (!policiesAccepted) {
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.remove("show");
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.add("show");
+  //       setTimeout(() => {
+  //         document
+  //           .getElementsByClassName("policies-error")[0]
+  //           .classList.remove("show");
+  //       }, 2000);
+  //       return;
+  //     }
+  //     document
+  //       .getElementsByClassName("overlay-div")[0]
+  //       .classList.add("overlay-login");
+  //     await authenticate({
+  //       provider: "web3Auth",
+  //       clientId: `${process.env.REACT_APP_WEB3AUTH_KEY}`,
+  //       loginMethodsOrder: ["google", "facebook"]
+  //     })     //ye ho
+  //       .then(async (user) => {
+  //         if (user === undefined) {
+  //           document
+  //             .getElementsByClassName("overlay-div")[0]
+  //             .classList.remove("overlay-login");
+  //           throw new Error("User Not Found");
+  //         }
+  //         await getAuthTokenFunction(user);
+  //       })
+  //       .then(async function () {
+  //         localStorage.setItem("walletType", "web3Auth");
+  //         window.location.pathname = "tournaments";
+  //         // navigate("tournaments");
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // };
 
 
   // NAMAN CODES
@@ -366,46 +390,46 @@ function LoginLeft() {
   //   ReactGA.send({ hitType: "GoogleLogin", page: "GoogleLogin", title: "GoogleLogin" });
   // }
   // Magic Login By Naman
-  const magicGoogleLogin = async () => {
-    localStorage.clear();
-    await logout();
+  // const magicGoogleLogin = async () => {
+  //   localStorage.clear();
+  //   await logout();
 
-    if (!isAuthenticated) {
-      if (!policiesAccepted) {
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.remove("show");
-        document
-          .getElementsByClassName("policies-error")[0]
-          .classList.add("show");
-        setTimeout(() => {
-          document
-            .getElementsByClassName("policies-error")[0]
-            .classList.remove("show");
-        }, 2000);
-        return;
-      }
-      document
-        .getElementsByClassName("overlay-div")[0]
-        .classList.add("overlay-login");
-      const magic = new Magic("pk_live_3CE84BD39270E181", {
-        extensions: [new OAuthExtension()],
-      });
-      await localStorage.setItem("loginInitiated", true);
-      try {
-        await magic.oauth.loginWithRedirect({
-          provider: "google",
-          redirectURI: new URL("/loginverify", window.location.origin).href,
+  //   if (!isAuthenticated) {
+  //     if (!policiesAccepted) {
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.remove("show");
+  //       document
+  //         .getElementsByClassName("policies-error")[0]
+  //         .classList.add("show");
+  //       setTimeout(() => {
+  //         document
+  //           .getElementsByClassName("policies-error")[0]
+  //           .classList.remove("show");
+  //       }, 2000);
+  //       return;
+  //     }
+  //     document
+  //       .getElementsByClassName("overlay-div")[0]
+  //       .classList.add("overlay-login");
+  //     const magic = new Magic("pk_live_3CE84BD39270E181", {
+  //       extensions: [new OAuthExtension()],
+  //     });
+  //     await localStorage.setItem("loginInitiated", true);
+  //     try {
+  //       await magic.oauth.loginWithRedirect({
+  //         provider: "google",
+  //         redirectURI: new URL("/loginverify", window.location.origin).href,
 
-        });
+  //       });
 
 
-      } catch (err) {
-        console.error(err);
-      }
-    }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
 
-  }
+  // }
   const [account, setAccount] = useState(null);
   const [idToken, setIdToken] = useState();
 
@@ -432,12 +456,19 @@ function LoginLeft() {
       document
         .getElementsByClassName("overlay-div")[0]
         .classList.add("overlay-login");
-      const magic = new Magic("pk_live_3CE84BD39270E181");
+      // const magic = new Magic("pk_live_3CE84BD39270E181");
+      const rpcUrl = "https://api.devnet.solana.com";
 
+      const magic = new Magic("pk_live_3CE84BD39270E181" , {
+        extensions: {
+          solana: new SolanaExtension({
+            rpcUrl,
+          }),
+        },
+      });
       await localStorage.setItem("loginInitiated", true);
       try {
-        const accounts = await magic.wallet
-          .connectWithUI()
+        await magic.auth.loginWithEmailOTP({ email });
           // .on("id-token-created", async(params) => {
           //   await setIdToken(params.idToken);
           //   await localStorage.setItem("didToken", params.idToken);
@@ -473,29 +504,37 @@ function LoginLeft() {
         // });
         // await localStorage.setItem("diiiddddtoken", didToken);
         // console.log("token from 474"+didToken);
-
-        const meta = await magic.user.getMetadata();
-        console.log("meta data");
-        const userEmail = await meta.email;
-        await localStorage.setItem("user", userEmail);
-        const didToken = await magic.auth.loginWithMagicLink({
-          email: userEmail
-        });
-       
-        await localStorage.setItem("didToken", didToken)
-      
         const isLoggedIn = await magic.user.isLoggedIn();
-        localStorage.setItem("isLoggedIn", isLoggedIn);
+
+        
+          setIsLoggedIn(true);
+          const meta = await magic.user.getMetadata();
+          console.log("meta data");
+          const userEmail = await meta.email;
+          
+          await localStorage.setItem("user", userEmail);
+          const didToken = await magic.auth.loginWithMagicLink({
+            email: userEmail
+          });
+         
+          await localStorage.setItem("didToken", didToken)
+        
+         
+          localStorage.setItem("isLoggedIn", isLoggedIn);
+         
+          const walletAddress = await meta.publicAddress;
+          await localStorage.setItem("walletAddress", walletAddress);
+          // await getMagicAuthToken(didToken, walletAddress);
+  
+          setPublicAddress(meta.publicAddress);
+          console.log(meta);
+          setUserMetadata(meta);
+          if (didToken) {
+          
+            navigate('/loginverify')
+          }
+  
        
-        const walletAddress = await meta.publicAddress;
-        await localStorage.setItem("walletAddress", walletAddress);
-        await getMagicAuthToken(didToken, walletAddress);
-
-        if (didToken) {
-          navigate('/loginverify')
-        }
-
-
         
       } catch (err) {
         console.error(err);
@@ -698,7 +737,7 @@ function LoginLeft() {
 
 
       <div style={{ width: "100%", height: "30px" }}></div>
-      {/* <label
+      <label
         style={{ width: "min(320px,100%)" }}
         className="font-size-12 ml-auto mr-auto"
         htmlFor="email-field"
@@ -706,25 +745,30 @@ function LoginLeft() {
         Email ID
       </label>
       <input
-        type="email"
-        placeholder="Mention your Email ID here"
-        required
-        // autoFocus
-        value={email}
-        name="email-field"
-        id="email-field"
-        onChange={(e) => handleChange(e)}
-      />
+  type="email"
+  placeholder="Mention your Email ID here"
+  required
+  // autoFocus (optional)
+  value={email}
+  name="email-field"
+  id="email-field"
+  onChange={(e) => setEmail(e.target.value)}
+/>
       <Button
         id="folioplay-login-mail-button"
-        onClick={() => magicEmailLoginMyNew()}
+        onClick={() => {
+          magicEmailLogin();
+        }}
         variant="filled"
         size="medium"
       >
         Continue
         <ArrowForwardIcon className="ml-10" style={{ fontSize: "16px" }} />
-      </Button> */}
-      <div className="folioplay-connect">
+      </Button>
+   
+   
+   {/* magic auth */}
+      {/* <div className="folioplay-connect">
         <Button
           style={{
             width: "min(320px,100%)",
@@ -738,7 +782,7 @@ function LoginLeft() {
             magicEmailLogin();
           }}
         >
-          <img src={emailIcon} alt="email"  style={{width:'8%',padding:"0 5px 0 0"}}/> {"    "} 
+          <img src={emailIcon} alt="email"  style={{width:'8%',padding:"0 5px 0 0"}}/> {"    "}  */}
           {/* <FcGoogle size={"1.5rem"} /> &nbsp; */}
           {/* <img
             className="mr-8"
@@ -746,10 +790,10 @@ function LoginLeft() {
             src={web4authLogo}
             width={"24px"}
             height={"24px"}
-        />{" "} */}
-          Login/Register with Email
+        />{" "} 
+          {/* Login/Register with Email
         </Button>
-      </div>
+      </div> */}
 
 
       {/* <div className="folioplay-connect">
