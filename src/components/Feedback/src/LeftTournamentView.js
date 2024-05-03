@@ -28,9 +28,30 @@ const LeftTournamentView = () => {
       navigate(-1);
     }
   }
+  const Server = process.env.REACT_APP_API_SERVER;
 
   async function submitFeedback() {
-    setFeedback("");
+    const authToken = localStorage.getItem("authtoken");
+   
+        try {
+      const response = await fetch(`${Server}/feedback`, {
+        method: 'POST',
+        headers: {
+          "x-access-token": authToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ feedbackMessage:feedback })
+      });
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        console.log('Feedback submitted:', jsonResponse);
+        setFeedback(""); // Clear feedback after successful submission
+      } else {
+        throw new Error('Failed to submit feedback');
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
   }
 
   return (
@@ -61,8 +82,7 @@ const LeftTournamentView = () => {
               gap: "18px",
             }}
           >
-
-<Box
+            <Box
               sx={{
                 width: "100%",
                 height: "fit-content",
@@ -72,9 +92,8 @@ const LeftTournamentView = () => {
                 alignItems: "center",
               }}
             >
-<h1 className="c12">Feedback</h1>
-          
-              </Box>
+              <h1 className="c12">Feedback</h1>
+            </Box>
 
             <Box
               sx={{
