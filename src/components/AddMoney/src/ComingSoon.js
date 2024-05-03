@@ -4,7 +4,6 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {Button} from "@mui/material";
 import BalanceTable from "../common/BalanceTable";
 import {useNavigate} from "react-router-dom";
-import { motion } from "framer-motion/dist/framer-motion";
 
 const   ComingSoon = () => {
 

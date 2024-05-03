@@ -1,7 +1,6 @@
 import React from 'react';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
-import { motion } from "framer-motion/dist/framer-motion";
 
 function createData(token, totalBalance, availableBalance) {
     return { token, totalBalance, availableBalance };
