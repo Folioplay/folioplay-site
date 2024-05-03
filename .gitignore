@@ -3,9 +3,9 @@
 .env
 # dependencies
 /node_modules
-
+/build
 /coverage
-
+./build
 # misc
 .DS_Store
 .env.local
