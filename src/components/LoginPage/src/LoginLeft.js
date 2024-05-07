@@ -529,6 +529,7 @@ const magic = new Magic("pk_live_3CE84BD39270E181" , {
           setPublicAddress(meta.publicAddress);
           console.log(meta);
           setUserMetadata(meta);
+
           if (didToken) {
           
             navigate('/loginverify')

@@ -22,6 +22,9 @@ import {
   getWinRateAPI,
   SERVER,
 } from "../../../APIS/apis";
+import { Magic, } from 'magic-sdk/';
+import { SolanaExtension } from "@magic-ext/solana";
+
 import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../../Context/AuthContext";
@@ -70,6 +73,7 @@ function UserProfileLeft() {
     setSnackMessage("Referral Link Code Copied!!");
     handleClick();
   }
+
   const [disabledNameField, setDisabledNameField] = useState(true);
   const [errorNameField, setErrorNameField] = useState(false);
   const [helperTextNameField, setHelperTextNameField] = useState("");
@@ -241,6 +245,28 @@ function UserProfileLeft() {
   };
   const defaultImage = require("../../../images/profilepic.jpeg").default;
   const [presentProfileImage, setPresentProfileImage] = useState(null);
+ 
+  const rpcUrl = "https://api.devnet.solana.com";
+
+  const magic = new Magic("pk_live_3CE84BD39270E181" , {
+    extensions: {
+      solana: new SolanaExtension({
+        rpcUrl,
+      }),
+    },
+  });
+
+  async function revelkey(){
+    const key = await magic.user.revealPrivateKey();
+    console.log("key"+ key); // => `true` or `false`
+  try {
+    // const key = await magic.user.revealPrivateKey();
+    console.log("key"+ key); // => `true` or `false`
+    
+  } catch(err) {
+   console.log(err)
+  }
+}
 
   return (
     <div className="fullpage">
@@ -433,6 +459,50 @@ function UserProfileLeft() {
                 </Button>
               )}
             </div>
+          </div>
+        </div>
+        
+        <div className="headingPersonalInfo">Reval Your Private Key</div>
+        <div className="personalDetails">
+          <div className="section">
+          
+
+            <div className="sectionHeading">Private Key</div>
+            {/* <div className="sectionDetails">
+              {tapToOpenDisabled ? (
+                <span>
+                  {localStorage.getItem("folioWalletAddress").substring(0, 8)}
+                  XXXXXX
+                  {localStorage.getItem("folioWalletAddress").slice(-8)}
+                </span>
+              ) : (
+                <span>{localStorage.getItem("folioWalletAddress")}</span>
+              )}
+              <ContentCopyIcon
+                id="copy-to-clipboard"
+                className="ml-10"
+                fontSize="medium"
+                style={{ color: "var(--black)" }}
+                onClick={copytoClipboard}
+              />
+            </div> */}
+
+<button onClick={revelkey}>get key</button>
+            {/* <div className="tapToOpenButton" style={{ marginBottom: "0.8rem" }}>
+              {tapToOpenDisabled ? (
+                <Button
+                  onClick={() => setTapToOpenDisabled(!tapToOpenDisabled)}
+                >
+                  Tap to see full Wallet Address
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => setTapToOpenDisabled(!tapToOpenDisabled)}
+                >
+                  Tap to shorten Wallet Address
+                </Button>
+              )}
+            </div> */}
           </div>
         </div>
         <div className="headingPersonalInfo">Referral Information</div>
