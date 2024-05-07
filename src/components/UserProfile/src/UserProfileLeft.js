@@ -33,7 +33,7 @@ function UserProfileLeft() {
   const [errorInputForm, setErrorInputForm] = useState(false);
   const [user, setUser] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState("");
-
+const [keySucess,setKeySucess] = useState(false)
   const [nameSnackOpen, setNameSnackOpen] = useState(false);
   const [successSnackOpen, setSuccessSnackOpen] = useState(false);
   const [error, setError] = useState(null);
@@ -257,15 +257,21 @@ function UserProfileLeft() {
   });
 
   async function revelkey(){
-    const key = await magic.user.revealPrivateKey();
-    console.log("key"+ key); // => `true` or `false`
+   
   try {
     // const key = await magic.user.revealPrivateKey();
+    const key = await magic.user.revealPrivateKey();
     console.log("key"+ key); // => `true` or `false`
+    setKeySucess(true);
     
   } catch(err) {
    console.log(err)
+   setKeySucess(false);
   }
+
+  setTimeout(() => {
+    setKeySucess(false);
+  }, 3000);
 }
 
   return (
@@ -463,7 +469,7 @@ function UserProfileLeft() {
         </div>
         
         <div className="headingPersonalInfo">Reval Your Private Key</div>
-        <div className="personalDetails">
+        <div className="privateKey">
           <div className="section">
           
 
@@ -486,8 +492,30 @@ function UserProfileLeft() {
                 onClick={copytoClipboard}
               />
             </div> */}
-
-<button onClick={revelkey}>get key</button>
+{keySucess === false ? (<Button onClick={() => revelkey()} 
+  sx={{
+    padding: "12px",
+    width: "fit",
+    height: "30px",
+    backgroundColor: "#fea31b",
+    color: "white",
+    '&:hover': {
+      backgroundColor: "grey",
+      color: "white"
+    }
+  }}>get key</Button>
+) : (<Button onClick={() => revelkey()}   sx={{
+  padding: "12px",
+  width: "fit",
+  height: "30px",
+  backgroundColor: "green",
+  color: "white",
+  '&:hover': {
+    backgroundColor: "grey",
+    color: "white"
+  }
+}}>Sucess</Button>
+)}
             {/* <div className="tapToOpenButton" style={{ marginBottom: "0.8rem" }}>
               {tapToOpenDisabled ? (
                 <Button
