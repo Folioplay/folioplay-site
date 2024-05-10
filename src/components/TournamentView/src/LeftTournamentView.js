@@ -166,6 +166,10 @@ const LeftTournamentView = () => {
     setRank(data);
    
   }
+  const tournament = useSelector(
+    (state) => state.LeaderBoardSlice.tournamentByIdData
+  );
+  
  
   useEffect(() => {
     localStoritems();
@@ -208,10 +212,7 @@ const LeftTournamentView = () => {
     getPresentUser();
   }, []);
 
-  const tournament = useSelector(
-    (state) => state.LeaderBoardSlice.tournamentByIdData
-  );
-  
+
   const leaderBoardRedux = useSelector(
     (state) => state.LeaderBoardSlice.leaderBoard
   );
