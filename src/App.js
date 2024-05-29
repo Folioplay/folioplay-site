@@ -301,7 +301,7 @@ import SelectedCoinTeamPreview from "./components/SelectedCoinTeamPreview/src";
 import HowToPlay from "./components/HowToPlay/src";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage/src";
 import Feedback from "./components/Feedback/src";
-
+import WidthdrawMoney from "./components/WithdrawMoney/src"
 
 
 function App() {
@@ -580,6 +580,15 @@ const [token, setToken] =useState("");
                 element={
                     <AuthenticatedRoute>
                         <TransactionHistory />
+                    </AuthenticatedRoute>
+                }
+            />
+              <Route
+                exact
+                path="/withdraw_money"
+                element={
+                    <AuthenticatedRoute>
+                        <WidthdrawMoney/>
                     </AuthenticatedRoute>
                 }
             />

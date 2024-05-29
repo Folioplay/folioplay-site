@@ -357,6 +357,17 @@ const [balance, setBalance] = useState("")
                   <MenuItem style={{fontFamily:"poppins"}}
                     onClick={() => {
                       clearInterval(intervalId);
+                      navigate("/withdraw_money");
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Withdraw Money
+                  </MenuItem>
+                  <MenuItem style={{fontFamily:"poppins"}}
+                    onClick={() => {
+                      clearInterval(intervalId);
                       navigate("/coming_soon");
                     }}
                   >
@@ -365,6 +376,7 @@ const [balance, setBalance] = useState("")
                     </ListItemIcon>
                     Add Money
                   </MenuItem>
+                
                 </Menu>
               </React.Fragment>
             </span>
