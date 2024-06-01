@@ -26,6 +26,7 @@ const LeftTransactionWithdrawMoney = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const [amount, setAmount] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,12 +51,15 @@ const LeftTransactionWithdrawMoney = () => {
       if (parseInt(amount) >= 10) {
         // Make a POST request to the API
         try {
+          const token = localStorage.getItem("authtoken");
           const response = await fetch(`${SERVER}/wallet/withdraw`, {
             method: "POST",
             headers: {
-              "x-access-token": localStorage.getItem("authtoken"),
+              "Content-type": "application/json",
+              "x-access-token": token,
             },
-            body: JSON.stringify({ amount: amount }),
+            
+            body: JSON.stringify({ amount: parseInt(amount) }),
           });
           const data = await response.json();
           console.log(data);
@@ -84,6 +88,12 @@ const LeftTransactionWithdrawMoney = () => {
       setAmount("")
     }, 2000);
   };
+
+  useEffect(() => {
+   
+    dispatch(getTransactionsAsync());
+  }, [])
+  
 
   return (
     <div className="withdrawMoney__fullPage">
