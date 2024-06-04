@@ -98,13 +98,13 @@ const LeftTransactionHistoryComponent = () => {
                 "WITHDRAWAL"
                   ? "-"
                   : "+"}
-                {item.type === "WITHDRAWAL_REJECTED" ? 0 : item.data.amount} FPC{" "}
+                {item.type === "WITHDRAWAL_REJECTED" ? "0 FPC": item.data.amount} FPC{" "}
               </div>
             ) : (
               <div className="summaryTab__amount">
                 {item.type === "PAID" ? "-" : "+"}
                 {item.type === "WITHDRAWAL_REJECTED"
-                  ? 0
+                  ? "0 FPC"
                   : item.data.amount}{" "}
               </div>
             )}
