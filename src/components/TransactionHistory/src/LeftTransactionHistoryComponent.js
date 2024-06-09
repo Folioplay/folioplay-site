@@ -93,12 +93,12 @@ const LeftTransactionHistoryComponent = () => {
             ) ? (
               <div className="summaryTab__amount">
                 {item.type === "PAID" ||
-                "WITHDRAWAL" ||
-                "WITHDRAWAL_REJECTED" ||
-                "WITHDRAWAL"
+                  "WITHDRAWAL" ||
+                  "WITHDRAWAL_REJECTED" ||
+                  "WITHDRAWAL"
                   ? "-"
                   : "+"}
-                {item.type === "WITHDRAWAL_REJECTED" ? "0 FPC": item.data.amount} FPC{" "}
+                {item.type === "WITHDRAWAL_REJECTED" ? "0 FPC" : item.data.amount} FPC{" "}
               </div>
             ) : (
               <div className="summaryTab__amount">
@@ -114,7 +114,7 @@ const LeftTransactionHistoryComponent = () => {
               style={{ marginLeft: "20px", marginRight: "auto" }}
             >
               {item.type === "RECEIVED" && "Reward"}
-              {item.type === "RECEIVED" && "Reward"}
+              {item.type === "PAID" && "TOURNAMENT"}
               {item.type === "WITHDRAWAL_REJECTED" && "WITHDRAWAL REJECTED"}
               {item.type === "WITHDRAWAL" && "WITHDRAWAL"}
             </div>
@@ -126,11 +126,14 @@ const LeftTransactionHistoryComponent = () => {
               {item.type === "WITHDRAWAL_REJECTED" && "WITHDRAWAL REJECTED"}
               {item.type === "WITHDRAWAL" && "WITHDRAWAL"}
               {item.type === "TOURNAMENT" && " Tournament Name"}
+              {item.type === "PAID" && "Tournament Name"}
             </div>
 
-            {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL" ? (
+            {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL" && (
               ""
-            ) : (
+            )}
+
+            {item.type === "PAID" && (
               <>
                 <div
                   className={"summaryTab__dataBody"}
@@ -147,9 +150,8 @@ const LeftTransactionHistoryComponent = () => {
                     });
                   }}
                 >
-                  {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL"
-                    ? 0
-                    : item.data.tournamentName}
+                  {item.type === "PAID" &&
+                    item.data.tournamentName}
                 </div>
               </>
             )}
@@ -161,8 +163,8 @@ const LeftTransactionHistoryComponent = () => {
               {moment(item.date).format("Do MMMM YYYY, h:mm:ss a")}
             </div>
             <div className={"summaryTab__dataHeading"}>  {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL"
-                ? ""
-                : "Team Name"}</div>
+              ? ""
+              : "Team Name"}</div>
             <div className={"summaryTab__dataBody"}>
               {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL"
                 ? ""
