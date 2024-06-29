@@ -135,6 +135,7 @@ const LeftTransactionWithdrawMoney = () => {
                 "WITHDRAWAL"
                   ? "-"
                   : "+"}
+                
                 {item.type === "WITHDRAWAL_REJECTED"
                   ? "0 FPC"
                   : item.data.amount}{" "}
@@ -154,9 +155,8 @@ const LeftTransactionWithdrawMoney = () => {
               style={{ marginLeft: "20px", marginRight: "auto" }}
             >
               {item.type === "WITHDRAWAL_CANCELLED" && "CANCELLED"}
-              {item.type === "RECEIVED" && "Reward"}
-              {item.type === "WITHDRAWAL_PENDING" && "WITHDRAWAL_PENDING"}
-              {item.type === "WITHDRAWAL_REJECTED" && "WITHDRAWAL REJECTED"}
+              {item.type === "WITHDRAWAL_PENDING" && "PENDING"}
+              {item.type === "WITHDRAWAL_REJECTED" && "REJECTED"}
               {item.type === "WITHDRAWAL" && "WITHDRAWAL"}
             </div>
           </div>
@@ -166,33 +166,11 @@ const LeftTransactionWithdrawMoney = () => {
             <div className={"summaryTab__dataHeading"}>
               {item.type === "WITHDRAWAL_REJECTED" && "WITHDRAWAL REJECTED"}
               {item.type === "WITHDRAWAL" && "WITHDRAWAL"}
-              {item.type === "TOURNAMENT" && " Tournament Name"}
-              {item.type === "PAID" && "Tournament Name"}
             </div>
 
             {item.type === "WITHDRAWAL_REJECTED" || ("WITHDRAWAL" && "")}
 
-            {item.type === "PAID" && (
-              <>
-                <div
-                  className={"summaryTab__dataBody"}
-                  style={{
-                    cursor: "pointer",
-                    color: "blue",
-                    textDecoration: "underline",
-                  }}
-                  onClick={() => {
-                    navigate(`/tournament/${item.data.fromId}`, {
-                      state: {
-                        comingFrom: window.location.pathname,
-                      },
-                    });
-                  }}
-                >
-                  {item.type === "PAID" && item.data.tournamentName}
-                </div>
-              </>
-            )}
+         
 
             {item.type === "WITHDRAWAL_PENDING" ? null : (
               <div className={"summaryTab__dataHeading"}>Transaction ID</div>
