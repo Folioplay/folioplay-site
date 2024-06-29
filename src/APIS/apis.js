@@ -430,6 +430,19 @@ export async function getTransactionHistory() {
   ).then((res) => res.json());
 }
 
+export async function getWithdrawalHistory() {
+  const authToken = localStorage.getItem("authtoken");
+  return await fetch(
+      `${SERVER}/wallet/withdrawal-history`,
+      {
+        method: "GET",
+        headers: {
+          "x-access-token": authToken,
+        },
+      }
+  ).then((res) => res.json());
+}
+
 
 
 export async function getGlobalLeaderBoardData() {
