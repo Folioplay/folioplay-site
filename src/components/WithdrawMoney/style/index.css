@@ -9,7 +9,9 @@
     display:none;
 }
 
-
+.withdraw_money_summaryTab__amount{
+    width: 35%;
+}
 
 .withdrawMoney__body{
     background-color: white;

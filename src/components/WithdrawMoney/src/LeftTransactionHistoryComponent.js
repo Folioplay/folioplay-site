@@ -128,7 +128,7 @@ const LeftTransactionWithdrawMoney = () => {
             {parseFloat(
               item.type === "WITHDRAWAL_REJECTED" ? 0 : item.data.amount
             ) ? (
-              <div className="summaryTab__amount">
+              <div className="withdraw_money_summaryTab__amount">
                 {item.type === "WITHDRAWAL_PENDING" ||
                 "WITHDRAWAL" ||
                 "WITHDRAWAL_REJECTED" ||
@@ -142,7 +142,7 @@ const LeftTransactionWithdrawMoney = () => {
                 FPC{" "}
               </div>
             ) : (
-              <div className="summaryTab__amount">
+              <div className="withdraw_money_summaryTab__amount">
                 {item.type === "PAID" ? "-" : "+"}
                 {item.type === "WITHDRAWAL_REJECTED"
                   ? "0 FPC"
