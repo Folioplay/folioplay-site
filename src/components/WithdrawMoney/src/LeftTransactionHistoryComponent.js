@@ -27,7 +27,7 @@ const LeftTransactionWithdrawMoney = () => {
   const [withdrawalHistory, setWithdrawalHistory] = useState([]);
   const [aleartMessage, setAleartMessage] = useState("");
   const [severityType, setSeverityType] = useState("success");
-  const [amount, setAmount] = useState("");  
+  const [amount, setAmount] = useState("");
 
   const navigate = useNavigate();
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -135,7 +135,6 @@ const LeftTransactionWithdrawMoney = () => {
                 "WITHDRAWAL"
                   ? "-"
                   : "+"}
-                
                 {item.type === "WITHDRAWAL_REJECTED"
                   ? "0 FPC"
                   : item.data.amount}{" "}
@@ -170,8 +169,6 @@ const LeftTransactionWithdrawMoney = () => {
 
             {item.type === "WITHDRAWAL_REJECTED" || ("WITHDRAWAL" && "")}
 
-         
-
             {item.type === "WITHDRAWAL_PENDING" ? null : (
               <div className={"summaryTab__dataHeading"}>Transaction ID</div>
             )}
@@ -181,6 +178,16 @@ const LeftTransactionWithdrawMoney = () => {
             <div className={"summaryTab__dataBody"}>
               {moment(item.date).format("Do MMMM YYYY, h:mm:ss a")}
             </div>
+            {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL" ? (
+              <>
+                <div className={"summaryTab__dataHeading"}>Remark</div>
+
+                <div className={"summaryTab__dataBody"}>
+                  {item?.data?.remark}
+                </div>
+              </>
+            ) : null}
+
             <div className={"summaryTab__dataHeading"}>
               {" "}
               {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL"
@@ -352,7 +359,7 @@ asdsaddddddddddasdsdassad
                 }}
               />
             </div>
-          
+
             <div
               style={{
                 width: "100%",
