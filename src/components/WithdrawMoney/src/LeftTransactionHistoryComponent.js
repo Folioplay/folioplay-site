@@ -178,7 +178,23 @@ const LeftTransactionWithdrawMoney = () => {
             <div className={"summaryTab__dataBody"}>
               {moment(item.date).format("Do MMMM YYYY, h:mm:ss a")}
             </div>
-            {item.type === "WITHDRAWAL_REJECTED" || "WITHDRAWAL" ? (
+            {item.type === "WITHDRAWAL" ? (
+              <>
+                <div className={"summaryTab__dataHeading"}>Transaction Id</div>
+
+                <div className={"summaryTab__dataBody"}>
+                  <Link
+                    to={`https://solscan.io/tx/${item?.data?.remark}`}
+                    target="_blank"
+                  >
+                    {" "}
+                    {item?.data?.remark}
+                  </Link>
+                </div>
+              </>
+            ) : null}
+
+            {item.type === "WITHDRAWAL_REJECTED" ? (
               <>
                 <div className={"summaryTab__dataHeading"}>Remark</div>
 
